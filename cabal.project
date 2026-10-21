@@ -10,5 +10,10 @@ index-state: hackage.haskell.org 2024-09-30T00:00:00Z
 -- allow-newer as well).
 allow-newer: all
 
+-- cabal.project.freeze does not pin lib:Cabal. GHC 9.8.2's boot Cabal is
+-- 3.10.2.0, but editors load this project with `cabal repl
+-- --enable-multi-repl`, which requires lib:Cabal >= 3.11; pinning the boot
+-- version makes that resolve fail.
+
 -- Clash (cabal run clash) finds the project's packages through this file.
 write-ghc-environment-files: always
