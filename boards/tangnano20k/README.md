@@ -7,6 +7,7 @@ nextpnr-himbaechel, gowin_pack, openFPGALoader).
 | Design | Source | Build script | Clock |
 |---|---|---|---|
 | SimpleRisc (RV32IM, 64 KiB RAM) | `src/SimpleRisc.hs` | `build.sh`; verified with `build_gowin.sh` | PLL; the Gowin-verified build is 78 MHz (placement mode 2) |
+| FP-RISC development preset (RV32IMC, 8 MiB SDRAM) | `src/SdramPipeline.hs` | `SDRAM_PRESET=fprisc-48 sdram/build.sh` | CPU/SDRAM 48/48 MHz; 64 KiB cache; internal timing and physical workload evidence, SDRAM I/O qualification pending |
 | SimpleRisc SDRAM pipeline (8 MiB, experimental) | `src/SdramPipeline.hs` | `sdram/build.sh pipeline` (Gowin) | IMC CPU 72 MHz / SDRAM 54 MHz; 64 KiB banked write-update cache; [integrated timing and regressions](../../docs/2026-10-19-TANGNANO20K-INTEGRATION.md), classifier 2.06 s; +0.008 ns internal setup margin; SDRAM I/O qualification pending |
 | Earlier serial SDRAM core | `src/SdramSimpleRisc.hs` | `sdram/build.sh serial` (Gowin) | cached 66 MHz |
 | PsramRegs | `src/PsramRegs.hs` | `build_psram.sh` | 27 MHz oscillator |
@@ -21,6 +22,14 @@ boards/tangnano20k/build.sh load
 
 `load` writes FPGA SRAM only; the design is gone after a power cycle. Set
 `OSS_CAD_SUITE` if the suite is not at `~/Documents/Libs/oss-cad-suite`.
+
+For FP-RISC examples, use `SDRAM_PRESET=fprisc-48 sdram/build.sh` from this
+directory (or `SDRAM_PRESET=fprisc-48 boards/tangnano20k/sdram/build.sh` from
+the repository root). It fixes the SDRAM pipeline at 48/48 MHz, RV32IMC,
+64 KiB cache, 135-degree phase and placement 2, and records a build manifest.
+The 72/54 MHz experiment in the table is not accepted for the larger repeated
+GC classifier workload. See the sibling FP-RISC
+[preset guide](../../../fprisc/docs/2026-10-21-TANGNANO20K-PRESET.md).
 
 ## Pins
 

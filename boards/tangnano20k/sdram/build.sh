@@ -2,7 +2,12 @@
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 root="$(cd "$here/../../.." && pwd)"
+source "$here/preset.sh"
 mode="${1:-test}"
+if [[ -n "${SDRAM_PRESET:-}" ]]; then
+  mode="${1:-pipeline}"
+  [[ "$mode" == pipeline ]] || { echo 'fprisc-48 requires pipeline mode' >&2; exit 1; }
+fi
 freq="${SDRAM_FREQ_MHZ:-54}"
 cpu_freq="${SDRAM_CPU_FREQ_MHZ:-$freq}"
 cache="${SDRAM_CACHE:-1}"
@@ -39,7 +44,11 @@ print(format(value.normalize(), 'f'))
 PYTHON
 )"
 out="${SDRAM_OUT:-$root/output/tangnano20k/sdram-$mode}"
+if [[ -n "${SDRAM_PRESET:-}" ]]; then out="${SDRAM_OUT:-$root/output/tangnano20k/fprisc-48}"; fi
 if [[ "$out" != /* ]];then out="$PWD/$out";fi
+if [[ -n "${SDRAM_PRESET:-}" ]]; then
+  python3 "$here/preset_manifest.py" begin "$out"
+fi
 case "${SDRAM_REQUIRE_IO_MODEL:-0}" in 0|1) ;; *) echo "SDRAM_REQUIRE_IO_MODEL must be 0 or 1" >&2;exit 1;;esac
 io_args=(--freq-mhz "$freq" --phase-degrees "$phase" --burst-words "$burst_words" --out "$out")
 if [[ "$cpu_freq" != "$freq" ]];then io_args+=(--split-clock);fi
@@ -184,3 +193,6 @@ rm -f "$out/impl/pnr/sdram_test.tr"
 timing_args=(--freq-mhz "$cpu_freq")
 if [[ "$cpu_freq" != "$freq" ]];then timing_args+=(--memory-freq-mhz "$freq");fi
 python3 "$here/../check_gowin_timing.py" "$out/impl/pnr/sdram_test.tr" "${timing_args[@]}"
+if [[ -n "${SDRAM_PRESET:-}" ]]; then
+  python3 "$here/preset_manifest.py" finish "$out" "$rtl"
+fi

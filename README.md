@@ -55,3 +55,18 @@ is GPL-3.0-only.
 SimpleRisc was split out of [HaskPlayground](https://github.com/hyperswine/HaskPlayground)
 on 2026-10-21 with its history. The sibling [fprisc](https://github.com/hyperswine/fprisc)
 repository's Tang Nano tests expect this checkout at `../simple-risc`.
+
+## FP-RISC development preset
+
+`SDRAM_PRESET=fprisc-48 boards/tangnano20k/sdram/build.sh` builds the RV32IMC
+SDRAM pipeline at CPU/SDRAM 48/48 MHz with the 64 KiB cache and 135-degree
+memory phase. Conflicting settings are rejected. A completed build writes
+`output/tangnano20k/fprisc-48/build-manifest.json` with source/artifact hashes
+and the internal timing gate. SDRAM I/O qualification remains open.
+
+From the sibling `fprisc` checkout, `python3 tools/run_tangnano20k_examples.py
+--target qemu` builds and checks seven example cases. To run physically, use
+`--target board --fpga-manifest
+../simple-risc/output/tangnano20k/fprisc-48/build-manifest.json`; this loads the
+recorded bitstream into FPGA SRAM. See the
+[FP-RISC preset guide](../fprisc/docs/2026-10-21-TANGNANO20K-PRESET.md).

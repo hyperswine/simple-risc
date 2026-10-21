@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-21",
+  "preset": "fprisc-48",
+  "bitstream_sha256": "30a3f82d8249fe1db0e35c51e7b3b9abb269b729e6b16b60ded71fdf57d986c3",
+  "internal_sta_passed": true,
+  "board_suite_passed": true,
+  "external_io_qualified": false,
+  "evidence_sha256": {
+    "board-results.json": "1c04a620394c5096b95936ba46406165ce0a0327f6fc48428de7c285d2dbc142",
+    "board-summary.json": "f7bcb97fece578230c0823143382ccefc5e2d6dd028cdbbd9397c621ec15069b",
+    "build-manifest.json": "9fa662d7e0e6ae545356ed4d5913ac094e6ddee69a256e8ca09efc6ef34e0dc2",
+    "build.log": "436ed5af2787f5b7068d399cee49f541c307ca8ccccb7905d9ffd349c8261d12",
+    "classifier.json": "3297a9e7adec084f7d492381caaccece3eaa5feed4f9b1c03f78e0b6278616fa",
+    "classifier.log": "f8759a71d589fe64513a1c0f42ad1516f02b33b984823cfa7579a317e7fd6ca4",
+    "program-fpga.log": "325fae90fb428bbe0958682a2bd1a75b561e4cee176ff7cda8a091d7b64f6240",
+    "timing.tr": "03f9240842c9c89458c76839bfcf2d735d33b6129bb33546db02dcf15aa2d96f"
+  }
+}
