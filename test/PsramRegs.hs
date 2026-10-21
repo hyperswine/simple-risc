@@ -20,7 +20,7 @@ import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Numeric (showHex)
-import "haskplayground" PsramRegs
+import "simple-risc" PsramRegs
 import qualified Prelude as P
 
 -- Frames -----------------------------------------------------------------------

@@ -152,7 +152,7 @@ Run from the repository root, with the existing Cabal/Clash, RISC-V GCC,
 RISCOF/Spike, Icarus, Verilator and Gowin installations:
 
 ```sh
-cabal test haskplayground-test --test-show-details=direct
+cabal test --test-show-details=direct
 python3 -m unittest discover -s boards/tangnano20k/arch-tests -p 'test_*.py'
 python3 boards/tangnano20k/sdram/check_pipeline_cache.py
 python3 boards/tangnano20k/sdram/check_clock_bridge.py
@@ -208,7 +208,7 @@ were performed. See the sibling FP-RISC
 [reclamation report](../../fprisc/docs/2026-10-20-TANGNANO20K-GC.md)
 and its tracked evidence for both the passing run and rejected 72 MHz run.
 
-Rebuild from HaskPlayground:
+Rebuild from the repository root:
 
 ```sh
 SDRAM_CPU_FREQ_MHZ=48 SDRAM_FREQ_MHZ=48 SDRAM_RVC=1 \

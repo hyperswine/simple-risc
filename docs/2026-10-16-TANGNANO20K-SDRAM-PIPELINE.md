@@ -190,9 +190,9 @@ From the repository root, generate either CPU without running the licensed
 vendor flow:
 
 ```sh
-cabal run -v0 clash -- -isrc -hide-package haskplayground src/SdramPipeline.hs \
+cabal run -v0 clash -- -isrc -hide-package simple-risc src/SdramPipeline.hs \
   --verilog -fclash-clear -outputdir output/tangnano20k/sdram-generated/SdramPipeline-0
-cabal run -v0 clash -- -isrc -hide-package haskplayground -DRISCV_COMPRESSED \
+cabal run -v0 clash -- -isrc -hide-package simple-risc -DRISCV_COMPRESSED \
   src/SdramPipeline.hs --verilog -fclash-clear \
   -outputdir output/tangnano20k/sdram-generated/SdramPipeline-1
 python3 boards/tangnano20k/sdram/check_pipeline_rtl.py

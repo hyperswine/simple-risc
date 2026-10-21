@@ -21,10 +21,10 @@ import Data.Maybe (fromMaybe, isNothing)
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
-import "haskplayground" SimpleRisc
+import "simple-risc" SimpleRisc
 import qualified Prelude as P
-import qualified "haskplayground" SdramSimpleRisc as S
-import qualified "haskplayground" SdramPipeline as SP
+import qualified "simple-risc" SdramSimpleRisc as S
+import qualified "simple-risc" SdramPipeline as SP
 import qualified Rv32Model as Model
 import qualified RiscVCompressed as C
 import Control.Monad (when)

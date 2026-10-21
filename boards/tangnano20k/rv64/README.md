@@ -33,7 +33,7 @@ and [M extension](https://docs.riscv.org/reference/isa/v20240411/unpriv/m-st-ext
 ## Build and run
 
 Requires the installed licensed Gowin IDE, RISC-V GCC, Python and
-openFPGALoader. From HaskPlayground:
+openFPGALoader. From the repository root:
 
 ```sh
 boards/tangnano20k/rv64/build.sh

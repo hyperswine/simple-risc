@@ -74,7 +74,7 @@ def hashes(paths, relative):
 
 def generation_inputs(module, rvc):
     paths = list((ROOT/'src').rglob('*.hs')) + list((HERE.parent/'bootrom').glob('*.hex'))
-    paths += [ROOT/p for p in ('cabal.project', 'cabal.project.freeze', 'haskplayground.cabal')]
+    paths += [ROOT/p for p in ('cabal.project', 'cabal.project.freeze', 'simple-risc.cabal')]
     return {'module': module, 'rvc': rvc, 'sources': hashes(paths, ROOT)}
 
 
@@ -104,7 +104,7 @@ def generate(module, rvc, out, regenerate):
     if regenerate or not list(entity.glob('*.v')) or previous != {'inputs': inputs, 'outputs': outputs}:
         # A failed generation must never leave a reusable success manifest.
         manifest.unlink(missing_ok=True)
-        options = ['-isrc', '-hide-package', 'haskplayground'] + (['-DRISCV_COMPRESSED'] if rvc else [])
+        options = ['-isrc', '-hide-package', 'simple-risc'] + (['-DRISCV_COMPRESSED'] if rvc else [])
         print(f'clash: {module} rvc={rvc}')
         run(['cabal', 'run', '-v0', 'clash', '--', *options, f'src/{module}.hs', '--verilog', '-fclash-clear',
              '-outputdir', generated], log=out/'gen'/f'{module}-{rvc}.log', cwd=ROOT)

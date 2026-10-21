@@ -61,7 +61,7 @@ case "$mode" in
      module=SdramPipeline;entity=sdram_pipeline_risc;top="$here/pipeline_top.v"
    fi
    generated="$root/output/tangnano20k/sdram-generated/$module-$rvc"
-   options=(-isrc -hide-package haskplayground);if [[ "$rvc" == 1 ]];then options+=(-DRISCV_COMPRESSED);fi
+   options=(-isrc -hide-package simple-risc);if [[ "$rvc" == 1 ]];then options+=(-DRISCV_COMPRESSED);fi
    if [[ -n "${SDRAM_RTL_FILE:-}" ]];then
      rtl="$SDRAM_RTL_FILE"
      if [[ "$rtl" != /* ]];then rtl="$root/$rtl";fi

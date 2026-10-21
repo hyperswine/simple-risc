@@ -25,7 +25,7 @@ echo "Gowin vendor build: core $freq MHz, VCO $((freq * odiv)) MHz, output $out"
 mkdir -p "$out"
 cd "$root"
 generated="$root/output/tangnano20k/clash-$rvc"
-options=(-isrc -hide-package haskplayground);if [[ "$rvc" == 1 ]];then options+=(-DRISCV_COMPRESSED);fi
+options=(-isrc -hide-package simple-risc);if [[ "$rvc" == 1 ]];then options+=(-DRISCV_COMPRESSED);fi
 cabal run -v0 clash -- "${options[@]}" src/SimpleRisc.hs --verilog -fclash-clear -outputdir "$generated"
 # The vendor PLL library uses GW2AR-18C for this device.
 python3 - "$here/top.v" "$out/top_vendor.v" "$freq" "$odiv" <<'PY'

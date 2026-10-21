@@ -69,7 +69,7 @@ and exited successfully on an empty line.
 
 ## Replay and artifacts
 
-From HaskPlayground, rebuild the routed base:
+From the repository root, rebuild the routed base:
 
 ```sh
 FREQ_MHZ=108 SEEDS=2 boards/tangnano20k/build.sh
