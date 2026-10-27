@@ -31,6 +31,24 @@ def inputs():
     return {str(p.relative_to(ROOT)): sha(p) for p in sorted(paths)}
 
 
+def compute_build_id(input_hashes, config=CONFIG):
+    payload = json.dumps({'configuration': config, 'inputs': input_hashes}, sort_keys=True).encode()
+    return hashlib.sha256(payload).hexdigest()[:16]
+
+
+def rom_identity(input_hashes, config=CONFIG):
+    return dict(
+        protocol='SRID1',
+        isa='rv32imc' if config.get('compressed') else 'rv32im',
+        cpu_mhz=config['cpu_mhz'],
+        mem_mhz=config['memory_mhz'],
+        ram_bytes=config['ram_bytes'],
+        max_bytes=2097152,
+        capabilities='PMXQVHTUICG',
+        build_id=compute_build_id(input_hashes, config),
+    )
+
+
 def main():
     action, directory = sys.argv[1:3]
     out = Path(directory).resolve()
@@ -40,9 +58,11 @@ def main():
         # Even missing tools or unreadable source inputs must invalidate an
         # earlier success before the new build's provenance is collected.
         manifest.write_text(json.dumps(dict(preset='fprisc-48', ready=False)) + '\n')
-        report = dict(preset='fprisc-48', configuration=CONFIG, ready=False,
+        inp = inputs()
+        report = dict(preset='fprisc-48', configuration=CONFIG,
+                      rom_identity=rom_identity(inp), ready=False,
                       qualification='internal STA only; SDRAM I/O/PVT unqualified',
-                      source_root=str(ROOT), inputs=inputs(),
+                      source_root=str(ROOT), inputs=inp,
                       revision=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                       source_diff_sha256=hashlib.sha256(subprocess.check_output(['git', 'diff', 'HEAD'], cwd=ROOT)).hexdigest(),
                       tools={tool: subprocess.check_output(command, cwd=ROOT, text=True).strip()
@@ -52,6 +72,8 @@ def main():
         report = json.loads(manifest.read_text())
         if report['inputs'] != inputs():
             raise SystemExit('preset inputs changed during build; rebuild before loading')
+        if 'rom_identity' not in report:
+            report['rom_identity'] = rom_identity(report['inputs'])
         # Repeat the gate here so invoking this helper alone cannot mark a
         # failed placement ready. Hash the checked report and final bitstream.
         timing = out / 'impl/pnr/sdram_test.tr'

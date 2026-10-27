@@ -89,7 +89,7 @@ for f in "$cache_rtl" "$bridge_rtl";do [[ -f "$f" ]] || { echo "missing RTL over
 mkdir -p "$out"
 python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" <<'PYTHON'
 from pathlib import Path
-import sys
+import hashlib, json, sys
 src,out=map(Path,sys.argv[1:3]);freq=int(sys.argv[3])
 cpu_freq=int(sys.argv[7])
 # Only the pipeline top exposes the SD-card slot; the other images retain
@@ -98,8 +98,18 @@ sd_slot=sys.argv[4] in ('core','pipeline')
 (out/'pins.cst').write_text(''.join(line for line in (src.parent/'tangnano20k.cst').read_text().splitlines(True) if sd_slot or '"sd_' not in line))
 if sys.argv[4] in ('core','pipeline','serial'):
     pipelined=sys.argv[4]!='serial'
+    rom_words=(src.parent/'bootrom/bootrom-sdram.hex').read_text().splitlines()[:508]
+    manifest_path=out/'build-manifest.json'
+    build_id=None
+    if manifest_path.is_file():
+        try: build_id=(json.loads(manifest_path.read_text()).get('rom_identity') or {}).get('build_id')
+        except Exception: build_id=None
+    if not build_id or len(build_id)!=16:
+        build_id=hashlib.sha256(('\n'.join(rom_words)+f':{sys.argv[4]}:{cpu_freq}:{freq}:{sys.argv[8]}').encode()).hexdigest()[:16]
+    stamped_rom=out/'bootrom-sdram.hex'
+    stamped_rom.write_text('\n'.join([*rom_words,f'{cpu_freq:08x}',f'{freq:08x}',build_id[:8],build_id[8:16]])+'\n')
     top=(src/('pipeline_top.v' if pipelined else 'core_top.v')).read_text()
-    top=top.replace('BOOT_ROM_FILE',str(src.parent/'bootrom/bootrom-sdram.hex')).replace('CORE_FREQUENCY',str(freq*1000000)).replace('CPU_FREQUENCY',str(cpu_freq*1000000)).replace('CACHE_LINE_BITS',sys.argv[8])
+    top=top.replace('BOOT_ROM_FILE',str(stamped_rom)).replace('CORE_FREQUENCY',str(freq*1000000)).replace('CPU_FREQUENCY',str(cpu_freq*1000000)).replace('CACHE_LINE_BITS',sys.argv[8])
     if cpu_freq!=freq:
         top=top.replace('sdram_pll pll(.clk_27m(clk_27m),.clk_core(clk),.clk_sdram(clk_sdram),.pll_lock(lock));',
                         f'sdram_dual_pll #(.CPU_MHZ({cpu_freq})) pll(.clk_27m(clk_27m),.clk_core(clk),.clk_memory(clk_memory),.clk_sdram(clk_sdram),.pll_lock(lock));')

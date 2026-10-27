@@ -319,6 +319,47 @@ prop_boot_rom_base_commands = withTests 1 . property $ do
   P.map (ramRead (simRam finished) . fromIntegral) [0..2 :: Int] === program
   ramRead (simRam finished) 3 === 0
 
+crc32WordTest :: Word32 -> Word32 -> Word32
+crc32WordTest crc word =
+  P.foldl
+    (\c _ -> (c `shiftR` 1) `xor` (if testBit c 0 then 0xedb8_8320 else 0))
+    (crc `xor` word)
+    [0 .. 31 :: Int]
+
+prop_boot_rom_identity_and_crc_upload :: Property
+prop_boot_rom_identity_and_crc_upload = withTests 1 . property $ do
+  let ascii s = P.map (fromIntegral . P.fromEnum) s :: [Byte]
+      hex8 v =
+        let h = showHex (toInteger v) ""
+         in ascii (P.replicate (8 - P.length h) '0' P.++ h)
+      identSim = runInputs (startSim initialMachine (blankRam 0xdead_beef))
+        (P.replicate 500 Nothing P.++ [Just 0x49] P.++ P.replicate 35000 Nothing)
+      identOut = simTransmitted identSim
+      expectedPrefix = ascii "SRID1 isa=rv32im cpu=00000060 mem=00000060 ram=00010000 max=0000ff00 cap=PMXQVHTUICG id="
+  P.take (P.length expectedPrefix) identOut === expectedPrefix
+  P.length identOut === P.length expectedPrefix + 17
+  P.last identOut === 10
+
+  let noImgSim = runInputs (startSim initialMachine (blankRam 0xdead_beef))
+        (P.replicate 500 Nothing P.++ [Just 0x47] P.++ P.replicate 8000 Nothing)
+  simTransmitted noImgSim === ascii "ERR NOIMG\n"
+
+  let program = [lui 2 0x10000, addi 1 0 0x4c, sw 1 2 0]
+      magic = 0x3155_5253 :: Word32
+      count = fromIntegral (P.length program) :: Word32
+      hdrCrc = complement (crc32WordTest (crc32WordTest 0xffff_ffff magic) count)
+      payCrc = complement (P.foldl crc32WordTest 0xffff_ffff program)
+      uWords = [magic, count, hdrCrc] P.++ program P.++ [payCrc]
+      wordStream w = hostBytes 600 (wordBytes w) P.++ P.replicate 3500 Nothing
+      uploaded = runInputs (startSim initialMachine (blankRam 0xdead_beef))
+        (P.replicate 500 Nothing P.++ hostBytes 600 [0x55] P.++ P.concatMap wordStream uWords
+          P.++ P.replicate 15000 Nothing P.++ hostBytes 20000 [0x43, 0x47] P.++ P.replicate 15000 Nothing)
+      okLine = ascii "OK " P.++ hex8 payCrc P.++ [10]
+      crcLine = hex8 payCrc P.++ [10]
+  simTransmitted uploaded === okLine P.++ crcLine P.++ [0x4c] P.++ doneBytes
+  P.map (ramRead (simRam uploaded) . fromIntegral) [0..2 :: Int] === program
+  ramRead (simRam uploaded) 3 === 0
+
 -- Control flow and fetch timing -------------------------------------------------
 
 prop_encoders_match_known_instructions :: Property
@@ -2033,6 +2074,7 @@ simpleRiscGroup =
       ("RV32I arithmetic result reaches BRAM", prop_arithmetic_instruction_stores_expected_result),
       ("Boot ROM loads programs with a guard word", prop_boot_rom_loads_programs),
       ("Boot ROM implements Base T/Q/V/H commands", prop_boot_rom_base_commands),
+      ("Boot ROM implements SRID1 I and SRU1 U/C/G commands", prop_boot_rom_identity_and_crc_upload),
       ("Boot ROM clears RAM", prop_boot_rom_clears_memory),
       ("RV32M matches the reference semantics", prop_muldiv_matches_reference),
       ("Test encoders match known instructions", prop_encoders_match_known_instructions),

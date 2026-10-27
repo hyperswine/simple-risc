@@ -60,3 +60,4 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-10-19 | [TANGNANO20K-SDRAM-CACHE](2026-10-19-TANGNANO20K-SDRAM-CACHE.md) | the 64 KiB cache and asynchronous-FIFO clock bridge: classifier 2.33 times faster |
 | 2026-10-19 | [TANGNANO20K-SDRAM-WRITE-UPDATE](2026-10-19-TANGNANO20K-SDRAM-WRITE-UPDATE.md) | write-update on the board: narrow BSRAM slices; evidence in `evidence/2026-10-19-bsram-rdw/` and `evidence/2026-10-19-write-update-board/` |
 | 2026-10-21 | [FPRISC-48-PRESET](2026-10-21-FPRISC-48-PRESET.md) | fixed 48 MHz development preset, fresh Gowin timing and full physical FP-RISC example suite |
+| 2026-10-25 | [FPRISC-BOARD-DEPENDABILITY](2026-10-25-FPRISC-BOARD-DEPENDABILITY.md) | priorities and acceptance criteria for board identification, reliable uploads, crash reports, endurance and reproducible releases |

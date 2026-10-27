@@ -1,6 +1,7 @@
 /* SimpleRisc boot ROM: the host protocol, in software.
  *
- * The old hardware loader's P/R/M/X protocol is retained. Base adds Q/V/H/T:
+ * The old hardware loader's P/R/M/X and Base's Q/V/H/T are retained, and
+ * versioned board identification and CRC32/timeout uploads add I/U/C/G:
  *
  *   'P', countLo, countHi, words   load COUNT little-endian words at 0x80000000
  *                                  (at most 16384), then a zero word after them
@@ -11,6 +12,13 @@
  *   'V'                            XOR readback of the last loaded image
  *   'H'                            alias for R (the high-address entry)
  *   'T'                            UART probe: send DONE
+ *   'I'                            board identity: SRID1 isa=... cpu=... mem=...
+ *                                  ram=... max=... cap=PMXQVHTUICG id=...\n
+ *   'U', "SRU1", count32, hcrc32,  framed upload with header/payload CRC32 and
+ *        words, pcrc32             bounded receive timeouts: OK <crc32>\n or
+ *                                  ERR HDR|LEN|TMO|CRC\n
+ *   'C'                            CRC32 readback of the last loaded image
+ *   'G'                            guarded run: requires a verified image
  *
  * "DONE" is sent when the ROM is entered after a program ends: a finisher exit
  * (a reset with cause EXIT) or a trap while mtvec is 0 (no reset, cause NONE).
@@ -18,9 +26,9 @@
  * loaded image makes a program that runs off its end execute an illegal
  * instruction, trap here, and also produce "DONE".
  *
- * Before 'R' the ROM quietens the interrupt sources a previous program may
- * have left armed; a trap back into the ROM is not a reset, so the hardware
- * has not done it.  mtime keeps counting.
+ * Before running a program the ROM quietens the interrupt sources a previous
+ * program may have left armed; a trap back into the ROM is not a reset, so the
+ * hardware has not done it.  mtime keeps counting.
  */
 #include <stdint.h>
 
@@ -40,13 +48,21 @@
 #define PLIC_THRESHOLD (*(volatile uint32_t *)0x0c200000u)
 #define PLIC_CLAIM (*(volatile uint32_t *)0x0c200004u)
 #define RAM ((volatile uint32_t *)0x80000000u)
+extern const volatile uint32_t rom_meta[4];
+#define ROM_META rom_meta
 #endif
 #define UART_IRQ 10u
 #define LOAD_WORDS 16384u
+#define SRU1_MAGIC 0x31555253u
+#define UART_TIMEOUT_SPINS 500000u
+#define UART_DRAIN_SPINS 4096u
+#define NOINLINE __attribute__((noinline))
 #ifdef ROM_SDRAM
+#define RAM_BYTES (8u * 1024u * 1024u)
 #define EXTENDED_WORDS (2u * 1024u * 1024u / 4u)
 #else
-/* Q reserves the C loader stack. P retains its historical 64 KiB framing. */
+#define RAM_BYTES (64u * 1024u)
+/* Q and U reserve the C loader stack. P retains its historical 64 KiB framing. */
 #define EXTENDED_WORDS (LOAD_WORDS - 64u)
 #endif
 
@@ -54,7 +70,7 @@ enum { CAUSE_NONE = 0, CAUSE_POWER_ON = 1, CAUSE_BREAK = 2, CAUSE_EXIT = 3 };
 
 void rom_run(void) __attribute__((noreturn));
 
-static void putc_raw(uint32_t c) {
+static NOINLINE void putc_raw(uint32_t c) {
 #ifdef ROM_HOST_TEST
   host_putc(c);
 #else
@@ -64,101 +80,209 @@ static void putc_raw(uint32_t c) {
 #endif
 }
 
-static uint32_t getc_raw(void) {
+static NOINLINE void put_str(const char *s) {
+  while (*s) putc_raw((uint8_t)*s++);
+}
+
+static NOINLINE void put_hex32(uint32_t value) {
+  for (uint32_t i = 0; i < 8u; i++) {
+    uint32_t d = value >> 28;
+    putc_raw(d + (d < 10u ? '0' : 'a' - 10u));
+    value <<= 4;
+  }
+}
+
+static NOINLINE int get_bytes(uint32_t bits, uint32_t *out) {
+  uint32_t w = 0;
+  for (uint32_t shift = 0; shift < bits; shift += 8u) {
+    uint32_t c;
+    uint32_t spins = (bits == 8u) ? UART_DRAIN_SPINS : UART_TIMEOUT_SPINS;
 #ifdef ROM_HOST_TEST
-  return host_getc();
+    if (!host_getc_timeout(&c, spins)) return 0;
 #else
-  while (!(UART_STATUS & 2u)) {
-  }
-  return UART_RXDATA & 0xffu;
-#endif
-}
-
-static uint32_t get_word(void) {
-  uint32_t word = getc_raw();
-  word |= getc_raw() << 8;
-  word |= getc_raw() << 16;
-  return word | (getc_raw() << 24);
-}
-
-static uint32_t load(uint32_t extended) {
-  uint32_t count = getc_raw();
-  count |= getc_raw() << 8;
-  if (extended) {
-    count |= getc_raw() << 16;
-    count |= getc_raw() << 24;
-    /* Reject the complete frame without writing any RAM. Consuming the
-     * declared payload keeps command bytes inside it from being executed.
-     * A truncated invalid frame needs a board reset, like any partial load. */
-    if (count > EXTENDED_WORDS) {
-      for (uint32_t i = 0; i < count; i++) (void)get_word();
-      putc_raw('E'); putc_raw('R'); putc_raw('R'); putc_raw('\n');
-      return 0;
+    while (!(UART_STATUS & 2u)) {
+      if (--spins == 0) return 0;
     }
-  } else if (count > LOAD_WORDS) count = LOAD_WORDS;
-  for (uint32_t i = 0; i < count; i++) {
-    RAM[i] = get_word();
+    c = UART_RXDATA & 0xffu;
+#endif
+    w |= (c & 0xffu) << shift;
   }
-  if (count != 0 && count < (extended ? EXTENDED_WORDS : LOAD_WORDS)) RAM[count] = 0;
-  return count;
+  *out = w;
+  return 1;
 }
 
-static void done(void) {
-  putc_raw('D'); putc_raw('O'); putc_raw('N'); putc_raw('E');
-}
-
-static void verify(uint32_t count) {
-  uint32_t value = 0;
-  for (uint32_t i = 0; i < count; i++) value ^= RAM[i];
-  for (int shift = 28; shift >= 0; shift -= 4) {
-    uint32_t digit = (value >> shift) & 15u;
-    putc_raw(digit < 10 ? '0' + digit : 'a' + digit - 10);
+static NOINLINE void drain_err(const char *msg) {
+  uint32_t discard;
+  while (get_bytes(8u, &discard)) {
   }
-  putc_raw('\n');
+  put_str(msg);
 }
 
-/* The state a reset leaves: no software interrupt, the timer compare at its
- * maximum, the UART's interrupt masked and the PLIC disabled with nothing
- * pending or in service. */
-static void reset_devices(void) {
-  UART_CTRL = 0;
-  CLINT_MSIP = 0;
-  CLINT_MTIMECMP_HI = 0xffffffffu;
-  CLINT_MTIMECMP_LO = 0xffffffffu;
-  /* Only a claim clears a stale pending request: briefly make it claimable. */
-  PLIC_THRESHOLD = 0;
-  PLIC_PRIORITY_UART = 1;
-  PLIC_ENABLE = 1u << UART_IRQ;
-  (void)PLIC_CLAIM;
-  PLIC_CLAIM = UART_IRQ;
-  PLIC_ENABLE = 0;
-  PLIC_PRIORITY_UART = 0;
+static NOINLINE uint32_t crc32_word(uint32_t crc, uint32_t word) {
+  crc ^= word;
+  for (uint32_t i = 0; i < 32u; i++) {
+    crc = (crc >> 1) ^ (0xedb88320u & (0u - (crc & 1u)));
+  }
+  return crc;
 }
 
-static void clear(void) {
-  for (uint32_t i = 0; i < LOAD_WORDS; i++) RAM[i] = 0;
+static uint32_t read_misa(void) {
+#ifdef ROM_HOST_TEST
+  return host_misa;
+#else
+  uint32_t val;
+  __asm__ volatile("csrr %0, misa" : "=r"(val));
+  return val;
+#endif
 }
 
 void rom_main(void) __attribute__((noreturn));
 void rom_main(void) {
-  uint32_t loaded = 0;
+  uint32_t loaded = 0, ready = 0, failed = 0;
   uint32_t cause = BOOT_CAUSE;
   if (cause == CAUSE_EXIT || cause == CAUSE_NONE) {
-    done();
+    put_str("DONE");
   }
   for (;;) {
-    switch (getc_raw()) {
-      case 'P': loaded = load(0); break;
-      case 'Q': loaded = load(1); break;
-      case 'V': verify(loaded); break;
-      case 'T': done(); break;
-      case 'R':
-      case 'H':
-        reset_devices();
-        while (UART_STATUS & 2u) (void)UART_RXDATA; /* a stale byte never reaches the program */
-        rom_run();
-      case 'M': clear(); loaded = 0; break;
-      default: break; /* 'X' and anything else */
+  next_cmd:;
+    uint32_t cmd;
+#ifdef ROM_HOST_TEST
+    cmd = host_getc();
+#else
+    while (!(UART_STATUS & 2u)) {
+    }
+    cmd = UART_RXDATA & 0xffu;
+#endif
+    if (cmd == 'P' || cmd == 'Q' || cmd == 'U') {
+      if (loaded) RAM[0] = 0;
+      loaded = 0;
+      ready = 0;
+      failed = 1;
+      uint32_t count = 0, w = 0;
+      if (cmd == 'U') {
+        uint32_t hdr[3], hc = 0xffffffffu;
+        for (uint32_t i = 0; i < 3u; i++) {
+          if (!get_bytes(32u, &hdr[i])) {
+            put_str("ERR TMO\n");
+            goto next_cmd;
+          }
+          if (i < 2u) hc = crc32_word(hc, hdr[i]);
+        }
+        count = hdr[1];
+        if (hdr[0] != SRU1_MAGIC || hdr[2] != ~hc) {
+          drain_err("ERR HDR\n");
+          continue;
+        }
+        if (count == 0 || count > EXTENDED_WORDS) {
+          drain_err("ERR LEN\n");
+          continue;
+        }
+      } else {
+        if (!get_bytes(cmd == 'P' ? 16u : 32u, &count)) {
+          put_str("ERR\n");
+          continue;
+        }
+        if (cmd == 'P') {
+          if (count > LOAD_WORDS) count = LOAD_WORDS;
+        } else if (count > EXTENDED_WORDS) {
+          for (uint32_t i = 0; i < count; i++) {
+            if (!get_bytes(32u, &w)) break;
+          }
+          put_str("ERR\n");
+          continue;
+        }
+      }
+      uint32_t crc = 0xffffffffu;
+      uint32_t word0 = 0;
+      if (count != 0) RAM[0] = 0;
+      for (uint32_t i = 0; i < count; i++) {
+        if (!get_bytes(32u, &w)) {
+          put_str(cmd == 'U' ? "ERR TMO\n" : "ERR\n");
+          goto next_cmd;
+        }
+        if (i == 0) {
+          word0 = w;
+        } else {
+          RAM[i] = w;
+        }
+        if (cmd == 'U') crc = crc32_word(crc, w);
+      }
+      if (cmd == 'U') {
+        if (!get_bytes(32u, &w)) {
+          put_str("ERR TMO\n");
+          continue;
+        }
+        crc = ~crc;
+        if (crc != w) {
+          drain_err("ERR CRC\n");
+          continue;
+        }
+      }
+      if (count != 0) {
+        uint32_t limit = (cmd == 'P') ? LOAD_WORDS : EXTENDED_WORDS;
+        if (count < limit) RAM[count] = 0;
+        RAM[0] = word0;
+      }
+      loaded = count;
+      ready = (count != 0);
+      failed = 0;
+      if (cmd == 'U') {
+        put_str("OK ");
+        put_hex32(crc);
+        putc_raw('\n');
+      }
+    } else if (cmd == 'V' || cmd == 'C') {
+      uint32_t use_crc = (cmd == 'C');
+      uint32_t value = use_crc ? 0xffffffffu : 0u;
+      for (uint32_t i = 0; i < loaded; i++) {
+        uint32_t w = RAM[i];
+        value = use_crc ? crc32_word(value, w) : (value ^ w);
+      }
+      put_hex32(use_crc ? ~value : value);
+      putc_raw('\n');
+    } else if (cmd == 'I') {
+      const char *p = "SRID1 isa=rv32im\x01 cpu=% mem=% ram=% max=% cap=PMXQVHTUICG id=%%\n";
+      uint32_t idx = 0;
+      while (*p) {
+        uint8_t c = (uint8_t)*p++;
+        if (c == 1u) {
+          if (read_misa() & 4u) putc_raw('c');
+        } else if (c == '%') {
+          uint32_t v = (idx == 2u)   ? RAM_BYTES
+                       : (idx == 3u) ? (EXTENDED_WORDS * 4u)
+                                     : ROM_META[idx > 3u ? idx - 2u : idx];
+          put_hex32(v);
+          idx++;
+        } else {
+          putc_raw(c);
+        }
+      }
+    } else if (cmd == 'T') {
+      put_str("DONE");
+    } else if (cmd == 'G' || cmd == 'R' || cmd == 'H') {
+      if (cmd == 'G' ? !ready : failed) {
+        put_str("ERR NOIMG\n");
+        continue;
+      }
+      UART_CTRL = 0;
+      CLINT_MSIP = 0;
+      CLINT_MTIMECMP_HI = 0xffffffffu;
+      CLINT_MTIMECMP_LO = 0xffffffffu;
+      /* Only a claim clears a stale pending request: briefly make it claimable. */
+      PLIC_THRESHOLD = 0;
+      PLIC_PRIORITY_UART = 1;
+      PLIC_ENABLE = 1u << UART_IRQ;
+      (void)PLIC_CLAIM;
+      PLIC_CLAIM = UART_IRQ;
+      PLIC_ENABLE = 0;
+      PLIC_PRIORITY_UART = 0;
+      while (UART_STATUS & 2u) (void)UART_RXDATA; /* a stale byte never reaches the program */
+      rom_run();
+    } else if (cmd == 'M') {
+      for (uint32_t i = 0; i < LOAD_WORDS; i++) RAM[i] = 0;
+      loaded = 0;
+      ready = 0;
+      failed = 0;
     }
   }
 }

@@ -28,6 +28,23 @@ class PresetManifest(unittest.TestCase):
                     preset_manifest.main()
             self.assertFalse(json.loads(path.read_text())['ready'])
 
+    def test_rom_identity_and_build_id_are_deterministic(self):
+        inp_a = {'src/SimpleRisc.hs': '1111', 'boards/tangnano20k/bootrom/bootrom-sdram.hex': '2222'}
+        inp_b = {'src/SimpleRisc.hs': '1111', 'boards/tangnano20k/bootrom/bootrom-sdram.hex': '3333'}
+        id_a1 = preset_manifest.rom_identity(inp_a)
+        id_a2 = preset_manifest.rom_identity(dict(reversed(list(inp_a.items()))))
+        id_b = preset_manifest.rom_identity(inp_b)
+        self.assertEqual(id_a1, id_a2)
+        self.assertEqual(id_a1['protocol'], 'SRID1')
+        self.assertEqual(id_a1['isa'], 'rv32imc')
+        self.assertEqual(id_a1['cpu_mhz'], 48)
+        self.assertEqual(id_a1['mem_mhz'], 48)
+        self.assertEqual(id_a1['ram_bytes'], 8388608)
+        self.assertEqual(id_a1['max_bytes'], 2097152)
+        self.assertEqual(id_a1['capabilities'], 'PMXQVHTUICG')
+        self.assertEqual(len(id_a1['build_id']), 16)
+        self.assertNotEqual(id_a1['build_id'], id_b['build_id'])
+
 
 if __name__ == '__main__':
     unittest.main()

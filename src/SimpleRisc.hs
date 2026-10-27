@@ -277,11 +277,7 @@ tickCounter increment write counter =
    in case write of
         Just (False, value) -> Counter64 value carriedHi False
         Just (True, value) -> Counter64 lo value False
-        Nothing ->
-          Counter64
-            (if increment then lo + 1 else lo)
-            carriedHi
-            (increment && lo == maxBound)
+        Nothing -> Counter64 (if increment then lo + 1 else lo) carriedHi (increment && lo == maxBound)
 
 -- | Where the next Fetch finds its word, decided by the instruction that
 -- set the pc: the sequential prefetch (pc + 4), the branch-target read, or
@@ -355,23 +351,12 @@ spiPins spi = (boolToBit (spiSck spi), msb (spiOut spi), boolToBit (not (spiSele
 -- | One clock of the SPI master; @start@ is a byte written to DATA.
 stepSpi :: Maybe Byte -> Maybe Word32 -> Spi -> Spi
 stepSpi start control spi
-  | Just c <- control,
-    not (spiBusy spi) =
-      spi {spiSelect = testBit c 0, spiDivider = resize (c `shiftR` 8)}
-  | Just byte <- start,
-    not (spiBusy spi) =
-      spi {spiOut = byte, spiBits = 8, spiCount = spiDivider spi, spiSck = False}
+  | Just c <- control, not (spiBusy spi) = spi {spiSelect = testBit c 0, spiDivider = resize (c `shiftR` 8)}
+  | Just byte <- start, not (spiBusy spi) = spi {spiOut = byte, spiBits = 8, spiCount = spiDivider spi, spiSck = False}
   | not (spiBusy spi) = spi
   | spiCount spi /= 0 = spi {spiCount = spiCount spi - 1}
-  | not (spiSck spi) =
-      spi
-        { spiSck = True,
-          spiCount = spiDivider spi,
-          spiBits = spiBits spi - 1,
-          spiIn = (spiIn spi `shiftL` 1) .|. (if spiMiso spi == high then 1 else 0)
-        }
-  | otherwise =
-      spi {spiSck = False, spiCount = spiDivider spi, spiOut = (spiOut spi `shiftL` 1) .|. 1}
+  | not (spiSck spi) = spi {spiSck = True, spiCount = spiDivider spi, spiBits = spiBits spi - 1, spiIn = (spiIn spi `shiftL` 1) .|. (if spiMiso spi == high then 1 else 0)}
+  | otherwise = spi {spiSck = False, spiCount = spiDivider spi, spiOut = (spiOut spi `shiftL` 1) .|. 1}
 
 initialDevices :: Devices
 initialDevices =
@@ -400,18 +385,11 @@ uartIrq = 10
 
 -- | The PLIC would grant a claim now.
 plicClaimable :: Devices -> Bool
-plicClaimable devices =
-  devPlicPending devices
-    && devPlicEnable devices
-    && devPlicPriority devices
-    > devPlicThreshold devices
+plicClaimable devices = devPlicPending devices && devPlicEnable devices && devPlicPriority devices > devPlicThreshold devices
 
 -- | mip as software reads it.
 pendingInterrupts :: Devices -> Word32
-pendingInterrupts devices =
-  (if devMeip devices then 0x800 else 0)
-    .|. (if devMtip devices then 0x80 else 0)
-    .|. (if devMsip devices then 0x8 else 0)
+pendingInterrupts devices = (if devMeip devices then 0x800 else 0) .|. (if devMtip devices then 0x80 else 0) .|. (if devMsip devices then 0x8 else 0)
 
 -- Registered memory target; wide address comparisons stay out of Commit.
 data MemoryTarget
@@ -582,37 +560,17 @@ data BusEffect
 
 -- Response and effects are pulses. A stalled TX emits neither; a completed
 -- transfer emits exactly one response and, where appropriate, one side effect.
-busStep ::
-  BusState ->
-  Maybe BusRequest ->
-  Word32 ->
-  Bool ->
-  Maybe Byte ->
-  Unsigned 2 ->
-  Devices ->
-  (BusState, Maybe BusResponse, StepOutput, BusEffect)
+busStep :: BusState -> Maybe BusRequest -> Word32 -> Bool -> Maybe Byte -> Unsigned 2 -> Devices -> (BusState, Maybe BusResponse, StepOutput, BusEffect)
 busStep = busStepWith decodeMemoryTarget
 
-busStepWith ::
-  (Word32 -> MemoryTarget) ->
-  BusState ->
-  Maybe BusRequest ->
-  Word32 ->
-  Bool ->
-  Maybe Byte ->
-  Unsigned 2 ->
-  Devices ->
-  (BusState, Maybe BusResponse, StepOutput, BusEffect)
+busStepWith :: (Word32 -> MemoryTarget) -> BusState -> Maybe BusRequest -> Word32 -> Bool -> Maybe Byte -> Unsigned 2 -> Devices -> (BusState, Maybe BusResponse, StepOutput, BusEffect)
 busStepWith decodeTarget state request memoryWord txReady rx bootCause devices =
   let q = busRequest state
       width = busWidth q
       address = busAddress q
       advance phase = (state {busPhase = phase}, Nothing, (0, Nothing, Nothing), NoEffect)
-      respond value fault exiting effect =
-        (state {busPhase = BusIdle}, Just (BusResponse value fault exiting), (0, Nothing, Nothing), effect)
-      valid =
-        (if busWrite q then validStore width else validLoad width)
-          && not (misalignedMemory width address)
+      respond value fault exiting effect = (state {busPhase = BusIdle}, Just (BusResponse value fault exiting), (0, Nothing, Nothing), effect)
+      valid = (if busWrite q then validStore width else validLoad width) && not (misalignedMemory width address)
    in case busPhase state of
         BusIdle -> case request of
           Nothing -> advance BusIdle
@@ -633,30 +591,14 @@ busStepWith decodeTarget state request memoryWord txReady rx bootCause devices =
                 | otherwise -> respond 0 False False NoEffect
               UartStatusTarget
                 | busWrite q -> respond 0 True False NoEffect
-                | otherwise ->
-                    respond
-                      ( loadValue
-                          width
-                          0
-                          ((if txReady then 1 else 0) .|. (case rx of Nothing -> 0; Just _ -> 2))
-                      )
-                      False
-                      False
-                      NoEffect
+                | otherwise -> respond (loadValue width 0 ((if txReady then 1 else 0) .|. (case rx of Nothing -> 0; Just _ -> 2))) False False NoEffect
               UartRxTarget
                 | busWrite q -> respond 0 True False NoEffect
-                | otherwise ->
-                    respond
-                      (loadValue width 0 (maybe 0 resize rx))
-                      False
-                      False
-                      (case rx of Nothing -> NoEffect; Just _ -> ConsumeRx)
+                | otherwise -> respond (loadValue width 0 (maybe 0 resize rx)) False False (case rx of Nothing -> NoEffect; Just _ -> ConsumeRx)
               ExitTarget
                 | width == 0 || width == 4 -> respond 0 True False NoEffect
                 | not (busWrite q) -> respond 0 False False NoEffect
-                | otherwise ->
-                    let status = busData q .&. 0xffff
-                     in respond 0 False (status == 0x5555 || status == 0x3333) NoEffect
+                | otherwise -> let status = busData q .&. 0xffff in respond 0 False (status == 0x5555 || status == 0x3333) NoEffect
               BootCauseTarget
                 | busWrite q -> respond 0 True False NoEffect
                 | otherwise -> respond (loadValue width 0 (resize bootCause)) False False ConsumeBootCause
@@ -669,51 +611,22 @@ busStepWith decodeTarget state request memoryWord txReady rx bootCause devices =
               target
                 | width /= 2 -> respond 0 True False NoEffect
                 | busWrite q -> respond 0 False False (deviceWrite target (busData q))
-                | target == PlicClaimTarget ->
-                    if plicClaimable devices
-                      then respond uartIrq False False ClaimInterrupt
-                      else respond 0 False False NoEffect
+                | target == PlicClaimTarget -> if plicClaimable devices then respond uartIrq False False ClaimInterrupt else respond 0 False False NoEffect
                 | otherwise -> respond (deviceRead target devices) False False NoEffect
         BusLoadIssue -> (state {busPhase = BusLoadDelay}, Nothing, (memoryIndex address, Nothing, Nothing), NoEffect)
         BusLoadDelay -> advance BusLoadCapture
         BusLoadCapture -> advance BusLoadWait
         BusLoadWait -> (state {busPhase = BusLoadAlign, busWord = memoryWord}, Nothing, (0, Nothing, Nothing), NoEffect)
-        BusLoadAlign ->
-          ( state
-              { busPhase = BusReply,
-                busValue = loadValue width (resize address) (busWord state)
-              },
-            Nothing,
-            (0, Nothing, Nothing),
-            NoEffect
-          )
+        BusLoadAlign -> (state {busPhase = BusReply, busValue = loadValue width (resize address) (busWord state)}, Nothing, (0, Nothing, Nothing), NoEffect)
         BusReply -> respond (busValue state) False False NoEffect
         BusStoreIssue -> (state {busPhase = BusStoreDelay}, Nothing, (memoryIndex address, Nothing, Nothing), NoEffect)
         BusStoreDelay -> advance BusStoreCapture
         BusStoreCapture -> advance BusStoreWait
         BusStoreWait -> (state {busPhase = BusStoreMerge, busWord = memoryWord}, Nothing, (0, Nothing, Nothing), NoEffect)
-        BusStoreMerge ->
-          ( state
-              { busPhase = BusRamWrite,
-                busValue = storeValue width (resize address) (busData q) (busWord state)
-              },
-            Nothing,
-            (0, Nothing, Nothing),
-            NoEffect
-          )
-        BusRamWrite ->
-          ( state {busPhase = BusIdle},
-            Just (BusResponse 0 False False),
-            (0, Just (memoryIndex address, busValue state), Nothing),
-            NoEffect
-          )
+        BusStoreMerge -> (state {busPhase = BusRamWrite, busValue = storeValue width (resize address) (busData q) (busWord state)}, Nothing, (0, Nothing, Nothing), NoEffect)
+        BusRamWrite -> (state {busPhase = BusIdle}, Just (BusResponse 0 False False), (0, Just (memoryIndex address, busValue state), Nothing), NoEffect)
         BusTx
-          | txReady ->
-              ( state {busPhase = BusIdle},
-                Just (BusResponse 0 False False),
-                (0, Nothing, Just (resize (busData q))),
-                NoEffect
-              )
+          | txReady -> (state {busPhase = BusIdle}, Just (BusResponse 0 False False), (0, Nothing, Just (resize (busData q))), NoEffect)
           | otherwise -> advance BusTx
         BusIo -> case devIo devices of
           Just value -> respond (if busWrite q then 0 else value) False False NoEffect
@@ -890,24 +803,8 @@ decodeExecuteControl instruction =
       regOperation = opcode == 0x33
       shiftOperation = funct3 == 1 || funct3 == 5
       alternate = funct7 == 0x20
-      legal =
-        if regOperation
-          then funct7 == 0 || (alternate && (funct3 == 0 || funct3 == 5))
-          else not shiftOperation || funct7 == 0 || (alternate && funct3 == 5)
-   in ExecuteControl
-        funct3
-        legal
-        (regOperation && alternate)
-        alternate
-        ((opcode == 0x13 || regOperation) && shiftOperation)
-        (regOperation && funct7 == 1)
-        (opcode == 0x03 || opcode == 0x23)
-        (opcode == 0x63 || opcode == 0x6f || opcode == 0x67)
-        (opcode == 0x37)
-        (opcode == 0x17)
-        (opcode == 0x13 || regOperation)
-        (opcode == 0x23)
-        (decodeCommitKind instruction)
+      legal = if regOperation then funct7 == 0 || (alternate && (funct3 == 0 || funct3 == 5)) else not shiftOperation || funct7 == 0 || (alternate && funct3 == 5)
+   in ExecuteControl funct3 legal (regOperation && alternate) alternate ((opcode == 0x13 || regOperation) && shiftOperation) (regOperation && funct7 == 1) (opcode == 0x03 || opcode == 0x23) (opcode == 0x63 || opcode == 0x6f || opcode == 0x67) (opcode == 0x37) (opcode == 0x17) (opcode == 0x13 || regOperation) (opcode == 0x23) (decodeCommitKind instruction)
 
 -- High and low comparisons run in parallel; their registered results are
 -- combined in ExecuteFinish, avoiding a full 32-bit comparison carry chain.
@@ -957,10 +854,7 @@ aluCandidates control a b =
     :> 0
     :> 0
     :> (a `xor` b)
-    :> ( if execArithmeticShift control
-           then unsigned32 (signed32 a `shiftR` fromIntegral (b .&. 3))
-           else a `shiftR` fromIntegral (b .&. 3)
-       )
+    :> (if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (b .&. 3)) else a `shiftR` fromIntegral (b .&. 3))
     :> (a .|. b)
     :> (a .&. b)
     :> Nil
@@ -1243,11 +1137,7 @@ rxStep (RxStart n) serialBit
   | otherwise = (RxIdle, Nothing)
 rxStep (RxData bitNo n byte) serialBit
   | n /= 0 = (RxData bitNo (n - 1) byte, Nothing)
-  | otherwise =
-      let byte' = if serialBit == high then setBit byte (fromIntegral bitNo) else byte
-       in if bitNo == maxBound
-            then (RxStop fullBit byte', Nothing)
-            else (RxData (succ bitNo) fullBit byte', Nothing)
+  | otherwise = let byte' = if serialBit == high then setBit byte (fromIntegral bitNo) else byte in if bitNo == maxBound then (RxStop fullBit byte', Nothing) else (RxData (succ bitNo) fullBit byte', Nothing)
 rxStep (RxStop n byte) serialBit
   | n /= 0 = (RxStop (n - 1) byte, Nothing)
   | serialBit == high = (RxIdle, Just byte)
@@ -1402,11 +1292,7 @@ boardMachine :: Machine
 boardMachine = initialMachine {cpuPipelined = True, cpuLocalMemory = False, cpuCompressed = boardCompressed}
 
 boardCompressed :: Bool
-#ifdef RISCV_COMPRESSED
-boardCompressed = True
-#else
 boardCompressed = False
-#endif
 
 -- I/O complex ---------------------------------------------------------------------
 
@@ -1620,28 +1506,10 @@ machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txRead
       receivedMachine = case (not emergencyReset, received, rxHolding machine) of
         (True, Just byte, Nothing) -> machine {rxHolding = Just byte}
         _ -> machine
-      (machine', coreOutput) =
-        runningStepBy
-          cpuStepWith
-          decodeTarget
-          receivedMachine
-            { clearRegisters = False,
-              cpuCountRetirement = False,
-              cpuCounterWrite = Nothing,
-              cpuBusRequest = Nothing,
-              cpuPrefetchIssue = False
-            }
-          memoryWord
-          received
-          txReady
-          emergencyReset
+      (machine', coreOutput) = runningStepBy cpuStepWith decodeTarget receivedMachine {clearRegisters = False, cpuCountRetirement = False, cpuCounterWrite = Nothing, cpuBusRequest = Nothing, cpuPrefetchIssue = False} memoryWord received txReady emergencyReset
       cancelled = emergencyReset
-      (busStepped, busResponse, busOutput, busEffect) =
-        busStepWith decodeTarget (systemBus machine) (cpuBusRequest machine) memoryWord txReady (rxHolding machine) (bootCause machine) (cpuDevices machine)
-      (bus', response, effect) =
-        if cancelled
-          then ((systemBus machine) {busPhase = BusIdle}, Nothing, NoEffect)
-          else (busStepped, busResponse, busEffect)
+      (busStepped, busResponse, busOutput, busEffect) = busStepWith decodeTarget (systemBus machine) (cpuBusRequest machine) memoryWord txReady (rxHolding machine) (bootCause machine) (cpuDevices machine)
+      (bus', response, effect) = if cancelled then ((systemBus machine) {busPhase = BusIdle}, Nothing, NoEffect) else (busStepped, busResponse, busEffect)
       busActive = case busPhase (systemBus machine) of
         BusIdle -> case cpuBusRequest machine of Nothing -> False; Just _ -> True
         _ -> True
@@ -1649,11 +1517,7 @@ machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txRead
       -- don't-care then, so it does not wait on the break.
       (busAddress', busWrite', busTx) = busOutput
       (coreAddress, coreWrite, coreTx) = coreOutput
-      output =
-        ( if busActive then busAddress' else coreAddress,
-          if busActive then (if cancelled then Nothing else busWrite') else coreWrite,
-          if busActive then (if cancelled then Nothing else busTx) else coreTx
-        )
+      output = (if busActive then busAddress' else coreAddress, if busActive then (if cancelled then Nothing else busWrite') else coreWrite, if busActive then (if cancelled then Nothing else busTx) else coreTx)
       counterWrite lowAddress highAddress = case cpuCounterWrite machine of
         Just (address, value)
           | address == lowAddress -> Just (False, value)
@@ -1666,11 +1530,7 @@ machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txRead
             rxHolding = if effect == ConsumeRx then Nothing else rxHolding machine',
             bootCause = if effect == ConsumeBootCause then causeNone else bootCause machine',
             cpuCycle = tickCounter True (counterWrite 0xb00 0xb80) (cpuCycle machine),
-            cpuInstret =
-              tickCounter
-                (cpuCountRetirement machine)
-                (counterWrite 0xb02 0xb82)
-                (cpuInstret machine),
+            cpuInstret = tickCounter (cpuCountRetirement machine) (counterWrite 0xb02 0xb82) (cpuInstret machine),
             -- Devices step from their registers; a reset this cycle quietens
             -- them after the time and compare logic, keeping time.
             cpuDevices = if clearRegisters machine' then initialDevices {devMtime = devMtime devices'} else devices',
@@ -1689,35 +1549,23 @@ machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txRead
         | clearRegisters counted = prefetchedWord {cpuPrefetchValid = False, cpuPrefetchCount = 0}
         | cpuPrefetchIssue counted = prefetchedWord -- a read issued this cycle
         | arriving = prefetchedWord {cpuPrefetchCount = 0, cpuPrefetchValid = True}
-        | cpuPrefetchCount machine /= 0 =
-            prefetchedWord {cpuPrefetchCount = cpuPrefetchCount machine - 1}
+        | cpuPrefetchCount machine /= 0 = prefetchedWord {cpuPrefetchCount = cpuPrefetchCount machine - 1}
         | otherwise = prefetchedWord
       -- the same for the branch target (issued at ExecuteFinish)
       targeted
         | clearRegisters prefetched = prefetched {cpuTargetValid = False, cpuTargetCount = 0}
-        | cpuTargetCount machine == 1 =
-            prefetched {cpuTargetCount = 0, cpuTargetWord = memoryWord, cpuTargetValid = True}
-        | cpuTargetCount machine /= 0 =
-            prefetched {cpuTargetCount = cpuTargetCount machine - 1}
+        | cpuTargetCount machine == 1 = prefetched {cpuTargetCount = 0, cpuTargetWord = memoryWord, cpuTargetValid = True}
+        | cpuTargetCount machine /= 0 = prefetched {cpuTargetCount = cpuTargetCount machine - 1}
         | otherwise = prefetched
-      final =
-        (if clearRegisters machine then targeted {cpuRegs = repeat 0, cpuRegValid = 0} else targeted)
-          { cpuInterruptDue = interruptCause machine
-          }
+      final = (if clearRegisters machine then targeted {cpuRegs = repeat 0, cpuRegValid = 0} else targeted) {cpuInterruptDue = interruptCause machine}
    in -- The register file's next read: a pipelined machine's is the
       -- pipeline's choice (its phases read no registers); otherwise
       -- Decode's sources.
-      ( if cpuPipelined machine then final else final {cpuReadIndices = registerReads final},
-        output
-      )
+      (if cpuPipelined machine then final else final {cpuReadIndices = registerReads final}, output)
 
 -- | Keep time while an external memory holds the core (the SDRAM wrapper).
 tickHeld :: Machine -> Machine
-tickHeld machine =
-  machine
-    { cpuCycle = tickCounter True Nothing (cpuCycle machine),
-      cpuDevices = (cpuDevices machine) {devMtime = tickCounter True Nothing (devMtime (cpuDevices machine))}
-    }
+tickHeld machine = machine {cpuCycle = tickCounter True Nothing (cpuCycle machine), cpuDevices = (cpuDevices machine) {devMtime = tickCounter True Nothing (devMtime (cpuDevices machine))}}
 
 -- | Ctrl-C: reset the CPU into the boot ROM with cause BREAK.
 resetCpu :: Machine -> Machine
@@ -1785,14 +1633,7 @@ data Fetched = Fetched
 fetchedWord :: (Word32, Word32) -> Word32 -> Fetched
 fetchedWord (pc, predicted) word =
   let opcode = word .&. 0x7f
-   in Fetched
-        pc
-        word
-        (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f)
-        (opcode == 0x33 || opcode == 0x23 || opcode == 0x63)
-        predicted
-        word
-        4
+   in Fetched pc word (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f) (opcode == 0x33 || opcode == 0x23 || opcode == 0x63) predicted word 4
 
 -- | Decode/register read to the first execute stage: operands (forwarded),
 -- the immediate and the decoded control.
@@ -2408,13 +2249,10 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
         Just h ->
           let half = resize (fWord h `shiftR` (if testBit instructionPc 1 then 16 else 0)) :: Unsigned 16
               short = half .&. 3 /= 3
-              raw =
-                if short
-                  then resize half
-                  else
-                    if not (testBit instructionPc 1)
-                      then fWord h
-                      else ((maybe 0 fWord secondWord .&. 0xffff) `shiftL` 16) .|. resize half
+              raw
+                | short = resize half
+                | not (testBit instructionPc 1) = fWord h
+                | otherwise = ((maybe 0 fWord secondWord .&. 0xffff) `shiftL` 16) .|. resize half
               size = if short then 2 else 4
            in -- Fetch always supplies a word, including a harmless dummy
               -- outside the memory map. Wait for it before assembly; D

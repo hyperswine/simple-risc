@@ -20,6 +20,10 @@ README.md).  On the way out, Ctrl-C (0x03) stops a program that is still
 running before the port is closed.
 """
 import argparse, fcntl, os, select, struct, sys, termios, time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import rom_protocol
 
 CLOCKS_PER_BIT = 868
 
@@ -63,28 +67,63 @@ def send_frame(fd: int, frame: bytes) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("image")
+    parser.add_argument("image", nargs="?")
     parser.add_argument("--input", default="", help="text sent after the program starts (\\n allowed)")
-    parser.add_argument("--port", default="/dev/cu.usbserial-20250303171")
+    parser.add_argument("--port", default="/dev/cu.usbserial-20250303171", help="serial device path, or 'auto' for single-port discovery")
     parser.add_argument("--freq-mhz", type=float, default=96, help="core clock; baud = clock / 868")
     parser.add_argument("--ram-base", type=lambda x: int(x, 0), default=0, choices=(0, 0x80000000), help="0x80000000 sends 'H' for the separate RV64 core; RV32 images ignore it")
     parser.add_argument("--timeout", type=float, default=10)
     parser.add_argument("--frame", help="write the host byte stream as hex, one byte per line, and exit")
+    parser.add_argument("--identify", action="store_true", help="query board identity ('I') before uploading (or exit if no image is given)")
+    parser.add_argument("--protocol", choices=("p", "u"), default="p", help="upload protocol: legacy 'p' (P+R) or CRC32/timeout 'u' (I+U+C+G)")
+    parser.add_argument("--manifest", help="verify board identity against a preset build-manifest.json")
     args = parser.parse_args()
 
-    with open(args.image, "rb") as f:
-        frame = frame_bytes(f.read(), args.input.encode().decode("unicode_escape").encode("latin-1"), args.ram_base)
+    if not args.identify and not args.image:
+        parser.error("image is required unless --identify is given")
+
+    raw_image = b""
+    input_bytes = args.input.encode().decode("unicode_escape").encode("latin-1")
+    frame = b""
+    if args.image:
+        with open(args.image, "rb") as f:
+            raw_image = f.read()
+        if args.frame or args.protocol == "p":
+            frame = frame_bytes(raw_image, input_bytes, args.ram_base)
     if args.frame:
         with open(args.frame, "w") as f:
             f.write("".join(f"{b:02x}\n" for b in frame))
         print(f"{len(frame)} bytes -> {args.frame}")
         return
 
+    port = rom_protocol.discover_port(args.port)
     baud = round(args.freq_mhz * 1e6 / CLOCKS_PER_BIT)
-    fd = open_port(args.port, baud)
+    fd = open_port(port, baud)
     try:
-        send_frame(fd, frame)
         output = b""
+        if args.identify or args.manifest or args.protocol == "u":
+            ident = rom_protocol.query_identity(fd, expected_mhz=args.freq_mhz)
+            rom_protocol.check_compatibility(
+                ident,
+                expected_cpu_mhz=round(args.freq_mhz),
+                image_bytes=len(raw_image) if args.image else None,
+                required_caps="UICG" if args.protocol == "u" else "PR",
+                manifest=args.manifest,
+            )
+            if args.identify and not args.image:
+                print(ident.raw)
+                return
+        if args.protocol == "u":
+            rom_protocol.upload_image_u(fd, raw_image, max_words=ident.max_bytes // 4, timeout=max(5.0, args.timeout))
+            initial = rom_protocol.start_guarded(fd)
+            if input_bytes:
+                send_frame(fd, input_bytes)
+            if initial:
+                sys.stdout.write(initial.decode("latin-1"))
+                sys.stdout.flush()
+                output += initial
+        else:
+            send_frame(fd, frame)
         deadline = time.time() + args.timeout
         while not output.endswith(b"DONE") and time.time() < deadline:
             ready, _, _ = select.select([fd], [], [], 0.05)
