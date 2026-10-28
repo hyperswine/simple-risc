@@ -25,7 +25,7 @@ initialMachine = R.boardMachine {R.cpuExternalMemory=True,
   }
 
 type Address = Unsigned 22
-type Input = (R.Word32,Bool,Maybe R.Byte,Bool,Bool,R.Word32,R.Word32,Maybe R.Word32)
+type Input = (R.Word32,Bool,Maybe R.Byte,Bool,Bool,R.Word32,R.Word32,Maybe R.Word32,Vec 4 (Signed 34))
 type Output = (Address,Bool,R.Word32,BitVector 4,Maybe R.Byte)
 
 physical :: R.Word32 -> Address
@@ -70,7 +70,7 @@ requestMask machine slot
   | otherwise = R.cpuPortByteEnable machine
 
 step :: R.Machine -> Input -> (R.Machine,Output)
-step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer)
+step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer,products)
   | held =
       let ticking=R.tickHeld machine
           breaking=R.breakRequested machine emergency
@@ -79,7 +79,7 @@ step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer)
             _ -> ticking
        in (if breaking then R.resetCpu buffered else buffered,(0x20_0000,False,0,15,Nothing))
   | otherwise =
-      let injected=machine {R.cpuRfA=a,R.cpuRfB=b,R.cpuDevices=(R.cpuDevices machine) {R.devIo=ioAnswer}}
+      let injected=machine {R.cpuRfA=a,R.cpuRfB=b,R.cpuMulProducts=products,R.cpuDevices=(R.cpuDevices machine) {R.devIo=ioAnswer}}
           (next,(index,write,tx))=R.machineStepCoreBy R.pipelinedCpuStep decodeTarget injected (memoryWord,received,txReady,emergency)
           bus=R.systemBus machine
           busActive=case R.busPhase bus of R.BusIdle -> isJust (R.cpuBusRequest machine); _ -> True
@@ -93,7 +93,7 @@ step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer)
           output=case write of
             Just (_,value) -> (physical writeAddress,True,value,mask,tx)
             Nothing -> (physical readAddress,False,0,15,tx)
-       in (next {R.cpuRegs=repeat 0},output)
+       in (next {R.cpuRegs=repeat 0,R.cpuMulOperandsMirror=(0,0,0),R.cpuMulProductsMirror=repeat 0},output)
 
 -- Only the SPI byte port is exposed. The BRAM image's DMA engine has a
 -- 64 KiB second RAM port and cannot address SDRAM, so its registers stay
@@ -161,7 +161,11 @@ circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,ma
  (ioAnswer,ioPins)=unbundle (mealy spiIoStep initialSpiIo
    (bundle (R.ioRequest <$> machine,R.clearRegisters <$> machine,memoryHeld,miso)))
  (sck,mosi,cs)=unbundle ioPins
- stepped=step <$> machine <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer)
+ stepped=step <$> machine <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
+ -- Free-running DSP operand and product registers: no enable, no reset
+ -- mux, so the MULT18X18 input/output registers absorb them (R.cpuMulProducts).
+ mulOperands=register (0,0,0) (R.multiplyOperands <$> machine)
+ mulProducts=register (repeat 0) (R.partialProductsOf <$> mulOperands)
  request=regEn initialRequestSlot (not <$> memoryHeld) (requestSlot <$> machine <*> (snd <$> stepped))
  address=requestAddress <$> machine <*> request
  write=slotWrite <$> request

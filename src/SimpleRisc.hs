@@ -996,6 +996,19 @@ data Machine = Machine
     cpuCountRetirement :: Bool,
     cpuCounterWrite :: Maybe (Unsigned 12, Word32),
     cpuMulDiv :: MulDivUnit,
+    -- | The pipelined multiply's four partial products, injected each cycle
+    -- like cpuRfA/cpuRfB. In hardware they come from two free-running
+    -- registers outside 'Machine' ('multiplyOperands' -> operand register
+    -- -> 'partialProductsOf' -> product register), so the DSP input and
+    -- output registers have no clock enable or next-state mux and are not
+    -- reached by stage-advance, hold or cancellation logic. The commit
+    -- stage waits long enough ('mWait') that both registers have reloaded
+    -- from its operands; holds only add edges, never remove them.
+    cpuMulProducts :: Vec 4 (Signed 34),
+    -- | The simulation's copy of those two registers (see
+    -- 'withMultiplyMirror'); the circuits keep them constant (removed).
+    cpuMulOperandsMirror :: (BitVector 3, Word32, Word32),
+    cpuMulProductsMirror :: Vec 4 (Signed 34),
     systemBus :: BusState,
     cpuBusRequest :: Maybe BusRequest,
     cpuBusResponse :: Maybe BusResponse,
@@ -1092,6 +1105,9 @@ initialMachine =
       cpuCountRetirement = False,
       cpuCounterWrite = Nothing,
       cpuMulDiv = MulDivUnit MdPrepare 0 0 0 0 False False False False,
+      cpuMulProducts = repeat 0,
+      cpuMulOperandsMirror = (0, 0, 0),
+      cpuMulProductsMirror = repeat 0,
       systemBus = initialBus,
       cpuBusRequest = Nothing,
       cpuBusResponse = Nothing,
@@ -1230,17 +1246,20 @@ simpleRiscSd serialRx sdMiso = bundle (serialTx, sck, mosi, cs)
     -- MISO is asynchronous: two flip-flops, then into the I/O complex.
     miso = register high (register high sdMiso)
     machineState = register boardMachine (fst <$> stepped)
-    stepped = withIo <$> machineState <*> machineInput <*> ioAnswer <*> rfA <*> rfB
+    stepped = withIo <$> machineState <*> machineInput <*> ioAnswer <*> rfA <*> rfB <*> mulProducts
+    -- Free-running DSP operand and product registers (see 'cpuMulProducts').
+    mulOperands = register (0, 0, 0) (multiplyOperands <$> machineState)
+    mulProducts = register (repeat 0) (partialProductsOf <$> mulOperands)
     -- The register file is distributed RAM: two copies, one per read port,
     -- written together. The mirror in the machine stays constant (removed).
-    withIo m input answer a b =
+    withIo m input answer a b products =
       let (m', output) =
             machineStepCoreBy
               pipelinedCpuStep
               decodeMemoryTarget
-              m {cpuDevices = (cpuDevices m) {devIo = answer}, cpuRfA = a, cpuRfB = b}
+              m {cpuDevices = (cpuDevices m) {devIo = answer}, cpuRfA = a, cpuRfB = b, cpuMulProducts = products}
               input
-       in (m' {cpuRegs = repeat 0}, output)
+       in (m' {cpuRegs = repeat 0, cpuMulOperandsMirror = (0, 0, 0), cpuMulProductsMirror = repeat 0}, output)
     rfWrite = (\m cancel -> if cancel then Nothing else cpuPendingWrite m) <$> machineState <*> breaking
     rfA = asyncRam (SNat @32) (fst . cpuReadIndices <$> machineState) rfWrite
     rfB = asyncRam (SNat @32) (snd . cpuReadIndices <$> machineState) rfWrite
@@ -1488,7 +1507,7 @@ machineStepDecoded = machineStepDecodedWith decodeMemoryTarget
 -- | One cycle with the register file as values in the machine ('cpuRegs'):
 -- the simulation and the SDRAM image.
 machineStepDecodedWith :: (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput)
-machineStepDecodedWith decodeTarget machine = machineStepCoreWith decodeTarget (withMirrorReads machine)
+machineStepDecodedWith decodeTarget machine input = withMultiplyMirror (\m -> machineStepCoreWith decodeTarget (withMirrorReads m) input) machine
 
 -- | One cycle; the register file's outputs at 'registerReads' are already in
 -- cpuRfA/cpuRfB, and its write this cycle is the state's cpuPendingWrite
@@ -1721,10 +1740,9 @@ data MemoryStage = MemoryStage
     mShift :: Bool,
     mArith :: Bool,
     mAmount :: Word32,
-    -- | A multiply: its four 17 x 17 partial products (DSP blocks, fed
-    -- from this stage's operand registers), summed at commit.
+    -- | A multiply: mA x mB, formed by the free-running DSP registers
+    -- (see 'cpuMulProducts') and summed at commit.
     mMultiply :: Bool,
-    mProducts :: Vec 4 (Signed 34),
     -- | Cycles until the word read for a load or a sub-word store is on
     -- the memory bus.
     mWait :: Unsigned 2,
@@ -1868,7 +1886,7 @@ emptyExecuteTwo =
     0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
 
 emptyMemoryStage :: MemoryStage
-emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False (repeat 0) 0 Plain 0 0 0 0
+emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 Plain 0 0 0 0
 
 emptyPipe :: Pipe
 emptyPipe =
@@ -1977,6 +1995,21 @@ productHalf funct3 products =
 -- encodings, misaligned targets, fetch faults) and any interrupt hands
 -- over: when it reaches the commit stage the pipeline is flushed and the
 -- phases run it from Fetch.
+-- | The commit stage's multiply operands, read every cycle by the
+-- free-running DSP operand register (a don't-care unless M multiplies).
+multiplyOperands :: Machine -> (BitVector 3, Word32, Word32)
+multiplyOperands machine = let m = slotPayload (pMSlot (cpuPipe machine)) in (mFunct3 m, mA m, mB m)
+
+partialProductsOf :: (BitVector 3, Word32, Word32) -> Vec 4 (Signed 34)
+partialProductsOf (funct3, a, b) = partialProducts funct3 a b
+
+-- | Simulation: inject the mirrored product register, then advance both
+-- mirrored registers by one edge, as the circuits' free-running registers do.
+withMultiplyMirror :: (Machine -> (Machine, o)) -> Machine -> (Machine, o)
+withMultiplyMirror stepWith machine =
+  let (next, output) = stepWith machine {cpuMulProducts = cpuMulProductsMirror machine}
+   in (next {cpuMulOperandsMirror = multiplyOperands machine, cpuMulProductsMirror = partialProductsOf (cpuMulOperandsMirror machine)}, output)
+
 pipeStep :: Machine -> Word32 -> (Machine, RegisterWrite, StepOutput)
 pipeStep = pipeStepDecodedWith decodeMemoryTarget
 
@@ -2017,8 +2050,10 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
       -- Multiplication's wide carry chains end at a dedicated register,
       -- before the common load/shift/ordinary writeback mux. A multiply
       -- spends one extra M cycle here; its result then forwards as mValue.
+      -- mWait counts 3, 2, 1: the operand register reloads from mA/mB by the
+      -- first edge, the product register by the second, and the third sums.
       heldMemory m
-        | mMultiply m = m {mWait = mWait m - 1, mValue = productHalf (mFunct3 m) (mProducts m), mMultiply = False, mFinal = True}
+        | mMultiply m && mWait m == 1 = m {mWait = 0, mValue = productHalf (mFunct3 m) (cpuMulProducts machine), mMultiply = False, mFinal = True}
         | otherwise = m {mWait = mWait m - 1}
       registerWriteNow = case pM pipe of
         Just m | mCommits && mWrites m -> Just (mRd m, committedValue m)
@@ -2087,7 +2122,6 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                   mArith = execArithmeticShift control,
                   mAmount = e2Op2 x,
                   mMultiply = multiplying,
-                  mProducts = partialProducts funct3 (e2A x) (e2B x),
                   mWait = e2WaitFast x,
                   mAction = action,
                   mWord = e2Word x,
@@ -2188,7 +2222,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             storeWord1 = store1 && funct31 == 2
             shifting1 = execShift control && not (execMulDiv control)
             multiplying1 = execMulDiv control && not (testBit funct31 2)
-            wait1 = if load1 || (store1 && not storeWord1 && not (cpuExternalMemory machine)) then 2 else if multiplying1 then 1 else 0
+            wait1 = if load1 || (store1 && not storeWord1 && not (cpuExternalMemory machine)) then 2 else if multiplying1 then 3 else 0
             refetch1 = e1Size x == 0
          in ExecuteTwo
               { e2Pc = e1Pc x,
