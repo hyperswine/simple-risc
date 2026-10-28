@@ -65,3 +65,4 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-10-28 | [CONTROLLED-BENCHMARK](2026-10-28-CONTROLLED-BENCHMARK.md) | fixed-binary eight-case predictor/cache/bridge matrix, six 48 MHz board runs and replayable evidence |
 | 2026-10-28 | [CONTROL-FANOUT-AND-AREA](2026-10-28-CONTROL-FANOUT-AND-AREA.md) | control-net source tracing and RAM-backed cache replacement state: 18.79% fewer logic cells with identical classifier cycles |
 | 2026-10-28 | [INDEPENDENT-TIMING-REVIEW](2026-10-28-INDEPENDENT-TIMING-REVIEW.md) | second reading of the committed timing reports: routing-dominated stage-select and DSP-input paths, ranked fixes, what is unverified |
+| 2026-10-28 | [ROM-IDENTITY-AND-VERIFIED-UPLOAD](2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md) | the boot ROM's `I`/`U`/`C`/`G` identity and CRC32 upload protocol, what `id=` does and does not identify, and why `U` is still unqualified on hardware |

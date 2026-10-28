@@ -2,7 +2,16 @@
 
 Kind: prioritized roadmap and acceptance criteria. Applies to SimpleRisc on
 the Tang Nano 20K and the sibling FP-RISC runtime/tooling, reviewed 2026-10-25.
-The items below are proposed work, not completed validation claims.
+When written, every item below was proposed work rather than a completed
+validation claim.
+
+**Status 2026-10-28:** priorities **1 and 2 are now implemented** and verified
+in the native ROM tests, the host-library unit tests and the core simulator, but
+neither is qualified on hardware. See
+[ROM-IDENTITY-AND-VERIFIED-UPLOAD](2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md)
+for the protocol as built, and the dated status notes in §1 and §2 below for
+which acceptance criteria are met and which are still open. Priorities 3, 4 and
+5 remain proposed work.
 
 ## Baseline and objective
 
@@ -46,6 +55,26 @@ Acceptance:
 - No board, multiple boards and legacy ROMs have explicit outcomes.
 - Tests cover malformed identity replies and deliberate mismatches.
 
+**Status 2026-10-28: implemented; all four acceptance criteria met in the host
+library and its tests.** The `T`-only limitation described above is historical:
+`I` now returns one `SRID1` line carrying the protocol version, ISA (from
+`misa`), CPU and memory clocks, RAM bytes, maximum uploadable image bytes, a
+capability list and a build id. `rom_protocol.py` provides `parse_identity`,
+`check_compatibility` (against explicit expectations or a
+`build-manifest.json`'s `rom_identity` block), `discover_port` (refuses
+ambiguous multi-port discovery, always honours an explicit `--port`) and
+`query_identity`, which sweeps candidate clocks **in place** with `set_fd_baud`
+rather than reopening the port, because reopening wedges the BL616 bridge.
+No board, a legacy ROM and a wrong clock each raise a distinct exception
+(`BoardNotRespondingError`, `LegacyRomError`, `CompatibilityError`).
+`run_program.py` gained `--identify` and `--manifest`.
+
+Two qualifications. `build_id` is stamped from **every** build input, so it
+identifies the bitstream but cannot tell you whether the ROM alone changed —
+see the [protocol record](2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md). And
+the FP-RISC runner side of this item lives in the sibling repository and was not
+re-verified for this note.
+
 ## 2. Reliable upload and recovery
 
 Ownership: SimpleRisc ROM and FP-RISC uploader, with shared protocol tests.
@@ -70,6 +99,43 @@ Acceptance:
 - Each negative test is followed by a successful upload and run, without
   manually reprogramming the FPGA.
 - Existing example and custom-program suites still pass on the new image.
+
+**Status 2026-10-28: implemented and verified natively and in simulation; NOT
+met on hardware.** `U` carries an `SRU1` magic, a word count, a header CRC32,
+the payload and a payload CRC32; the ROM's receive loops are bounded
+(`UART_TIMEOUT_SPINS`) and report `ERR HDR`/`LEN`/`TMO`/`CRC`; `OK <crc32>`
+acknowledges; `C` re-reads RAM and CRC32s it; `G` runs only a verified image and
+otherwise answers `ERR NOIMG`. Entering `P`, `Q` or `U` clears `ready`, sets
+`failed` and zeroes `RAM[0]` first, so a replacement or failed upload cannot
+leave a stale image startable. `ERR HDR`/`LEN`/`CRC` drain the host's remaining
+bytes before replying, which is the resynchronisation this section asked for;
+`ERR TMO` deliberately does not drain. `bootrom/check_loader.py` runs the actual
+ROM C for both variants and covers these paths, and `test_upload.py` covers the
+host side.
+
+Against the acceptance criteria:
+
+- Truncated headers/payloads, excessive lengths, corrupt data and bad CRCs
+  cannot execute an incomplete or stale program — **met** in the native ROM
+  tests and the simulator.
+- Host termination and cable interruption recover within a documented bound —
+  **partly met**: timeouts are bounded and documented, but an interrupted
+  transfer has not been exercised on a physical board.
+- Each negative test followed by a successful upload and run without manually
+  reprogramming the FPGA — **met natively and in simulation, unmet on
+  hardware.** A bounded 2026-10-28 probe found `U` returning `ERR HDR` on the
+  controlled-benchmark baseline image at both 0 ms and 3 ms per-byte pacing,
+  while the combined image accepted the identical frame and returned the
+  expected CRC. Those two ROMs have since been shown to be byte-identical in
+  code, differing only in their stamped build-id words, so this is not a ROM or
+  host-protocol defect; the cause is still open. See
+  [the protocol record](2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md) and
+  [`upload-probe.json`](evidence/2026-10-28-controlled-benchmark/hardware/upload-probe.json).
+- Existing suites still pass on the new image — **not re-run under
+  `--protocol u`**; accepted physical results still use legacy `Q`/`V`/`H`.
+
+Until `ERR HDR` is reproduced and explained, `run_program.py` keeps its
+`--protocol p` default and `U` must not be used for a hardware claim.
 
 ## 3. Actionable crash reports
 

@@ -1,0 +1,9 @@
+NOTES.txt is just an internal note file for the project. It is not meant to be part of the source code or documentation, but rather a place to jot down ideas, reminders, or other notes related to the project.
+
+--------
+
+Write the dated page for the I/U/C/G protocol; extend the README table; correct §1/§2 of the dependability doc. (Cheap, and it stops the drift compounding.)
+Root-cause ERR HDR — same-ROM check first, then RX-vs-memory_hold in RTL sim. Add the reproducer as a regression either way.
+Add check_compressed.py to CI; add .qwen/ to .gitignore.
+Then payload/token separation in Pipe (item #2 of your own list), and only after that re-attempt a higher clock.
+Chase Gowin for the AC timings, or plan a measured pin characterization — nothing above 48 MHz is signoff-grade until one exists.

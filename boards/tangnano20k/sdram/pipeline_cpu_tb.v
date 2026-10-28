@@ -10,6 +10,7 @@ module pipeline_cpu_tb #(
  parameter CDC_BRIDGE=0,
  parameter LOADER_DUMP=0,
  parameter LOADER_EXTENDED=0,
+ parameter LOADER_FRAMED=0,
  parameter PIN_FREQ_MHZ=48,
  parameter PIN_PHASE_DEGREES=180,
  parameter real PIN_TAC_NS=0.0
@@ -78,6 +79,13 @@ module pipeline_cpu_tb #(
  integer i,words,send_index;reg [4095:0] image_file;
  reg probe_finished=0,verify_finished=0;
  reg [31:0] expected_xor=0;
+ // Framed ('U') upload: the CRC-32s the host would send, and the reply state.
+ // crc32_update is the reflected byte-wise form, which is what the ROM's
+ // word-wise crc32_word computes over a little-endian word.
+ reg [31:0] expected_header_crc=0,expected_payload_crc=0;
+ reg identity_finished=0,upload_finished=0,readback_finished=0;
+ reg [47:0] framed_head=0;reg [23:0] framed_three=0;reg [47:0] framed_six=0;
+ reg [127:0] framed_msg=0;integer framed_len=0;
  integer tick=0,backend_tick=0,delay=0,phase=0,reads=0,writes=0,held_clocks=0;
  integer long_held=0,ready_stalls=0,markers=0,quiet=0;
  integer timer_misses=0;
@@ -215,9 +223,40 @@ module pipeline_cpu_tb #(
    end
    uart_rx=1;repeat(UART_BIT)@(negedge clk);
  end endtask
+ task send_word32(input [31:0] value);
+ begin
+   send_byte(value[7:0]);send_byte(value[15:8]);send_byte(value[23:16]);send_byte(value[31:24]);
+ end endtask
+ function [31:0] crc32_update;
+   input [31:0] crc_in;
+   input [7:0] data;
+   integer k;
+   reg [31:0] c;
+   begin
+     c=crc_in^{24'h000000,data};
+     for(k=0;k<8;k=k+1)c=c[0] ? ((c>>1)^32'hEDB88320):(c>>1);
+     crc32_update=c;
+   end
+ endfunction
  initial begin
    if(LOADER_TEST)begin
      wait(!reset);repeat(2000)@(negedge clk);
+     if(LOADER_FRAMED)begin
+       // 'I', then the 'U' frame, then 'C' readback, then a guarded 'G' run.
+       send_byte(8'h49);
+       wait(identity_finished);repeat(UART_BIT)@(negedge clk);
+       send_byte(8'h55);
+       send_word32(32'h31555253);
+       send_word32(words[31:0]);
+       send_word32(expected_header_crc);
+       for(send_index=0;send_index<words*4;send_index=send_index+1)
+         send_byte(expected_image[send_index/4] >> ((send_index%4)*8));
+       send_word32(expected_payload_crc);
+       wait(upload_finished);repeat(UART_BIT)@(negedge clk);
+       send_byte(8'h43);
+       wait(readback_finished);repeat(UART_BIT)@(negedge clk);
+       send_byte(8'h47);
+     end else begin
      if(LOADER_EXTENDED)begin
        send_byte(8'h54);wait(probe_finished);repeat(UART_BIT)@(negedge clk);
      end
@@ -229,6 +268,7 @@ module pipeline_cpu_tb #(
        send_byte(8'h56);wait(verify_finished);repeat(UART_BIT)@(negedge clk);
      end
      send_byte(LOADER_DUMP ? 8'h44:LOADER_EXTENDED ? 8'h48:8'h52);
+     end
    end else begin
      wait(long_seen);repeat(3)@(negedge clk);
      send_byte(8'h03);break_sent=1;
@@ -246,7 +286,37 @@ module pipeline_cpu_tb #(
    if(uart_tx!==1)$fatal(1,"UART framing");
    if(LOADER_TEST)begin
      $write("%c",transmitted);$fflush;
-     if(LOADER_EXTENDED && !probe_finished)begin
+     if(LOADER_FRAMED && !readback_finished)begin
+       framed_head={framed_head[39:0],transmitted};
+       framed_msg={framed_msg[119:0],transmitted};
+       framed_len=framed_len+1;
+       if(framed_len==3)framed_three=framed_head[23:0];
+       if(framed_len==6)framed_six=framed_head[47:0];
+       // 'O', 'K', 'E', 'R' and ' ' are not hex digits, so only a CRC field
+       // accumulates here; gating on identity_finished skips the identity
+       // line's own hex (cpu=, mem=, ram=, max=, id=).
+       if(identity_finished &&
+          ((transmitted>=48 && transmitted<=57)||(transmitted>=97 && transmitted<=102)))begin
+         nibble=(transmitted<=57)?transmitted-48:transmitted-87;
+         dump_value={dump_value[27:0],nibble[3:0]};dump_digits=dump_digits+1;
+       end
+       if(transmitted==10)begin
+         if(!identity_finished)begin
+           if(framed_six!=="SRID1 ")$fatal(1,"ROM identity line is not SRID1: %s",framed_msg);
+           identity_finished=1;
+         end else if(!upload_finished)begin
+           if(framed_three!=="OK ")$fatal(1,"ROM rejected the framed upload: %s",framed_msg);
+           if(dump_digits!=8 || dump_value!==expected_payload_crc)
+             $fatal(1,"ROM upload ack CRC=%h expected=%h digits=%0d",dump_value,expected_payload_crc,dump_digits);
+           upload_finished=1;dump_value=0;dump_digits=0;
+         end else begin
+           if(dump_digits!=8 || dump_value!==expected_payload_crc)
+             $fatal(1,"ROM 'C' readback CRC=%h expected=%h digits=%0d",dump_value,expected_payload_crc,dump_digits);
+           readback_finished=1;dump_value=0;dump_digits=0;
+         end
+         framed_head=0;framed_msg=0;framed_len=0;
+       end
+     end else if(LOADER_EXTENDED && !probe_finished)begin
        last_four={last_four[23:0],transmitted};
        if(last_four=="DONE")begin probe_finished=1;last_four=0;end
      end else if(LOADER_EXTENDED && !verify_finished)begin
@@ -282,7 +352,8 @@ module pipeline_cpu_tb #(
          ram[0],ram[1],ram[2],ram[3],expected_image[0],expected_image[1],expected_image[2],expected_image[3]);
        for(j=0;j<words;j=j+1)if(ram[j]!==expected_image[j])$fatal(1,"ROM uploaded word %0d mismatch",j);
        if(ram[words]!==0)$fatal(1,"ROM did not append zero sentinel");
-       if(LOADER_EXTENDED)$display("\nPASS: extended ROM T/Q/V/H UART loader, XOR readback, program execution and trap DONE");
+       if(LOADER_FRAMED)$display("\nPASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE");
+       else if(LOADER_EXTENDED)$display("\nPASS: extended ROM T/Q/V/H UART loader, XOR readback, program execution and trap DONE");
        else $display("\nPASS: actual ROM UART loader, program execution and trap DONE");
        $finish;
      end
@@ -330,6 +401,24 @@ module pipeline_cpu_tb #(
    if(LOADER_TEST)begin
      $readmemh(image_file,expected_image,0,words-1);
      for(i=0;i<words;i=i+1)expected_xor=expected_xor^expected_image[i];
+     if(LOADER_FRAMED)begin
+       // Header CRC over the eight bytes "SRU1" + count, then the payload CRC
+       // over the image's little-endian bytes: what frame_u() sends.
+       expected_header_crc=32'hFFFFFFFF;
+       expected_header_crc=crc32_update(expected_header_crc,8'h53);
+       expected_header_crc=crc32_update(expected_header_crc,8'h52);
+       expected_header_crc=crc32_update(expected_header_crc,8'h55);
+       expected_header_crc=crc32_update(expected_header_crc,8'h31);
+       expected_header_crc=crc32_update(expected_header_crc,words[7:0]);
+       expected_header_crc=crc32_update(expected_header_crc,words[15:8]);
+       expected_header_crc=crc32_update(expected_header_crc,words[23:16]);
+       expected_header_crc=crc32_update(expected_header_crc,words[31:24]);
+       expected_header_crc=~expected_header_crc;
+       expected_payload_crc=32'hFFFFFFFF;
+       for(i=0;i<words*4;i=i+1)
+         expected_payload_crc=crc32_update(expected_payload_crc,expected_image[i/4] >> ((i%4)*8));
+       expected_payload_crc=~expected_payload_crc;
+     end
    end
    else $readmemh(image_file,ram,0,words-1);
    ram[COUNTER_LINE]=32'h13579bdf;

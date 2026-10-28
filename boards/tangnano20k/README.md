@@ -72,7 +72,8 @@ RAM raises an instruction access fault.
 
 The CPU starts in the boot ROM (`bootrom/`, C plus a short `crt0.S`), which
 implements the host protocol in software. The legacy commands retain their
-framing; Base images use the extended load and readback commands:
+framing; Base images use the extended load and readback commands, and `I`/`U`/
+`C`/`G` add versioned identity and CRC-verified upload:
 
 | Byte | Meaning |
 |---|---|
@@ -84,6 +85,27 @@ framing; Base images use the extended load and readback commands:
 | `V` | reread the last accepted upload from RAM, XOR its 32-bit words, send eight lowercase hex digits plus newline |
 | `H` | alias for `R`, used by the Base uploader |
 | `T` | send `DONE` as a UART probe |
+| `I` | board identity, one line: `SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=<16 hex>` |
+| `U`, `"SRU1"`, count (32-bit), header CRC32, words, payload CRC32 | framed upload with bounded receive timeouts; replies `OK <crc32>` or `ERR HDR`/`LEN`/`TMO`/`CRC` |
+| `C` | reread the last accepted upload from RAM, CRC32 its 32-bit words, send eight lowercase hex digits plus newline |
+| `G` | run only after a complete verified upload, else `ERR NOIMG` |
+
+See [the protocol record](../../docs/2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md)
+for the exact `U` framing, the error and resynchronisation behaviour, and what
+`id=` does and does not identify: on an SDRAM build the ROM's metadata words are
+re-stamped from every build input, so `id=` identifies the bitstream, not the
+ROM. Starting any of `P`/`Q`/`U` invalidates the previous image, so a failed
+upload cannot leave a stale image startable, and `ERR HDR`/`LEN`/`CRC` drain the
+host's remaining bytes before replying so the link stays aligned.
+
+`U` is implemented and passes the native ROM, host-library and simulator tests,
+but it is **not qualified on hardware**: a 2026-10-28 probe returned `ERR HDR`
+on one experimental image while its sibling accepted the identical frame.
+`run_program.py` therefore still defaults to `--protocol p` (`P`+`R`), and
+accepted physical results use legacy `Q`/`V`/`H`. Use `--identify` to query a
+board without uploading, `--protocol u` for a CRC-verified upload and guarded
+start, and `--manifest` to check a board's identity against a preset
+`build-manifest.json`.
 
 `Q` rejects an oversized frame without RAM writes, consumes its declared
 payload, sends `ERR\n` and empties the readback range. A truncated load needs

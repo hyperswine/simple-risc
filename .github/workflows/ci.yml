@@ -35,7 +35,7 @@ jobs:
       - name: Generated RTL tools
         run: sudo apt-get update && sudo apt-get install -y iverilog gcc-riscv64-unknown-elf
       - name: Generate and execute fresh IM and IMC pipeline RTL
-        timeout-minutes: 20
+        timeout-minutes: 30
         run: |
           for compressed in 0 1; do
             flags=()
@@ -50,6 +50,17 @@ jobs:
             python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
               --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
               --cache-ways 2 --cache-line-bits 7
+            # The ROM's I/U/C/G framed CRC32 upload, end to end through the
+            # actual boot ROM, over the one-way geometry and a tiny cache that
+            # maximises refill holds while the UART receives.
+            python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
+              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --boot-loader --loader-command U --uart-bit-cycles 32 \
+              --cache-ways 1 --cache-line-bits 12
+            python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
+              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --boot-loader --loader-command U --uart-bit-cycles 32 \
+              --cache-ways 1 --cache-line-bits 7
           done
       - name: Generated RTL evidence
         if: always()

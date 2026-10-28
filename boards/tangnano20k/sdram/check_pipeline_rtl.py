@@ -409,7 +409,7 @@ def main():
     parser.add_argument('--burst-rtl',type=Path,default=HERE/'burst_memory.v',help='burst adapter RTL override for controlled diagnostics')
     parser.add_argument('--sdram-rtl',type=Path,default=HERE/'sdram.v',help='SDRAM controller RTL override for controlled diagnostics')
     parser.add_argument('--rom-file',type=Path,help='simulation ROM override')
-    parser.add_argument('--loader-command',choices=['R','D','H'],default='R',help='H checks the Base T/Q/V/H protocol; D checks an eight-word debug-ROM dump')
+    parser.add_argument('--loader-command',choices=['R','D','H','U'],default='R',help='H checks the Base T/Q/V/H protocol; D checks an eight-word debug-ROM dump; U checks the I/U/C/G framed CRC32 upload')
     args = parser.parse_args()
     if args.uart_bit_cycles<32 or args.uart_bit_cycles>1024 or args.uart_bit_cycles%2:
         parser.error('--uart-bit-cycles must be even and between 32 and 1024')
@@ -436,6 +436,7 @@ def main():
                ('-pins' if args.pin_model else '')+(f'-uart{args.uart_bit_cycles}' if args.uart_bit_cycles!=868 else ''))
     if args.loader_command=='D':out=out.with_name(out.name+'-dump')
     if args.loader_command=='H':out=out.with_name(out.name+'-extended')
+    if args.loader_command=='U':out=out.with_name(out.name+'-framed')
     if args.pin_model and (args.pin_freq_mhz!=48 or args.pin_phase_degrees!=180 or args.pin_tac_ns!=0):
         out=out.with_name(out.name+f'-f{args.pin_freq_mhz}-p{args.pin_phase_degrees}-t{args.pin_tac_ns:g}')
     if args.burst_rtl.resolve()!=(HERE/'burst_memory.v').resolve():
@@ -486,6 +487,7 @@ def main():
          '-P',f'pipeline_cpu_tb.PIN_TAC_NS={args.pin_tac_ns}',
          '-P',f'pipeline_cpu_tb.LOADER_DUMP={int(args.loader_command=="D")}',
          '-P',f'pipeline_cpu_tb.LOADER_EXTENDED={int(args.loader_command=="H")}',
+         '-P',f'pipeline_cpu_tb.LOADER_FRAMED={int(args.loader_command=="U")}',
          '-o',out/'sim',*sources,HERE/'pipeline_fence_assertions.v',HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v']
     if args.simulator=='verilator':
         params=[str(command[i+1]).replace('pipeline_cpu_tb.', '-G', 1) for i,x in enumerate(command) if x=='-P']
@@ -504,6 +506,7 @@ def main():
     output=run(common,timeout=900 if args.boot_loader else 240)
     expected=('PASS: debug ROM memory dump' if args.loader_command=='D' else
               'PASS: extended ROM T/Q/V/H UART loader' if args.loader_command=='H' else
+              'PASS: ROM I/U/C/G framed upload' if args.loader_command=='U' else
               'PASS: actual ROM UART loader' if args.boot_loader else 'PASS: pipeline/cache guest')
     assert expected in output,output
     (out/'pass.log').write_text(output)

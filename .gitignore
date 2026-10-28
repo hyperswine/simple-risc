@@ -12,3 +12,4 @@ __pycache__/
 .vscode/
 !boards/tangnano20k/bootrom/bootrom.hex
 !boards/tangnano20k/bootrom/bootrom-sdram.hex
+.qwen/
