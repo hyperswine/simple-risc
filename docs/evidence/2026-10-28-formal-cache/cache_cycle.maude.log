@@ -1,0 +1,59 @@
+==========================================
+search [1, 16] in CACHE-CYCLE : initialUpdate =>* S such that bad(S) = true .
+
+No solution.
+states: 710033  rewrites: 36636030 in 71121ms cpu (105974ms real) (515122
+    rewrites/second)
+==========================================
+search [1, 16] in CACHE-CYCLE : initialInvalidate =>* S such that bad(S) = true
+    .
+
+No solution.
+states: 631913  rewrites: 33062790 in 64184ms cpu (88546ms real) (515119
+    rewrites/second)
+==========================================
+search [1, 16] in CACHE-CYCLE : initialBadWay1 =>* S such that bad(S) = true .
+
+Solution 1 (state 30)
+states: 31  rewrites: 1110 in 0ms cpu (0ms real) (2110266 rewrites/second)
+S --> st(cache(invalid, line(t0, v0)), mem(v0, v0, v0), w1, update, badWay1,
+    none, none, empty, q(t0, v1, nil), midle)
+==========================================
+search [1, 16] in CACHE-CYCLE : initialNoDrain =>* S such that bad(S) = true .
+
+Solution 1 (state 1590)
+states: 1591  rewrites: 55998 in 279ms cpu (370ms real) (200480
+    rewrites/second)
+S --> st(cache(invalid, invalid), mem(v0, v0, v0), w0, update, noDrain, none,
+    none, rd(t2, false, w0), q(t2, v0, nil), mfill(t2, w0, b0))
+==========================================
+search [1, 12] in CACHE-CYCLE : initialRead =>* S such that readCompleted(S) =
+    true .
+
+Solution 1 (state 530)
+states: 531  rewrites: 11938 in 4ms cpu (5ms real) (2619705 rewrites/second)
+S --> st(cache(line(t0, v0), invalid), mem(v0, v0, v0), w0, update, good, none,
+    none, empty, nil, midle)
+==========================================
+search [1, 12] in CACHE-CYCLE : initialStuck =>* S such that readCompleted(S) =
+    true .
+
+No solution.
+states: 930  rewrites: 23147 in 8ms cpu (8ms real) (2809783 rewrites/second)
+==========================================
+search [1, 12] in CACHE-CYCLE : initialEviction0 =>* S such that evictedWay1(S)
+    = true .
+
+Solution 1 (state 530)
+states: 531  rewrites: 11958 in 5ms cpu (6ms real) (2037832 rewrites/second)
+S --> st(cache(line(t0, v0), line(t2, v0)), mem(v0, v1, v0), w1, update, good,
+    none, none, empty, nil, midle)
+==========================================
+search [1, 12] in CACHE-CYCLE : initialEviction1 =>* S such that evictedWay0(S)
+    = true .
+
+Solution 1 (state 530)
+states: 531  rewrites: 11958 in 6ms cpu (7ms real) (1721814 rewrites/second)
+S --> st(cache(line(t2, v0), line(t1, v1)), mem(v0, v1, v0), w0, update, good,
+    none, none, empty, nil, midle)
+Bye.

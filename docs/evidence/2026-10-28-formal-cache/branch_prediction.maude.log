@@ -1,0 +1,27 @@
+==========================================
+search in BRANCH-PREDICTION : initialCorrect =>* S:State such that bad(S:State)
+    = true .
+
+No solution.
+states: 4  rewrites: 33 in 0ms cpu (0ms real) (302752 rewrites/second)
+==========================================
+search in BRANCH-PREDICTION : initialWrong =>* S:State such that bad(S:State) =
+    true .
+
+No solution.
+states: 4  rewrites: 29 in 0ms cpu (0ms real) (1115384 rewrites/second)
+==========================================
+search [1] in BRANCH-PREDICTION : initialNoFlush =>* S:State such that bad(
+    S:State) = true .
+
+Solution 1 (state 4)
+states: 5  rewrites: 40 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(noBranch, noStore, noBubble, arch(true, false), noFlush)
+==========================================
+search [1] in BRANCH-PREDICTION : initialBubbleFault =>* S:State such that bad(
+    S:State) = true .
+
+Solution 1 (state 3)
+states: 4  rewrites: 29 in 0ms cpu (0ms real) (878787 rewrites/second)
+S:State --> st(noBranch, noStore, noBubble, arch(false, true), retireBubble)
+Bye.

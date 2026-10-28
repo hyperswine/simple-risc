@@ -1,0 +1,25 @@
+Warning: The package list for 'hackage.haskell.org' is 15 days old.
+Run 'cabal update' to get the latest list of available packages.
+Resolving dependencies...
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (exe:clash) (configuration changed)
+Configuring executable 'clash' for simple-risc-0.1.0.0...
+Preprocessing executable 'clash' for simple-risc-0.1.0.0...
+Building executable 'clash' for simple-risc-0.1.0.0...
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.572s
+GHC: Compiling and loading modules took: 1m7s
+Clash: Parsing and compiling primitives took 0.413s
+GHC+Clash: Loading modules cumulatively took 2m44s
+Clash: Compiling SdramPipeline.topEntity
+Clash: Compiling SimpleRisc.topEntity
+Clash: Normalization took 1m10s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.274s
+Clash: Normalization took 1m13s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.033s
+Clash: Compiling SimpleRisc.topEntity took 2m5s
+Clash: Compiling SdramPipeline.topEntity took 2m6s
+Clash: Total compilation took 4m52s

@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:294: guest failure stage=2 cycles=1072 retired=3
+       Time: 218300000  Scope: pipeline_cpu_tb

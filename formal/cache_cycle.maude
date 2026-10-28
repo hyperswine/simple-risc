@@ -9,15 +9,15 @@ mod CACHE-CYCLE is
 
   sorts Tag Value Way Line Cache Memory Policy Fault Request Stage Queue
         Beat Backend State .
-  ops t0 t1 : -> Tag [ctor] .
+  ops t0 t1 t2 : -> Tag [ctor] .
   ops v0 v1 : -> Value [ctor] .
   ops w0 w1 : -> Way [ctor] .
   op invalid : -> Line [ctor] .
   op line : Tag Value -> Line [ctor] .
   op cache : Line Line -> Cache [ctor] .
-  op mem : Value Value -> Memory [ctor] .
+  op mem : Value Value Value -> Memory [ctor] .
   ops update invalidate : -> Policy [ctor] .
-  ops good badWay1 noDrain : -> Fault [ctor] .
+  ops good badWay1 noDrain stuckFill : -> Fault [ctor] .
 
   op none : -> Request [ctor] .
   op load : Tag -> Request [ctor] .
@@ -37,20 +37,20 @@ mod CACHE-CYCLE is
           -> State [ctor] .
   ops initialUpdate initialInvalidate initialBadWay1 initialNoDrain : -> State .
   eq initialUpdate =
-    st(cache(invalid,invalid),mem(v0,v0),w0,update,good,
+    st(cache(invalid,invalid),mem(v0,v0,v0),w0,update,good,
        none,none,empty,nil,midle) .
   eq initialInvalidate =
-    st(cache(invalid,invalid),mem(v0,v0),w0,invalidate,good,
+    st(cache(invalid,invalid),mem(v0,v0,v0),w0,invalidate,good,
        none,none,empty,nil,midle) .
   eq initialBadWay1 =
-    st(cache(invalid,line(t0,v0)),mem(v0,v0),w1,update,badWay1,
+    st(cache(invalid,line(t0,v0)),mem(v0,v0,v0),w1,update,badWay1,
        store(t0,v1),none,empty,nil,midle) .
   eq initialNoDrain =
-    st(cache(invalid,invalid),mem(v0,v0),w0,update,noDrain,
+    st(cache(invalid,invalid),mem(v0,v0,v0),w0,update,noDrain,
        none,none,empty,nil,midle) .
 
   var T U : Tag .
-  vars V Old M0 M1 : Value .
+  vars V Old M0 M1 M2 : Value .
   vars W R : Way .
   vars L L0 L1 : Line .
   var C : Cache .
@@ -66,12 +66,14 @@ mod CACHE-CYCLE is
   var S : State .
 
   op get : Tag Memory -> Value .
-  eq get(t0,mem(M0,M1)) = M0 .
-  eq get(t1,mem(M0,M1)) = M1 .
+  eq get(t0,mem(M0,M1,M2)) = M0 .
+  eq get(t1,mem(M0,M1,M2)) = M1 .
+  eq get(t2,mem(M0,M1,M2)) = M2 .
 
   op put : Tag Value Memory -> Memory .
-  eq put(t0,V,mem(M0,M1)) = mem(V,M1) .
-  eq put(t1,V,mem(M0,M1)) = mem(M0,V) .
+  eq put(t0,V,mem(M0,M1,M2)) = mem(V,M1,M2) .
+  eq put(t1,V,mem(M0,M1,M2)) = mem(M0,V,M2) .
+  eq put(t2,V,mem(M0,M1,M2)) = mem(M0,M1,V) .
 
   op arch : Memory Queue Tag -> Value .
   eq arch(M,nil,T) = get(T,M) .
@@ -98,7 +100,7 @@ mod CACHE-CYCLE is
 
   op victim : Cache Way -> Way .
   eq victim(cache(invalid,L1),R) = w0 .
-  eq victim(cache(L0,invalid),R) = w1 .
+  eq victim(cache(line(T,V),invalid),R) = w1 .
   eq victim(cache(line(T,V),line(U,Old)),w0) = w1 .
   eq victim(cache(line(T,V),line(U,Old)),w1) = w0 .
 
@@ -136,7 +138,7 @@ mod CACHE-CYCLE is
   eq advance(st(C,M,R,P,F,RQ,A1,empty,Q,B)) =
     st(C,M,R,P,F,none,RQ,lookup(A1,C,R),Q,B) .
   eq advance(st(C,M,R,P,F,RQ,A1,rd(T,true,W),Q,B)) =
-    st(C,M,W,P,F,none,RQ,lookup(A1,C,R),Q,B) .
+    st(C,M,W,P,F,none,RQ,lookup(A1,C,W),Q,B) .
   eq advance(st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,B)) =
     st(C,M,R,P,F,none,RQ,lookup(A1,C,R),Q,B) .
   eq advance(st(C,M,R,P,F,RQ,A1,wr(T,V),Q,B)) =
@@ -189,6 +191,9 @@ mod CACHE-CYCLE is
 
   crl [issue-read-t0] : S => withRequest(S,load(t0)) if requestOf(S) == none .
   crl [issue-read-t1] : S => withRequest(S,load(t1)) if requestOf(S) == none .
+  crl [issue-read-t2] : S => withRequest(S,load(t2)) if requestOf(S) == none .
+  crl [issue-write-t2-v0] : S => withRequest(S,store(t2,v0)) if requestOf(S) == none .
+  crl [issue-write-t2-v1] : S => withRequest(S,store(t2,v1)) if requestOf(S) == none .
   crl [issue-write-t0-v0] : S => withRequest(S,store(t0,v0)) if requestOf(S) == none .
   crl [issue-write-t0-v1] : S => withRequest(S,store(t0,v1)) if requestOf(S) == none .
   crl [issue-write-t1-v0] : S => withRequest(S,store(t1,v0)) if requestOf(S) == none .
@@ -215,13 +220,36 @@ mod CACHE-CYCLE is
   rl [fill-beat-2] :
     st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b2)) =>
     st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b3)) .
+  op completedRead : Tag Way Fault -> Stage .
+  eq completedRead(T,W,F) = if F == stuckFill then rd(T,false,W) else rd(T,true,W) fi .
   rl [fill-done] :
-    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b3)) =>
-    st(install(W,T,arch(M,Q,T),C),M,R,P,F,RQ,A1,A2,Q,midle) .
+    st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,mfill(T,W,b3)) =>
+    st(install(W,T,arch(M,Q,T),C),M,W,P,F,RQ,A1,completedRead(T,W,F),Q,midle) .
 
   rl [write-done] :
     st(C,M,R,P,F,RQ,A1,A2,q(T,V,Q),mwrite(T,V)) =>
     st(C,put(T,V,M),R,P,F,RQ,A1,A2,Q,midle) .
+  *** Seed a cold read and full-set replacements to check progress without
+  *** assuming fair completion of every possible memory schedule.
+  ops initialRead initialStuck initialEviction0 initialEviction1 : -> State .
+  eq initialRead = st(cache(invalid,invalid),mem(v0,v0,v0),w0,update,good,
+                      load(t0),none,empty,nil,midle) .
+  eq initialStuck = st(cache(invalid,invalid),mem(v0,v0,v0),w0,update,stuckFill,
+                       load(t0),none,empty,nil,midle) .
+  eq initialEviction0 = st(cache(line(t0,v0),line(t1,v1)),mem(v0,v1,v0),w0,update,good,
+                           load(t2),none,empty,nil,midle) .
+  eq initialEviction1 = st(cache(line(t0,v0),line(t1,v1)),mem(v0,v1,v0),w1,update,good,
+                           load(t2),none,empty,nil,midle) .
+  ops readCompleted evictedWay0 evictedWay1 : State -> Bool .
+  eq readCompleted(st(cache(line(t0,v0),invalid),mem(v0,v0,v0),w0,update,F,
+                      none,none,empty,nil,midle)) = true .
+  eq readCompleted(S) = false [owise] .
+  eq evictedWay0(st(cache(line(t2,v0),line(t1,v1)),mem(v0,v1,v0),w0,update,good,
+                    none,none,empty,nil,midle)) = true .
+  eq evictedWay0(S) = false [owise] .
+  eq evictedWay1(st(cache(line(t0,v0),line(t2,v0)),mem(v0,v1,v0),w1,update,good,
+                    none,none,empty,nil,midle)) = true .
+  eq evictedWay1(S) = false [owise] .
 endm
 
 *** Bounded to 16 control transitions; these are not unbounded proofs.
@@ -232,3 +260,9 @@ search [1,16] in CACHE-CYCLE : initialInvalidate =>* S:State such that bad(S:Sta
 *** Expected counterexamples: stale Way 1 update and refill under a queued store.
 search [1,16] in CACHE-CYCLE : initialBadWay1 =>* S:State such that bad(S:State) .
 search [1,16] in CACHE-CYCLE : initialNoDrain =>* S:State such that bad(S:State) .
+
+*** Required progress/eviction witnesses; the stuck-fill mutant must not complete.
+search [1,12] in CACHE-CYCLE : initialRead =>* S:State such that readCompleted(S:State) .
+search [1,12] in CACHE-CYCLE : initialStuck =>* S:State such that readCompleted(S:State) .
+search [1,12] in CACHE-CYCLE : initialEviction0 =>* S:State such that evictedWay1(S:State) .
+search [1,12] in CACHE-CYCLE : initialEviction1 =>* S:State such that evictedWay0(S:State) .

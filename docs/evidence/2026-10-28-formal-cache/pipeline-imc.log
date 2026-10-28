@@ -1,0 +1,6 @@
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 92 fills 20 writes 55807 held clocks; 2 fence.i epoch assertions
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:317: $finish called at 7218100000 (100fs)
+PASS: corrupt backend beat is rejected by the executing guest

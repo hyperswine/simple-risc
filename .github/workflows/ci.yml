@@ -32,3 +32,68 @@ jobs:
       - run: cabal update
       - run: cabal build all
       - run: cabal test --test-show-details=direct
+      - name: Generated RTL tools
+        run: sudo apt-get update && sudo apt-get install -y iverilog gcc-riscv64-unknown-elf
+      - name: Generate and execute fresh IM and IMC pipeline RTL
+        timeout-minutes: 20
+        run: |
+          for compressed in 0 1; do
+            flags=()
+            check_flags=()
+            if [ "$compressed" = 1 ]; then
+              flags=(-DRISCV_COMPRESSED)
+              check_flags=(--compressed)
+            fi
+            generated="$PWD/output/ci-generated-$compressed"
+            cabal run clash -- -isrc -hide-package simple-risc "${flags[@]}" \
+              src/SdramPipeline.hs --verilog -fclash-clear -outputdir "$generated"
+            python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
+              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --cache-ways 2 --cache-line-bits 7
+          done
+      - name: Generated RTL evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-rtl-results
+          if-no-files-found: warn
+          path: |
+            output/tangnano20k/pipeline-rtl*/**/*.json
+            output/tangnano20k/pipeline-rtl*/**/*.log
+
+  formal-and-rtl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Formal and RTL tools
+        run: sudo apt-get update && sudo apt-get install -y maude iverilog
+      - name: Formal gate regressions and all model searches
+        run: |
+          python3 -m unittest discover -s formal -p test_check_formal.py
+          python3 formal/check_formal.py
+      - name: Cache, CDC and instruction-fence RTL checks
+        run: |
+          python3 boards/tangnano20k/sdram/check_pipeline_cache.py
+          python3 boards/tangnano20k/sdram/check_clock_bridge.py
+          python3 boards/tangnano20k/sdram/check_fence_assertion.py
+      - name: ROM and preset contracts
+        run: |
+          python3 boards/tangnano20k/bootrom/check_loader.py
+          python3 boards/tangnano20k/test_upload.py
+          python3 -m unittest discover -s boards/tangnano20k/sdram -p test_preset_manifest.py
+      - name: Formal and RTL evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: formal-and-rtl-results
+          if-no-files-found: warn
+          path: |
+            output/formal/*.json
+            output/formal/*.log
+            output/tangnano20k/pipeline-cache-regression/*.json
+            output/tangnano20k/pipeline-cache-regression/*.log
+            output/tangnano20k/sdram-clock-bridge-tests/*.log
+            output/tangnano20k/fence-assertion/*.json
+            output/tangnano20k/fence-assertion/*.log
+            output/tangnano20k/bootrom/host-test/*.log

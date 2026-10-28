@@ -1,0 +1,14 @@
+==========================================
+search in INSTRUCTION-FENCE : initialGood =>* S such that bad(S) = true .
+
+No solution.
+states: 2824  rewrites: 110161 in 33ms cpu (35ms real) (3249011
+    rewrites/second)
+==========================================
+search [1] in INSTRUCTION-FENCE : initialNoFlush =>* S such that bad(S) = true
+    .
+
+Solution 1 (state 166)
+states: 167  rewrites: 4238 in 0ms cpu (0ms real) (18188841 rewrites/second)
+S --> st(mem(new, old), inst(t0, old), none, none, none, true, noFlush)
+Bye.

@@ -7,24 +7,24 @@ mod CACHE-COHERENCE is
   protecting BOOL .
 
   sorts Tag Value Way Line Cache Memory Policy Fault State .
-  ops t0 t1 : -> Tag [ctor] .
+  ops t0 t1 t2 : -> Tag [ctor] .
   ops v0 v1 v2 : -> Value [ctor] .
   ops w0 w1 : -> Way [ctor] .
   op invalid : -> Line [ctor] .
   op line : Tag Value -> Line [ctor] .
   op cache : Line Line -> Cache [ctor] .
-  op mem : Value Value -> Memory [ctor] .
+  op mem : Value Value Value -> Memory [ctor] .
   ops update invalidate : -> Policy [ctor] .
   ops good badWay1 : -> Fault [ctor] .
   op st : Cache Memory Way Policy Fault -> State [ctor] .
 
   ops initialUpdate initialInvalidate initialBroken : -> State .
-  eq initialUpdate = st(cache(invalid, invalid), mem(v0, v0), w0, update, good) .
-  eq initialInvalidate = st(cache(invalid, invalid), mem(v0, v0), w0, invalidate, good) .
-  eq initialBroken = st(cache(invalid, invalid), mem(v0, v0), w0, update, badWay1) .
+  eq initialUpdate = st(cache(invalid, invalid), mem(v0,v0,v0), w0, update, good) .
+  eq initialInvalidate = st(cache(invalid, invalid), mem(v0,v0,v0), w0, invalidate, good) .
+  eq initialBroken = st(cache(invalid, invalid), mem(v0,v0,v0), w0, update, badWay1) .
 
   var T U : Tag .
-  vars V Old M0 M1 : Value .
+  vars V Old M0 M1 M2 : Value .
   vars L L0 L1 : Line .
   var M : Memory .
   var R : Way .
@@ -33,12 +33,14 @@ mod CACHE-COHERENCE is
   var S : State .
 
   op get : Tag Memory -> Value .
-  eq get(t0, mem(M0, M1)) = M0 .
-  eq get(t1, mem(M0, M1)) = M1 .
+  eq get(t0, mem(M0,M1,M2)) = M0 .
+  eq get(t1, mem(M0,M1,M2)) = M1 .
+  eq get(t2, mem(M0,M1,M2)) = M2 .
 
   op put : Tag Value Memory -> Memory .
-  eq put(t0, V, mem(M0, M1)) = mem(V, M1) .
-  eq put(t1, V, mem(M0, M1)) = mem(M0, V) .
+  eq put(t0, V, mem(M0,M1,M2)) = mem(V,M1,M2) .
+  eq put(t1, V, mem(M0,M1,M2)) = mem(M0,V,M2) .
+  eq put(t2, V, mem(M0,M1,M2)) = mem(M0,M1,V) .
 
   op hit : Tag Line -> Bool .
   eq hit(T, line(T, V)) = true .
@@ -82,8 +84,9 @@ mod CACHE-COHERENCE is
 
   op badLine : Memory Line -> Bool .
   eq badLine(M, invalid) = false .
-  eq badLine(mem(M0, M1), line(t0, V)) = V =/= M0 .
-  eq badLine(mem(M0, M1), line(t1, V)) = V =/= M1 .
+  eq badLine(mem(M0,M1,M2), line(t0, V)) = V =/= M0 .
+  eq badLine(mem(M0,M1,M2), line(t1, V)) = V =/= M1 .
+  eq badLine(mem(M0,M1,M2), line(t2, V)) = V =/= M2 .
 
   op duplicate : Line Line -> Bool .
   eq duplicate(line(T, V), line(T, Old)) = true .
@@ -97,12 +100,26 @@ mod CACHE-COHERENCE is
 
   rl [read-t0] : S => read(t0, S) .
   rl [read-t1] : S => read(t1, S) .
+  rl [read-t2] : S => read(t2, S) .
   rl [write-t0-v0] : S => write(t0, v0, S) .
   rl [write-t0-v1] : S => write(t0, v1, S) .
   rl [write-t0-v2] : S => write(t0, v2, S) .
   rl [write-t1-v0] : S => write(t1, v0, S) .
   rl [write-t1-v1] : S => write(t1, v1, S) .
   rl [write-t1-v2] : S => write(t1, v2, S) .
+  rl [write-t2-v0] : S => write(t2, v0, S) .
+  rl [write-t2-v1] : S => write(t2, v1, S) .
+  rl [write-t2-v2] : S => write(t2, v2, S) .
+
+  *** Full sets force replacement of the non-MRU way on a t2 read.
+  ops initialEviction0 initialEviction1 : -> State .
+  eq initialEviction0 = st(cache(line(t0,v0),line(t1,v1)),mem(v0,v1,v2),w0,update,good) .
+  eq initialEviction1 = st(cache(line(t0,v0),line(t1,v1)),mem(v0,v1,v2),w1,update,good) .
+  ops evictedWay0 evictedWay1 : State -> Bool .
+  eq evictedWay0(st(cache(line(t2,v2),line(t1,v1)),mem(v0,v1,v2),w0,update,good)) = true .
+  eq evictedWay0(S) = false [owise] .
+  eq evictedWay1(st(cache(line(t0,v0),line(t2,v2)),mem(v0,v1,v2),w1,update,good)) = true .
+  eq evictedWay1(S) = false [owise] .
 endm
 
 *** Expected: no solution. All reachable good states preserve coherence.
@@ -111,3 +128,7 @@ search in CACHE-COHERENCE : initialInvalidate =>* S:State such that bad(S:State)
 
 *** Expected: one solution. A missed Way 1 store update leaves a stale hit.
 search [1] in CACHE-COHERENCE : initialBroken =>* S:State such that bad(S:State) .
+
+*** Required witnesses: a third tag replaces either non-MRU way.
+search [1,1] in CACHE-COHERENCE : initialEviction0 =>* S:State such that evictedWay1(S:State) .
+search [1,1] in CACHE-COHERENCE : initialEviction1 =>* S:State such that evictedWay0(S:State) .
