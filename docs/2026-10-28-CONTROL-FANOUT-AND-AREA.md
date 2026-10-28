@@ -316,3 +316,9 @@ the settings listed above, the frozen CPU from the preceding benchmark,
 and an absolute `SDRAM_CACHE_RTL` path selecting either archived cache.
 `analyze_implementation.py` reads the synthesis netlist, timing report and
 utilization report; it does not change a design or program the board.
+
+## Independent timing review, 2026-10-28
+
+A second reading of the committed timing reports, its ranked
+recommendations and what it could not verify are in
+[INDEPENDENT-TIMING-REVIEW](2026-10-28-INDEPENDENT-TIMING-REVIEW.md).
