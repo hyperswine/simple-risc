@@ -62,3 +62,5 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-10-21 | [FPRISC-48-PRESET](2026-10-21-FPRISC-48-PRESET.md) | fixed 48 MHz development preset, fresh Gowin timing and full physical FP-RISC example suite |
 | 2026-10-25 | [FPRISC-BOARD-DEPENDABILITY](2026-10-25-FPRISC-BOARD-DEPENDABILITY.md) | priorities and acceptance criteria for board identification, reliable uploads, crash reports, endurance and reproducible releases |
 | 2026-10-28 | [FORMAL-CACHE-CONTRACTS](2026-10-28-FORMAL-CACHE-CONTRACTS.md) | refill progress, three-tag eviction coverage, per-search formal gates and RTL CI checks |
+| 2026-10-28 | [CONTROLLED-BENCHMARK](2026-10-28-CONTROLLED-BENCHMARK.md) | fixed-binary eight-case predictor/cache/bridge matrix, six 48 MHz board runs and replayable evidence |
+| 2026-10-28 | [CONTROL-FANOUT-AND-AREA](2026-10-28-CONTROL-FANOUT-AND-AREA.md) | control-net source tracing and RAM-backed cache replacement state: 18.79% fewer logic cells with identical classifier cycles |

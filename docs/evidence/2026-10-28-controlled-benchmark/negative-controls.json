@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "matching_build_accepted": true,
+  "tampered_binary_hash_refused": true,
+  "original_build_receipt_restored": true,
+  "corrupt_classifier_result_refused": true,
+  "refusal": "simulation binary/source/configuration mismatch; rebuild before running",
+  "tampered_executable_file_refused": true,
+  "original_executable_restored": true
+}

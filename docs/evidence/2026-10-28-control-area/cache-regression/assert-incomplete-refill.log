@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/assert-incomplete-refill.v:263: ASSERT: refill completed before all four beats
+       Time: 2375000  Scope: pipeline_cache_tb.cache

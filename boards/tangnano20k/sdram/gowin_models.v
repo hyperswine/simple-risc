@@ -55,6 +55,13 @@ module ALU(output SUM,COUT,input I0,I1,I3,CIN);
   default:begin S=I0&I1;C=I0&I1;end
  endcase
 endmodule
+// GW2A prim_sim.v: asynchronous read, rising-edge write, INIT_0 power-up.
+module RAM16SDP1(output DO,input DI,input [3:0] WAD,RAD,input WRE,CLK);
+ parameter INIT_0=16'h0;
+ reg [15:0] mem=INIT_0;
+ assign DO=mem[RAD];
+ always @(posedge CLK)if(WRE)mem[WAD]<=DI;
+endmodule
 module RAM16SDP4(output [3:0] DO,input [3:0] DI,WAD,RAD,input WRE,CLK);
  parameter INIT_0=16'h0,INIT_1=16'h0,INIT_2=16'h0,INIT_3=16'h0;
  reg [15:0] m0=INIT_0,m1=INIT_1,m2=INIT_2,m3=INIT_3;

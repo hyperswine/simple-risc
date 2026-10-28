@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 72.0,
+    "mem_mhz": 54.0,
+    "cdc": true,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/generated-on/SdramPipeline.topEntity/sdram_pipeline_risc.v": "b2db3d0bd4c05399f7b8b0eb26e508c027b69e018e70571299cc6b9cd05f1030"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "a1334ef52885df558a6ea26570f709f52015247696b1ee5dd69ea4821b06fb14",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "3ccb43810c22f3c68109a2e1909279ade990b76027264498ee0fdafa5964111c",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "f887d80abb30c939b7769356591cba26cb3d033aae106b0acbbd1b92f8f7b6c1"
+    }
+  },
+  "build_manifest_sha256": "c9b13edad3ae55669b17c001a18bddd9c9d2b70ddac4e035f7ac0d36de73a745",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 136745834,
+    "held": 10934263,
+    "held_read_miss": 8829668,
+    "held_write_full": 2102547,
+    "held_clear": 2048,
+    "miss_draining": 355212,
+    "miss_filling": 8302705,
+    "fills": 260423,
+    "code_fills": 26084,
+    "writes": 5807281,
+    "stores": 5807285,
+    "store_updates": 4037596,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 136227643,
+    "window_held": 10840949,
+    "window_fills": 260069,
+    "window_writes": 5777926,
+    "window_pipeline_commits": 39516930,
+    "window_redirects": 6566913
+  },
+  "measured_us": 1892050.5972222222,
+  "held_percent": 7.957965623761104,
+  "output_sha256": "ff5c291e1e4cfe772e53cbb9d2067a36bed222b757e6e86555033ca335a8631b"
+}

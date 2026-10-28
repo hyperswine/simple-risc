@@ -16,7 +16,8 @@ module perf_tb #(
  parameter UART_BIT=32,
  parameter LINE_BITS=11,
  parameter WRITE_UPDATE=1,
- parameter WAYS=2
+ parameter WAYS=2,
+ parameter PROFILE_CPU=0
 );
  localparam real CPU_NS=1000.0/CPU_MHZ;
  localparam real MEM_NS=1000.0/MEM_MHZ;
@@ -146,6 +147,16 @@ module perf_tb #(
    end
  end
 
+ // Optional observation of the current generated CPU ABI. The runner checks
+ // these exact field declarations before enabling this instrumentation.
+ reg [63:0] window_pipeline_commits=0,window_redirects=0;
+ generate if(PROFILE_CPU)begin: cpu_profile
+   always @(posedge clk)if(!core_reset && !hold_cpu && measuring)begin
+     if(cpu.mCommits)window_pipeline_commits<=window_pipeline_commits+1;
+     if(cpu.e2Moved[659] && cpu.e2Moved[100])window_redirects<=window_redirects+1;
+   end
+ end endgenerate
+
  // UART receiver for the CPU's transmitter (UART_BIT clocks per bit).
  reg [8*64-1:0] line_text=0;integer line_length=0;
  reg [8*64-1:0] end_marker,start_marker;
@@ -160,6 +171,7 @@ module perf_tb #(
      store_updates,store_hit_invalidations,store_invalidated_fills);
    $display("PERF window_cycles=%0d window_held=%0d window_fills=%0d window_writes=%0d",
      window_cycles,window_held,window_fills,window_writes);
+   $display("PERF window_pipeline_commits=%0d window_redirects=%0d",window_pipeline_commits,window_redirects);
    $finish;
  end endtask
  initial begin

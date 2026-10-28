@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/mru-regression/missing-bypass-tb.v:29: MRU replacement differs from register-vector reference
+       Time: 40955000  Scope: pipeline_cache_tb

@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "only_cache_source_changed": true,
+  "normalized_build_outputs": {
+    "pipeline_top.v": "5e4d441bb41d2420c6179a3e4f8d3d3d9c14dc071b862ff6c6981a4b1a7c385a",
+    "clocks.sdc": "4fd2a3fb0750e571f77bde8a35290ec6a996f4586586c5145284b0fbaea69ca6",
+    "pll.v": "46f5edabee90100cbc39380bba2f2dd49f161aa4e2e2e8a2d11fa2e76365404c",
+    "pins.cst": "8f96e85f2b2fb2dadbc919e0a97b4fb583c058ba3a6b96883bf311b827649101",
+    "bootrom-sdram.hex": "3a7af3a84644751d2a1c9d8b496f9dc7241e71ca8be6563dc9c36f2d6d9313ab"
+  },
+  "baseline_inputs": {
+    "pipeline_top.v": "d4562bf97ca6e952a57c4bfd3ec2fc3ae2c1400cea42bd20ca3ee65b86f05108",
+    "memory.v": "36c9ac1b92c1a032feafa217e882b5a74f0bc8f386bcbeb3f2b39158f2d688ec",
+    "cache.v": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+    "pipeline_cache.v": "57910308a2909b1e597ddc73eee779eb65c6d99639994d9284edd0728cd35816",
+    "burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+    "clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+    "pll.v": "46f5edabee90100cbc39380bba2f2dd49f161aa4e2e2e8a2d11fa2e76365404c",
+    "dual_pll.v": "077a205d27bd8beec5237884c972e8640db2438aee770006e3306b04727c20dc",
+    "pins.cst": "8f96e85f2b2fb2dadbc919e0a97b4fb583c058ba3a6b96883bf311b827649101",
+    "clocks.sdc": "4fd2a3fb0750e571f77bde8a35290ec6a996f4586586c5145284b0fbaea69ca6",
+    "sdram_pipeline_risc.v": "b2db3d0bd4c05399f7b8b0eb26e508c027b69e018e70571299cc6b9cd05f1030"
+  },
+  "optimized_inputs": {
+    "pipeline_top.v": "a6f30a8fdbdeb110e3f1ece10f86efd553fd605f7ad54f0fafd001035d5433d6",
+    "memory.v": "36c9ac1b92c1a032feafa217e882b5a74f0bc8f386bcbeb3f2b39158f2d688ec",
+    "cache.v": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+    "pipeline_cache.v": "a1334ef52885df558a6ea26570f709f52015247696b1ee5dd69ea4821b06fb14",
+    "burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+    "clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+    "pll.v": "46f5edabee90100cbc39380bba2f2dd49f161aa4e2e2e8a2d11fa2e76365404c",
+    "dual_pll.v": "077a205d27bd8beec5237884c972e8640db2438aee770006e3306b04727c20dc",
+    "pins.cst": "8f96e85f2b2fb2dadbc919e0a97b4fb583c058ba3a6b96883bf311b827649101",
+    "clocks.sdc": "4fd2a3fb0750e571f77bde8a35290ec6a996f4586586c5145284b0fbaea69ca6",
+    "sdram_pipeline_risc.v": "b2db3d0bd4c05399f7b8b0eb26e508c027b69e018e70571299cc6b9cd05f1030"
+  }
+}

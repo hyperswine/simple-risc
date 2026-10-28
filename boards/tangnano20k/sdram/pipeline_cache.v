@@ -32,7 +32,12 @@ module sdram_pipeline_cache #(
  // otherwise dominates timing even though the CPU request is registered.
  reg [19-LINE_BITS:0] tags[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "block_ram" */;
  reg [19-LINE_BITS:0] tags_way1[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "block_ram" */;
- reg [(1<<LINE_BITS)-1:0] mru;
+ // One replacement bit per set. An indexed register vector creates a
+ // full-set read mux and a reset/write decoder. Use a synchronous RAM
+ // lookup alongside the tags, with explicit write-through on collisions.
+ // Clearing shares the existing tag sweep, so no wide reset is needed.
+ reg mru[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "distributed_ram" */;
+ reg entry_mru;
  reg [31:0] rom[0:511];
  initial $readmemh(ROM_FILE,rom);
  reg v1,v2,w1,w2,hit2,keep2,way2,conflict2,fill_way;
@@ -65,6 +70,9 @@ module sdram_pipeline_cache #(
  wire tag_write_way1=clearing || store_invalidate || (tag_fill && way2);
  wire [LINE_BITS-1:0] tag_write_index=(tag_fill || push) ? a2[LINE_BITS+1:2]:clear_index;
  wire [19-LINE_BITS:0] tag_write_value=tag_fill ? {1'b1,a2[20:LINE_BITS+2]}:0;
+ wire mru_write=clearing || tag_fill || (advance && v2 && hit2 && !a2[21]);
+ wire [LINE_BITS-1:0] mru_index=clearing ? clear_index:a2[LINE_BITS+1:2];
+ wire mru_value=clearing ? 1'b0:way2;
  assign memory_req=!reset && (state==WRITE_SEND || state==READ_SEND);
  assign memory_write=state==WRITE_SEND || state==WRITE_WAIT;
  assign memory_address=memory_write ? write_address[write_head]:{a2[20:2],2'b00};
@@ -91,7 +99,7 @@ module sdram_pipeline_cache #(
    same_fill_set ? ~fill_way:
    !entry_tag[19-LINE_BITS] ? 1'b0:
    !entry_tag_way1[19-LINE_BITS] ? 1'b1:
-   ~mru[a1[LINE_BITS+1:2]];
+   ~entry_mru;
  // The refill that just completed overwrote a1's way in this set: its lookup is stale.
  wire evicted=same_fill_set && !filled && hit_way1==fill_way;
  // A store invalidating the line being read may return any BRAM value.
@@ -104,6 +112,11 @@ module sdram_pipeline_cache #(
  always @(posedge clk)begin
    if(!reset && tag_write_way1)tags_way1[tag_write_index]<=tag_write_value;
    if(advance)entry_tag_way1<=tags_way1[cpu_address[LINE_BITS+1:2]];
+ end
+ always @(posedge clk)begin
+   if(!reset && mru_write)mru[mru_index]<=mru_value;
+   if(advance)entry_mru<=(mru_write && mru_index==cpu_address[LINE_BITS+1:2]) ?
+     mru_value:mru[cpu_address[LINE_BITS+1:2]];
  end
  function [31:0] merged(input [31:0] before_word,input [31:0] data,input [3:0] lanes);
  integer k;
@@ -168,7 +181,6 @@ module sdram_pipeline_cache #(
      write_head<=0;write_tail<=0;v1<=0;v2<=0;
      hit2<=0;keep2<=0;way2<=0;conflict2<=0;fill_way<=0;
      last_write<=0;last_update<=0;fill_forward<=0;cpu_rdata<=0;tag_conflict<=0;
-     mru<=0;
    end else begin
      if(clearing)begin
        clear_index<=clear_index+1'b1;
@@ -184,7 +196,6 @@ module sdram_pipeline_cache #(
        cpu_rdata<=forwarded;
        fill_forward<=0;
        last_write<=push;last_update<=update;last_address<=a2;last_data<=d2;last_mask<=m2;last_word<=store_word;
-       if(v2 && hit2 && !a2[21])mru[a2[LINE_BITS+1:2]]<=way2;
      end
      if(push)begin
        write_address[write_tail]<=a2[20:0];write_data[write_tail]<=d2;write_mask[write_tail]<=m2;
@@ -212,7 +223,7 @@ module sdram_pipeline_cache #(
          if(memory_done)begin
            // Completion may arrive with the final beat.
            cpu_rdata<=(memory_word_valid && memory_word_index==a2[1:0]) ? memory_rdata:fill_target;
-           hit2<=1;fill_forward<=1;mru[a2[LINE_BITS+1:2]]<=way2;state<=IDLE;
+           hit2<=1;fill_forward<=1;state<=IDLE;
          end
        end
      endcase

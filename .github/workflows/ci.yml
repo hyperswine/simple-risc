@@ -72,9 +72,12 @@ jobs:
         run: |
           python3 -m unittest discover -s formal -p test_check_formal.py
           python3 formal/check_formal.py
+      - name: Benchmark result guard tests
+        run: python3 -m unittest discover -s boards/tangnano20k/sdram -p test_run_perf.py
       - name: Cache, CDC and instruction-fence RTL checks
         run: |
           python3 boards/tangnano20k/sdram/check_pipeline_cache.py
+          python3 boards/tangnano20k/sdram/check_cache_mru.py
           python3 boards/tangnano20k/sdram/check_clock_bridge.py
           python3 boards/tangnano20k/sdram/check_fence_assertion.py
       - name: ROM and preset contracts
@@ -93,6 +96,8 @@ jobs:
             output/formal/*.log
             output/tangnano20k/pipeline-cache-regression/*.json
             output/tangnano20k/pipeline-cache-regression/*.log
+            output/tangnano20k/cache-mru-regression/*.json
+            output/tangnano20k/cache-mru-regression/*.log
             output/tangnano20k/sdram-clock-bridge-tests/*.log
             output/tangnano20k/fence-assertion/*.json
             output/tangnano20k/fence-assertion/*.log

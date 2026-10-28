@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/missing-data-forward-tb.v:60: reply 330 expected abc00000 got xxxxxx00
+       Time: 21765000  Scope: pipeline_cache_tb

@@ -1,0 +1,2 @@
+PASS: 241 reads, 137 ordered masked writes, 23 line fills, 1760 held clocks
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/two-way-write-update-tb.v:67: $finish called at 21485000 (1ps)

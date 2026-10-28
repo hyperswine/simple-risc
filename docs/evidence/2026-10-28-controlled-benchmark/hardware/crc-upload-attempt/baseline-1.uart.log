@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/jasonqin/Documents/GitHub/fprisc/tools/run_tangnano20k_base.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/jasonqin/Documents/GitHub/fprisc/tools/run_tangnano20k_base.py", line 139, in main
+    rom_protocol.upload_image_u(fd,image,max_words=ident.max_bytes//4,timeout=upload_timeout)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/rom_protocol.py", line 474, in upload_image_u
+    raise UploadError(last_error)
+rom_protocol.UploadError: ROM rejected upload with ERR HDR

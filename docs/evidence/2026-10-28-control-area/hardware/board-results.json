@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "restored": true,
+  "cpu_mhz": 48,
+  "memory_mhz": 48,
+  "guest_timer_mhz": 72,
+  "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+  "elapsed_correction": "guest elapsed_us * 72 / 48",
+  "upload_protocol": "legacy Q/V/H with readback verification",
+  "runs": [
+    {
+      "configuration": "mru-ram",
+      "repeat": 1,
+      "guest_elapsed_us": 1870170,
+      "corrected_elapsed_us": 2805255.0,
+      "log_sha256": "146344edf1fa1f3f7d15248858620e2771e483c67f332c7fda11caccb145fcb9"
+    },
+    {
+      "configuration": "mru-ram",
+      "repeat": 2,
+      "guest_elapsed_us": 1870170,
+      "corrected_elapsed_us": 2805255.0,
+      "log_sha256": "146344edf1fa1f3f7d15248858620e2771e483c67f332c7fda11caccb145fcb9"
+    },
+    {
+      "configuration": "mru-ram",
+      "repeat": 3,
+      "guest_elapsed_us": 1870170,
+      "corrected_elapsed_us": 2805255.0,
+      "log_sha256": "146344edf1fa1f3f7d15248858620e2771e483c67f332c7fda11caccb145fcb9"
+    }
+  ],
+  "timing": {
+    "mru-ram": {
+      "bitstream_sha256": "55febd648659896010351b11e0b88a6630e5d07f19acde0954745653f445f7ea",
+      "timing_sha256": "4d77c6996fb40c55706a6ec1e193e455ad2ea4136fcda6b08f53e4918ca04056",
+      "timing_gate": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 52.023 MHz Fmax, 1.611 ns worst setup slack; 0 setup / 0 hold violating endpoints\n"
+    }
+  },
+  "medians_us": {
+    "mru-ram": 2805255.0
+  },
+  "previous_combined_median_us": 2805255.0,
+  "restore_sha256": "30a3f82d8249fe1db0e35c51e7b3b9abb269b729e6b16b60ded71fdf57d986c3"
+}

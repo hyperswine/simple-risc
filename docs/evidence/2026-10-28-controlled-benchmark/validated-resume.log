@@ -1,0 +1,17 @@
+btb-off-ways-1-bridge-old: reused validated result
+btb-off-ways-1-bridge-old: PASS 2045997.556 us, held 9.25%
+btb-off-ways-1-bridge-new: reused validated result
+btb-off-ways-1-bridge-new: PASS 2036919.181 us, held 8.85%
+btb-off-ways-2-bridge-old: reused validated result
+btb-off-ways-2-bridge-old: PASS 2014353.250 us, held 7.82%
+btb-off-ways-2-bridge-new: reused validated result
+btb-off-ways-2-bridge-new: PASS 2007262.472 us, held 7.50%
+btb-on-ways-1-bridge-old: reused validated result
+btb-on-ways-1-bridge-old: PASS 1930712.083 us, held 9.80%
+btb-on-ways-1-bridge-new: reused validated result
+btb-on-ways-1-bridge-new: PASS 1921767.806 us, held 9.38%
+btb-on-ways-2-bridge-old: reused validated result
+btb-on-ways-2-bridge-old: PASS 1898993.972 us, held 8.29%
+btb-on-ways-2-bridge-new: reused validated result
+btb-on-ways-2-bridge-new: PASS 1892050.597 us, held 7.96%
+PASS: full eight-case controlled matrix; /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/matrix-results.json

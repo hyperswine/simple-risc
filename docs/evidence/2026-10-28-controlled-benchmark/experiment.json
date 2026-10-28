@@ -1,0 +1,48 @@
+{
+  "base_revision": "9d29a6b746c4472795ac56516c96b2096e6b70b8",
+  "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+  "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+  "guest_cpu_mhz": 72,
+  "reference": {
+    "train_rows": 128,
+    "test_rows": 64,
+    "bins": 8,
+    "max_depth": 5,
+    "min_leaf": 2,
+    "nodes": 23,
+    "depth": 5,
+    "train": {
+      "hits": 124,
+      "rows": 128,
+      "digest": 21562,
+      "predictions_sha256": "888ded6dbd04c33e23d17c8ca7f8899a5ee30b08afa5e7bafb17e3fe3f672877"
+    },
+    "test": {
+      "hits": 61,
+      "rows": 64,
+      "digest": 909572,
+      "predictions_sha256": "f8bad44ad21890cd6a00359c8fee71a036eeb5cb10f3eeef5beafed31bd3c958"
+    },
+    "root": {
+      "column": 1,
+      "threshold": 0.7506353431381285
+    },
+    "entropy": "Independent Python math.log2; classifier uses its existing 48-step log2"
+  },
+  "predictor_off_change": "Add not cpuCompressed to the BTB hit predicate; all other source is unchanged.",
+  "bridge_old_revision": "417053d3099dfa52b6ae497d796086a75dc5d4ab",
+  "sources": {
+    "src/SimpleRisc.hs": "ac8f04404288b10bece212d8976956523acc5dc9550ce542b0a7231afc6d48a1",
+    "output/tangnano20k/benchmark-matrix-20261028/source-off/SimpleRisc.hs": "f6c4fee99e3939e7c74362402ac83450557b9817bf5d2c719e6fa74bb33af7a4",
+    "output/tangnano20k/benchmark-matrix-20261028/bridge-old.v": "3f7bec73cc8011275f6e316d95cee12190d06d32e2a3b9a2dd45b4128b60d986",
+    "output/tangnano20k/benchmark-matrix-20261028/bridge-new.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2"
+  },
+  "frozen_inputs": {
+    "input/base.bin": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "input/base.elf": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "bridge-old.v": "3f7bec73cc8011275f6e316d95cee12190d06d32e2a3b9a2dd45b4128b60d986",
+    "bridge-new.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "generated-on/SdramPipeline.topEntity/sdram_pipeline_risc.v": "b2db3d0bd4c05399f7b8b0eb26e508c027b69e018e70571299cc6b9cd05f1030",
+    "generated-off/SdramPipeline.topEntity/sdram_pipeline_risc.v": "045755aaa52efb3c1da150715f8d995e23d8a3708e913781dec4ef2ed88b5d3d"
+  }
+}

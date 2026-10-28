@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/missing-collision-guard-tb.v:22: undefined tag collision used as a hit
+       Time: 3525000  Scope: pipeline_cache_tb

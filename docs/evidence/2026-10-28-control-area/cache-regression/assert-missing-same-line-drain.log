@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/assert-missing-same-line-drain.v:252: ASSERT: refill overlaps a queued store to its line
+       Time: 3545000  Scope: pipeline_cache_tb.cache

@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-28",
+  "base_revision": "b33a8447914fff594b2e036560b1d83490f50e73",
+  "complete": true,
+  "source_sha256": {
+    "formal/cache_coherence.maude": "c56dbe7a266c23c9b757c1b64c5c9d12c3f9fe08502abb36306142646376a150",
+    "formal/instruction_fence.maude": "9f94654679c6ff313dfe8c3714fd1d9aa08ee39cf244aeca1e94b7a79cfd2e7e",
+    "formal/branch_prediction.maude": "83da6ec00cb4c876473ec9a85b20085987474c3a3f18dccfb221f134e22a2cae",
+    "formal/cache_cycle.maude": "79f4b99e74eade189ef6add2b94867d2446be9731cb7cff9ba993d86688c8ab0",
+    "formal/check_formal.py": "e053d0c506d9c439d165c13401ef4dc53c624f9a3f1802feb8ccaa8282b76dda",
+    "formal/test_check_formal.py": "2e937a4c2e9cc7d2eec2c5050efb4c53550d3f9941cf6b81062d5dab7472404b",
+    ".github/workflows/ci.yml": "fd816b450d8c78eaa204384a04be126ee941d2215184e8f8fb4b21a1d6df98bb",
+    "src/SimpleRisc.hs": "ac8f04404288b10bece212d8976956523acc5dc9550ce542b0a7231afc6d48a1",
+    "src/SdramPipeline.hs": "da90e43ae4782e51e62076032a25c02380e9a2b022162def0b961d60c132b129",
+    "boards/tangnano20k/sdram/pipeline_cache.v": "57910308a2909b1e597ddc73eee779eb65c6d99639994d9284edd0728cd35816",
+    "boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "boards/tangnano20k/sdram/check_pipeline_rtl.py": "71339412b63f528c669f04bb8370f531bbdf02d673715a7fa28a5a9862d1b82e",
+    "boards/tangnano20k/sdram/pipeline_cpu_tb.v": "c639952bec7b48e1306f0551d325cd668d35347b9a550ca306fbee8db3064d3c",
+    "boards/tangnano20k/sdram/pipeline_fence_assertions.v": "81ccd36d783d0ae947a1c511d89da7f25a2cdb972a0dcfd65a522c7975771f00"
+  },
+  "validation": {
+    "formal_searches": 19,
+    "formal_gate_regressions": 7,
+    "cache_cases": 18,
+    "fence_monitor_cases": 3,
+    "rom_variants": 2,
+    "host_protocol_tests": 7,
+    "preset_tests": 5,
+    "fprisc_runner_tests": 8,
+    "clock_bridge": "five digital clock ratios/phases and two SDRAM pin/CDC cases passed",
+    "generated_rtl": "fresh IM and IMC; both pass guest scoreboard, two fence epochs, and corrupt-backend rejection",
+    "workflow_lint": "actionlint v1.7.7 passed"
+  },
+  "generated_rtl_sha256": {
+    "0": "a29729d82745453c45a6b6175d2f79dd14f5f045480faf0ed8555f9b7f13e8d0",
+    "1": "b2db3d0bd4c05399f7b8b0eb26e508c027b69e018e70571299cc6b9cd05f1030"
+  },
+  "fprisc_source_sha256": {
+    "tools/run_tangnano20k_examples.py": "a533cf9a9ca6242100d3a5e0d5aeaa64d2cdd4cdcd1a76729be9bb443bdaf64f",
+    "tests/test_tangnano20k_examples.py": "b472a533d0e6883d0863b5fea01590ba8ecdc468658b6466613caedb9be57a99"
+  },
+  "evidence_sha256": {
+    "branch_prediction.maude.log": "f450aa84d81c73b1d26ecd0b0732fa15c1c9f0fc22f19f892fd0896c12ccc58e",
+    "cache_coherence.maude.log": "b8d0f0e40f8d4cbd765f7ad998ca4ecbb479f45c511eb55b6922c59ab2ab37a4",
+    "cache_cycle.maude.log": "58415edd61cba19af5014650fe1b8f044c58c8e443d9d6d8404e75e4b777161f",
+    "fence-assertion.json": "531fc416821edd661fdda5a88d25c2d1e1dfd9be62a3856156cb865369c43753",
+    "generate-0.log": "7611e2c81ccf513eca892275e0f006f097bcc7e99a3fa58d0d1b4c8e4f88ef19",
+    "generate-1.log": "1d310f2177e54f8ec89f2a27f531b8898f735796c6b93f113d93f09e4b4f207a",
+    "instruction_fence.maude.log": "b307bf9623a83683ace7970ed405298c0262b432c5248a15b26e506f4e16726c",
+    "pipeline-cache-regression.json": "e0c0a2ebc2e245c5ec0ff71b616f5e83ba8c3974db3787a27cb89554bada905a",
+    "pipeline-im-corrupt.log": "a67610faf3c818297a3442446c74633bcab2f524c10ec494dc37bf2ea34255f5",
+    "pipeline-im.log": "f02057c06333240ef4d3c8ce4c54f24152c9eee09c66339553e038b390a17937",
+    "pipeline-imc-corrupt.log": "f0dd89a2367cd2a7a34f40bc08b6def52b326cf26be0f3ce75e8d79be2b0aefc",
+    "pipeline-imc.log": "06bee7ca946b13f315e1c7a41e1140cbb59775c81ea410c5bcc2c96e34d815d3",
+    "results.json": "06cdeb227613cb55b1f21cd5254995293db989a78ce45336bf99b9a32bd458c0"
+  }
+}

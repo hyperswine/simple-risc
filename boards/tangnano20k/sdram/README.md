@@ -16,6 +16,28 @@ default is two-way with `SDRAM_CACHE_WAYS=2` and `SDRAM_CACHE_LINE_BITS=11`
 `WAYS=1`, `LINE_BITS=12` geometry. Two-way timing and physical qualification
 are separate from the historical results.
 
+The [controlled benchmark matrix](../../../docs/2026-10-28-CONTROLLED-BENCHMARK.md)
+holds the guest binary, 72/54 MHz clocks, 64 KiB capacity and write policy fixed
+while varying compressed branch prediction, associativity and bridge response
+latency. It includes exact replay inputs and a separate 48 MHz board comparison.
+`prepare_benchmark_matrix.py --image IMAGE --elf ELF --out NEW_DIRECTORY`
+freezes a small-classifier guest with a 72 MHz timer and generates both CPU
+variants; `benchmark_matrix.py --out NEW_DIRECTORY` runs all eight cases.
+Use `--resume` to reuse source- and output-validated results. Each result must
+pass the independent classifier oracle as well as successful exit and counter
+checks. `run_perf.py` also supports `--build-only`, `--run-only`, bounded `--jobs`
+and `--timeout`, and optional current-ABI `--profile-cpu` observations.
+
+The [control-fanout and area analysis](../../../docs/2026-10-28-CONTROL-FANOUT-AND-AREA.md)
+traces the global hold/break and execution-mode enables, and replaces two-way
+MRU registers with a synchronous distributed-RAM lookup. A controlled 48 MHz
+build uses 18.79% fewer logic cells with identical classifier counters.
+`check_cache_mru.py` compares replacement decisions with the original policy
+and tests lookup/write collisions and a broken-bypass negative control.
+`analyze_implementation.py BUILD --out REPORT.json` extracts Gowin utilization,
+module primitives, high-fanout drivers and leading setup paths. The clock
+ceiling remains a separate timing and physical-qualification question.
+
 The [write-update follow-up](../../../docs/2026-10-19-TANGNANO20K-SDRAM-WRITE-UPDATE.md) keeps lines valid on
 store hits (`WRITE_UPDATE`, now default 1): 2.06 s, 1.38 times faster again.
 It failed on the board until the data array was built from 512x32 BSRAM

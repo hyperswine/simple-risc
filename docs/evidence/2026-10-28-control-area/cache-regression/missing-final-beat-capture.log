@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/missing-final-beat-capture-tb.v:57: reply 81 expected abc00403 got deadbeed
+       Time: 4865000  Scope: pipeline_cache_tb

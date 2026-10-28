@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/assert-duplicate-refill-beat.v:258: ASSERT: duplicate refill beat
+       Time: 1565000  Scope: pipeline_cache_tb.cache

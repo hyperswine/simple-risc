@@ -1,0 +1,2 @@
+PASS: 241 reads, 137 ordered masked writes, 91 line fills, 2936 held clocks
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/normal-invalidate-tb.v:67: $finish called at 33245000 (1ps)

@@ -1,0 +1,466 @@
+{
+  "resources": {
+    "Logic": {
+      "used": 15911,
+      "available": 20736,
+      "percent": 77
+    },
+    "Register": {
+      "used": 5308,
+      "available": 15915,
+      "percent": 34
+    },
+    "CLS": {
+      "used": 8856,
+      "available": 10368,
+      "percent": 86
+    },
+    "BSRAM": {
+      "used": 37,
+      "available": 46,
+      "percent": 81
+    },
+    "DSP": {
+      "used": 3,
+      "available": 24,
+      "percent": 13
+    }
+  },
+  "synthesized_modules": {
+    "sdram_pll": {
+      "cells": {
+        "rPLL": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 0,
+      "lut_primitives": 0,
+      "mux_primitives": 0
+    },
+    "sdram_pipeline_risc": {
+      "cells": {
+        "LUT3": 3228,
+        "LUT4": 7464,
+        "LUT2": 1773,
+        "DFFRE": 2669,
+        "DFFR": 22,
+        "DFF": 25,
+        "DFFS": 5,
+        "DFFE": 1863,
+        "DFFSE": 98,
+        "SDPB": 2,
+        "MULT18X18": 4,
+        "ALU54D": 1,
+        "ALU": 672,
+        "MUX2_LUT5": 258,
+        "MUX2_LUT6": 99,
+        "MUX2_LUT7": 28,
+        "MUX2_LUT8": 10,
+        "INV": 4,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 4682,
+      "lut_primitives": 12465,
+      "mux_primitives": 395
+    },
+    "sdram_pipeline_cache": {
+      "cells": {
+        "LUT3": 425,
+        "LUT4": 982,
+        "LUT2": 22,
+        "DFFE": 350,
+        "DFF": 1,
+        "DFFS": 1,
+        "DFFR": 4,
+        "DFFSE": 6,
+        "DFFRE": 85,
+        "SDPX9B": 2,
+        "SDPB": 32,
+        "pROM": 1,
+        "RAM16SDP1": 128,
+        "RAM16SDP4": 17,
+        "ALU": 198,
+        "MUX2_LUT5": 53,
+        "MUX2_LUT6": 16,
+        "MUX2_LUT7": 8,
+        "MUX2_LUT8": 4,
+        "INV": 3,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 447,
+      "lut_primitives": 1429,
+      "mux_primitives": 81
+    },
+    "sdram": {
+      "cells": {
+        "LUT3": 39,
+        "LUT4": 77,
+        "LUT2": 9,
+        "DFF": 6,
+        "DFFR": 4,
+        "DFFS": 3,
+        "DFFE": 117,
+        "DFFRE": 27,
+        "DFFSE": 1,
+        "ALU": 14,
+        "INV": 4,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 158,
+      "lut_primitives": 125,
+      "mux_primitives": 0
+    },
+    "sdram_burst_memory": {
+      "cells": {
+        "LUT2": 5,
+        "LUT4": 12,
+        "LUT3": 2,
+        "DFFRE": 18,
+        "DFFR": 1,
+        "ALU": 15,
+        "INV": 1,
+        "sdram": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 19,
+      "lut_primitives": 19,
+      "mux_primitives": 0
+    },
+    "top": {
+      "cells": {
+        "IBUF": 4,
+        "IOBUF": 32,
+        "OBUF": 29,
+        "LUT2": 1,
+        "DFFP": 2,
+        "sdram_pll": 1,
+        "sdram_pipeline_risc": 1,
+        "sdram_pipeline_cache": 1,
+        "sdram_burst_memory": 1,
+        "VCC": 1,
+        "GND": 1,
+        "GSR": 1
+      },
+      "flip_flops": 2,
+      "lut_primitives": 1,
+      "mux_primitives": 0
+    }
+  },
+  "high_fanout": [
+    {
+      "net": "clk",
+      "fanout": 5530,
+      "worst_slack_ns": 1.611,
+      "max_delay_ns": 2.274,
+      "driver": null
+    },
+    {
+      "net": "memory_reset_sync[1]",
+      "fanout": 2887,
+      "worst_slack_ns": 7.982,
+      "max_delay_ns": 2.165,
+      "driver": null
+    },
+    {
+      "net": "core/machine_0_50_9",
+      "fanout": 1776,
+      "worst_slack_ns": 10.52,
+      "max_delay_ns": 5.324,
+      "driver": {
+        "cell_type": "LUT3",
+        "instance": "machine_0_50_s3",
+        "ports": {
+          "F": "machine_0_50_9",
+          "I0": "advance",
+          "I1": "emergency",
+          "I2": "machine_0_0[1737]"
+        },
+        "init": "8'hAE"
+      }
+    },
+    {
+      "net": "core/c$case_alt_10_47_5",
+      "fanout": 713,
+      "worst_slack_ns": 12.632,
+      "max_delay_ns": 4.624,
+      "driver": null
+    },
+    {
+      "net": "core/c$case_alt_10_47_19",
+      "fanout": 713,
+      "worst_slack_ns": 2.881,
+      "max_delay_ns": 6.667,
+      "driver": null
+    },
+    {
+      "net": "advance",
+      "fanout": 681,
+      "worst_slack_ns": 9.155,
+      "max_delay_ns": 2.081,
+      "driver": null
+    },
+    {
+      "net": "core/machine_0_0[5492]",
+      "fanout": 576,
+      "worst_slack_ns": 11.978,
+      "max_delay_ns": 5.878,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5492_s1",
+        "ports": {
+          "Q": "machine_0_0[5492]",
+          "D": "\\c$case_alt_387 [5492]",
+          "CLK": "clk",
+          "CE": "machine_0_50_9",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/machine_0_5492_7",
+      "fanout": 575,
+      "worst_slack_ns": 5.165,
+      "max_delay_ns": 4.59,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5492_s3",
+        "ports": {
+          "Q": "machine_0_5492_7",
+          "D": "\\c$case_alt_387_5492_11 ",
+          "CLK": "clk",
+          "CE": "machine_0_50_9",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/c$case_alt_392_3031_8",
+      "fanout": 550,
+      "worst_slack_ns": 4.012,
+      "max_delay_ns": 4.213,
+      "driver": null
+    },
+    {
+      "net": "core/c$case_alt_392_3031_10",
+      "fanout": 546,
+      "worst_slack_ns": 1.66,
+      "max_delay_ns": 5.454,
+      "driver": null
+    }
+  ],
+  "setup_paths": [
+    {
+      "number": 1,
+      "slack_ns": 1.611,
+      "source": "core/request_66_s0/Q",
+      "destination": "cache/entry_mru_s0/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.187
+    },
+    {
+      "number": 2,
+      "slack_ns": 1.66,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_61_0_s/B[2]",
+      "relation_ns": 20.833,
+      "delay_ns": 18.949
+    },
+    {
+      "number": 3,
+      "slack_ns": 1.744,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_61_0_s/B[10]",
+      "relation_ns": 20.833,
+      "delay_ns": 18.865
+    },
+    {
+      "number": 4,
+      "slack_ns": 1.939,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_61_0_s/B[14]",
+      "relation_ns": 20.833,
+      "delay_ns": 18.671
+    },
+    {
+      "number": 5,
+      "slack_ns": 1.942,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_61_0_s/B[9]",
+      "relation_ns": 20.833,
+      "delay_ns": 18.667
+    },
+    {
+      "number": 6,
+      "slack_ns": 2.031,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2174_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.767
+    },
+    {
+      "number": 7,
+      "slack_ns": 2.269,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2261_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.529
+    },
+    {
+      "number": 8,
+      "slack_ns": 2.357,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2166_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.441
+    },
+    {
+      "number": 9,
+      "slack_ns": 2.357,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2192_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.441
+    },
+    {
+      "number": 10,
+      "slack_ns": 2.36,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2177_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.438
+    },
+    {
+      "number": 11,
+      "slack_ns": 2.371,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/machine_0_3004_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.427
+    },
+    {
+      "number": 12,
+      "slack_ns": 2.447,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2124_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.351
+    },
+    {
+      "number": 13,
+      "slack_ns": 2.447,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2132_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.351
+    },
+    {
+      "number": 14,
+      "slack_ns": 2.513,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2078_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.285
+    },
+    {
+      "number": 15,
+      "slack_ns": 2.516,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2248_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.282
+    },
+    {
+      "number": 16,
+      "slack_ns": 2.522,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_61_0_s/B[6]",
+      "relation_ns": 20.833,
+      "delay_ns": 18.087
+    },
+    {
+      "number": 17,
+      "slack_ns": 2.551,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2036_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.247
+    },
+    {
+      "number": 18,
+      "slack_ns": 2.571,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2303_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.227
+    },
+    {
+      "number": 19,
+      "slack_ns": 2.655,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/machine_0_3925_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.143
+    },
+    {
+      "number": 20,
+      "slack_ns": 2.662,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2125_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.137
+    },
+    {
+      "number": 21,
+      "slack_ns": 2.675,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2122_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.123
+    },
+    {
+      "number": 22,
+      "slack_ns": 2.679,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_64_0_s/B[10]",
+      "relation_ns": 20.833,
+      "delay_ns": 17.931
+    },
+    {
+      "number": 23,
+      "slack_ns": 2.7,
+      "source": "core/machine_0_3696_s1/Q",
+      "destination": "core/machine_0_2267_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.099
+    },
+    {
+      "number": 24,
+      "slack_ns": 2.701,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/machine_0_3250_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.098
+    },
+    {
+      "number": 25,
+      "slack_ns": 2.726,
+      "source": "core/machine_0_2034_s0/Q",
+      "destination": "core/c$app_arg_64_0_s/B[9]",
+      "relation_ns": 20.833,
+      "delay_ns": 17.883
+    }
+  ],
+  "target_mhz": 48.0,
+  "fmax_mhz": 52.023,
+  "inputs": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/mru-ram/impl/gwsynthesis/sdram_test.vg": "c2cc609a35a51171e030abe762cb22ed47a3575ce096c563cc174b38d04dc3a3",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/mru-ram/impl/pnr/sdram_test.tr": "4d77c6996fb40c55706a6ec1e193e455ad2ea4136fcda6b08f53e4918ca04056",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/mru-ram/impl/pnr/sdram_test.rpt.txt": "744b8146153bc30a47f103b074ebadbf0686071487b201f647b6adaf65ed21ea"
+  }
+}

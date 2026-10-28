@@ -1,0 +1,2 @@
+PASS: 369 reads, 169 ordered masked writes, 175 line fills, 6446 held clocks
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/all-16-banks-two-way-invalidate-tb.v:67: $finish called at 69945000 (1ps)

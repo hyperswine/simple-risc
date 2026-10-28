@@ -1,0 +1,9 @@
+DONE
+[gls] sending H after 109715 SDRAM clocks
+FPR EXIT 0
+
+[gls] limit reached
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/gls_tb.v:70: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 21ms; walltime 9.202 s; speed 2.264 ms/s
+- Verilator: cpu 9.042 s on 1 threads; allocated 11 MB

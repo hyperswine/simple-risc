@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "pairwise": [
+    {
+      "dimension": "predictor",
+      "before": "btb-off-ways-1-bridge-old",
+      "after": "btb-on-ways-1-bridge-old",
+      "cycles_saved": 8300554,
+      "cycle_reduction_percent": 5.634682793690748,
+      "speedup": 1.0597113744806446
+    },
+    {
+      "dimension": "predictor",
+      "before": "btb-off-ways-1-bridge-new",
+      "after": "btb-on-ways-1-bridge-new",
+      "cycles_saved": 8290899,
+      "cycle_reduction_percent": 5.653212758720905,
+      "speedup": 1.0599195046701864
+    },
+    {
+      "dimension": "predictor",
+      "before": "btb-off-ways-2-bridge-old",
+      "after": "btb-on-ways-2-bridge-old",
+      "cycles_saved": 8305868,
+      "cycle_reduction_percent": 5.726864331158287,
+      "speedup": 1.060747574486918
+    },
+    {
+      "dimension": "predictor",
+      "before": "btb-off-ways-2-bridge-new",
+      "after": "btb-on-ways-2-bridge-new",
+      "cycles_saved": 8295255,
+      "cycle_reduction_percent": 5.739751357601475,
+      "speedup": 1.0608925972535546
+    },
+    {
+      "dimension": "ways",
+      "before": "btb-off-ways-1-bridge-old",
+      "after": "btb-off-ways-2-bridge-old",
+      "cycles_saved": 2278390,
+      "cycle_reduction_percent": 1.5466443481142456,
+      "speedup": 1.0157094122173236
+    },
+    {
+      "dimension": "ways",
+      "before": "btb-off-ways-1-bridge-new",
+      "after": "btb-off-ways-2-bridge-new",
+      "cycles_saved": 2135283,
+      "cycle_reduction_percent": 1.45595900988299,
+      "speedup": 1.0147747037289552
+    },
+    {
+      "dimension": "ways",
+      "before": "btb-on-ways-1-bridge-old",
+      "after": "btb-on-ways-2-bridge-old",
+      "cycles_saved": 2283704,
+      "cycle_reduction_percent": 1.6428193196134422,
+      "speedup": 1.0167025865142658
+    },
+    {
+      "dimension": "ways",
+      "before": "btb-on-ways-1-bridge-new",
+      "after": "btb-on-ways-2-bridge-new",
+      "cycles_saved": 2139639,
+      "cycle_reduction_percent": 1.5463474956456835,
+      "speedup": 1.015706349701727
+    },
+    {
+      "dimension": "bridge",
+      "before": "btb-off-ways-1-bridge-old",
+      "after": "btb-off-ways-1-bridge-new",
+      "cycles_saved": 653643,
+      "cycle_reduction_percent": 0.4437138732326096,
+      "speedup": 1.0044569146810842
+    },
+    {
+      "dimension": "bridge",
+      "before": "btb-off-ways-2-bridge-old",
+      "after": "btb-off-ways-2-bridge-new",
+      "cycles_saved": 510536,
+      "cycle_reduction_percent": 0.35201262627484464,
+      "speedup": 1.0035325613246422
+    },
+    {
+      "dimension": "bridge",
+      "before": "btb-on-ways-1-bridge-old",
+      "after": "btb-on-ways-1-bridge-new",
+      "cycles_saved": 643988,
+      "cycle_reduction_percent": 0.4632631584475133,
+      "speedup": 1.004654192744785
+    },
+    {
+      "dimension": "bridge",
+      "before": "btb-on-ways-2-bridge-old",
+      "after": "btb-on-ways-2-bridge-new",
+      "cycles_saved": 499923,
+      "cycle_reduction_percent": 0.3656343886060287,
+      "speedup": 1.0036697617971706
+    }
+  ],
+  "combined": {
+    "before": "btb-off-ways-1-bridge-old",
+    "after": "btb-on-ways-2-bridge-new",
+    "cycles_saved": 11084181,
+    "cycle_reduction_percent": 7.524298253207428,
+    "speedup": 1.081365138204733
+  }
+}

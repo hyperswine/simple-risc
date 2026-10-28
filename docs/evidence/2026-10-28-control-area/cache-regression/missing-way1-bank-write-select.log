@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/cache-regression/missing-way1-bank-write-select-tb.v:57: reply 522 expected abc043ff got 12c01fff
+       Time: 51885000  Scope: pipeline_cache_tb

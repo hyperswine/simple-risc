@@ -1,0 +1,8 @@
+test_accepts_only_controlled_matrix (test_run_perf.MatrixControls.test_accepts_only_controlled_matrix) ... ok
+test_accepts_complete_bounded_window (test_run_perf.PerformanceGate.test_accepts_complete_bounded_window) ... ok
+test_rejects_limits_missing_markers_duplicates_and_invalid_counters (test_run_perf.PerformanceGate.test_rejects_limits_missing_markers_duplicates_and_invalid_counters) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

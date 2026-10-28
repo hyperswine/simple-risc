@@ -1,0 +1,24 @@
+{
+  "passed": false,
+  "restored": true,
+  "cpu_mhz": 48,
+  "memory_mhz": 48,
+  "guest_timer_mhz": 72,
+  "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+  "elapsed_correction": "guest elapsed_us * 72 / 48",
+  "runs": [],
+  "timing": {
+    "baseline": {
+      "bitstream_sha256": "ae442ecd80213a6969d61a2d838570e367c099a21a325bf36c44bcd79e00f92a",
+      "timing_sha256": "69846e4f8b47570e0275d9bcf2fabf60447c07e901a79ce610876859152423d4",
+      "timing_gate": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 51.682 MHz Fmax, 1.484 ns worst setup slack; 0 setup / 0 hold violating endpoints\n"
+    },
+    "combined": {
+      "bitstream_sha256": "16f7bc6d7217475fcd6b81a7d6a2e3e9e2b4b1c782121d83b4614aea7037f60a",
+      "timing_sha256": "f8658c9eb43c278496a32cadc4a8e92360c09d037bebfec79ce6fa491e766a39",
+      "timing_gate": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 51.281 MHz Fmax, 1.333 ns worst setup slack; 0 setup / 0 hold violating endpoints\n"
+    }
+  },
+  "error": "command failed: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/hardware/baseline-1.uart.log",
+  "restore_sha256": "30a3f82d8249fe1db0e35c51e7b3b9abb269b729e6b16b60ded71fdf57d986c3"
+}

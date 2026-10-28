@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "generated_both_variants": true,
+  "existing_directory_refused_without_changes": true,
+  "frozen_inputs": {
+    "input/base.bin": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "input/base.elf": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "bridge-old.v": "3f7bec73cc8011275f6e316d95cee12190d06d32e2a3b9a2dd45b4128b60d986",
+    "bridge-new.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "generated-on/SdramPipeline.topEntity/sdram_pipeline_risc.v": "d399a2570b287eeb3a7dd674c4c0d81912f7069f10eaafed5b72cd8ff3178500",
+    "generated-off/SdramPipeline.topEntity/sdram_pipeline_risc.v": "3d0b53a8bc1275e444ad961fbbd120635eba2e4babf31aa81769bda60d4c1753"
+  }
+}

@@ -1,0 +1,4 @@
+{"configuration": "baseline", "pacing_ms": 0, "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=b71e54b0563bfcdd", "reply": "ERR HDR\n", "accepted": false, "readback": null}
+{"configuration": "baseline", "pacing_ms": 3.0, "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=b71e54b0563bfcdd", "reply": "ERR HDR\n", "accepted": false, "readback": null}
+{"configuration": "combined", "pacing_ms": 0, "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=fe28365ea09c4e00", "reply": "OK 63e8276d\n", "accepted": true, "readback": "63e8276d\n"}
+{"configuration": "combined", "pacing_ms": 3.0, "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=fe28365ea09c4e00", "reply": "OK 63e8276d\n", "accepted": true, "readback": "63e8276d\n"}

@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "all_counters_identical": true,
+  "baseline_sha256": "997b12c067860e9e9ca8764b17312354ab393de13975533459ce3a4208104c11",
+  "optimized_sha256": "cc52c4e3399954cc94da5701d004aa4be5044bad2f08c3c7938c0ce4e4f9178e",
+  "metrics": {
+    "cycles": 136745834,
+    "held": 10934263,
+    "held_read_miss": 8829668,
+    "held_write_full": 2102547,
+    "held_clear": 2048,
+    "miss_draining": 355212,
+    "miss_filling": 8302705,
+    "fills": 260423,
+    "code_fills": 26084,
+    "writes": 5807281,
+    "stores": 5807285,
+    "store_updates": 4037596,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 136227643,
+    "window_held": 10840949,
+    "window_fills": 260069,
+    "window_writes": 5777926,
+    "window_pipeline_commits": 39516930,
+    "window_redirects": 6566913
+  }
+}

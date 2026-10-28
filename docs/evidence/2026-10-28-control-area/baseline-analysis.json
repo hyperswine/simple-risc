@@ -1,0 +1,509 @@
+{
+  "resources": {
+    "Logic": {
+      "used": 19592,
+      "available": 20736,
+      "percent": 95
+    },
+    "Register": {
+      "used": 7360,
+      "available": 15915,
+      "percent": 47
+    },
+    "CLS": {
+      "used": 10260,
+      "available": 10368,
+      "percent": 99
+    },
+    "BSRAM": {
+      "used": 37,
+      "available": 46,
+      "percent": 81
+    },
+    "DSP": {
+      "used": 3,
+      "available": 24,
+      "percent": 13
+    }
+  },
+  "synthesized_modules": {
+    "sdram_pll": {
+      "cells": {
+        "rPLL": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 0,
+      "lut_primitives": 0,
+      "mux_primitives": 0
+    },
+    "sdram_pipeline_risc": {
+      "cells": {
+        "LUT3": 2853,
+        "LUT4": 9578,
+        "LUT2": 1437,
+        "DFFRE": 2673,
+        "DFFR": 18,
+        "DFF": 25,
+        "DFFS": 5,
+        "DFFE": 1865,
+        "DFFSE": 98,
+        "SDPB": 2,
+        "MULT18X18": 4,
+        "ALU54D": 1,
+        "ALU": 676,
+        "MUX2_LUT5": 288,
+        "MUX2_LUT6": 99,
+        "MUX2_LUT7": 27,
+        "MUX2_LUT8": 10,
+        "INV": 5,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 4684,
+      "lut_primitives": 13868,
+      "mux_primitives": 424
+    },
+    "sdram_pipeline_cache": {
+      "cells": {
+        "LUT3": 3288,
+        "LUT4": 1132,
+        "LUT2": 58,
+        "DFF": 1,
+        "DFFE": 349,
+        "DFFS": 1,
+        "DFFR": 4,
+        "DFFSE": 6,
+        "DFFRE": 2136,
+        "SDPX9B": 2,
+        "SDPB": 32,
+        "pROM": 1,
+        "RAM16SDP4": 17,
+        "ALU": 187,
+        "MUX2_LUT5": 541,
+        "MUX2_LUT6": 260,
+        "MUX2_LUT7": 130,
+        "MUX2_LUT8": 64,
+        "INV": 3,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 2497,
+      "lut_primitives": 4478,
+      "mux_primitives": 995
+    },
+    "sdram": {
+      "cells": {
+        "LUT2": 13,
+        "LUT3": 37,
+        "LUT4": 82,
+        "DFF": 6,
+        "DFFR": 4,
+        "DFFS": 3,
+        "DFFE": 117,
+        "DFFRE": 27,
+        "DFFSE": 1,
+        "ALU": 14,
+        "INV": 4,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 158,
+      "lut_primitives": 132,
+      "mux_primitives": 0
+    },
+    "sdram_burst_memory": {
+      "cells": {
+        "LUT4": 11,
+        "LUT3": 5,
+        "LUT2": 1,
+        "DFFRE": 17,
+        "DFFR": 2,
+        "ALU": 15,
+        "INV": 1,
+        "sdram": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 19,
+      "lut_primitives": 17,
+      "mux_primitives": 0
+    },
+    "top": {
+      "cells": {
+        "IBUF": 4,
+        "IOBUF": 32,
+        "OBUF": 29,
+        "LUT2": 1,
+        "DFFP": 2,
+        "sdram_pll": 1,
+        "sdram_pipeline_risc": 1,
+        "sdram_pipeline_cache": 1,
+        "sdram_burst_memory": 1,
+        "VCC": 1,
+        "GND": 1,
+        "GSR": 1
+      },
+      "flip_flops": 2,
+      "lut_primitives": 1,
+      "mux_primitives": 0
+    }
+  },
+  "high_fanout": [
+    {
+      "net": "clk",
+      "fanout": 7454,
+      "worst_slack_ns": 1.333,
+      "max_delay_ns": 2.274,
+      "driver": null
+    },
+    {
+      "net": "memory_reset_sync[1]",
+      "fanout": 4919,
+      "worst_slack_ns": 7.616,
+      "max_delay_ns": 1.914,
+      "driver": null
+    },
+    {
+      "net": "core/machine_0_50_9",
+      "fanout": 1778,
+      "worst_slack_ns": 9.049,
+      "max_delay_ns": 7.875,
+      "driver": {
+        "cell_type": "LUT3",
+        "instance": "machine_0_50_s3",
+        "ports": {
+          "F": "machine_0_50_9",
+          "I0": "advance",
+          "I1": "emergency",
+          "I2": "machine_0_0[1737]"
+        },
+        "init": "8'hAE"
+      }
+    },
+    {
+      "net": "cache/n19474_17",
+      "fanout": 1000,
+      "worst_slack_ns": 10.049,
+      "max_delay_ns": 5.294,
+      "driver": {
+        "cell_type": "LUT4",
+        "instance": "n19474_s12",
+        "ports": {
+          "F": "n19474_17",
+          "I0": "n19474_13",
+          "I1": "memory_reset_sync[1]",
+          "I2": "n19473_9",
+          "I3": "n19474_14"
+        },
+        "init": "16'h0F0D"
+      }
+    },
+    {
+      "net": "cache/n19474_18",
+      "fanout": 1000,
+      "worst_slack_ns": 10.721,
+      "max_delay_ns": 5.11,
+      "driver": {
+        "cell_type": "LUT4",
+        "instance": "n19474_s13",
+        "ports": {
+          "F": "n19474_18",
+          "I0": "n19474_13",
+          "I1": "memory_reset_sync[1]",
+          "I2": "n19473_9",
+          "I3": "n19474_14"
+        },
+        "init": "16'h0F0D"
+      }
+    },
+    {
+      "net": "cache/way2_5",
+      "fanout": 1000,
+      "worst_slack_ns": 15.071,
+      "max_delay_ns": 4.259,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "way2_s2",
+        "ports": {
+          "Q": "way2_5",
+          "D": "n4598_10",
+          "CLK": "clk",
+          "CE": "advance",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": null
+      }
+    },
+    {
+      "net": "cache/way2_6",
+      "fanout": 1000,
+      "worst_slack_ns": 14.566,
+      "max_delay_ns": 6.001,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "way2_s3",
+        "ports": {
+          "Q": "way2_6",
+          "D": "n4598_11",
+          "CLK": "clk",
+          "CE": "advance",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": null
+      }
+    },
+    {
+      "net": "core/machine_0_0[5492]",
+      "fanout": 993,
+      "worst_slack_ns": 5.472,
+      "max_delay_ns": 5.692,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5492_s1",
+        "ports": {
+          "Q": "machine_0_0[5492]",
+          "D": "\\c$case_alt_387 [5492]",
+          "CLK": "clk",
+          "CE": "machine_0_50_9",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/machine_0_5492_7",
+      "fanout": 991,
+      "worst_slack_ns": 3.352,
+      "max_delay_ns": 6.737,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5492_s3",
+        "ports": {
+          "Q": "machine_0_5492_7",
+          "D": "\\c$case_alt_387_5492_8 ",
+          "CLK": "clk",
+          "CE": "machine_0_50_9",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/c$case_alt_10_47_5",
+      "fanout": 964,
+      "worst_slack_ns": 10.956,
+      "max_delay_ns": 6.906,
+      "driver": null
+    }
+  ],
+  "setup_paths": [
+    {
+      "number": 1,
+      "slack_ns": 1.333,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4157_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.466
+    },
+    {
+      "number": 2,
+      "slack_ns": 1.537,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4217_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.261
+    },
+    {
+      "number": 3,
+      "slack_ns": 1.568,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4596_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.23
+    },
+    {
+      "number": 4,
+      "slack_ns": 1.587,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4669_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.212
+    },
+    {
+      "number": 5,
+      "slack_ns": 1.64,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4181_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.158
+    },
+    {
+      "number": 6,
+      "slack_ns": 1.651,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4667_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.148
+    },
+    {
+      "number": 7,
+      "slack_ns": 1.75,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4668_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 19.048
+    },
+    {
+      "number": 8,
+      "slack_ns": 1.959,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4205_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.839
+    },
+    {
+      "number": 9,
+      "slack_ns": 1.959,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4180_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.839
+    },
+    {
+      "number": 10,
+      "slack_ns": 1.961,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4602_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.838
+    },
+    {
+      "number": 11,
+      "slack_ns": 2.032,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4688_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.766
+    },
+    {
+      "number": 12,
+      "slack_ns": 2.056,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4161_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.743
+    },
+    {
+      "number": 13,
+      "slack_ns": 2.059,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4160_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.739
+    },
+    {
+      "number": 14,
+      "slack_ns": 2.181,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4684_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.617
+    },
+    {
+      "number": 15,
+      "slack_ns": 2.183,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4182_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.615
+    },
+    {
+      "number": 16,
+      "slack_ns": 2.187,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4664_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.611
+    },
+    {
+      "number": 17,
+      "slack_ns": 2.227,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4670_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.571
+    },
+    {
+      "number": 18,
+      "slack_ns": 2.227,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4686_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.571
+    },
+    {
+      "number": 19,
+      "slack_ns": 2.262,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4610_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.536
+    },
+    {
+      "number": 20,
+      "slack_ns": 2.336,
+      "source": "core/machine_0_3695_s1/Q",
+      "destination": "core/machine_0_2225_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 18.462
+    },
+    {
+      "number": 21,
+      "slack_ns": 2.364,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4689_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.435
+    },
+    {
+      "number": 22,
+      "slack_ns": 2.391,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4197_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.408
+    },
+    {
+      "number": 23,
+      "slack_ns": 2.41,
+      "source": "core/machine_0_2598_s1/Q",
+      "destination": "core/machine_0_4229_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.388
+    },
+    {
+      "number": 24,
+      "slack_ns": 2.431,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4604_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.367
+    },
+    {
+      "number": 25,
+      "slack_ns": 2.436,
+      "source": "core/machine_0_192_s0/Q",
+      "destination": "core/machine_0_4683_s1/D",
+      "relation_ns": 20.833,
+      "delay_ns": 18.363
+    }
+  ],
+  "target_mhz": 48.0,
+  "fmax_mhz": 51.281,
+  "inputs": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/hardware/combined/impl/gwsynthesis/sdram_test.vg": "e370bf542d463309dddaa433ffd2fb4e98bb034ef404d47de52358767ebc1f00",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/hardware/combined/impl/pnr/sdram_test.tr": "f8658c9eb43c278496a32cadc4a8e92360c09d037bebfec79ce6fa491e766a39",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/benchmark-matrix-20261028/hardware/combined/impl/pnr/sdram_test.rpt.txt": "87eab96c31927ce51c0796b3d958bf168862fbf3ad5303d8259503f736add4c4"
+  }
+}

@@ -1,0 +1,3 @@
+PASS: 31 MRU decisions, 253 lookup/write collisions
+PASS: 297 reads, 137 ordered masked writes, 47 line fills, 4065 held clocks
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/control-area-20261028/mru-regression/poisoned-read-tb.v:90: $finish called at 45095000 (1ps)

@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "restored": true,
+  "cpu_mhz": 48,
+  "memory_mhz": 48,
+  "guest_timer_mhz": 72,
+  "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+  "elapsed_correction": "guest elapsed_us * 72 / 48",
+  "upload_protocol": "legacy Q/V/H with readback verification",
+  "runs": [
+    {
+      "configuration": "baseline",
+      "repeat": 1,
+      "guest_elapsed_us": 1996702,
+      "corrected_elapsed_us": 2995053.0,
+      "log_sha256": "1dbc0069e28db571db454de01226660508df62fe71fd51eacd39c6b672e87a1f"
+    },
+    {
+      "configuration": "combined",
+      "repeat": 1,
+      "guest_elapsed_us": 1870170,
+      "corrected_elapsed_us": 2805255.0,
+      "log_sha256": "146344edf1fa1f3f7d15248858620e2771e483c67f332c7fda11caccb145fcb9"
+    },
+    {
+      "configuration": "baseline",
+      "repeat": 2,
+      "guest_elapsed_us": 1996701,
+      "corrected_elapsed_us": 2995051.5,
+      "log_sha256": "752ebbc83c2dcb340df80cef0abf320e1de14d8e3c065513bb288da1f62617a8"
+    },
+    {
+      "configuration": "combined",
+      "repeat": 2,
+      "guest_elapsed_us": 1870171,
+      "corrected_elapsed_us": 2805256.5,
+      "log_sha256": "8db7f6adef7a647666a15f98e2627c83964fd8311af1f4d6786c2532778af2b2"
+    },
+    {
+      "configuration": "baseline",
+      "repeat": 3,
+      "guest_elapsed_us": 1996703,
+      "corrected_elapsed_us": 2995054.5,
+      "log_sha256": "c631e2bd797dead93e45c3f0ac00ae9035e44bd3ccc66734b220d308ba22821e"
+    },
+    {
+      "configuration": "combined",
+      "repeat": 3,
+      "guest_elapsed_us": 1870170,
+      "corrected_elapsed_us": 2805255.0,
+      "log_sha256": "146344edf1fa1f3f7d15248858620e2771e483c67f332c7fda11caccb145fcb9"
+    }
+  ],
+  "timing": {
+    "baseline": {
+      "bitstream_sha256": "ae442ecd80213a6969d61a2d838570e367c099a21a325bf36c44bcd79e00f92a",
+      "timing_sha256": "69846e4f8b47570e0275d9bcf2fabf60447c07e901a79ce610876859152423d4",
+      "timing_gate": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 51.682 MHz Fmax, 1.484 ns worst setup slack; 0 setup / 0 hold violating endpoints\n"
+    },
+    "combined": {
+      "bitstream_sha256": "16f7bc6d7217475fcd6b81a7d6a2e3e9e2b4b1c782121d83b4614aea7037f60a",
+      "timing_sha256": "f8658c9eb43c278496a32cadc4a8e92360c09d037bebfec79ce6fa491e766a39",
+      "timing_gate": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 51.281 MHz Fmax, 1.333 ns worst setup slack; 0 setup / 0 hold violating endpoints\n"
+    }
+  },
+  "medians_us": {
+    "baseline": 2995053.0,
+    "combined": 2805255.0
+  },
+  "cycle_time_reduction_percent": 6.337049795112137,
+  "restore_sha256": "30a3f82d8249fe1db0e35c51e7b3b9abb269b729e6b16b60ded71fdf57d986c3"
+}

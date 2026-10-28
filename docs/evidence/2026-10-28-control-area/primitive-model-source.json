@@ -1,0 +1,7 @@
+{
+  "vendor_file": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA/IDE/simlib/gw2a/prim_sim.v",
+  "vendor_sha256": "ea60e176f48306d596dc11d2495641a49cd778447f539427f53da95430bf9081",
+  "primitive": "RAM16SDP1",
+  "semantics": "INIT_0 initializes 16 bits; asynchronous RAD read; WRE-gated rising-edge CLK write at WAD",
+  "local_model_sha256": "9c1dc277ba899e23bdbb83e4be25025a01bef408f29e4cea4547656995115ceb"
+}

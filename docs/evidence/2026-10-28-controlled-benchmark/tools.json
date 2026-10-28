@@ -1,0 +1,5 @@
+{
+  "verilator": "Verilator 5.052 2026-09-05 rev vUNKNOWN-built20260905",
+  "cabal": "cabal-install version 3.16.1.0 \ncompiled using version 3.16.1.0 of the Cabal library (in-tree)",
+  "clang": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin"
+}
