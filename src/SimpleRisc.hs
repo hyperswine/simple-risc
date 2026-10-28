@@ -1798,7 +1798,7 @@ data Pipe = Pipe
     pFRead :: Index 2,
     pFWrite :: Index 2,
     pFCount :: Unsigned 2,
-    pD :: Maybe Fetched,
+    pDSlot :: Slot Fetched,
     -- | Decode's operands: on its first cycle (pDFresh) they come from the
     -- register file, read the cycle before at the entering word's sources;
     -- while it waits, from here, refreshed by forwarding.
@@ -1808,9 +1808,12 @@ data Pipe = Pipe
     -- from their next state on the preceding edge. Comparisons terminate
     -- here rather than driving the wide D payload enable in the same cycle.
     pDBlocked :: Bool,
-    pE1 :: Maybe ExecuteOne,
-    pE2 :: Maybe ExecuteTwo,
-    pM :: Maybe MemoryStage,
+    -- D, E1, E2 and M keep their validity token apart from their payload
+    -- (see 'Slot'): cancellation (handover, FENCE.I, a redirect) clears the
+    -- token only, and each payload is loaded under a local stage enable.
+    pE1Slot :: Slot ExecuteOne,
+    pE2Slot :: Slot ExecuteTwo,
+    pMSlot :: Slot MemoryStage,
     -- | A taken branch or jump left the second execute stage last cycle:
     -- this cycle the younger stages are flushed and its target fetched.
     pRedirect :: Maybe Word32,
@@ -1819,6 +1822,53 @@ data Pipe = Pipe
     pBtb :: Vec 8 BtbEntry
   }
   deriving (Generic, NFDataX)
+
+-- | A pipeline stage register split into a one-bit validity token and its
+-- payload. Only 'slotValid' depends on cancellation (handover, FENCE.I,
+-- redirects, resets); 'slotPayload' is loaded by the stage's own advance
+-- decision, which reads registered stage state only. A Maybe-typed stage
+-- made every payload bit's next-state mux depend on the whole-pipeline
+-- cancellation logic (the 2026-10-28 reports trace pM.mAction and
+-- cpuInterruptDue through 400-550-load selects into pD/E2 payload and the
+-- DSP operand registers). A payload of an invalid slot is a don't-care and is
+-- never observed: everything reads stages through 'pD', 'pE1', 'pE2', 'pM'.
+data Slot a = Slot {slotValid :: Bool, slotPayload :: a}
+  deriving (Generic, NFDataX)
+
+slotView :: Slot a -> Maybe a
+slotView (Slot valid payload) = if valid then Just payload else Nothing
+
+-- | Invalidate, keeping the (now don't-care) payload: no payload mux.
+slotCancel :: Slot a -> Slot a
+slotCancel slot = slot {slotValid = False}
+
+-- | The token from a Maybe-valued next state, keeping the old payload; the
+-- payload is overwritten separately in 'pipeStepDecodedWith'.
+slotToken :: Slot a -> Maybe b -> Slot a
+slotToken slot next = slot {slotValid = isJust next}
+
+pD :: Pipe -> Maybe Fetched
+pD = slotView . pDSlot
+
+pE1 :: Pipe -> Maybe ExecuteOne
+pE1 = slotView . pE1Slot
+
+pE2 :: Pipe -> Maybe ExecuteTwo
+pE2 = slotView . pE2Slot
+
+pM :: Pipe -> Maybe MemoryStage
+pM = slotView . pMSlot
+
+emptyExecuteOne :: ExecuteOne
+emptyExecuteOne = ExecuteOne 0 0 0 0 0 initialExecuteControl 0 0 0 0 0 False False 0
+
+emptyExecuteTwo :: ExecuteTwo
+emptyExecuteTwo =
+  ExecuteTwo 0 0 initialExecuteControl (Computed Nothing 0 0 Nothing 0) (repeat 0) initialCompareResults initialCompareResults
+    0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
+
+emptyMemoryStage :: MemoryStage
+emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False (repeat 0) 0 Plain 0 0 0 0
 
 emptyPipe :: Pipe
 emptyPipe =
@@ -1835,13 +1885,13 @@ emptyPipe =
     0
     0
     0
-    Nothing
+    (Slot False (Fetched 0 0 False False 0 0 4))
     (0, 0)
     False
     False
-    Nothing
-    Nothing
-    Nothing
+    (Slot False emptyExecuteOne)
+    (Slot False emptyExecuteTwo)
+    (Slot False emptyMemoryStage)
     Nothing
     (repeat (BtbEntry False False 0 0))
 
@@ -1865,12 +1915,12 @@ restartPipe pc pipe =
       pFRead = 0,
       pFWrite = 0,
       pFCount = 0,
-      pD = Nothing,
+      pDSlot = slotCancel (pDSlot pipe),
       pDFresh = False,
       pDBlocked = False,
-      pE1 = Nothing,
-      pE2 = Nothing,
-      pM = Nothing,
+      pE1Slot = slotCancel (pE1Slot pipe),
+      pE2Slot = slotCancel (pE2Slot pipe),
+      pMSlot = slotCancel (pMSlot pipe),
       pRedirect = Nothing
     }
 
@@ -2362,9 +2412,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
               { pInstructionPc = fetchPc,
                 pInflight = issued :> Nothing :> Nothing :> Nil,
                 pOutstanding = if issue then 1 else 0,
-                pM = case pM pipe of
-                  Just m | mHold -> Just (heldMemory m)
-                  _ -> Nothing
+                pMSlot = slotToken (pMSlot pipe) (if mHold then pM pipe else Nothing)
               }
         | otherwise =
             Pipe
@@ -2380,15 +2428,15 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                 pFRead = if fPop then (if pFRead pipe == 0 then 1 else 0) else pFRead pipe,
                 pFWrite = if fPush then (if pFWrite pipe == 0 then 1 else 0) else pFWrite pipe,
                 pFCount = pFCount pipe + (if fPush then 1 else 0) - (if fPop then 1 else 0),
-                pD = nextD,
+                pDSlot = slotToken (pDSlot pipe) nextD,
                 pDOperands = case d of
                   Just f -> let (_, _, operands) = decodeOut f in operands
                   Nothing -> pDOperands pipe,
                 pDFresh = dFree,
                 pDBlocked = nextBlocked,
-                pE1 = nextE1,
-                pE2 = nextE2,
-                pM = nextM,
+                pE1Slot = slotToken (pE1Slot pipe) nextE1,
+                pE2Slot = slotToken (pE2Slot pipe) nextE2,
+                pMSlot = slotToken (pMSlot pipe) nextM,
                 pRedirect = redirect,
                 pBtb = btb'
               }
@@ -2409,9 +2457,41 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             cpuPortWriteAddressFull = maybe 0 mAddress (pM pipe),
             cpuPortByteEnable = maybe 0xf (\x -> pack (map (\n -> if testBit (mMask x) (n * 8) then high else low) (3 :> 2 :> 1 :> 0 :> Nil))) (pM pipe)
           }
+      -- Stage payloads, independent of handover, FENCE.I and redirects:
+      -- each loads from the stage before it under that stage's own advance
+      -- decision (registered state only), and otherwise holds, so synthesis
+      -- can use the flip-flops' clock enables. Wherever the selected
+      -- next pipe (any branch above) has a valid stage, its contents equal
+      -- the payload here; where the stage is cancelled the payload is unused.
+      payloadD
+        | dFree && pFCount pipe /= 0 = pFQueue pipe !! pFRead pipe
+        | otherwise = slotPayload (pDSlot pipe)
+      payloadE1
+        | isJust (pE1 pipe) && not e1Advance = slotPayload (pE1Slot pipe)
+        | dAdvance = let (stage, _, _) = decodeOut (slotPayload (pDSlot pipe)) in stage
+        | otherwise = slotPayload (pE1Slot pipe)
+      payloadE2
+        | isJust (pE2 pipe) && not e2Advance = slotPayload (pE2Slot pipe)
+        | isJust (pE1 pipe) && e1Advance = e1Out (slotPayload (pE1Slot pipe))
+        | otherwise = slotPayload (pE2Slot pipe)
+      payloadM
+        | mHold = heldMemory (slotPayload (pMSlot pipe))
+        | isJust (pE2 pipe) && e2Advance = let (stage, _, _, _) = e2Out (slotPayload (pE2Slot pipe)) in stage
+        | otherwise = slotPayload (pMSlot pipe)
+      withPayloads m =
+        let p = cpuPipe m
+         in m
+              { cpuPipe =
+                  p
+                    { pDSlot = (pDSlot p) {slotPayload = payloadD},
+                      pE1Slot = (pE1Slot p) {slotPayload = payloadE1},
+                      pE2Slot = (pE2Slot p) {slotPayload = payloadE2},
+                      pMSlot = (pMSlot p) {slotPayload = payloadM}
+                    }
+              }
    in if handover
-        then (handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing))
-        else (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}, registerWriteNow, (readAddress, memoryWrite, Nothing))
+        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing))
+        else (withPayloads (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}), registerWriteNow, (readAddress, memoryWrite, Nothing))
 
 -- | Leave the pipeline for the phases at the commit stage: an interrupt
 -- (before the instruction), an exception, or an action the phases run from
