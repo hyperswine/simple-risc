@@ -14,8 +14,9 @@ module perf_tb #(
  parameter real MEM_MHZ=54.0,
  parameter PHASE_DEGREES=135,
  parameter UART_BIT=32,
- parameter LINE_BITS=12,
- parameter WRITE_UPDATE=1
+ parameter LINE_BITS=11,
+ parameter WRITE_UPDATE=1,
+ parameter WAYS=2
 );
  localparam real CPU_NS=1000.0/CPU_MHZ;
  localparam real MEM_NS=1000.0/MEM_MHZ;
@@ -38,7 +39,7 @@ module perf_tb #(
    .sd_miso(1'b1),.sd_sck(sd_sck),.sd_mosi(sd_mosi),.sd_cs(sd_cs));
  wire c_req,c_write,c_ready,c_done,c_valid;
  wire [20:0] c_address;wire [31:0] c_wdata,c_rdata;wire [3:0] c_mask;wire [1:0] c_word_index;
- sdram_pipeline_cache #(.LINE_BITS(LINE_BITS),.WRITE_UPDATE(WRITE_UPDATE),.ROM_FILE(ROM_FILE)) cache(clk,core_reset,
+ sdram_pipeline_cache #(.LINE_BITS(LINE_BITS),.WRITE_UPDATE(WRITE_UPDATE),.WAYS(WAYS),.ROM_FILE(ROM_FILE)) cache(clk,core_reset,
    cpu_address,cpu_write,cpu_wdata,cpu_mask,hold_cpu,cpu_rdata,
    c_req,c_write,c_address,c_wdata,c_mask,c_ready,c_done,c_rdata,c_valid,c_word_index);
  wire req,write,ready,done,valid;wire [20:0] address;wire [31:0] wdata,rdata;

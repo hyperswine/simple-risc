@@ -7,8 +7,8 @@ nextpnr-himbaechel, gowin_pack, openFPGALoader).
 | Design | Source | Build script | Clock |
 |---|---|---|---|
 | SimpleRisc (RV32IM, 64 KiB RAM) | `src/SimpleRisc.hs` | `build.sh`; verified with `build_gowin.sh` | PLL; the Gowin-verified build is 78 MHz (placement mode 2) |
-| FP-RISC development preset (RV32IMC, 8 MiB SDRAM) | `src/SdramPipeline.hs` | `SDRAM_PRESET=fprisc-48 sdram/build.sh` | CPU/SDRAM 48/48 MHz; 64 KiB cache; internal timing and physical workload evidence, SDRAM I/O qualification pending |
-| SimpleRisc SDRAM pipeline (8 MiB, experimental) | `src/SdramPipeline.hs` | `sdram/build.sh pipeline` (Gowin) | IMC CPU 72 MHz / SDRAM 54 MHz; 64 KiB banked write-update cache; [integrated timing and regressions](../../docs/2026-10-19-TANGNANO20K-INTEGRATION.md), classifier 2.06 s; +0.008 ns internal setup margin; SDRAM I/O qualification pending |
+| FP-RISC development preset (RV32IMC, 8 MiB SDRAM) | `src/SdramPipeline.hs` | `SDRAM_PRESET=fprisc-48 sdram/build.sh` | CPU/SDRAM 48/48 MHz; one-way 64 KiB cache; internal timing and physical workload evidence, SDRAM I/O qualification pending |
+| SimpleRisc SDRAM pipeline (8 MiB, experimental) | `src/SdramPipeline.hs` | `sdram/build.sh pipeline` (Gowin) | Two-way 64 KiB default; historical one-way IMC 72/54 MHz [timing and regressions](../../docs/2026-10-19-TANGNANO20K-INTEGRATION.md), classifier 2.06 s and +0.008 ns internal setup margin; two-way and SDRAM I/O qualification pending |
 | Earlier serial SDRAM core | `src/SdramSimpleRisc.hs` | `sdram/build.sh serial` (Gowin) | cached 66 MHz |
 | PsramRegs | `src/PsramRegs.hs` | `build_psram.sh` | 27 MHz oscillator |
 

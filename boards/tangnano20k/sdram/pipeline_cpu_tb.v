@@ -3,6 +3,7 @@ module pipeline_cpu_tb #(
  parameter ROM_FILE="output/tangnano20k/pipeline-rtl/rom.hex",
  parameter EXPECT_TRAPS=4,
  parameter LINE_BITS=12,
+ parameter CACHE_WAYS=1,
  parameter LOADER_TEST=0,
  parameter UART_BIT=868,
  parameter PIN_MODEL=0,
@@ -37,12 +38,22 @@ module pipeline_cpu_tb #(
    .uart_rx(uart_rx),.uart_tx(uart_tx),.memory_data(cpu_rdata),.memory_hold(hold_cpu),
    .memory_address(cpu_address),.memory_write(cpu_write),.memory_wdata(cpu_wdata),.memory_mask(cpu_mask),
    .sd_miso(sd_mosi),.sd_sck(sd_sck),.sd_mosi(sd_mosi),.sd_cs(sd_cs));
+ // Generated pipeline commit/fetch fields: a post-fence commit must follow a
+ // new fetch of mNext with every pre-fence pipeline valid/queue field empty.
+ wire fence_pipeline_empty =
+   (cpu.c$ds1_app_arg[4694:4692]==0) && !cpu.c$ds1_app_arg[4691] &&
+   (cpu.c$ds1_app_arg[4289:4288]==0) &&
+   !cpu.c$ds1_app_arg[4287] && !cpu.c$ds1_app_arg[4087] &&
+   !cpu.c$ds1_app_arg[3761] && !cpu.c$ds1_app_arg[2962];
+ pipeline_fence_assertions fence_i_monitor(clk,core_reset,hold_cpu,
+   cpu.mCommits,cpu.m_4[127:96],cpu.m_4[557:526],cpu.m_4[525:494],
+   cpu.issue,cpu.fetchPc,fence_pipeline_empty);
  wire req,write,ready;wire [20:0] address;wire [31:0] wdata;wire [3:0] mask;
  wire done,valid;wire [31:0] rdata;wire [1:0] word_index;
  wire c_req,c_write,c_ready,c_done,c_valid;
  wire [20:0] c_address;wire [31:0] c_wdata,c_rdata;wire [3:0] c_mask;wire [1:0] c_word_index;
  reg fake_done=0,fake_valid=0;reg [31:0] fake_rdata=0;reg [1:0] fake_word_index=0;
- sdram_pipeline_cache #(.LINE_BITS(LINE_BITS),.ROM_FILE(ROM_FILE)) cache(clk,core_reset,
+ sdram_pipeline_cache #(.LINE_BITS(LINE_BITS),.WAYS(CACHE_WAYS),.ROM_FILE(ROM_FILE)) cache(clk,core_reset,
    cpu_address,cpu_write,cpu_wdata,cpu_mask,hold_cpu,cpu_rdata,
    c_req,c_write,c_address,c_wdata,c_mask,c_ready,c_done,c_rdata,c_valid,c_word_index);
  generate if(CDC_BRIDGE)begin: clock_crossing
@@ -297,7 +308,12 @@ module pipeline_cpu_tb #(
        if(timer_misses!=8 || ram[STATUS+8]!==8 || ram[STATUS+9]!==32'h5a5a1234)
          $fatal(1,"timer/cache/flush coverage misses=%0d interrupts=%0d sentinel=%h",timer_misses,ram[STATUS+8],ram[STATUS+9]);
        if(!break_sent || long_held<8000 || ready_stalls==0)$fatal(1,"hold/backpressure/UART leg was not exercised");
-       $display("PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; %0d fills %0d writes %0d held clocks",reads,writes,held_clocks);
+       if(fence_i_monitor.commits<2 || fence_i_monitor.memory_fetches!=fence_i_monitor.commits ||
+         fence_i_monitor.verified_fences!=fence_i_monitor.commits || fence_i_monitor.awaiting_memory_fetch ||
+         fence_i_monitor.awaiting_commit)$fatal(1,"FENCE.I coverage commits=%0d fetches=%0d verified=%0d pending=%b/%b",
+         fence_i_monitor.commits,fence_i_monitor.memory_fetches,fence_i_monitor.verified_fences,
+         fence_i_monitor.awaiting_memory_fetch,fence_i_monitor.awaiting_commit);
+       $display("PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; %0d fills %0d writes %0d held clocks; %0d fence.i epoch assertions",reads,writes,held_clocks,fence_i_monitor.verified_fences);
        $finish;
      end
    end else quiet=0;

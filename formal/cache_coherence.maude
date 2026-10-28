@@ -1,0 +1,113 @@
+*** Transaction-level coherence model for a one-set, two-way unified cache.
+*** Architectural memory includes every accepted store immediately. Refills are
+*** atomic at this abstraction level; RTL collision/CDC timing is intentionally
+*** outside this model and remains covered by the Verilog regressions.
+
+mod CACHE-COHERENCE is
+  protecting BOOL .
+
+  sorts Tag Value Way Line Cache Memory Policy Fault State .
+  ops t0 t1 : -> Tag [ctor] .
+  ops v0 v1 v2 : -> Value [ctor] .
+  ops w0 w1 : -> Way [ctor] .
+  op invalid : -> Line [ctor] .
+  op line : Tag Value -> Line [ctor] .
+  op cache : Line Line -> Cache [ctor] .
+  op mem : Value Value -> Memory [ctor] .
+  ops update invalidate : -> Policy [ctor] .
+  ops good badWay1 : -> Fault [ctor] .
+  op st : Cache Memory Way Policy Fault -> State [ctor] .
+
+  ops initialUpdate initialInvalidate initialBroken : -> State .
+  eq initialUpdate = st(cache(invalid, invalid), mem(v0, v0), w0, update, good) .
+  eq initialInvalidate = st(cache(invalid, invalid), mem(v0, v0), w0, invalidate, good) .
+  eq initialBroken = st(cache(invalid, invalid), mem(v0, v0), w0, update, badWay1) .
+
+  var T U : Tag .
+  vars V Old M0 M1 : Value .
+  vars L L0 L1 : Line .
+  var M : Memory .
+  var R : Way .
+  var P : Policy .
+  var F : Fault .
+  var S : State .
+
+  op get : Tag Memory -> Value .
+  eq get(t0, mem(M0, M1)) = M0 .
+  eq get(t1, mem(M0, M1)) = M1 .
+
+  op put : Tag Value Memory -> Memory .
+  eq put(t0, V, mem(M0, M1)) = mem(V, M1) .
+  eq put(t1, V, mem(M0, M1)) = mem(M0, V) .
+
+  op hit : Tag Line -> Bool .
+  eq hit(T, line(T, V)) = true .
+  eq hit(T, invalid) = false .
+  ceq hit(T, line(U, V)) = false if T =/= U .
+
+  op updateLine : Tag Value Line -> Line .
+  eq updateLine(T, V, line(T, Old)) = line(T, V) .
+  eq updateLine(T, V, invalid) = invalid .
+  ceq updateLine(T, V, line(U, Old)) = line(U, Old) if T =/= U .
+
+  op invalidateLine : Tag Line -> Line .
+  eq invalidateLine(T, line(T, V)) = invalid .
+  eq invalidateLine(T, invalid) = invalid .
+  ceq invalidateLine(T, line(U, V)) = line(U, V) if T =/= U .
+
+  op read : Tag State -> State .
+  eq read(T, st(cache(L0, L1), M, R, P, F)) =
+    if hit(T, L0) then st(cache(L0, L1), M, w0, P, F)
+    else if hit(T, L1) then st(cache(L0, L1), M, w1, P, F)
+    else if L0 == invalid then st(cache(line(T, get(T, M)), L1), M, w0, P, F)
+    else if L1 == invalid then st(cache(L0, line(T, get(T, M))), M, w1, P, F)
+    else if R == w0 then st(cache(L0, line(T, get(T, M))), M, w1, P, F)
+    else st(cache(line(T, get(T, M)), L1), M, w0, P, F)
+    fi fi fi fi fi .
+
+  op written0 : Tag Value Line Policy -> Line .
+  eq written0(T, V, L, P) =
+    if P == update then updateLine(T, V, L) else invalidateLine(T, L) fi .
+
+  op written1 : Tag Value Line Policy Fault -> Line .
+  eq written1(T, V, L, P, F) =
+    if F == badWay1 then L
+    else if P == update then updateLine(T, V, L) else invalidateLine(T, L) fi
+    fi .
+
+  op write : Tag Value State -> State .
+  eq write(T, V, st(cache(L0, L1), M, R, P, F)) =
+    st(cache(written0(T, V, L0, P), written1(T, V, L1, P, F)),
+       put(T, V, M), R, P, F) .
+
+  op badLine : Memory Line -> Bool .
+  eq badLine(M, invalid) = false .
+  eq badLine(mem(M0, M1), line(t0, V)) = V =/= M0 .
+  eq badLine(mem(M0, M1), line(t1, V)) = V =/= M1 .
+
+  op duplicate : Line Line -> Bool .
+  eq duplicate(line(T, V), line(T, Old)) = true .
+  eq duplicate(invalid, L) = false .
+  eq duplicate(L, invalid) = false .
+  ceq duplicate(line(T, V), line(U, Old)) = false if T =/= U .
+
+  op bad : State -> Bool .
+  eq bad(st(cache(L0, L1), M, R, P, F)) =
+    badLine(M, L0) or badLine(M, L1) or duplicate(L0, L1) .
+
+  rl [read-t0] : S => read(t0, S) .
+  rl [read-t1] : S => read(t1, S) .
+  rl [write-t0-v0] : S => write(t0, v0, S) .
+  rl [write-t0-v1] : S => write(t0, v1, S) .
+  rl [write-t0-v2] : S => write(t0, v2, S) .
+  rl [write-t1-v0] : S => write(t1, v0, S) .
+  rl [write-t1-v1] : S => write(t1, v1, S) .
+  rl [write-t1-v2] : S => write(t1, v2, S) .
+endm
+
+*** Expected: no solution. All reachable good states preserve coherence.
+search in CACHE-COHERENCE : initialUpdate =>* S:State such that bad(S:State) .
+search in CACHE-COHERENCE : initialInvalidate =>* S:State such that bad(S:State) .
+
+*** Expected: one solution. A missed Way 1 store update leaves a stale hit.
+search [1] in CACHE-COHERENCE : initialBroken =>* S:State such that bad(S:State) .

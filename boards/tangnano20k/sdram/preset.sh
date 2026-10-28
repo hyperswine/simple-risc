@@ -12,6 +12,7 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
   sdram_preset_setting SDRAM_CPU_FREQ_MHZ 48
   sdram_preset_setting SDRAM_RVC 1
   sdram_preset_setting SDRAM_CACHE 1
+  sdram_preset_setting SDRAM_CACHE_WAYS 1
   sdram_preset_setting SDRAM_CACHE_LINE_BITS 12
   sdram_preset_setting SDRAM_PHASE_DEGREES 135
   sdram_preset_setting SDRAM_PLACE_OPTION 2

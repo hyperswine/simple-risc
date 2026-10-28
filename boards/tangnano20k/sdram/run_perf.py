@@ -38,7 +38,8 @@ def main():
     p.add_argument('--cpu-mhz', type=float, default=72)
     p.add_argument('--mem-mhz', type=float, default=54)
     p.add_argument('--single-clock', action='store_true', help='no bridge; memory runs on the CPU clock')
-    p.add_argument('--line-bits', type=int, default=12)
+    p.add_argument('--line-bits', type=int, default=11)
+    p.add_argument('--ways', type=int, choices=[1, 2], default=2)
     p.add_argument('--write-update', type=int, choices=[0, 1], default=1)
     p.add_argument('--start', default='DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2')
     p.add_argument('--end', default='FPR EXIT 0')
@@ -47,7 +48,7 @@ def main():
     a = p.parse_args()
     name = a.out or ROOT/'output/tangnano20k/perf'/(
         f'{a.image.stem}-{"single" if a.single_clock else "cdc"}-c{a.cpu_mhz:g}-m{a.mem_mhz:g}'
-        f'-l{a.line_bits}-w{a.write_update}-{a.cache_rtl.stem}')
+        f'-l{a.line_bits}-k{a.ways}-w{a.write_update}-{a.cache_rtl.stem}')
     out = name.resolve()
     out.mkdir(parents=True, exist_ok=True)
     sources = sorted(a.generated.glob('*.v'))
@@ -80,7 +81,7 @@ def main():
     build = ['verilator', '--binary', '--timing', '-O3', '-Wno-fatal', '-Wno-lint', '-Wno-style',
              '--top-module', 'perf_tb', '--Mdir', out/'obj', '-j', '0',
              f'-GROM_FILE="{out}/rom.hex"', f'-GCDC_BRIDGE={cdc}', f'-GCPU_MHZ={a.cpu_mhz}',
-             f'-GMEM_MHZ={a.mem_mhz}', f'-GLINE_BITS={a.line_bits}', f'-GWRITE_UPDATE={a.write_update}',
+             f'-GMEM_MHZ={a.mem_mhz}', f'-GLINE_BITS={a.line_bits}', f'-GWAYS={a.ways}', f'-GWRITE_UPDATE={a.write_update}',
              *copied, a.cache_rtl.resolve(), a.bridge_rtl.resolve(), HERE/'sdram.v', HERE/'burst_memory.v',
              HERE/'perf_tb.v']
     log = out/'build.log'

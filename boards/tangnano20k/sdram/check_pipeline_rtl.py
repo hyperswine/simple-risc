@@ -394,8 +394,10 @@ def main():
                         help='generated Clash directory; defaults to SdramPipeline-0 or -1 matching --compressed')
     parser.add_argument('--compressed', action='store_true')
     parser.add_argument('--simulator', choices=['iverilog', 'verilator'], default='iverilog')
-    parser.add_argument('--cache-line-bits', type=int, choices=range(7, 13), default=12,
-                        help='12 selects the production 64 KiB cache; 7 stresses small-cache conflicts')
+    parser.add_argument('--cache-line-bits', type=int, choices=range(7, 13), default=11,
+                        help='11 with --cache-ways 2 (or 12 with --cache-ways 1) selects the production 64 KiB cache; 7 stresses small-cache conflicts')
+    parser.add_argument('--cache-ways', type=int, choices=[1, 2], default=2,
+                        help='cache associativity ways (1 or 2)')
     parser.add_argument('--cdc-bridge', action='store_true',help='cross into an offset half-speed backing-memory clock')
     parser.add_argument('--boot-loader', action='store_true', help='exercise the actual ROM and UART P/R upload')
     parser.add_argument('--uart-bit-cycles',type=int,default=868,
@@ -423,6 +425,8 @@ def main():
         parser.error('pin timing overrides require --pin-model')
     if args.loader_command!='R' and not args.boot_loader:
         parser.error('--loader-command requires --boot-loader')
+    unit_output = run(['python3', HERE/'check_fence_assertion.py'])
+    print(unit_output, end='', flush=True)
     generated = (args.generated or ROOT/f'output/tangnano20k/sdram-generated/SdramPipeline-{int(args.compressed)}/SdramPipeline.topEntity').resolve()
     sources = [generated] if generated.is_file() else sorted(generated.glob('*.v'))
     if not sources:
@@ -438,7 +442,7 @@ def main():
         out=out.with_name(out.name+'-adapter-'+args.burst_rtl.stem)
     if args.sdram_rtl.resolve()!=(HERE/'sdram.v').resolve():
         out=out.with_name(out.name+'-controller-'+args.sdram_rtl.stem)
-    out=out.with_name(out.name+f'-l{args.cache_line_bits}-{args.simulator}')
+    out=out.with_name(out.name+f'-w{args.cache_ways}-l{args.cache_line_bits}-{args.simulator}')
     out.mkdir(parents=True, exist_ok=True)
     if args.uart_bit_cycles!=868:
         # Change only UART reload constants in simulation copies, never the
@@ -472,6 +476,7 @@ def main():
     command=['iverilog','-g2005','-s','pipeline_cpu_tb','-P',f'pipeline_cpu_tb.ROM_FILE="{out}/rom.hex"',
          '-P','pipeline_cpu_tb.EXPECT_TRAPS=4',
          '-P',f'pipeline_cpu_tb.LINE_BITS={args.cache_line_bits}',
+         '-P',f'pipeline_cpu_tb.CACHE_WAYS={args.cache_ways}',
          '-P',f'pipeline_cpu_tb.LOADER_TEST={int(args.boot_loader)}',
          '-P',f'pipeline_cpu_tb.UART_BIT={args.uart_bit_cycles}',
          '-P',f'pipeline_cpu_tb.PIN_MODEL={int(args.pin_model)}',
@@ -481,7 +486,7 @@ def main():
          '-P',f'pipeline_cpu_tb.PIN_TAC_NS={args.pin_tac_ns}',
          '-P',f'pipeline_cpu_tb.LOADER_DUMP={int(args.loader_command=="D")}',
          '-P',f'pipeline_cpu_tb.LOADER_EXTENDED={int(args.loader_command=="H")}',
-         '-o',out/'sim',*sources,HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v']
+         '-o',out/'sim',*sources,HERE/'pipeline_fence_assertions.v',HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v']
     if args.simulator=='verilator':
         params=[str(command[i+1]).replace('pipeline_cpu_tb.', '-G', 1) for i,x in enumerate(command) if x=='-P']
         copied=[]
@@ -490,7 +495,7 @@ def main():
             target.write_text(sv_safe(source.read_text()));copied.append(target)
         run(['verilator','--binary','--timing','-O3','-Wno-fatal','-Wno-lint','-Wno-style',
              '--top-module','pipeline_cpu_tb','--Mdir',out/'obj','-j','4',*params,*copied,
-             HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v'],timeout=300)
+             HERE/'pipeline_fence_assertions.v',HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v'],timeout=300)
         executable=[out/'obj/Vpipeline_cpu_tb']
     else:
         run(command)

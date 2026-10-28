@@ -1,0 +1,90 @@
+*** Architectural-safety model for predicted control flow.
+*** A wrong prediction may come from a BTB alias or an incorrect target. Younger
+*** stores may speculate, but in-order resolution must flush the wrong path.
+*** A compressed straddle under a BTB hit produces a zero-size refetch bubble;
+*** that bubble may be discarded but must never increment architectural retire.
+
+mod BRANCH-PREDICTION is
+  protecting BOOL .
+
+  sorts Outcome Path Pending Store Bubble Arch Fault State .
+  ops correct wrong : -> Outcome [ctor] .
+  ops rightPath wrongPath : -> Path [ctor] .
+  op noBranch : -> Pending [ctor] .
+  op pending : Outcome -> Pending [ctor] .
+  op noStore : -> Store [ctor] .
+  ops spec confirmed : Path -> Store [ctor] .
+  ops noBubble bubble : -> Bubble [ctor] .
+  op arch : Bool Bool -> Arch [ctor] .
+  ops safe noFlush retireBubble : -> Fault [ctor] .
+  op st : Pending Store Bubble Arch Fault -> State [ctor] .
+
+  ops initialCorrect initialWrong initialNoFlush initialBubbleFault : -> State .
+  eq initialCorrect =
+    st(pending(correct), noStore, noBubble, arch(false, false), safe) .
+  eq initialWrong =
+    st(pending(wrong), noStore, noBubble, arch(false, false), safe) .
+  eq initialNoFlush =
+    st(pending(wrong), noStore, noBubble, arch(false, false), noFlush) .
+  eq initialBubbleFault =
+    st(pending(wrong), noStore, noBubble, arch(false, false), retireBubble) .
+
+  var O : Outcome .
+  var P : Path .
+  var S : Store .
+  var A : Arch .
+  var F : Fault .
+  var Br : Pending .
+  var Bu : Bubble .
+  vars W B : Bool .
+
+  op pathOf : Outcome -> Path .
+  eq pathOf(correct) = rightPath .
+  eq pathOf(wrong) = wrongPath .
+
+  op confirm : Store -> Store .
+  eq confirm(noStore) = noStore .
+  eq confirm(spec(P)) = confirmed(P) .
+  eq confirm(confirmed(P)) = confirmed(P) .
+
+  op bad : State -> Bool .
+  eq bad(st(Br, S, Bu, arch(W, B), F)) = W or B .
+
+  rl [speculate-younger-store] :
+    st(pending(O), noStore, noBubble, A, F) =>
+    st(pending(O), spec(pathOf(O)), noBubble, A, F) .
+
+  rl [resolve-correct] :
+    st(pending(correct), S, noBubble, A, F) =>
+    st(noBranch, confirm(S), noBubble, A, F) .
+
+  crl [resolve-wrong-flush] :
+    st(pending(wrong), S, noBubble, A, F) =>
+    st(noBranch, noStore, bubble, A, F)
+    if F =/= noFlush .
+
+  rl [resolve-wrong-without-flush] :
+    st(pending(wrong), S, noBubble, A, noFlush) =>
+    st(noBranch, confirm(S), noBubble, A, noFlush) .
+
+  crl [discard-refetch-bubble] :
+    st(noBranch, noStore, bubble, A, F) =>
+    st(noBranch, noStore, noBubble, A, F)
+    if F =/= retireBubble .
+
+  rl [retire-refetch-bubble-fault] :
+    st(noBranch, noStore, bubble, arch(W, B), retireBubble) =>
+    st(noBranch, noStore, noBubble, arch(W, true), retireBubble) .
+
+  rl [commit-confirmed-store] :
+    st(noBranch, confirmed(P), noBubble, arch(W, B), F) =>
+    st(noBranch, noStore, noBubble, arch(W or P == wrongPath, B), F) .
+endm
+
+*** Expected: no solution. Prediction never changes architectural safety.
+search in BRANCH-PREDICTION : initialCorrect =>* S:State such that bad(S:State) .
+search in BRANCH-PREDICTION : initialWrong =>* S:State such that bad(S:State) .
+
+*** Expected: one solution each, demonstrating both checks can fail.
+search [1] in BRANCH-PREDICTION : initialNoFlush =>* S:State such that bad(S:State) .
+search [1] in BRANCH-PREDICTION : initialBubbleFault =>* S:State such that bad(S:State) .

@@ -6,12 +6,15 @@ change, and fresh simulation and physical regressions at CPU72/SDRAM54.
 The selected build uses 15,827 logic cells and closes internal timing at
 +0.008 ns worst setup slack; that tight margin does not qualify SDRAM I/O.
 
-The [cache and clock-bridge report](../../../docs/2026-10-19-TANGNANO20K-SDRAM-CACHE.md) makes the 72/54 MHz
+The [cache and clock-bridge report](../../../docs/2026-10-19-TANGNANO20K-SDRAM-CACHE.md) makes the historical one-way 72/54 MHz
 pipeline 2.33 times faster on the board's FP-RISC classifier (2.84 s against
-6.61 s): a 64 KiB cache (`SDRAM_CACHE_LINE_BITS`, default 12), refills that
-drain only stores to their own line, and an asynchronous-FIFO clock bridge
-with posted writes. `run_perf.py` simulates where the cycles go and matched
-the board within 1.4%.
+6.61 s): a 64 KiB cache, refills that drain only stores to their own line, and
+an asynchronous-FIFO clock bridge with posted writes. `run_perf.py` simulates
+where the cycles go and matched the board within 1.4%. The current experimental
+default is two-way with `SDRAM_CACHE_WAYS=2` and `SDRAM_CACHE_LINE_BITS=11`
+(64 KiB total); `fprisc-48` deliberately preserves the validated one-way
+`WAYS=1`, `LINE_BITS=12` geometry. Two-way timing and physical qualification
+are separate from the historical results.
 
 The [write-update follow-up](../../../docs/2026-10-19-TANGNANO20K-SDRAM-WRITE-UPDATE.md) keeps lines valid on
 store hits (`WRITE_UPDATE`, now default 1): 2.06 s, 1.38 times faster again.

@@ -1,0 +1,77 @@
+*** FENCE.I frontend safety over a coherent unified memory/cache.
+*** Stores may leave already buffered instructions stale. FENCE.I must discard
+*** the current, prefetch, target, and next buffers and order later fetches
+*** after older stores. The unified-cache refill protocol is modeled separately
+*** in cache_cycle.maude; ordinary FENCE/external-master ordering is out of scope.
+
+mod INSTRUCTION-FENCE is
+  protecting BOOL .
+
+  sorts Tag Value Memory Buffer Fault State .
+  ops t0 t1 : -> Tag [ctor] .
+  ops old new : -> Value [ctor] .
+  op mem : Value Value -> Memory [ctor] .
+  op none : -> Buffer [ctor] .
+  op inst : Tag Value -> Buffer [ctor] .
+  ops good noFlush : -> Fault [ctor] .
+
+  op st : Memory Buffer Buffer Buffer Buffer Bool Fault -> State [ctor] .
+  ops initialGood initialNoFlush : -> State .
+  eq initialGood = st(mem(old,old),none,none,none,none,false,good) .
+  eq initialNoFlush = st(mem(old,old),none,none,none,none,false,noFlush) .
+
+  var T U : Tag .
+  vars V M0 M1 : Value .
+  var M : Memory .
+  vars I P N X : Buffer .
+  var O : Bool .
+  var F : Fault .
+  var S : State .
+
+  op get : Tag Memory -> Value .
+  eq get(t0,mem(M0,M1)) = M0 .
+  eq get(t1,mem(M0,M1)) = M1 .
+
+  op put : Tag Value Memory -> Memory .
+  eq put(t0,V,mem(M0,M1)) = mem(V,M1) .
+  eq put(t1,V,mem(M0,M1)) = mem(M0,V) .
+
+  op stale : Memory Buffer -> Bool .
+  eq stale(M,none) = false .
+  eq stale(M,inst(T,V)) = V =/= get(T,M) .
+
+  op bad : State -> Bool .
+  eq bad(st(M,I,P,N,X,O,F)) =
+    O and (stale(M,I) or stale(M,P) or stale(M,N) or stale(M,X)) .
+
+  op fence : State -> State .
+  eq fence(st(M,I,P,N,X,O,good)) = st(M,none,none,none,none,true,good) .
+  eq fence(st(M,I,P,N,X,O,noFlush)) = st(M,I,P,N,X,true,noFlush) .
+
+  rl [store-t0-old] : st(M,I,P,N,X,O,F) => st(put(t0,old,M),I,P,N,X,false,F) .
+  rl [store-t0-new] : st(M,I,P,N,X,O,F) => st(put(t0,new,M),I,P,N,X,false,F) .
+  rl [store-t1-old] : st(M,I,P,N,X,O,F) => st(put(t1,old,M),I,P,N,X,false,F) .
+  rl [store-t1-new] : st(M,I,P,N,X,O,F) => st(put(t1,new,M),I,P,N,X,false,F) .
+
+  rl [fetch-t0] : st(M,none,P,N,X,O,F) => st(M,inst(t0,get(t0,M)),P,N,X,O,F) .
+  rl [fetch-t1] : st(M,none,P,N,X,O,F) => st(M,inst(t1,get(t1,M)),P,N,X,O,F) .
+  rl [prefetch-t0] : st(M,I,none,N,X,O,F) => st(M,I,inst(t0,get(t0,M)),N,X,O,F) .
+  rl [prefetch-t1] : st(M,I,none,N,X,O,F) => st(M,I,inst(t1,get(t1,M)),N,X,O,F) .
+  rl [target-t0] : st(M,I,P,none,X,O,F) => st(M,I,P,inst(t0,get(t0,M)),X,O,F) .
+  rl [target-t1] : st(M,I,P,none,X,O,F) => st(M,I,P,inst(t1,get(t1,M)),X,O,F) .
+  rl [next-t0] : st(M,I,P,N,none,O,F) => st(M,I,P,N,inst(t0,get(t0,M)),O,F) .
+  rl [next-t1] : st(M,I,P,N,none,O,F) => st(M,I,P,N,inst(t1,get(t1,M)),O,F) .
+
+  rl [execute] : st(M,inst(T,V),P,N,X,O,F) => st(M,none,P,N,X,O,F) .
+  rl [use-prefetch] : st(M,none,inst(T,V),N,X,O,F) => st(M,inst(T,V),none,N,X,O,F) .
+  rl [use-target] : st(M,none,P,inst(T,V),X,O,F) => st(M,inst(T,V),P,none,X,O,F) .
+  rl [use-next] : st(M,none,P,N,inst(T,V),O,F) => st(M,inst(T,V),P,N,none,O,F) .
+
+  rl [fence-i] : S => fence(S) .
+endm
+
+*** Expected: no solution. Every post-fence buffered instruction is current.
+search in INSTRUCTION-FENCE : initialGood =>* S:State such that bad(S:State) .
+
+*** Expected: one solution. FENCE.I without a frontend flush retains stale code.
+search [1] in INSTRUCTION-FENCE : initialNoFlush =>* S:State such that bad(S:State) .

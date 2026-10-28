@@ -8,7 +8,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 CONFIG = dict(xlen=32, compressed=True, cpu_mhz=48, memory_mhz=48,
-              ram_bytes=8388608, cache_bytes=65536, phase_degrees=135,
+              ram_bytes=8388608, cache_bytes=65536, cache_ways=1,
+              cache_line_bits=12, phase_degrees=135,
               placement=2, write_update=True)
 
 

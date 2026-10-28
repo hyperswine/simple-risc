@@ -1689,7 +1689,11 @@ data ExecuteTwo = ExecuteTwo
     e2StoreWordFast :: Bool,
     e2ShiftFast :: Bool,
     e2MultFast :: Bool,
-    e2WaitFast :: Unsigned 2
+    e2WaitFast :: Unsigned 2,
+    e2Slot :: Bool,
+    e2Straddle :: Bool,
+    e2Refetch :: Bool,
+    e2PredictedTaken :: Bool
   }
   deriving (Generic, NFDataX)
 
@@ -1751,10 +1755,12 @@ data Action
     Bus
   deriving (Generic, NFDataX, Show, Eq)
 
--- | A branch target buffer entry: a taken branch or jump at the tagged pc
--- went to the target last time. The tag is pc bits 12..5 only: an alias
--- costs a redirect, never correctness (execute checks every prediction).
-data BtbEntry = BtbEntry {bValid :: Bool, bTag :: Unsigned 8, bTarget :: Word32}
+-- | A branch target buffer entry: a taken branch or jump in the tagged
+-- 32-bit word went to the target last time. bSlot records whether the
+-- control instruction ends at the word's low halfword (False) or high
+-- halfword (True). The tag is pc bits 12..5 only: an alias costs a
+-- redirect, never correctness (execute checks every prediction).
+data BtbEntry = BtbEntry {bValid :: Bool, bSlot :: Bool, bTag :: Unsigned 8, bTarget :: Word32}
   deriving (Generic, NFDataX, Show, Eq)
 
 btbIndex :: Word32 -> Index 8
@@ -1837,7 +1843,7 @@ emptyPipe =
     Nothing
     Nothing
     Nothing
-    (repeat (BtbEntry False 0 0))
+    (repeat (BtbEntry False False 0 0))
 
 -- | Expanded FIFO head, stable while D stalls. Data words are only written
 -- by A, so popping this head changes pointers rather than a wide shift mux.
@@ -1912,8 +1918,8 @@ productHalf funct3 products =
 -- register read with forwarding, two execute stages, and the commit stage.
 -- The explicit C variant uses the same queue as a raw word FIFO:
 -- two compressed instructions can share one word, and a full-width instruction
--- can combine the upper half with the next word's lower half. It predicts
--- sequential instruction PCs (the word-indexed BTB remains enabled for IM).
+-- can combine the upper half with the next word's lower half. The BTB tags
+-- which halfword of the fetched 32-bit word ends a predicted branch or jump.
 -- Straight-line decode still advances one instruction per cycle.
 -- ALU instructions, jumps, branches, and aligned RAM loads and
 -- stores run here. Anything else (CSRs, ECALL, EBREAK, MRET, WFI,
@@ -2039,23 +2045,26 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                   mB = e2B x,
                   mAddress = address
                 }
-            actual = if taken then target else cLink comp
+            actual = if e2Refetch x then e2Pc x else if taken then target else cLink comp
             control' = case kind of KindBranch -> True; KindJump -> True; _ -> False
-            -- A taken branch or jump teaches the buffer; a branch not taken
-            -- clears its entry. Neither waits on the action: an
-            -- instruction that leaves for the phases flushes the pipeline
-            -- at commit anyway, and a wrong entry only costs a redirect.
-            training = if control' then Just (e2Pc x, taken, target) else Nothing
-         in (stage, if actual /= e2Predicted x then Just actual else Nothing, training)
+            mispredicted = e2Refetch x || actual /= e2Predicted x
+            trainTaken = control' && not (e2Refetch x) && not (e2Straddle x) && taken && target /= cLink comp
+            -- A taken non-straddling branch or jump teaches the buffer; any
+            -- mispredicted BTB hit clears its entry, while a correctly
+            -- predicted not-taken branch leaves the other halfword's entry
+            -- intact.
+            trainBtb = trainTaken || (e2PredictedTaken x && mispredicted)
+            training = if trainBtb then Just (e2Pc x, trainTaken, e2Slot x, target) else Nothing
+         in (stage, if mispredicted then Just actual else Nothing, training, e2Refetch x)
       -- (in a redirect cycle the stage holds a wrong-path instruction)
       flushing = pRedirect pipe
       e2Moved = case pE2 pipe of
         Just x | e2Advance && isNothing flushing -> Just (e2Out x)
         _ -> Nothing
-      redirect = e2Moved >>= (\(_, r, _) -> r)
+      redirect = e2Moved >>= (\(_, r, _, _) -> r)
       btb = pBtb pipe
-      btb' = case e2Moved >>= (\(_, _, t) -> t) of
-        Just (pc, taken, target) -> replace (btbIndex pc) (BtbEntry taken (btbTag pc) target) btb
+      btb' = case e2Moved >>= (\(_, _, t, _) -> t) of
+        Just (pc, taken, slotBit, target) -> replace (btbIndex pc) (BtbEntry taken slotBit (btbTag pc) target) btb
         Nothing -> btb
       e2Reading = case pE2 pipe of
         Just x -> e2Reads x && isNothing flushing
@@ -2068,7 +2077,8 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             imm = e1Imm x
             op2 = e1Op2 x
             control = e1Control x
-            computed = (compute (e1Pc x) (e1Word x) a b imm op2) {cLink = e1Pc x + resize (e1Size x), cAlu = Nothing, cTaken = Nothing}
+            link1 = e1Pc x + resize (e1Size x)
+            computed = (compute (e1Pc x) (e1Word x) a b imm op2) {cLink = link1, cAlu = Nothing, cTaken = Nothing}
             -- The E2 outcome, decided here at the E1->E2 edge: the same
             -- priority order the E2->M transition used to recompute (fetch
             -- fault, illegal encoding, system instructions, misaligned
@@ -2129,6 +2139,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             shifting1 = execShift control && not (execMulDiv control)
             multiplying1 = execMulDiv control && not (testBit funct31 2)
             wait1 = if load1 || (store1 && not storeWord1 && not (cpuExternalMemory machine)) then 2 else if multiplying1 then 1 else 0
+            refetch1 = e1Size x == 0
          in ExecuteTwo
               { e2Pc = e1Pc x,
                 e2Predicted = e1Predicted x,
@@ -2154,7 +2165,11 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                 e2StoreWordFast = storeWord1,
                 e2ShiftFast = shifting1,
                 e2MultFast = multiplying1,
-                e2WaitFast = wait1
+                e2WaitFast = wait1,
+                e2Slot = testBit (e1Pc x) 1 || e1Size x == 4,
+                e2Straddle = testBit (e1Pc x) 1 && e1Size x == 4,
+                e2Refetch = refetch1,
+                e2PredictedTaken = refetch1 || e1Predicted x /= link1
               }
       e1Advance = isNothing (pE2 pipe) || e2Advance
       -- Decode and register read ---------------------------------------------
@@ -2166,7 +2181,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             opcode = word .&. 0x7f
             control = decodeExecuteControl word
             kind = execKind control
-            firstFault = not (fetchable (decodeTarget pc))
+            firstFault = fSize f /= 0 && not (fetchable (decodeTarget pc))
             crossFault = cpuCompressed machine && fSize f == 4 && testBit pc 1 && not (fetchable (decodeTarget (pc + 2)))
             fetchFault = firstFault || crossFault
             faultValue = if firstFault then pc else pc + 2
@@ -2239,29 +2254,47 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
         Just a -> replace (slot writePointer) a (pQueue pipe)
         Nothing -> pQueue pipe
       instructionPc = pInstructionPc pipe
+      atHalf1 = testBit instructionPc 1
       headWord = if waiting then Just (pQueue pipe !! slot readPointer) else arrival
       secondWord
         | writePointer - readPointer >= 2 = Just (pQueue pipe !! slot (readPointer + 1))
         | waiting = arrival
         | otherwise = Nothing
-      assembled = case headWord of
-        Nothing -> Nothing
+      (assembled, headDone) = case headWord of
+        Nothing -> (Nothing, False)
         Just h ->
-          let half = resize (fWord h `shiftR` (if testBit instructionPc 1 then 16 else 0)) :: Unsigned 16
+          let slot0Hit = testBit (fPc h) 0
+              slot1Hit = testBit (fPc h) 1
+              half = resize (fWord h `shiftR` (if atHalf1 then 16 else 0)) :: Unsigned 16
               short = half .&. 3 /= 3
+              straddle = atHalf1 && not short
+              -- If fetch followed a BTB hit on this word, the next queued word
+              -- is the predicted target rather than the sequential upper half
+              -- of a straddling 32-bit instruction; emit a zero-size refetch
+              -- bubble so E2 clears the aliased BTB entry and refetches.
+              refetch = straddle && (slot0Hit || slot1Hit)
+              wordDone = atHalf1 || not short || slot0Hit
+              nextPc = if wordDone then fPredicted h else instructionPc + 2
               raw
+                | refetch = 0x00000013
                 | short = resize half
-                | not (testBit instructionPc 1) = fWord h
+                | not atHalf1 = fWord h
                 | otherwise = ((maybe 0 fWord secondWord .&. 0xffff) `shiftL` 16) .|. resize half
-              size = if short then 2 else 4
+              size
+                | refetch = 0
+                | short = 2
+                | otherwise = 4
+              predictedPc
+                | straddle && not refetch = instructionPc + 4
+                | otherwise = nextPc
            in -- Fetch always supplies a word, including a harmless dummy
               -- outside the memory map. Wait for it before assembly; D
               -- raises the precise second-half access fault. This keeps a
               -- full address-map decode out of FIFO consumption/accounting.
-              if not short && testBit instructionPc 1 && isNothing secondWord
-                then Nothing
-                else Just (Fetched instructionPc raw False False (instructionPc + resize size) raw size)
-      cConsume = aFree && isJust assembled && (testBit instructionPc 1 || maybe False ((== 4) . fSize) assembled)
+              if straddle && not refetch && isNothing secondWord
+                then (Nothing, False)
+                else (Just (Fetched instructionPc raw False False predictedPc raw size), wordDone)
+      cConsume = aFree && headDone
       writePointer'
         | cpuCompressed machine = if isJust arrival then writePointer + 1 else writePointer
         | otherwise = if isJust arrival && not bypass then writePointer + 1 else writePointer
@@ -2299,9 +2332,17 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
       -- The lookup reads the fetch pc register only: a redirect's target
       -- is followed by target + 4.
       entry = btb !! btbIndex (pFetchPc pipe)
-      hit = not (cpuCompressed machine) && isNothing flushing && bValid entry && bTag entry == btbTag (pFetchPc pipe)
+      hit =
+        isNothing flushing
+          && bValid entry
+          && bTag entry == btbTag (pFetchPc pipe)
+          && (not (cpuCompressed machine) || not (testBit (pFetchPc pipe) 1) || bSlot entry)
       predicted = if hit then bTarget entry else (if cpuCompressed machine then fetchPc .&. complement 3 else fetchPc) + 4
-      issued = if issue then Just (fetchPc, predicted) else Nothing
+      fetchMeta =
+        if cpuCompressed machine
+          then (if hit && not (bSlot entry) then 1 else 0) .|. (if hit && bSlot entry then 2 else 0)
+          else fetchPc
+      issued = if issue then Just (fetchMeta, predicted) else Nothing
       nextE1 = case pE1 pipe of
         Just x | not e1Advance -> Just x
         _ -> if dAdvance then (\f -> let (stage, _, _) = decodeOut f in stage) <$> d else Nothing
@@ -2310,7 +2351,9 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
         _ -> if e1Advance then e1Out <$> pE1 pipe else Nothing
       nextM = case pM pipe of
         Just m | mHold -> Just (heldMemory m)
-        _ -> (\(stage, _, _) -> stage) <$> e2Moved
+        _ -> case e2Moved of
+          Just (stage, _, _, False) -> Just stage
+          _ -> Nothing
       pipe'
         | handover = restartPipe 0 pipe
         | fencing = restartPipe (maybe 0 mNext (pM pipe)) pipe
@@ -2326,7 +2369,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
         | otherwise =
             Pipe
               { pFetchPc = if issue then predicted else fetchPc,
-                pInstructionPc = if cpuCompressed machine && aFree && isJust assembled then instructionPc + resize (maybe 4 fSize assembled) else pInstructionPc pipe,
+                pInstructionPc = if cpuCompressed machine && aFree && isJust assembled then maybe (pInstructionPc pipe) fPredicted assembled else pInstructionPc pipe,
                 pInflight = issued :> init inflight,
                 pQueue = queue',
                 pQueueRead = readPointer',

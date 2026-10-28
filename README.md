@@ -44,11 +44,21 @@ which is not tracked.
 | `src/PsramRegs.hs` | the PSRAM register experiment |
 | `test/` | the independent `Rv32Model` reference interpreter and Hedgehog differential tests |
 | `boards/tangnano20k/` | constraints, build scripts, C test programs, the boot ROM, the SDRAM controller and cache, the RV64 variant, RISCOF plumbing |
+| `formal/` | executable Maude cache, instruction-fence, and branch-prediction safety models, with negative controls |
 | `docs/` | the dated record of every experiment |
 
 `boards/tangnano20k/sdram/sdram.v` derives from nand2mario's Apache-2.0 SDRAM
 controller; the `LICENSE` file beside it keeps that license. Everything else
 is GPL-3.0-only.
+
+## Formal safety models
+
+With Maude installed, `python3 formal/check_formal.py` checks the transaction,
+cycle-stepped cache, instruction-fence, and branch-prediction abstractions and
+requires each deliberate fault to produce a counterexample. The cycle cache uses
+a documented 16-step bound; the smaller models are exhaustive. See
+`formal/README.md` for properties, state-space results, RTL-mirrored assertions,
+and abstraction limits.
 
 ## History
 

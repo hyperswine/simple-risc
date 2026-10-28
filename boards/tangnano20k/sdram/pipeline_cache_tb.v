@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0);
+module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0, WAYS=1);
  reg clk=0;always #5 clk=~clk;
  reg reset=1;reg [21:0] address=22'h200000;reg wr=0;
  reg [31:0] data=0;reg [3:0] mask=15;
@@ -13,7 +13,7 @@ module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0);
    if(reset)begin port_address<=22'h200000;port_write<=0;port_data<=0;port_mask<=15;end
    else if(!hold_cpu)begin port_address<=address;port_write<=wr;port_data<=data;port_mask<=mask;end
  end
- sdram_pipeline_cache #(.LINE_BITS(LINE_BITS)) cache(clk,reset,port_address,port_write,port_data,port_mask,hold_cpu,rdata,
+ sdram_pipeline_cache #(.LINE_BITS(LINE_BITS),.WAYS(WAYS)) cache(clk,reset,port_address,port_write,port_data,port_mask,hold_cpu,rdata,
    req,mwrite,ma,md,mm,ready,done,mrdata,valid,beat);
  reg [31:0] ram[0:2097151],reference[0:2097151],rom[0:511];
  integer delay=0,tick=0,phase=0,reads=0,writes=0,stalls=0;
@@ -89,15 +89,20 @@ module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0);
    end
    add(22'h1fffff,1,32'h87654321,15);add(22'h1fffff,0,0,15);
    if(BANK_SWEEP)begin
-     // All 32 physical 512x32 banks in the 64 KiB image, including the
-     // last word of each bank and the first word of its neighbour. A
-     // partial store must preserve the other word and every earlier bank.
-     for(i=0;i<32;i=i+1)begin
-       add(i*512+511,0,0,15);add(((i+1)*512)&16383,0,0,15);
+     // Sweep every 512x32 bank in each way (32 banks for the one-way 64 KiB
+     // image, 16 per way for two-way). Each alias has the same set index as
+     // its base address but a different tag, forcing a second-way allocation.
+     // Recheck every alias after all stores so a missing way/bank write select
+     // cannot hide behind forwarding or a later refill.
+     for(i=0;i<(1<<(LINE_BITS-7));i=i+1)begin
+       add(i*512+511,0,0,15);add(((i+1)*512)&((1<<(LINE_BITS+2))-1),0,0,15);
        add(i*512+511,1,32'h12345678^i,1<<(i%4));
-       add(((i+1)*512)&16383,0,0,15);add(i*512+511,0,0,15);
+       add(((i+1)*512)&((1<<(LINE_BITS+2))-1),0,0,15);add(i*512+511,0,0,15);
+       add(i*512+511+(1<<(LINE_BITS+2)),0,0,15);
+       add(i*512+511+(1<<(LINE_BITS+2)),1,32'h87654321^i,1<<((i+1)%4));
+       add(i*512+511+(1<<(LINE_BITS+2)),0,0,15);add(i*512+511,0,0,15);
      end
-     for(i=0;i<32;i=i+1)add(i*512+511,0,0,15);
+     for(i=0;i<(1<<(LINE_BITS-7));i=i+1)add(i*512+511+(1<<(LINE_BITS+2)),0,0,15);
    end
    repeat(4)@(negedge clk);reset=0;
  end

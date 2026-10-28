@@ -2027,11 +2027,72 @@ prop_frontend_register_boundaries = withTests 300 . property $ do
   (pA reset,pF reset,pD reset) === (Nothing,Nothing,Nothing)
   pInstructionPc reset === ramBase+14
 
+prop_compressed_btb_prediction_and_aliases :: Property
+prop_compressed_btb_prediction_and_aliases = withTests 1 . property $ do
+  -- 1. Slot-0 compressed backward branch at ramBase+8 jumping to a halfword
+  -- target (ramBase+2), sharing its word with c.ebreak at ramBase+10.
+  let slot0Loop = [0x0001, 0x0505, 0xc091, 0x147d, 0xfc6d, 0x9002]
+      initRegs = [(8, 20), (9, 1), (10, 0)]
+      (slot0Cycles, slot0After) =
+        runUntilHalt 4000 (startSim ((runningMachine initRegs) {cpuCompressed = True, cpuPipelined = True}) (ramFromHalfwords slot0Loop))
+      slot0M = simMachine slot0After
+  cpuRegs slot0M !! (8 :: Index 32) === 0
+  cpuRegs slot0M !! (10 :: Index 32) === 20
+  counterLo (cpuInstret slot0M) === 1 + 20 * 4
+  -- Without BTB hits, 19 taken branches * 5 redirect cycles + 81 instructions
+  -- would exceed 180 cycles; with BTB hits it completes well under 150 cycles.
+  annotateShow slot0Cycles
+  assert (slot0Cycles < 155)
+
+  -- 2. Slot-0 not-taken branch (c.beqz x9, +4 at ramBase+4) sharing a 32-bit
+  -- word with a Slot-1 taken loop branch (c.bnez x8, -4 at ramBase+6).
+  let sharedWordLoop = [0x0001, 0x147d, 0xc091, 0xfc75, 0x9002]
+      (sharedCycles, sharedAfter) =
+        runUntilHalt 4000 (startSim ((runningMachine initRegs) {cpuCompressed = True, cpuPipelined = True}) (ramFromHalfwords sharedWordLoop))
+      sharedM = simMachine sharedAfter
+  cpuRegs sharedM !! (8 :: Index 32) === 0
+  counterLo (cpuInstret sharedM) === 1 + 20 * 3
+  annotateShow sharedCycles
+  assert (sharedCycles < 135)
+
+  -- 3. BTB tag alias (0x2000 bytes = 2048 words apart) where a Slot-1 BTB
+  -- entry trained at ramBase+6 aliases with ramBase+0x2004, whose upper
+  -- halfword at ramBase+0x2006 starts a straddling 32-bit ADDI x10, x10, 123.
+  let straddleAddi = addi 10 10 123
+      straddleLo = resize (straddleAddi .&. 0xffff) :: Unsigned 16
+      straddleHi = resize (straddleAddi `shiftR` 16) :: Unsigned 16
+      -- At 0x8000_0000:
+      --   +0: c.nop (0x0001)
+      --   +2: c.nop (0x0001)
+      --   +4: c.nop (0x0001)
+      --   +6: c.jr x11 (0x8582) -> trains btbIndex 1, btbTag 0, bSlot True, target = ramBase+0x2004
+      -- At 0x8000_2004 (word index 2049, same btbIndex 1 and btbTag 0):
+      --   +0: c.addi x10, 1 (0x0505)
+      --   +2..+4: straddling 32-bit addi x10, x10, 123
+      --   +6: c.ebreak (0x9002)
+      aliasRam =
+        ramWrite 0 0x0001_0001
+          $ ramWrite 1 0x8582_0001
+          $ ramWrite 2049 (resize (0x0505 :: Unsigned 16) .|. (resize straddleLo `shiftL` 16))
+          $ ramWrite 2050 (resize straddleHi .|. (0x9002 `shiftL` 16))
+          $ blankRam 0
+      (_, aliasAfter) =
+        runUntilHalt 4000 (startSim ((runningMachine [(10, 10), (11, ramBase + 0x2004)]) {cpuCompressed = True, cpuPipelined = True}) aliasRam)
+      aliasM = simMachine aliasAfter
+  cpuRegs aliasM !! (10 :: Index 32) === 134
+  trapCause (cpuTrapRegisters aliasM) === 3
+  trapEpc (cpuTrapRegisters aliasM) === ramBase + 0x200a
+  -- Exactly 6 architectural instructions retired prior to EBREAK (the refetch
+  -- bubble must not increment minstret), and the aliased BTB entry was cleared.
+  counterLo (cpuInstret aliasM) === 6
+  bValid (pBtb (cpuPipe aliasM) !! (1 :: Index 8)) === False
+
 simpleRiscGroup :: Group
 simpleRiscGroup =
   Group
     "SimpleRisc"
     [ ("Frontend assembly, expansion and register reads have separate boundaries", prop_frontend_register_boundaries),
+      ("Compressed BTB predicts halfword branches and recovers from straddle aliases", prop_compressed_btb_prediction_and_aliases),
       ("Registered decode hazards match arriving producer stages", prop_registered_decode_hazard),
       ("Compressed mret and FENCE.I discard stale halfwords", prop_compressed_handler_and_fence_i),
       ("Compressed ALU stream matches independent RV32 interpreter", prop_compressed_alu_matches_reference),

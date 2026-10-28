@@ -12,18 +12,25 @@ freq="${SDRAM_FREQ_MHZ:-54}"
 cpu_freq="${SDRAM_CPU_FREQ_MHZ:-$freq}"
 cache="${SDRAM_CACHE:-1}"
 rvc="${SDRAM_RVC:-0}"
-# Pipeline cache size: 2^(bits+4) bytes of 16-byte lines (12 = 64 KiB, the
-# board-verified default; 7 = the original 2 KiB).
-cache_line_bits="${SDRAM_CACHE_LINE_BITS:-12}"
+cache_ways="${SDRAM_CACHE_WAYS:-2}"
+case "$cache_ways" in 1|2) ;; *) echo "SDRAM_CACHE_WAYS must be 1 or 2" >&2;exit 1;; esac
+# Pipeline cache size: 2^(bits+4) bytes per way (default 64 KiB total: 11 bits
+# per way for 2-way, 12 bits for 1-way; 7 = 2 KiB per way).
+default_line_bits=12
+if [[ "$cache_ways" == 2 ]];then default_line_bits=11;fi
+cache_line_bits="${SDRAM_CACHE_LINE_BITS:-$default_line_bits}"
 placement="${SDRAM_PLACE_OPTION:-2}"
 case "$placement" in 0|1|2|3|4) ;; *) echo "SDRAM_PLACE_OPTION must be 0 through 4" >&2;exit 1;; esac
 case "$rvc" in 0|1) ;; *) echo "SDRAM_RVC must be 0 or 1" >&2;exit 1;; esac
 case "$cache" in 0|1) ;; *) echo "SDRAM_CACHE must be 0 or 1" >&2;exit 1;; esac
 case "$cache_line_bits" in 7|8|9|10|11|12) ;; *) echo "SDRAM_CACHE_LINE_BITS must be 7 through 12" >&2;exit 1;; esac
+if [[ "$cache_ways" == 2 && "$cache_line_bits" == 12 ]];then
+  echo "SDRAM_CACHE_WAYS=2 requires SDRAM_CACHE_LINE_BITS<=11 (64 KiB max on GW2AR-18)" >&2;exit 1
+fi
 case "$freq" in 27|48|54|60|66) ;; *) echo "supported SDRAM clocks: 27, 48, 54, 60, 66 MHz" >&2;exit 1;; esac
 if [[ "$cpu_freq" != "$freq" ]];then
-  if [[ ( "$cpu_freq" != 108 && "$cpu_freq" != 72 ) || "$freq" != 54 || ( "$mode" != core && "$mode" != pipeline ) ]];then
-    echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ=72 or 108 and SDRAM_FREQ_MHZ=54" >&2;exit 1
+  if [[ ( "$cpu_freq" != 108 && "$cpu_freq" != 96 && "$cpu_freq" != 72 ) || ( "$freq" != 54 && "$freq" != 48 ) || ( "$mode" != core && "$mode" != pipeline ) ]];then
+    echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ=72, 96 or 108 and SDRAM_FREQ_MHZ=48 or 54" >&2;exit 1
   fi
 fi
 # Audit the memory specification before expensive CPU generation. Ordinary
@@ -87,7 +94,7 @@ cache_rtl="${SDRAM_CACHE_RTL:-$here/pipeline_cache.v}"
 bridge_rtl="${SDRAM_BRIDGE_RTL:-$here/clock_bridge.v}"
 for f in "$cache_rtl" "$bridge_rtl";do [[ -f "$f" ]] || { echo "missing RTL override: $f" >&2;exit 1; };done
 mkdir -p "$out"
-python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" <<'PYTHON'
+python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" "$cache_ways" <<'PYTHON'
 from pathlib import Path
 import hashlib, json, sys
 src,out=map(Path,sys.argv[1:3]);freq=int(sys.argv[3])
@@ -105,14 +112,14 @@ if sys.argv[4] in ('core','pipeline','serial'):
         try: build_id=(json.loads(manifest_path.read_text()).get('rom_identity') or {}).get('build_id')
         except Exception: build_id=None
     if not build_id or len(build_id)!=16:
-        build_id=hashlib.sha256(('\n'.join(rom_words)+f':{sys.argv[4]}:{cpu_freq}:{freq}:{sys.argv[8]}').encode()).hexdigest()[:16]
+        build_id=hashlib.sha256(('\n'.join(rom_words)+f':{sys.argv[4]}:{cpu_freq}:{freq}:{sys.argv[8]}:{sys.argv[9]}').encode()).hexdigest()[:16]
     stamped_rom=out/'bootrom-sdram.hex'
     stamped_rom.write_text('\n'.join([*rom_words,f'{cpu_freq:08x}',f'{freq:08x}',build_id[:8],build_id[8:16]])+'\n')
     top=(src/('pipeline_top.v' if pipelined else 'core_top.v')).read_text()
-    top=top.replace('BOOT_ROM_FILE',str(stamped_rom)).replace('CORE_FREQUENCY',str(freq*1000000)).replace('CPU_FREQUENCY',str(cpu_freq*1000000)).replace('CACHE_LINE_BITS',sys.argv[8])
+    top=top.replace('BOOT_ROM_FILE',str(stamped_rom)).replace('CORE_FREQUENCY',str(freq*1000000)).replace('CPU_FREQUENCY',str(cpu_freq*1000000)).replace('CACHE_LINE_BITS',sys.argv[8]).replace('CACHE_WAYS',sys.argv[9])
     if cpu_freq!=freq:
         top=top.replace('sdram_pll pll(.clk_27m(clk_27m),.clk_core(clk),.clk_sdram(clk_sdram),.pll_lock(lock));',
-                        f'sdram_dual_pll #(.CPU_MHZ({cpu_freq})) pll(.clk_27m(clk_27m),.clk_core(clk),.clk_memory(clk_memory),.clk_sdram(clk_sdram),.pll_lock(lock));')
+                        f'sdram_dual_pll #(.CPU_MHZ({cpu_freq}),.MEM_MHZ({freq})) pll(.clk_27m(clk_27m),.clk_core(clk),.clk_memory(clk_memory),.clk_sdram(clk_sdram),.pll_lock(lock));')
         top=top.replace(' assign clk_memory=clk; // SINGLE_CLOCK_MEMORY\n','')
     if pipelined and sys.argv[5]=='0':raise SystemExit('the pipeline requires its fixed-latency cache; use serial with SDRAM_CACHE=0')
     if not pipelined and sys.argv[5]=='0':
@@ -174,8 +181,8 @@ else
 cat > "$out/clocks.sdc" <<SDC
 create_clock -name clk_27m -period 37.037037 [get_ports {clk_27m}]
 create_generated_clock -name clk_core -source [get_ports {clk_27m}] -multiply_by $((cpu_freq/3)) -divide_by 9 [get_pins {pll/cpu/pll/CLKOUT}]
-create_generated_clock -name clk_memory -source [get_ports {clk_27m}] -multiply_by 2 [get_pins {pll/memory/pll/CLKOUT}]
-create_generated_clock -name clk_sdram -source [get_ports {clk_27m}] -multiply_by 2 -phase $phase [get_pins {pll/memory/pll/CLKOUTP}]
+create_generated_clock -name clk_memory -source [get_ports {clk_27m}] -multiply_by $((freq/3)) -divide_by 9 [get_pins {pll/memory/pll/CLKOUT}]
+create_generated_clock -name clk_sdram -source [get_ports {clk_27m}] -multiply_by $((freq/3)) -divide_by 9 -phase $phase [get_pins {pll/memory/pll/CLKOUTP}]
 # Only the first metastability stages (the FIFO's Gray pointers and the read
 # response toggle) are asynchronous endpoints. Payload slots retain normal
 # setup/hold analysis; no clock groups or blanket

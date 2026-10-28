@@ -30,13 +30,16 @@ def main():
     fixture = (HERE/'pipeline_cache_tb.v').read_text()
     results = []
 
-    def run(name, rtl, tb, expected=0, failure='undefined tag collision used as a hit', banks=False):
+    def run(name, rtl, tb, expected=0, failure='undefined tag collision used as a hit',
+            banks=False, line_bits=12, ways=1):
         rtl_path = out/(name+'.v');rtl_path.write_text(rtl)
         tb_path = out/(name+'-tb.v');tb_path.write_text(tb)
         executable = out/(name+'-sim')
         command = ['iverilog', '-g2012', '-s', 'pipeline_cache_tb', '-o', str(executable), str(rtl_path), str(tb_path)]
+        command[1:1] = ['-P', f'pipeline_cache_tb.WAYS={ways}']
         if banks:
-            command[1:1] = ['-P', 'pipeline_cache_tb.LINE_BITS=12', '-P', 'pipeline_cache_tb.BANK_SWEEP=1']
+            command[1:1] = ['-P', f'pipeline_cache_tb.LINE_BITS={line_bits}',
+                            '-P', 'pipeline_cache_tb.BANK_SWEEP=1']
         compiled = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=60)
         if compiled.returncode:
             raise AssertionError(compiled.stdout+compiled.stderr)
@@ -46,8 +49,10 @@ def main():
         if executed.returncode != expected:
             raise AssertionError(f'{name}: exit {executed.returncode}\n{text}')
         if expected == 0:
-            assert ('PASS: 401 reads, 169 ordered masked writes' if banks else
-                    'PASS: 241 reads, 137 ordered masked writes') in text, text
+            bank_count = 1 << (line_bits-7)
+            expected_pass = (f'PASS: {241+8*bank_count} reads, {137+2*bank_count} ordered masked writes'
+                             if banks else 'PASS: 241 reads, 137 ordered masked writes')
+            assert expected_pass in text, text
         else:
             assert failure in text, text
         results.append({'name': name, 'passed': True, 'expected_exit': expected,
@@ -63,12 +68,25 @@ def main():
     run('normal-write-update', updating, fixture)
     invalidating = source.replace(default_policy, 'parameter WRITE_UPDATE=0,')
     run('normal-invalidate', invalidating, fixture)
+    two_way_updating = updating.replace('parameter WAYS=1,', 'parameter WAYS=2,')
+    run('two-way-write-update', two_way_updating, fixture, ways=2)
+    assert '23 line fills' in results[-1]['output'], results[-1]['output']
+    two_way_invalidating = invalidating.replace('parameter WAYS=1,', 'parameter WAYS=2,')
+    run('two-way-invalidate', two_way_invalidating, fixture, ways=2)
     run('all-32-banks-write-update', updating, fixture, banks=True)
     run('all-32-banks-invalidate', invalidating, fixture, banks=True)
+    run('all-16-banks-two-way-write-update', two_way_updating, fixture,
+        banks=True, line_bits=11, ways=2)
+    run('all-16-banks-two-way-invalidate', two_way_invalidating, fixture,
+        banks=True, line_bits=11, ways=2)
     bank_guard = '(words_index>>9)==b'
     assert source.count(bank_guard) == 1
     run('missing-bank-write-select', source.replace(bank_guard, "1'b1"), fixture,
         expected=1, failure='reply', banks=True)
+    way1_bank_guard = 'b1==(words_index>>9)'
+    assert source.count(way1_bank_guard) == 1
+    run('missing-way1-bank-write-select', two_way_updating.replace(way1_bank_guard, "1'b1"), fixture,
+        expected=1, failure='reply', banks=True, line_bits=11, ways=2)
     read = 'if(advance)entry_tag<=tags[cpu_address[LINE_BITS+1:2]];'
     poisoned_read = "if(advance)entry_tag<=(tag_write && tag_write_index==cpu_address[LINE_BITS+1:2]) ? {(20-LINE_BITS){1'bx}}:tags[cpu_address[LINE_BITS+1:2]];"
     assert source.count(read) == 1, 'update the collision injection for the current tag read port'
@@ -116,6 +134,25 @@ def main():
     assert source.count(capture) == 1
     run('missing-final-beat-capture', source.replace(capture, 'cpu_rdata<=fill_target;'), fixture,
         expected=1, failure='reply')
+    # Assertion negative controls mirror the Maude refill/queue guards and
+    # prove that the four-beat protocol checks are exercised, not vacuous.
+    drain_guard = 'wire fill_conflict=|same_line;'
+    assert invalidating.count(drain_guard) == 1
+    run('assert-missing-same-line-drain',
+        invalidating.replace(drain_guard, "wire fill_conflict=1'b0;"), fixture,
+        expected=1, failure='ASSERT: refill overlaps a queued store to its line')
+    last_beat_done = 'if(phase==4 && tick%2==0)begin done<=1;phase<=0;end'
+    assert fixture.count(last_beat_done) == 1
+    early_done = fixture.replace(last_beat_done,
+        'if(phase==3 && tick%2==0)begin done<=1;phase<=0;end')
+    run('assert-incomplete-refill', updating, early_done,
+        expected=1, failure='ASSERT: refill completed before all four beats')
+    advance_beat = 'mrdata<=ram[saved_address+phase-1];beat<=phase-1;valid<=1;phase<=phase+1;'
+    assert fixture.count(advance_beat) == 1
+    duplicate_beat = fixture.replace(advance_beat,
+        "mrdata<=ram[saved_address+phase-1];beat<=phase-1;valid<=1;phase<=phase==2 ? phase:phase+1;")
+    run('assert-duplicate-refill-beat', updating, duplicate_beat,
+        expected=1, failure='ASSERT: duplicate refill beat')
     (out/'results.json').write_text(json.dumps({'complete': True,
         'source_sha256': digest(source), 'fixture_sha256': digest(fixture), 'cases': results}, indent=2)+'\n')
 

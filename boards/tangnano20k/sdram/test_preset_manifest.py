@@ -1,10 +1,15 @@
 import json
+import os
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
 
 import preset_manifest
+
+
+PRESET = Path(__file__).with_name('preset.sh')
 
 
 class PresetManifest(unittest.TestCase):
@@ -42,8 +47,28 @@ class PresetManifest(unittest.TestCase):
         self.assertEqual(id_a1['ram_bytes'], 8388608)
         self.assertEqual(id_a1['max_bytes'], 2097152)
         self.assertEqual(id_a1['capabilities'], 'PMXQVHTUICG')
+        self.assertEqual(preset_manifest.CONFIG['cache_ways'], 1)
+        self.assertEqual(preset_manifest.CONFIG['cache_line_bits'], 12)
         self.assertEqual(len(id_a1['build_id']), 16)
         self.assertNotEqual(id_a1['build_id'], id_b['build_id'])
+
+    def test_preset_pins_validated_one_way_geometry(self):
+        env = os.environ.copy()
+        env['SDRAM_PRESET'] = 'fprisc-48'
+        env.pop('SDRAM_CACHE_WAYS', None)
+        result = subprocess.run(
+            ['bash', '-c', 'source "$1"; printf "%s %s\\n" "$SDRAM_CACHE_WAYS" "$SDRAM_CACHE_LINE_BITS"',
+             'bash', str(PRESET)],
+            env=env, capture_output=True, text=True, check=True)
+        self.assertEqual(result.stdout.strip(), '1 12')
+
+    def test_preset_rejects_conflicting_associativity(self):
+        env = os.environ.copy()
+        env.update(SDRAM_PRESET='fprisc-48', SDRAM_CACHE_WAYS='2')
+        result = subprocess.run(['bash', '-c', 'source "$1"', 'bash', str(PRESET)],
+                                env=env, capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('requires SDRAM_CACHE_WAYS=1', result.stderr)
 
 
 if __name__ == '__main__':

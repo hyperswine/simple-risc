@@ -20,7 +20,7 @@ module sdram_clock_bridge(
  output [31:0] mem_wdata,output [3:0] mem_mask,
  input mem_ready,mem_done,input [31:0] mem_rdata,
  input mem_word_valid,input [1:0] mem_word_index);
- localparam CPU_IDLE=0,CPU_WAIT=1,CPU_CAPTURE=2,CPU_REPLAY=3;
+ localparam CPU_IDLE=0,CPU_WAIT=1,CPU_REPLAY=2;
  localparam MEM_IDLE=0,MEM_SEND=1,MEM_WAIT=2;
  function [2:0] gray(input [2:0] binary);gray=binary^(binary>>1);endfunction
  reg [1:0] cpu_state,mem_state;
@@ -35,7 +35,7 @@ module sdram_clock_bridge(
  reg operation_write;reg [20:0] operation_address;
  reg [31:0] operation_wdata;reg [3:0] operation_mask;
  reg [31:0] response_words[0:3];
- reg [31:0] replay_words[0:3];
+ reg [31:0] replay_words[1:3];
  reg [1:0] replay_index;
  reg [3:0] received_words;
  wire full=put_gray=={~take_sync[2:1],take_sync[0]};
@@ -66,7 +66,7 @@ module sdram_clock_bridge(
   if(cpu_reset)begin
    cpu_state<=CPU_IDLE;put<=0;put_gray<=0;read_toggle<=0;
    cpu_done<=0;cpu_word_valid<=0;cpu_word_index<=0;cpu_rdata<=0;replay_index<=0;
-   for(c=0;c<4;c=c+1)replay_words[c]<=0;
+   for(c=1;c<4;c=c+1)replay_words[c]<=0;
   end else begin
    cpu_done<=0;cpu_word_valid<=0;
    case(cpu_state)
@@ -75,16 +75,17 @@ module sdram_clock_bridge(
      if(cpu_write)cpu_done<=1;
      else begin read_toggle<=!read_toggle;cpu_state<=CPU_WAIT;end
     end
-    CPU_WAIT:if(response_sync==read_toggle)cpu_state<=CPU_CAPTURE;
-    CPU_CAPTURE:begin
-     for(c=0;c<4;c=c+1)replay_words[c]<=response_words[c];
-     replay_index<=0;cpu_state<=CPU_REPLAY;
+    CPU_WAIT:if(response_sync==read_toggle)begin
+     cpu_rdata<=response_words[0];cpu_word_index<=0;cpu_word_valid<=1;
+     for(c=1;c<4;c=c+1)replay_words[c]<=response_words[c];
+     replay_index<=1;cpu_state<=CPU_REPLAY;
     end
     CPU_REPLAY:begin
      cpu_rdata<=replay_words[replay_index];cpu_word_index<=replay_index;cpu_word_valid<=1;
      replay_index<=replay_index+1'b1;
      if(replay_index==3)begin cpu_done<=1;cpu_state<=CPU_IDLE;end
     end
+    default:cpu_state<=CPU_IDLE;
    endcase
   end
  end

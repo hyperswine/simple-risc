@@ -1,0 +1,234 @@
+*** Cycle-stepped control model of the one-set, two-way SDRAM cache.
+*** A request slot and A1 feed A2. A2 read misses hold the logical pipeline;
+*** posted writes and four-beat refills continue while it is held. Each rewrite
+*** is one control transition, not a proof of physical setup/hold timing.
+
+mod CACHE-CYCLE is
+  protecting BOOL .
+  protecting NAT .
+
+  sorts Tag Value Way Line Cache Memory Policy Fault Request Stage Queue
+        Beat Backend State .
+  ops t0 t1 : -> Tag [ctor] .
+  ops v0 v1 : -> Value [ctor] .
+  ops w0 w1 : -> Way [ctor] .
+  op invalid : -> Line [ctor] .
+  op line : Tag Value -> Line [ctor] .
+  op cache : Line Line -> Cache [ctor] .
+  op mem : Value Value -> Memory [ctor] .
+  ops update invalidate : -> Policy [ctor] .
+  ops good badWay1 noDrain : -> Fault [ctor] .
+
+  op none : -> Request [ctor] .
+  op load : Tag -> Request [ctor] .
+  op store : Tag Value -> Request [ctor] .
+  op empty : -> Stage [ctor] .
+  op rd : Tag Bool Way -> Stage [ctor] .
+  op wr : Tag Value -> Stage [ctor] .
+
+  op nil : -> Queue [ctor] .
+  op q : Tag Value Queue -> Queue [ctor] .
+  ops b0 b1 b2 b3 : -> Beat [ctor] .
+  op midle : -> Backend [ctor] .
+  op mwrite : Tag Value -> Backend [ctor] .
+  op mfill : Tag Way Beat -> Backend [ctor] .
+
+  op st : Cache Memory Way Policy Fault Request Request Stage Queue Backend
+          -> State [ctor] .
+  ops initialUpdate initialInvalidate initialBadWay1 initialNoDrain : -> State .
+  eq initialUpdate =
+    st(cache(invalid,invalid),mem(v0,v0),w0,update,good,
+       none,none,empty,nil,midle) .
+  eq initialInvalidate =
+    st(cache(invalid,invalid),mem(v0,v0),w0,invalidate,good,
+       none,none,empty,nil,midle) .
+  eq initialBadWay1 =
+    st(cache(invalid,line(t0,v0)),mem(v0,v0),w1,update,badWay1,
+       store(t0,v1),none,empty,nil,midle) .
+  eq initialNoDrain =
+    st(cache(invalid,invalid),mem(v0,v0),w0,update,noDrain,
+       none,none,empty,nil,midle) .
+
+  var T U : Tag .
+  vars V Old M0 M1 : Value .
+  vars W R : Way .
+  vars L L0 L1 : Line .
+  var C : Cache .
+  var M : Memory .
+  var P : Policy .
+  var F : Fault .
+  var RQ : Request .
+  var A1 : Request .
+  var A2 : Stage .
+  var Q : Queue .
+  var BT : Beat .
+  var B : Backend .
+  var S : State .
+
+  op get : Tag Memory -> Value .
+  eq get(t0,mem(M0,M1)) = M0 .
+  eq get(t1,mem(M0,M1)) = M1 .
+
+  op put : Tag Value Memory -> Memory .
+  eq put(t0,V,mem(M0,M1)) = mem(V,M1) .
+  eq put(t1,V,mem(M0,M1)) = mem(M0,V) .
+
+  op arch : Memory Queue Tag -> Value .
+  eq arch(M,nil,T) = get(T,M) .
+  eq arch(M,q(T,V,Q),T) = arch(put(T,V,M),Q,T) .
+  ceq arch(M,q(U,V,Q),T) = arch(M,Q,T) if T =/= U .
+
+  op queued : Tag Queue -> Bool .
+  eq queued(T,nil) = false .
+  eq queued(T,q(T,V,Q)) = true .
+  ceq queued(T,q(U,V,Q)) = queued(T,Q) if T =/= U .
+
+  op append : Queue Tag Value -> Queue .
+  eq append(nil,T,V) = q(T,V,nil) .
+  eq append(q(U,Old,Q),T,V) = q(U,Old,append(Q,T,V)) .
+
+  op depth : Queue -> Nat .
+  eq depth(nil) = 0 .
+  eq depth(q(T,V,Q)) = 1 + depth(Q) .
+
+  op hit : Tag Line -> Bool .
+  eq hit(T,line(T,V)) = true .
+  eq hit(T,invalid) = false .
+  ceq hit(T,line(U,V)) = false if T =/= U .
+
+  op victim : Cache Way -> Way .
+  eq victim(cache(invalid,L1),R) = w0 .
+  eq victim(cache(L0,invalid),R) = w1 .
+  eq victim(cache(line(T,V),line(U,Old)),w0) = w1 .
+  eq victim(cache(line(T,V),line(U,Old)),w1) = w0 .
+
+  op install : Way Tag Value Cache -> Cache .
+  eq install(w0,T,V,cache(L0,L1)) = cache(line(T,V),L1) .
+  eq install(w1,T,V,cache(L0,L1)) = cache(L0,line(T,V)) .
+
+  op updateLine : Tag Value Line -> Line .
+  eq updateLine(T,V,line(T,Old)) = line(T,V) .
+  eq updateLine(T,V,invalid) = invalid .
+  ceq updateLine(T,V,line(U,Old)) = line(U,Old) if T =/= U .
+
+  op invalidateLine : Tag Line -> Line .
+  eq invalidateLine(T,line(T,V)) = invalid .
+  eq invalidateLine(T,invalid) = invalid .
+  ceq invalidateLine(T,line(U,V)) = line(U,V) if T =/= U .
+
+  op writeCache : Tag Value Cache Policy Fault -> Cache .
+  ceq writeCache(T,V,cache(L0,L1),P,F) =
+    cache(updateLine(T,V,L0),
+          if F == badWay1 then L1 else updateLine(T,V,L1) fi)
+    if P == update .
+  eq writeCache(T,V,cache(L0,L1),invalidate,F) =
+    cache(invalidateLine(T,L0),invalidateLine(T,L1)) .
+
+  op lookup : Request Cache Way -> Stage .
+  eq lookup(none,C,R) = empty .
+  eq lookup(store(T,V),C,R) = wr(T,V) .
+  eq lookup(load(T),cache(L0,L1),R) =
+    if hit(T,L0) then rd(T,true,w0)
+    else if hit(T,L1) then rd(T,true,w1)
+    else rd(T,false,victim(cache(L0,L1),R)) fi fi .
+
+  op advance : State -> State .
+  eq advance(st(C,M,R,P,F,RQ,A1,empty,Q,B)) =
+    st(C,M,R,P,F,none,RQ,lookup(A1,C,R),Q,B) .
+  eq advance(st(C,M,R,P,F,RQ,A1,rd(T,true,W),Q,B)) =
+    st(C,M,W,P,F,none,RQ,lookup(A1,C,R),Q,B) .
+  eq advance(st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,B)) =
+    st(C,M,R,P,F,none,RQ,lookup(A1,C,R),Q,B) .
+  eq advance(st(C,M,R,P,F,RQ,A1,wr(T,V),Q,B)) =
+    st(writeCache(T,V,C,P,F),M,R,P,F,none,RQ,lookup(A1,C,R),
+       append(Q,T,V),B) .
+
+  op hold : State -> Bool .
+  eq hold(st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,B)) = true .
+  eq hold(st(C,M,R,P,F,RQ,A1,wr(T,V),Q,B)) = depth(Q) == 2 .
+  eq hold(st(C,M,R,P,F,RQ,A1,empty,Q,B)) = false .
+  eq hold(st(C,M,R,P,F,RQ,A1,rd(T,true,W),Q,B)) = false .
+
+  op requestOf : State -> Request .
+  eq requestOf(st(C,M,R,P,F,RQ,A1,A2,Q,B)) = RQ .
+  op withRequest : State Request -> State .
+  eq withRequest(st(C,M,R,P,F,none,A1,A2,Q,B),RQ) =
+    st(C,M,R,P,F,RQ,A1,A2,Q,B) .
+
+  op fillReady : Stage Queue Fault -> Bool .
+  eq fillReady(rd(T,false,W),Q,F) = not queued(T,Q) or F == noDrain .
+  eq fillReady(rd(T,true,W),Q,F) = false .
+  eq fillReady(wr(T,V),Q,F) = false .
+  eq fillReady(empty,Q,F) = false .
+
+  op fillConflict : Backend Queue -> Bool .
+  eq fillConflict(mfill(T,W,BT),Q) = queued(T,Q) .
+  eq fillConflict(midle,Q) = false .
+  eq fillConflict(mwrite(T,V),Q) = false .
+
+  op badLine : Memory Queue Line -> Bool .
+  eq badLine(M,Q,invalid) = false .
+  eq badLine(M,Q,line(T,V)) = V =/= arch(M,Q,T) .
+
+  op duplicate : Line Line -> Bool .
+  eq duplicate(line(T,V),line(T,Old)) = true .
+  eq duplicate(invalid,L) = false .
+  eq duplicate(L,invalid) = false .
+  ceq duplicate(line(T,V),line(U,Old)) = false if T =/= U .
+
+  op badQueue : Queue Backend -> Bool .
+  eq badQueue(q(T,V,Q),mwrite(U,Old)) = T =/= U or V =/= Old .
+  eq badQueue(nil,mwrite(T,V)) = true .
+  eq badQueue(Q,midle) = false .
+  eq badQueue(Q,mfill(T,W,BT)) = false .
+
+  op bad : State -> Bool .
+  eq bad(st(cache(L0,L1),M,R,P,F,RQ,A1,A2,Q,B)) =
+    badLine(M,Q,L0) or badLine(M,Q,L1) or duplicate(L0,L1) or
+    fillConflict(B,Q) or badQueue(Q,B) .
+
+  crl [issue-read-t0] : S => withRequest(S,load(t0)) if requestOf(S) == none .
+  crl [issue-read-t1] : S => withRequest(S,load(t1)) if requestOf(S) == none .
+  crl [issue-write-t0-v0] : S => withRequest(S,store(t0,v0)) if requestOf(S) == none .
+  crl [issue-write-t0-v1] : S => withRequest(S,store(t0,v1)) if requestOf(S) == none .
+  crl [issue-write-t1-v0] : S => withRequest(S,store(t1,v0)) if requestOf(S) == none .
+  crl [issue-write-t1-v1] : S => withRequest(S,store(t1,v1)) if requestOf(S) == none .
+
+  crl [advance] : S => advance(S) if not hold(S) .
+
+  crl [start-fill] :
+    st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,midle) =>
+    st(C,M,R,P,F,RQ,A1,rd(T,false,W),Q,mfill(T,W,b0))
+    if not queued(T,Q) or F == noDrain .
+
+  crl [start-write] :
+    st(C,M,R,P,F,RQ,A1,A2,q(T,V,Q),midle) =>
+    st(C,M,R,P,F,RQ,A1,A2,q(T,V,Q),mwrite(T,V))
+    if not fillReady(A2,q(T,V,Q),F) .
+
+  rl [fill-beat-0] :
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b0)) =>
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b1)) .
+  rl [fill-beat-1] :
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b1)) =>
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b2)) .
+  rl [fill-beat-2] :
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b2)) =>
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b3)) .
+  rl [fill-done] :
+    st(C,M,R,P,F,RQ,A1,A2,Q,mfill(T,W,b3)) =>
+    st(install(W,T,arch(M,Q,T),C),M,R,P,F,RQ,A1,A2,Q,midle) .
+
+  rl [write-done] :
+    st(C,M,R,P,F,RQ,A1,A2,q(T,V,Q),mwrite(T,V)) =>
+    st(C,put(T,V,M),R,P,F,RQ,A1,A2,Q,midle) .
+endm
+
+*** Bounded to 16 control transitions; these are not unbounded proofs.
+*** Expected: no solution in either good policy.
+search [1,16] in CACHE-CYCLE : initialUpdate =>* S:State such that bad(S:State) .
+search [1,16] in CACHE-CYCLE : initialInvalidate =>* S:State such that bad(S:State) .
+
+*** Expected counterexamples: stale Way 1 update and refill under a queued store.
+search [1,16] in CACHE-CYCLE : initialBadWay1 =>* S:State such that bad(S:State) .
+search [1,16] in CACHE-CYCLE : initialNoDrain =>* S:State such that bad(S:State) .
