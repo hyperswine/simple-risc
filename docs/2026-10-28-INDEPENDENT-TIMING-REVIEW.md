@@ -112,16 +112,16 @@ earlier. The mapping of `machine_0_2589`/`2598` to `pM.mAction` and of
 | 1 | Separate each stage's validity token from its payload; load payload only by the stage's own advance decision | Removes handover/redirect from payload D-inputs, so payload uses CE; targets the 546/543-load selects | Medium | Implemented on `timing/stage-enables`, not yet timed |
 | 2 | Feed the DSPs from free-running operand/product registers outside `Machine` | Removes the DSP-input endpoints from the select network; lets Gowin use `AREG/BREG/OUT_REG` without CE | Low, +2 cycles per pipelined multiply | Implemented on `timing/stage-enables`, not yet timed |
 | 3 | Register the cache's hold earlier / skid buffer | Only after 1; the broad enable is not critical today | High | Not attempted (semantics per CONTROL-FANOUT-AND-AREA) |
-| 4 | Register the cache read return (BSRAM output register or split bank select) | Targets the 72 MHz worst path | Medium-high: changes the three-clock port | Not attempted (see below) |
+| 4 | Register the cache read return (BSRAM output register or split bank select) | Targets the 72 MHz worst path | Low for the reduced form; medium-high for a full output register (changes the three-clock port) | Reduced form implemented on `timing/stage-enables`: registered one-hot bank select and AND-OR return, no added latency; not yet timed |
 | 5 | Floorplan, placement sweeps at an over-constrained target, `max_fanout` after 1 | Recovers placement noise | Low | Not attempted |
 
-Item 4 adds a clock to the cache's fixed three-logical-clock CPU port. The
+A full output register for item 4 would add a clock to the cache's fixed three-logical-clock CPU port. The
 CPU hard-codes that latency (`pInflight :: Vec 3`, load `mWait = 2`, the
 four-entry fetch queue and `pOutstanding < 4`), the BRAM image shares the
 same pipeline, and the cache's store and fill forwarding windows
-(`last_write`, `fill_forward`) and the Maude models assume three stages. It
-needs its own change and its own timing/CPI measurement; it is not bundled
-with 1 and 2.
+(`last_write`, `fill_forward`) and the Maude models assume three stages. That
+needs its own change and its own timing/CPI measurement; only the
+latency-neutral one-hot select is on the branch.
 
 ## What remains unverified
 
