@@ -159,12 +159,28 @@ module sdram_pipeline_cache #(
  end else begin: single_way_tieoff
    assign bank_word_way1=0;
  end endgenerate
- reg advanced,read_rom;reg [BANK_BITS-1:0] read_bank;reg [31:0] rom_word,held_word;
- wire [31:0] selected_bank_word=(WAYS>1 && hit_way1) ? bank_word_way1[32*read_bank+:32]:bank_word[32*read_bank+:32];
+ reg advanced,read_rom;reg [31:0] rom_word,held_word;
+ // The bank select is also kept one-hot, registered on the BSRAM read edge,
+ // so the return path is an AND-OR of the registered BSRAM words instead
+ // of a binary decode of the old read_bank register followed by a wide indexed mux. This
+ // was the 72 MHz build's worst path (read_bank -> cpu_rdata). It selects
+ // the same word as bank_word[32*read_bank+:32] and adds no latency.
+ reg [BANKS-1:0] read_bank_hot;
+ reg [31:0] way0_word,way1_word;
+ integer sel;
+ always @* begin
+   way0_word=0;way1_word=0;
+   for(sel=0;sel<BANKS;sel=sel+1)begin
+     way0_word=way0_word|({32{read_bank_hot[sel]}} & bank_word[32*sel+:32]);
+     way1_word=way1_word|({32{read_bank_hot[sel]}} & bank_word_way1[32*sel+:32]);
+   end
+ end
+ wire [31:0] selected_bank_word=(WAYS>1 && hit_way1) ? way1_word:way0_word;
  wire [31:0] entry_word=!advanced ? held_word:read_rom ? rom_word:selected_bank_word;
  always @(posedge clk)begin
    advanced<=advance;held_word<=entry_word;
-   read_rom<=cpu_address[21];read_bank<=cpu_address[LINE_BITS+1:0]>>9;rom_word<=rom[cpu_address[8:0]];
+   read_rom<=cpu_address[21];
+   read_bank_hot<=1'b1<<(cpu_address[LINE_BITS+1:0]>>9);rom_word<=rom[cpu_address[8:0]];
  end
  reg [31:0] forwarded;
  always @* begin
