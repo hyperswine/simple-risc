@@ -40,13 +40,18 @@ module pipeline_cpu_tb #(
    .sd_miso(sd_mosi),.sd_sck(sd_sck),.sd_mosi(sd_mosi),.sd_cs(sd_cs));
  // Generated pipeline commit/fetch fields: a post-fence commit must follow a
  // new fetch of mNext with every pre-fence pipeline valid/queue field empty.
+ // Offsets follow the generated Machine packing; they moved by +203 when the
+ // multiply's partial products left MemoryStage (-136) and the injected
+ // product/mirror fields were added below cpuPipe (+339). The M slot is now
+ // valid bit 3165 and payload [3164:2743] (mPc, mNext at the top, mWord at
+ // payload [127:96]).
  wire fence_pipeline_empty =
-   (cpu.c$ds1_app_arg[4694:4692]==0) && !cpu.c$ds1_app_arg[4691] &&
-   (cpu.c$ds1_app_arg[4289:4288]==0) &&
-   !cpu.c$ds1_app_arg[4287] && !cpu.c$ds1_app_arg[4087] &&
-   !cpu.c$ds1_app_arg[3761] && !cpu.c$ds1_app_arg[2962];
+   (cpu.c$ds1_app_arg[4897:4895]==0) && !cpu.c$ds1_app_arg[4894] &&
+   (cpu.c$ds1_app_arg[4492:4491]==0) &&
+   !cpu.c$ds1_app_arg[4490] && !cpu.c$ds1_app_arg[4290] &&
+   !cpu.c$ds1_app_arg[3964] && !cpu.c$ds1_app_arg[3165];
  pipeline_fence_assertions fence_i_monitor(clk,core_reset,hold_cpu,
-   cpu.mCommits,cpu.m_4[127:96],cpu.m_4[557:526],cpu.m_4[525:494],
+   cpu.mCommits,cpu.c$ds1_app_arg[2870:2839],cpu.c$ds1_app_arg[3164:3133],cpu.c$ds1_app_arg[3132:3101],
    cpu.issue,cpu.fetchPc,fence_pipeline_empty);
  wire req,write,ready;wire [20:0] address;wire [31:0] wdata;wire [3:0] mask;
  wire done,valid;wire [31:0] rdata;wire [1:0] word_index;

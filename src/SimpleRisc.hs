@@ -996,6 +996,19 @@ data Machine = Machine
     cpuCountRetirement :: Bool,
     cpuCounterWrite :: Maybe (Unsigned 12, Word32),
     cpuMulDiv :: MulDivUnit,
+    -- | The pipelined multiply's four partial products, injected each cycle
+    -- like cpuRfA/cpuRfB. In hardware they come from two free-running
+    -- registers outside 'Machine' ('multiplyOperands' -> operand register
+    -- -> 'partialProductsOf' -> product register), so the DSP input and
+    -- output registers have no clock enable or next-state mux and are not
+    -- reached by stage-advance, hold or cancellation logic. The commit
+    -- stage waits long enough ('mWait') that both registers have reloaded
+    -- from its operands; holds only add edges, never remove them.
+    cpuMulProducts :: Vec 4 (Signed 34),
+    -- | The simulation's copy of those two registers (see
+    -- 'withMultiplyMirror'); the circuits keep them constant (removed).
+    cpuMulOperandsMirror :: (BitVector 3, Word32, Word32),
+    cpuMulProductsMirror :: Vec 4 (Signed 34),
     systemBus :: BusState,
     cpuBusRequest :: Maybe BusRequest,
     cpuBusResponse :: Maybe BusResponse,
@@ -1092,6 +1105,9 @@ initialMachine =
       cpuCountRetirement = False,
       cpuCounterWrite = Nothing,
       cpuMulDiv = MulDivUnit MdPrepare 0 0 0 0 False False False False,
+      cpuMulProducts = repeat 0,
+      cpuMulOperandsMirror = (0, 0, 0),
+      cpuMulProductsMirror = repeat 0,
       systemBus = initialBus,
       cpuBusRequest = Nothing,
       cpuBusResponse = Nothing,
@@ -1230,17 +1246,20 @@ simpleRiscSd serialRx sdMiso = bundle (serialTx, sck, mosi, cs)
     -- MISO is asynchronous: two flip-flops, then into the I/O complex.
     miso = register high (register high sdMiso)
     machineState = register boardMachine (fst <$> stepped)
-    stepped = withIo <$> machineState <*> machineInput <*> ioAnswer <*> rfA <*> rfB
+    stepped = withIo <$> machineState <*> machineInput <*> ioAnswer <*> rfA <*> rfB <*> mulProducts
+    -- Free-running DSP operand and product registers (see 'cpuMulProducts').
+    mulOperands = register (0, 0, 0) (multiplyOperands <$> machineState)
+    mulProducts = register (repeat 0) (partialProductsOf <$> mulOperands)
     -- The register file is distributed RAM: two copies, one per read port,
     -- written together. The mirror in the machine stays constant (removed).
-    withIo m input answer a b =
+    withIo m input answer a b products =
       let (m', output) =
             machineStepCoreBy
               pipelinedCpuStep
               decodeMemoryTarget
-              m {cpuDevices = (cpuDevices m) {devIo = answer}, cpuRfA = a, cpuRfB = b}
+              m {cpuDevices = (cpuDevices m) {devIo = answer}, cpuRfA = a, cpuRfB = b, cpuMulProducts = products}
               input
-       in (m' {cpuRegs = repeat 0}, output)
+       in (m' {cpuRegs = repeat 0, cpuMulOperandsMirror = (0, 0, 0), cpuMulProductsMirror = repeat 0}, output)
     rfWrite = (\m cancel -> if cancel then Nothing else cpuPendingWrite m) <$> machineState <*> breaking
     rfA = asyncRam (SNat @32) (fst . cpuReadIndices <$> machineState) rfWrite
     rfB = asyncRam (SNat @32) (snd . cpuReadIndices <$> machineState) rfWrite
@@ -1488,7 +1507,7 @@ machineStepDecoded = machineStepDecodedWith decodeMemoryTarget
 -- | One cycle with the register file as values in the machine ('cpuRegs'):
 -- the simulation and the SDRAM image.
 machineStepDecodedWith :: (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput)
-machineStepDecodedWith decodeTarget machine = machineStepCoreWith decodeTarget (withMirrorReads machine)
+machineStepDecodedWith decodeTarget machine input = withMultiplyMirror (\m -> machineStepCoreWith decodeTarget (withMirrorReads m) input) machine
 
 -- | One cycle; the register file's outputs at 'registerReads' are already in
 -- cpuRfA/cpuRfB, and its write this cycle is the state's cpuPendingWrite
@@ -1721,10 +1740,9 @@ data MemoryStage = MemoryStage
     mShift :: Bool,
     mArith :: Bool,
     mAmount :: Word32,
-    -- | A multiply: its four 17 x 17 partial products (DSP blocks, fed
-    -- from this stage's operand registers), summed at commit.
+    -- | A multiply: mA x mB, formed by the free-running DSP registers
+    -- (see 'cpuMulProducts') and summed at commit.
     mMultiply :: Bool,
-    mProducts :: Vec 4 (Signed 34),
     -- | Cycles until the word read for a load or a sub-word store is on
     -- the memory bus.
     mWait :: Unsigned 2,
@@ -1798,7 +1816,7 @@ data Pipe = Pipe
     pFRead :: Index 2,
     pFWrite :: Index 2,
     pFCount :: Unsigned 2,
-    pD :: Maybe Fetched,
+    pDSlot :: Slot Fetched,
     -- | Decode's operands: on its first cycle (pDFresh) they come from the
     -- register file, read the cycle before at the entering word's sources;
     -- while it waits, from here, refreshed by forwarding.
@@ -1808,9 +1826,12 @@ data Pipe = Pipe
     -- from their next state on the preceding edge. Comparisons terminate
     -- here rather than driving the wide D payload enable in the same cycle.
     pDBlocked :: Bool,
-    pE1 :: Maybe ExecuteOne,
-    pE2 :: Maybe ExecuteTwo,
-    pM :: Maybe MemoryStage,
+    -- D, E1, E2 and M keep their validity token apart from their payload
+    -- (see 'Slot'): cancellation (handover, FENCE.I, a redirect) clears the
+    -- token only, and each payload is loaded under a local stage enable.
+    pE1Slot :: Slot ExecuteOne,
+    pE2Slot :: Slot ExecuteTwo,
+    pMSlot :: Slot MemoryStage,
     -- | A taken branch or jump left the second execute stage last cycle:
     -- this cycle the younger stages are flushed and its target fetched.
     pRedirect :: Maybe Word32,
@@ -1819,6 +1840,53 @@ data Pipe = Pipe
     pBtb :: Vec 8 BtbEntry
   }
   deriving (Generic, NFDataX)
+
+-- | A pipeline stage register split into a one-bit validity token and its
+-- payload. Only 'slotValid' depends on cancellation (handover, FENCE.I,
+-- redirects, resets); 'slotPayload' is loaded by the stage's own advance
+-- decision, which reads registered stage state only. A Maybe-typed stage
+-- made every payload bit's next-state mux depend on the whole-pipeline
+-- cancellation logic (the 2026-10-28 reports trace pM.mAction and
+-- cpuInterruptDue through 400-550-load selects into pD/E2 payload and the
+-- DSP operand registers). A payload of an invalid slot is a don't-care and is
+-- never observed: everything reads stages through 'pD', 'pE1', 'pE2', 'pM'.
+data Slot a = Slot {slotValid :: Bool, slotPayload :: a}
+  deriving (Generic, NFDataX)
+
+slotView :: Slot a -> Maybe a
+slotView (Slot valid payload) = if valid then Just payload else Nothing
+
+-- | Invalidate, keeping the (now don't-care) payload: no payload mux.
+slotCancel :: Slot a -> Slot a
+slotCancel slot = slot {slotValid = False}
+
+-- | The token from a Maybe-valued next state, keeping the old payload; the
+-- payload is overwritten separately in 'pipeStepDecodedWith'.
+slotToken :: Slot a -> Maybe b -> Slot a
+slotToken slot next = slot {slotValid = isJust next}
+
+pD :: Pipe -> Maybe Fetched
+pD = slotView . pDSlot
+
+pE1 :: Pipe -> Maybe ExecuteOne
+pE1 = slotView . pE1Slot
+
+pE2 :: Pipe -> Maybe ExecuteTwo
+pE2 = slotView . pE2Slot
+
+pM :: Pipe -> Maybe MemoryStage
+pM = slotView . pMSlot
+
+emptyExecuteOne :: ExecuteOne
+emptyExecuteOne = ExecuteOne 0 0 0 0 0 initialExecuteControl 0 0 0 0 0 False False 0
+
+emptyExecuteTwo :: ExecuteTwo
+emptyExecuteTwo =
+  ExecuteTwo 0 0 initialExecuteControl (Computed Nothing 0 0 Nothing 0) (repeat 0) initialCompareResults initialCompareResults
+    0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
+
+emptyMemoryStage :: MemoryStage
+emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 Plain 0 0 0 0
 
 emptyPipe :: Pipe
 emptyPipe =
@@ -1835,13 +1903,13 @@ emptyPipe =
     0
     0
     0
-    Nothing
+    (Slot False (Fetched 0 0 False False 0 0 4))
     (0, 0)
     False
     False
-    Nothing
-    Nothing
-    Nothing
+    (Slot False emptyExecuteOne)
+    (Slot False emptyExecuteTwo)
+    (Slot False emptyMemoryStage)
     Nothing
     (repeat (BtbEntry False False 0 0))
 
@@ -1865,12 +1933,12 @@ restartPipe pc pipe =
       pFRead = 0,
       pFWrite = 0,
       pFCount = 0,
-      pD = Nothing,
+      pDSlot = slotCancel (pDSlot pipe),
       pDFresh = False,
       pDBlocked = False,
-      pE1 = Nothing,
-      pE2 = Nothing,
-      pM = Nothing,
+      pE1Slot = slotCancel (pE1Slot pipe),
+      pE2Slot = slotCancel (pE2Slot pipe),
+      pMSlot = slotCancel (pMSlot pipe),
       pRedirect = Nothing
     }
 
@@ -1927,6 +1995,21 @@ productHalf funct3 products =
 -- encodings, misaligned targets, fetch faults) and any interrupt hands
 -- over: when it reaches the commit stage the pipeline is flushed and the
 -- phases run it from Fetch.
+-- | The commit stage's multiply operands, read every cycle by the
+-- free-running DSP operand register (a don't-care unless M multiplies).
+multiplyOperands :: Machine -> (BitVector 3, Word32, Word32)
+multiplyOperands machine = let m = slotPayload (pMSlot (cpuPipe machine)) in (mFunct3 m, mA m, mB m)
+
+partialProductsOf :: (BitVector 3, Word32, Word32) -> Vec 4 (Signed 34)
+partialProductsOf (funct3, a, b) = partialProducts funct3 a b
+
+-- | Simulation: inject the mirrored product register, then advance both
+-- mirrored registers by one edge, as the circuits' free-running registers do.
+withMultiplyMirror :: (Machine -> (Machine, o)) -> Machine -> (Machine, o)
+withMultiplyMirror stepWith machine =
+  let (next, output) = stepWith machine {cpuMulProducts = cpuMulProductsMirror machine}
+   in (next {cpuMulOperandsMirror = multiplyOperands machine, cpuMulProductsMirror = partialProductsOf (cpuMulOperandsMirror machine)}, output)
+
 pipeStep :: Machine -> Word32 -> (Machine, RegisterWrite, StepOutput)
 pipeStep = pipeStepDecodedWith decodeMemoryTarget
 
@@ -1967,8 +2050,10 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
       -- Multiplication's wide carry chains end at a dedicated register,
       -- before the common load/shift/ordinary writeback mux. A multiply
       -- spends one extra M cycle here; its result then forwards as mValue.
+      -- mWait counts 3, 2, 1: the operand register reloads from mA/mB by the
+      -- first edge, the product register by the second, and the third sums.
       heldMemory m
-        | mMultiply m = m {mWait = mWait m - 1, mValue = productHalf (mFunct3 m) (mProducts m), mMultiply = False, mFinal = True}
+        | mMultiply m && mWait m == 1 = m {mWait = 0, mValue = productHalf (mFunct3 m) (cpuMulProducts machine), mMultiply = False, mFinal = True}
         | otherwise = m {mWait = mWait m - 1}
       registerWriteNow = case pM pipe of
         Just m | mCommits && mWrites m -> Just (mRd m, committedValue m)
@@ -2037,7 +2122,6 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                   mArith = execArithmeticShift control,
                   mAmount = e2Op2 x,
                   mMultiply = multiplying,
-                  mProducts = partialProducts funct3 (e2A x) (e2B x),
                   mWait = e2WaitFast x,
                   mAction = action,
                   mWord = e2Word x,
@@ -2138,7 +2222,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             storeWord1 = store1 && funct31 == 2
             shifting1 = execShift control && not (execMulDiv control)
             multiplying1 = execMulDiv control && not (testBit funct31 2)
-            wait1 = if load1 || (store1 && not storeWord1 && not (cpuExternalMemory machine)) then 2 else if multiplying1 then 1 else 0
+            wait1 = if load1 || (store1 && not storeWord1 && not (cpuExternalMemory machine)) then 2 else if multiplying1 then 3 else 0
             refetch1 = e1Size x == 0
          in ExecuteTwo
               { e2Pc = e1Pc x,
@@ -2362,9 +2446,7 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
               { pInstructionPc = fetchPc,
                 pInflight = issued :> Nothing :> Nothing :> Nil,
                 pOutstanding = if issue then 1 else 0,
-                pM = case pM pipe of
-                  Just m | mHold -> Just (heldMemory m)
-                  _ -> Nothing
+                pMSlot = slotToken (pMSlot pipe) (if mHold then pM pipe else Nothing)
               }
         | otherwise =
             Pipe
@@ -2380,15 +2462,15 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                 pFRead = if fPop then (if pFRead pipe == 0 then 1 else 0) else pFRead pipe,
                 pFWrite = if fPush then (if pFWrite pipe == 0 then 1 else 0) else pFWrite pipe,
                 pFCount = pFCount pipe + (if fPush then 1 else 0) - (if fPop then 1 else 0),
-                pD = nextD,
+                pDSlot = slotToken (pDSlot pipe) nextD,
                 pDOperands = case d of
                   Just f -> let (_, _, operands) = decodeOut f in operands
                   Nothing -> pDOperands pipe,
                 pDFresh = dFree,
                 pDBlocked = nextBlocked,
-                pE1 = nextE1,
-                pE2 = nextE2,
-                pM = nextM,
+                pE1Slot = slotToken (pE1Slot pipe) nextE1,
+                pE2Slot = slotToken (pE2Slot pipe) nextE2,
+                pMSlot = slotToken (pMSlot pipe) nextM,
                 pRedirect = redirect,
                 pBtb = btb'
               }
@@ -2409,9 +2491,41 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
             cpuPortWriteAddressFull = maybe 0 mAddress (pM pipe),
             cpuPortByteEnable = maybe 0xf (\x -> pack (map (\n -> if testBit (mMask x) (n * 8) then high else low) (3 :> 2 :> 1 :> 0 :> Nil))) (pM pipe)
           }
+      -- Stage payloads, independent of handover, FENCE.I and redirects:
+      -- each loads from the stage before it under that stage's own advance
+      -- decision (registered state only), and otherwise holds, so synthesis
+      -- can use the flip-flops' clock enables. Wherever the selected
+      -- next pipe (any branch above) has a valid stage, its contents equal
+      -- the payload here; where the stage is cancelled the payload is unused.
+      payloadD
+        | dFree && pFCount pipe /= 0 = pFQueue pipe !! pFRead pipe
+        | otherwise = slotPayload (pDSlot pipe)
+      payloadE1
+        | isJust (pE1 pipe) && not e1Advance = slotPayload (pE1Slot pipe)
+        | dAdvance = let (stage, _, _) = decodeOut (slotPayload (pDSlot pipe)) in stage
+        | otherwise = slotPayload (pE1Slot pipe)
+      payloadE2
+        | isJust (pE2 pipe) && not e2Advance = slotPayload (pE2Slot pipe)
+        | isJust (pE1 pipe) && e1Advance = e1Out (slotPayload (pE1Slot pipe))
+        | otherwise = slotPayload (pE2Slot pipe)
+      payloadM
+        | mHold = heldMemory (slotPayload (pMSlot pipe))
+        | isJust (pE2 pipe) && e2Advance = let (stage, _, _, _) = e2Out (slotPayload (pE2Slot pipe)) in stage
+        | otherwise = slotPayload (pMSlot pipe)
+      withPayloads m =
+        let p = cpuPipe m
+         in m
+              { cpuPipe =
+                  p
+                    { pDSlot = (pDSlot p) {slotPayload = payloadD},
+                      pE1Slot = (pE1Slot p) {slotPayload = payloadE1},
+                      pE2Slot = (pE2Slot p) {slotPayload = payloadE2},
+                      pMSlot = (pMSlot p) {slotPayload = payloadM}
+                    }
+              }
    in if handover
-        then (handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing))
-        else (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}, registerWriteNow, (readAddress, memoryWrite, Nothing))
+        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing))
+        else (withPayloads (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}), registerWriteNow, (readAddress, memoryWrite, Nothing))
 
 -- | Leave the pipeline for the phases at the commit stage: an interrupt
 -- (before the instruction), an exception, or an action the phases run from
