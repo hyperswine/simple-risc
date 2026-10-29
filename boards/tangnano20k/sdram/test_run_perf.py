@@ -1,7 +1,7 @@
 import unittest
 from copy import deepcopy
 from itertools import product
-from run_perf import parse_metrics
+from run_perf import parse_metrics, stall_breakdown, SLOT_CAUSES
 from benchmark_matrix import check_controls
 
 
@@ -21,6 +21,28 @@ class PerformanceGate(unittest.TestCase):
                      self.output + 'PERF cycles=10\n', self.output.replace('code_fills=2', '')]:
             with self.assertRaises(ValueError):
                 parse_metrics(text, 'BEGIN', 'FPR EXIT 0')
+
+
+class StallBreakdown(unittest.TestCase):
+    def metrics(self):
+        values = {key: 0 for key, _ in SLOT_CAUSES}
+        values.update(slot_issue=50, slot_load_wait=12, slot_frontend_refill=9, fetch_port_blocked=7)
+        values.update(window_cycles=80, window_held=9, window_pipeline_commits=45)
+        return values
+
+    def test_causes_and_holds_cover_every_cycle(self):
+        rows = {key: (value, percent) for key, _, value, percent in stall_breakdown(self.metrics())}
+        self.assertEqual(rows['slot_issue'], (50, 62.5))
+        self.assertAlmostEqual(sum(percent for _, percent in rows.values()), 100.0)
+
+    def test_rejects_gaps_double_counting_and_missing_counters(self):
+        for change in [dict(slot_issue=49), dict(slot_hazard=1), dict(window_held=10)]:
+            with self.assertRaises(ValueError):
+                stall_breakdown({**self.metrics(), **change})
+        missing = self.metrics()
+        del missing['slot_other']
+        with self.assertRaises(ValueError):
+            stall_breakdown(missing)
 
 
 class MatrixControls(unittest.TestCase):

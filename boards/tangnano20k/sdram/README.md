@@ -44,6 +44,9 @@ and `--timeout`, and optional named-port `--profile-cpu` observations. Generate
 `SdramPipelineObserved` for profiling and CPU-level RTL tests; ordinary board
 builds continue to use `SdramPipeline`. Historical matrix receipts without a
 profiling-ABI field explicitly select the archived 2026-10-28 layout.
+`--stall-breakdown` attributes every measured cycle to one issue-slot cause
+(named-v2 ABI); generate the observed top with `-DPIPELINE_SLOT_OBSERVATIONS`
+for it. See [STALL-BREAKDOWN](../../../docs/2026-10-30-STALL-BREAKDOWN.md).
 
 The [structural experiment plan](../../../docs/2026-10-30-STRUCTURAL-EXPERIMENTS.md)
 records the baseline, acceptance criteria and pending experiments. For example:

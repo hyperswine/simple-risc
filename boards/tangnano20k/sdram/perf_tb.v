@@ -163,6 +163,36 @@ module perf_tb #(
    end
  end endgenerate
 
+ // Issue-slot accounting (named-v2 ABI): every unheld measured cycle gets one
+ // cause from the CPU's own step function, so slot_* plus window_held equals
+ // window_cycles. A front-end bubble is a refill while no instruction has
+ // issued since the last restart (redirect, handover or FENCE.I).
+ reg [63:0] slot_issue=0,slot_slow=0,slot_restart=0,slot_load_wait=0,slot_mul_wait=0,slot_other_wait=0;
+ reg [63:0] slot_port_conflict=0,slot_hazard=0,slot_frontend_refill=0,slot_frontend_other=0,slot_other=0;
+ reg [63:0] fetch_port_blocked=0;
+`ifdef NAMED_SLOT_OBSERVATIONS
+ reg refilling=0;
+ always @(posedge clk)if(!core_reset && !hold_cpu)begin
+   if(cpu.observe_slot==2)refilling<=1;
+   else if(cpu.observe_slot==0)refilling<=0;
+   if(measuring)begin
+     case(cpu.observe_slot)
+       0:slot_issue<=slot_issue+1;
+       1:slot_slow<=slot_slow+1;
+       2:slot_restart<=slot_restart+1;
+       3:slot_load_wait<=slot_load_wait+1;
+       4:slot_mul_wait<=slot_mul_wait+1;
+       5:slot_other_wait<=slot_other_wait+1;
+       6:slot_port_conflict<=slot_port_conflict+1;
+       7:slot_hazard<=slot_hazard+1;
+       8:if(refilling)slot_frontend_refill<=slot_frontend_refill+1;else slot_frontend_other<=slot_frontend_other+1;
+       default:slot_other<=slot_other+1;
+     endcase
+     if(cpu.observe_fetch_port_blocked)fetch_port_blocked<=fetch_port_blocked+1;
+   end
+ end
+`endif
+
  // UART receiver for the CPU's transmitter (UART_BIT clocks per bit).
  reg [8*64-1:0] line_text=0;integer line_length=0;
  reg [8*64-1:0] end_marker,start_marker;
@@ -178,6 +208,12 @@ module perf_tb #(
    $display("PERF window_cycles=%0d window_held=%0d window_fills=%0d window_writes=%0d",
      window_cycles,window_held,window_fills,window_writes);
    $display("PERF window_pipeline_commits=%0d window_redirects=%0d",window_pipeline_commits,window_redirects);
+`ifdef NAMED_SLOT_OBSERVATIONS
+   $display("PERF slot_issue=%0d slot_slow=%0d slot_restart=%0d slot_load_wait=%0d slot_mul_wait=%0d slot_other_wait=%0d",
+     slot_issue,slot_slow,slot_restart,slot_load_wait,slot_mul_wait,slot_other_wait);
+   $display("PERF slot_port_conflict=%0d slot_hazard=%0d slot_frontend_refill=%0d slot_frontend_other=%0d slot_other=%0d fetch_port_blocked=%0d",
+     slot_port_conflict,slot_hazard,slot_frontend_refill,slot_frontend_other,slot_other,fetch_port_blocked);
+`endif
    $finish;
  end endtask
  initial begin

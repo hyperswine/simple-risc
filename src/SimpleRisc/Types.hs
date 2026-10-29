@@ -1,4 +1,5 @@
 {-# LANGUAGE BinaryLiterals #-}
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
@@ -961,5 +962,41 @@ data PipelineTrace = PipelineTrace
     ptFetchPc :: Word32,
     ptEmpty :: Bool,
     ptRedirect :: Bool
+#ifdef PIPELINE_SLOT_OBSERVATIONS
+    -- Only the stall-breakdown simulation build defines this flag. Clash
+    -- carries the trace through the step's internal result, so these fields
+    -- would change the board RTL text even though nothing reads them there.
+    ,
+    -- | What the decode-to-E1 issue slot did this cycle (see 'slotIssue'
+    -- and the codes after it). Exactly one code per cycle, so over a run the
+    -- codes plus cache-held cycles add up to the cycle count.
+    ptSlot :: Unsigned 4,
+    -- | Fetch had room to issue but a load or store owned the memory port.
+    -- Not exclusive with 'ptSlot': it explains front-end bubbles that follow.
+    ptFetchPortBlocked :: Bool
+#endif
   }
   deriving (Generic, NFDataX)
+
+-- | Issue-slot cause codes for 'ptSlot', in priority order.
+slotIssue, slotSlow, slotRestart, slotLoadWait, slotMulWait, slotOtherWait, slotPortConflict, slotHazard, slotFrontEnd, slotOther :: Unsigned 4
+-- | An instruction moves from decode into E1.
+slotIssue = 0
+-- | The core is outside the pipeline (ROM, trap and handover phases).
+slotSlow = 1
+-- | A redirect, handover or FENCE.I restart discards the front of the pipe.
+slotRestart = 2
+-- | Decode is blocked behind the commit stage waiting for a load's word.
+slotLoadWait = 3
+-- | ... behind a multiply's three commit-stage cycles.
+slotMulWait = 4
+-- | ... behind any other commit-stage wait.
+slotOtherWait = 5
+-- | ... behind a load in E2 that cannot read while M writes the port.
+slotPortConflict = 6
+-- | Decode holds an instruction whose operands are not ready yet.
+slotHazard = 7
+-- | Decode is empty: fetch has not delivered an instruction.
+slotFrontEnd = 8
+-- | Anything else (should stay zero).
+slotOther = 9

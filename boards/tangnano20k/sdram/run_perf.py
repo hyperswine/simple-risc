@@ -42,6 +42,60 @@ def require_observations(sources):
         raise ValueError('generate SdramPipelineObserved for simulation; missing observation ports: ' + ', '.join(missing))
 
 
+SLOT_PORTS = ('slot', 'fetch_port_blocked')
+
+# Exclusive issue-slot causes (perf_tb.v NAMED_SLOT_OBSERVATIONS), in display order.
+SLOT_CAUSES = (
+    ('slot_issue', 'issued into E1'),
+    ('slot_load_wait', 'behind a load in M'),
+    ('slot_mul_wait', 'behind a multiply in M'),
+    ('slot_other_wait', 'behind another M wait'),
+    ('slot_port_conflict', 'E2 load blocked by an M store'),
+    ('slot_hazard', 'operand hazard in decode'),
+    ('slot_restart', 'restart cycle (redirect/handover/fence)'),
+    ('slot_frontend_refill', 'front end refilling after restart'),
+    ('slot_frontend_other', 'front end empty, other'),
+    ('slot_slow', 'outside the pipeline (ROM/trap phases)'),
+    ('slot_other', 'unclassified'),
+)
+
+
+def require_slot_observations(sources):
+    text = '\n'.join(Path(source).read_text() for source in sources)
+    missing = [name for name in SLOT_PORTS
+               if not re.search(r'\boutput\s+(?:wire\s+)?(?:\[\d+:\d+\]\s+)?observe_' + name + r'\b', text)]
+    if missing:
+        raise ValueError('regenerate SdramPipelineObserved; missing stall-breakdown ports: ' + ', '.join(missing))
+
+
+def stall_breakdown(metrics):
+    """Check the slot identity and return (key, label, cycles, percent) rows.
+
+    Every unheld measured cycle carries exactly one cause, so the causes plus
+    window_held must equal window_cycles.
+    """
+    keys = [key for key, _ in SLOT_CAUSES]
+    if not set(keys) <= metrics.keys():
+        raise ValueError('missing stall-breakdown counters')
+    total = sum(metrics[key] for key in keys) + metrics['window_held']
+    if total != metrics['window_cycles']:
+        raise ValueError(f'slot causes plus held ({total}) differ from window cycles ({metrics["window_cycles"]})')
+    cycles = metrics['window_cycles']
+    rows = [('window_held', 'cache holds the core', metrics['window_held'])]
+    rows += [(key, label, metrics[key]) for key, label in SLOT_CAUSES]
+    return [(key, label, value, 100*value/cycles) for key, label, value in rows]
+
+
+def format_breakdown(rows, metrics):
+    lines = ['STALL BREAKDOWN (share of measured cycles)']
+    lines += [f'  {label:<42} {value:>13,} {percent:6.2f}%' for _, label, value, percent in rows]
+    commits = metrics.get('window_pipeline_commits', 0)
+    issued = metrics['slot_issue']
+    lines.append(f'  commits {commits:,}  IPC {commits/metrics["window_cycles"]:.3f}  '
+                 f'wrong-path issues {issued-commits:,}  fetch port blocked {metrics["fetch_port_blocked"]:,} cycles')
+    return '\n'.join(lines)
+
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -93,6 +147,7 @@ def main():
     p.add_argument('--jobs', type=int, default=2, help='bounded Verilator C++ build parallelism')
     p.add_argument('--timeout', type=float, default=1800, help='wall-clock limit per simulator execution')
     p.add_argument('--profile-cpu', action='store_true', help='count pipeline commits and redirects through named observation ports')
+    p.add_argument('--stall-breakdown', action='store_true', help='attribute every cycle to one issue-slot cause (implies --profile-cpu)')
     p.add_argument('--legacy-profile-20261028', action='store_true', help='explicit historical replay of the frozen 2026-10-28 profiling layout')
     a = p.parse_args()
     if (not all(math.isfinite(v) and v > 0 for v in [a.cpu_mhz, a.mem_mhz, a.timeout])
@@ -108,6 +163,10 @@ def main():
     sources = sorted(a.generated.glob('*.v'))
     if not sources:
         raise SystemExit(f'no generated Verilog in {a.generated}')
+    if a.stall_breakdown:
+        if a.legacy_profile_20261028:
+            p.error('--stall-breakdown needs the named observation ABI')
+        a.profile_cpu = True
     if a.legacy_profile_20261028 and not a.profile_cpu:
         p.error('--legacy-profile-20261028 requires --profile-cpu')
     if a.profile_cpu:
@@ -117,6 +176,8 @@ def main():
                 raise SystemExit('archived profiling ABI mismatch; use named observations for current CPUs')
         else:
             require_observations(sources)
+            if a.stall_breakdown:
+                require_slot_observations(sources)
     copied = []
     for source in sources:
         text = source.read_text()
@@ -147,11 +208,12 @@ def main():
              f'-GMEM_MHZ={a.mem_mhz}', f'-GPROFILE_CPU={int(a.profile_cpu)}', f'-GLINE_BITS={a.line_bits}', f'-GWAYS={a.ways}', f'-GWRITE_UPDATE={a.write_update}',
              *(['-DLEGACY_PROFILE_20261028'] if a.legacy_profile_20261028 else []),
              *(['-DNAMED_PIPELINE_OBSERVATIONS'] if a.profile_cpu and not a.legacy_profile_20261028 else []),
+             *(['-DNAMED_SLOT_OBSERVATIONS'] if a.stall_breakdown else []),
              *copied, a.cache_rtl.resolve(), a.bridge_rtl.resolve(), HERE/'sdram.v', HERE/'burst_memory.v',
              HERE/'perf_tb.v']
     config = dict(cpu_mhz=a.cpu_mhz, mem_mhz=a.mem_mhz, cdc=bool(cdc),
                   line_bits=a.line_bits, ways=a.ways, write_update=a.write_update,
-                  profile_cpu=a.profile_cpu, profile_abi=('legacy-20261028' if a.legacy_profile_20261028 else 'named-v1') if a.profile_cpu else None, image_sha256=sha(a.image),
+                  profile_cpu=a.profile_cpu, profile_abi=('legacy-20261028' if a.legacy_profile_20261028 else 'named-v2' if a.stall_breakdown else 'named-v1') if a.profile_cpu else None, image_sha256=sha(a.image),
                   elf_sha256=sha(a.elf) if a.elf else None,
                   generated={str(p.resolve()): sha(p) for p in sources},
                   inputs={str(p.resolve()): sha(p) for p in [a.cache_rtl, a.bridge_rtl,
@@ -194,7 +256,13 @@ def main():
         report.update(passed=True, metrics=metrics, measured_us=metrics['window_cycles']/a.cpu_mhz,
                       held_percent=100*metrics['window_held']/metrics['window_cycles'],
                       output_sha256=sha(out/'run.log'))
+        if a.stall_breakdown:
+            rows = stall_breakdown(metrics)
+            report['stall_breakdown'] = {key: dict(cycles=value, percent=round(percent, 4))
+                                         for key, _, value, percent in rows}
         print(output, end='', flush=True)
+        if a.stall_breakdown:
+            print(format_breakdown(rows, metrics), flush=True)
     except BaseException as error:
         report['error'] = str(error)
         raise

@@ -1619,6 +1619,23 @@ pipeStepTracedWith decodeTarget machine memoryWord =
           not (slotValid (pDSlot pipe)) && not (slotValid (pE1Slot pipe)) &&
           not (slotValid (pE2Slot pipe)) && not (slotValid (pMSlot pipe)))
         (isJust redirect)
+#ifdef PIPELINE_SLOT_OBSERVATIONS
+        slotCause
+        (portBusy && pOutstanding pipe < 4)
+      -- Observation only: which reason the issue slot is lost to this cycle.
+      slotCause
+        | not (cpuFast machine) = slotSlow
+        | handover || fencing || isJust flushing = slotRestart
+        | dAdvance = slotIssue
+        | isJust d && not e1Free = case pM pipe of
+            Just m
+              | mWait m /= 0 -> if mLoad m then slotLoadWait else if mMultiply m then slotMulWait else slotOtherWait
+            _ -> case pE2 pipe of
+              Just x | e2Reads x && mWriting -> slotPortConflict
+              _ -> slotOther
+        | isJust d = slotHazard
+        | otherwise = slotFrontEnd
+#endif
    in if handover
         then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing), stages, loads, trace)
         else

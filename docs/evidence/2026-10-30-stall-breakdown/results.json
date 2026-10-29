@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 48.0,
+    "mem_mhz": 48.0,
+    "cdc": false,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "profile_abi": "named-v2",
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/stall-breakdown-20261030/generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "7ea18d51dba78c33c47b9dc13b1d7a6d84562b12b45fb1f2cd3d6d98429314f2"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "82f22027b6c712b0022d00e0685e80ae9e0739b3816fc5645496506c4ab1a84c",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "0a8ac26ef007edae72d66e35efa90cb4ada423021e2df503aac4469b66cd3e2d"
+    }
+  },
+  "build_manifest_sha256": "738f5e0dba13ccebd03b3f5198e9d114bfceac291496f6aaf1738e122e95c065",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 145955655,
+    "held": 8501834,
+    "held_read_miss": 2962346,
+    "held_write_full": 5537440,
+    "held_clear": 2048,
+    "miss_draining": 448285,
+    "miss_filling": 2360949,
+    "fills": 260457,
+    "code_fills": 26117,
+    "writes": 5807436,
+    "stores": 5807439,
+    "store_updates": 4037595,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 145460221,
+    "window_held": 8450881,
+    "window_fills": 260094,
+    "window_writes": 5778058,
+    "window_pipeline_commits": 39517185,
+    "window_redirects": 5364322,
+    "slot_issue": 47903247,
+    "slot_slow": 546149,
+    "slot_restart": 5373238,
+    "slot_load_wait": 9921271,
+    "slot_mul_wait": 124869,
+    "slot_other_wait": 0,
+    "slot_port_conflict": 512998,
+    "slot_hazard": 35526046,
+    "slot_frontend_refill": 34909932,
+    "slot_frontend_other": 2191590,
+    "slot_other": 0,
+    "fetch_port_blocked": 16564763
+  },
+  "measured_us": 3030421.2708333335,
+  "held_percent": 5.8097539945302294,
+  "output_sha256": "6b0e4070d117ac6b7e6e03e8e303fc4cb429b079d3e116f7da61122023b408c1",
+  "stall_breakdown": {
+    "window_held": {
+      "cycles": 8450881,
+      "percent": 5.8098
+    },
+    "slot_issue": {
+      "cycles": 47903247,
+      "percent": 32.9322
+    },
+    "slot_load_wait": {
+      "cycles": 9921271,
+      "percent": 6.8206
+    },
+    "slot_mul_wait": {
+      "cycles": 124869,
+      "percent": 0.0858
+    },
+    "slot_other_wait": {
+      "cycles": 0,
+      "percent": 0.0
+    },
+    "slot_port_conflict": {
+      "cycles": 512998,
+      "percent": 0.3527
+    },
+    "slot_hazard": {
+      "cycles": 35526046,
+      "percent": 24.4232
+    },
+    "slot_restart": {
+      "cycles": 5373238,
+      "percent": 3.694
+    },
+    "slot_frontend_refill": {
+      "cycles": 34909932,
+      "percent": 23.9996
+    },
+    "slot_frontend_other": {
+      "cycles": 2191590,
+      "percent": 1.5067
+    },
+    "slot_slow": {
+      "cycles": 546149,
+      "percent": 0.3755
+    },
+    "slot_other": {
+      "cycles": 0,
+      "percent": 0.0
+    }
+  }
+}
