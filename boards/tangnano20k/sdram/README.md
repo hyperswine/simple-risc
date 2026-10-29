@@ -255,8 +255,11 @@ Two of them are worth having on this design. `SDRAM_ROUTE_OPTION=1` took the
 2026-10-29 netlist from 54.863 MHz to 63.401 MHz at identical area, and adding
 `SDRAM_MAP_OPTION=3` (LUT5-oriented mapping, 13 % more logic) reached
 74.483 MHz. With both, the RV32IMC image runs on the board at 54 MHz with the
-full check suite passing; 60 MHz closes timing but reports `SDRAM BAD`, and 66
-needs more work. See
+full check suite passing. 60 MHz is not usable, and the cause is the processor,
+not the memory: the standalone tester (`build.sh test`, then `check.py`) passes
+all 8 MiB at 60 and at 66 MHz, while the processor's reported Fmax saturates at
+63.6-64.5 MHz once the constraint bites. Raising the processor clock further
+means cutting its own critical path; the SDRAM has margin above 66 MHz. See
 [HOLD-ENABLE-AND-MRU-LOOKUP](../../../docs/2026-10-29-HOLD-ENABLE-AND-MRU-LOOKUP.md).
 
 The host starts the standalone test after opening the UART, preventing lost

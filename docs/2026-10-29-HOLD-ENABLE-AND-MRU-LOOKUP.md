@@ -137,14 +137,54 @@ were built, flashed and run at 54/54 MHz with the same options and placement 2:
 The RV32IMC image is the one to keep: it is the preset's ISA. The board is
 left running it.
 
-**60 MHz is not usable.** A 60/60 MHz build closes timing at only +0.938 ns and
+## Is the SDRAM the limit? No
+
+The 60 MHz memory failures invite the question, so it was measured directly with
+the standalone tester (`build.sh test`, which drives `sdram_burst_memory` from a
+state machine with no CPU in the way). All eight MiB pass at 60 MHz **and** at
+66 MHz:
+
+| standalone tester, `build.sh test` | 60 MHz | 66 MHz |
+|---|---:|---:|
+| Fmax (small design, so it is not the limiter) | 112.515 MHz | 116.220 MHz |
+| `check.py` (12,582,912 word comparisons, all banks, byte lanes, retention) | PASS | PASS |
+
+So the pins, the command sequencing, the burst protocol, the refresh and the
+read-capture phase all work on this board at 66 MHz — above any clock the
+processor reaches. The memory is not the wall; the processor is. That also means
+the SDRAM's absolute ceiling was not located here, only shown to be above 66 MHz.
+
+Two caveats keep this from being a signoff:
+
+1. **The interface has no timing model.** `io_timing.py` emits
+   `model_complete: false` with `t_ac_max`, `t_oh_min`, command/data/DQM
+   setup and hold, every flight time, the setup/hold uncertainties and the whole
+   qualification block missing, and the SDC carries no SDRAM I/O constraints.
+   Every frequency above 48 MHz is empirically qualified, not proven.
+2. **The capture window shrinks with the period.** At the 135 degrees the
+   pipeline uses, the memory clock edge sits `0.375 x period` after the FPGA
+   launch edge (commands get that much setup) and `0.625 x period` before the
+   next capture edge (reads get that much to arrive). The second number is what
+   has to cover the SDRAM's `tAC`, which does not shrink: 13.0 ns at 48 MHz,
+   11.6 ns at 54, 10.4 ns at 60, 9.5 ns at 66. The project's phase-window model
+   (`check_phase_window.py`) puts the 135-degree read margin at +5.57 ns with a
+   6 ns `tAC` and +1.57 ns with a 10 ns `tAC` at 54 MHz, and at +3.47 ns and
+   -0.53 ns at 66 MHz. Phase is the knob that trades the two windows against
+   each other: 112.5 degrees buys about 0.95 ns of read margin at the cost of
+   the same amount of command setup, and `sdram.v` itself documents 66.7 MHz as
+   the ceiling for its cycle counts.
+
+**60 MHz is not usable for the processor.** A 60/60 MHz build closes timing at only +0.938 ns and
 on the board the 1 MiB test reports `SDRAM BAD` and the C arithmetic programs
-return wrong results, so the margin the report shows is not real there. With
-under a nanosecond of slack the core is the more likely cause, which means a
-capture-phase sweep alone would not rescue 60 MHz. 60 is also outside the
-frequency set the I/O tooling models (`io_timing.py` and `check_phase_window.py`
-accept 27, 48, 54 and 66 MHz), so the next supported step up is 66 MHz, and it
-needs more core margin first.
+return wrong results, so the margin the report shows is not real there. With under a
+nanosecond of slack, and with the memory separately proven healthy at 60 and
+66 MHz, the core is the cause: the reported Fmax saturates at 63.6-64.5 MHz once
+the constraint actually bites, whether it is set to 54 or 60 MHz. The 74.483 MHz
+figure above is what the placer reports when it is told to close at 48 MHz and
+then stops working, not a clock this build reaches under pressure. 60 MHz is
+also outside the frequency set the I/O tooling models (`io_timing.py` and
+`check_phase_window.py` accept 27, 48, 54 and 66 MHz), so the next supported
+step up is 66 MHz, and it needs the core past 66 MHz first.
 
 **The remaining wall is fan-out, not depth.** The hold enable's buffer tree
 alone costs 9-16 ns of the 20.8 ns period, whichever way the driver is built.
