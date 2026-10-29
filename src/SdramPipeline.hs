@@ -153,25 +153,34 @@ circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,ma
  stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
  machineNext=(\(m,_,_,_) -> m) <$> stepped
  stageNext=(\(_,_,ps,_) -> ps) <$> stepped
- stageLoad=(\(_,_,_,l) -> l) <$> stepped
  machineOutput=(\(_,o,_,_) -> o) <$> stepped
  holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
  machine=regEn initialMachine (not <$> holding) machineNext
- -- One clock-enabled register per pipeline stage: D, E1, E2 and M each load
- -- only when their own stage advances, so the far larger machine register no
- -- longer carries the stage payloads or their advance decision.
- stageD=regEn (R.spD R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slD <$> stageLoad)) ((\ps -> R.spD ps) <$> stageNext)
- stageE1=regEn (R.spE1 R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slE1 <$> stageLoad)) ((\ps -> R.spE1 ps) <$> stageNext)
- stageE2=regEn (R.spE2 R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slE2 <$> stageLoad)) ((\ps -> R.spE2 ps) <$> stageNext)
- stageM=regEn (R.spM R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slM <$> stageLoad)) ((\ps -> R.spM ps) <$> stageNext)
+ -- One clock-enabled register per pipeline stage. They all load on the same
+ -- hold enable: gating a stage group on its own advance decision put the whole
+ -- advance cone (a function of the frozen pipeline registers) in front of the
+ -- hold enable that every one of the 5,000 pipeline flops also uses. Synthesis
+ -- then merged the two nets, and the pipeline's clock enable inherited four
+ -- levels of stage logic on top of its routing tree (2026-10-29). A stage that
+ -- does not advance loads its own payload back.
+ stageD=regEn (R.spD R.initialStagePayloads) (not <$> holding) ((\ps -> R.spD ps) <$> stageNext)
+ stageE1=regEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
+ stageE2=regEn (R.spE2 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE2 ps) <$> stageNext)
+ stageM=regEn (R.spM R.initialStagePayloads) (not <$> holding) ((\ps -> R.spM ps) <$> stageNext)
  stages=R.StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM
  heldState=register R.initialHeldState (R.heldStateOf <$> machineNext)
  -- The pipeline itself is the largest remaining field, so it gets its own
- -- enable too: one 5,000-load enable would otherwise be the critical path.
+ -- register: the hold enable is the widest net in the design either way, and
+ -- one 5,000-load enable was the critical path before the split.
  pipeState=regEn (R.cpuPipe initialMachine) (not <$> holding) (R.cpuPipe <$> machineNext)
  running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> pipeState <*> machine))
- breaking=R.breakRequested <$> running <*> emergency
- rxWanted=(\m offered headByte -> isNothing (R.rxHolding m) && isNothing offered && isJust headByte) <$> running <*> received <*> rxHead
+ -- Both the Ctrl-C reset and the hold clock-enable start at a register, not at
+ -- the assembled pipeline: 'cpuInRom' only ever comes from the machine
+ -- register, so reading it through 'running' put the enable that every
+ -- pipeline flop shares behind record-select logic. 'heldRx' is the one field
+ -- the held-state register supplies while the machine register is frozen.
+ breaking=R.breakRequested <$> machine <*> emergency
+ rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
  received=register Nothing (mux rxPop rxHead (pure Nothing))
  (rxHead,_)=unbundle (mealy R.fifoStep (R.initialFifo :: R.Fifo 32) (bundle (breaking,receivedNow,rxPop)))

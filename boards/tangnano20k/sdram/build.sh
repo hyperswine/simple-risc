@@ -24,6 +24,23 @@ if [[ "$cache_ways" == 2 ]];then default_line_bits=11;fi
 cache_line_bits="${SDRAM_CACHE_LINE_BITS:-$default_line_bits}"
 placement="${SDRAM_PLACE_OPTION:-2}"
 case "$placement" in 0|1|2|3|4) ;; *) echo "SDRAM_PLACE_OPTION must be 0 through 4" >&2;exit 1;; esac
+# Synthesis and routing knobs. All are unset by default, which leaves the
+# stock flow: 1/1/0/1000/23 below are the tool defaults.
+map_option="${SDRAM_MAP_OPTION:-}"       # 1 default, 3/4 LUT5-oriented for timing
+route_option="${SDRAM_ROUTE_OPTION:-}"   # 0 default, 1 spends compile time on routing
+replicate="${SDRAM_REPLICATE:-}"         # 1 replicates high-fanout resources (Arora V/III only)
+max_fanout="${SDRAM_MAX_FANOUT:-}"       # global syn_maxfan, default 1000
+route_maxfan="${SDRAM_ROUTE_MAXFAN:-}"   # routing-tree fanout, default 23
+for pair in "SDRAM_MAP_OPTION:1:2:3:4" "SDRAM_ROUTE_OPTION:0:1:2" "SDRAM_REPLICATE:0:1"; do
+  name="${pair%%:*}"; allowed=":${pair#*:}:"
+  value="${!name:-}"
+  [[ -z "$value" || "$allowed" == *":$value:"* ]] || { echo "$name must be one of ${pair#*:}" >&2; exit 1; }
+done
+for name in SDRAM_MAX_FANOUT SDRAM_ROUTE_MAXFAN; do
+  value="${!name:-}"
+  [[ -z "$value" || ( "$value" =~ ^[1-9][0-9]*$ && "$value" -le 100000 ) ]] || { echo "$name must be a positive integer" >&2; exit 1; }
+done
+[[ -z "$route_maxfan" || "$route_maxfan" -le 100 ]] || { echo "SDRAM_ROUTE_MAXFAN must be 1 through 100" >&2; exit 1; }
 case "$rvc" in 0|1) ;; *) echo "SDRAM_RVC must be 0 or 1" >&2;exit 1;; esac
 case "$cache" in 0|1) ;; *) echo "SDRAM_CACHE must be 0 or 1" >&2;exit 1;; esac
 case "$cache_line_bits" in 7|8|9|10|11|12) ;; *) echo "SDRAM_CACHE_LINE_BITS must be 7 through 12" >&2;exit 1;; esac
@@ -168,6 +185,16 @@ set_option -frequency $target
 set_option -global_freq $target
 set_option -num_critical_paths 20
 set_option -gen_verilog_sim_netlist 1
+TCL
+for knob in map_option route_option replicate max_fanout route_maxfan; do
+  case "$knob" in
+    replicate) option=-replicate_resources;;
+    *) option="-$knob";;
+  esac
+  value="${!knob:-}"
+  [[ -z "$value" ]] || echo "set_option $option $value" >> "$out/build.tcl"
+done
+cat >> "$out/build.tcl" <<TCL
 add_file "$top"
 add_file "$out/memory.v"
 add_file "$here/cache.v"

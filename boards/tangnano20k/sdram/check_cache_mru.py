@@ -54,13 +54,15 @@ def main():
        if(mru_checks==0 || mru_collisions==0)$fatal(1,"MRU coverage missing");
        $display("PASS: %0d MRU decisions, %0d lookup/write collisions",mru_checks,mru_collisions);
        $display("PASS: %0d reads,''')
-    bypass = '(mru_write && mru_index==cpu_address[LINE_BITS+1:2]) ?\n     mru_value:mru[cpu_address[LINE_BITS+1:2]]'
-    assert source.count(bypass) == 1, 'review the current MRU collision bypass'
-    # Poison only the RAM output on collisions. Explicit write-through must
-    # make the underlying memory's read-during-write result unobservable.
+    select = 'entry_mru=entry_mru_bypass ? entry_mru_write:entry_mru_raw'
+    assert source.count(select) == 1, 'review the current MRU read-through select'
+    read = 'entry_mru_raw<=mru[cpu_address[LINE_BITS+1:2]];'
+    assert source.count(read) == 1, 'review the current MRU read'
+    # Poison only the RAM output on collisions. The registered read-through
+    # must make the underlying memory's read-during-write result unobservable.
     poison = "((mru_write && mru_index==cpu_address[LINE_BITS+1:2]) ? 1'bx:mru[cpu_address[LINE_BITS+1:2]])"
-    poisoned = source.replace('mru_value:mru[cpu_address[LINE_BITS+1:2]]', 'mru_value:'+poison)
-    missing = source.replace(bypass, poison)
+    poisoned = source.replace(read, 'entry_mru_raw<='+poison+';')
+    missing = source.replace(select, 'entry_mru=entry_mru_raw')
     report = dict(complete=False, source_sha256=hashlib.sha256(source.encode()).hexdigest(), cases=[])
     destination = out/'results.json'
     destination.write_text(json.dumps(report, indent=2)+'\n')

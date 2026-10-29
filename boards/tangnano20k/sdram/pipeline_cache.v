@@ -33,12 +33,20 @@ module sdram_pipeline_cache #(
  // otherwise dominates timing even though the CPU request is registered.
  reg [19-LINE_BITS:0] tags[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "block_ram" */;
  reg [19-LINE_BITS:0] tags_way1[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "block_ram" */;
- // One replacement bit per set. An indexed register vector creates a
- // full-set read mux and a reset/write decoder. Use a synchronous RAM
- // lookup alongside the tags, with explicit write-through on collisions.
- // Clearing shares the existing tag sweep, so no wide reset is needed.
- reg mru[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "distributed_ram" */;
- reg entry_mru;
+ // One replacement bit per set, in the same kind of memory as the tags. A
+// distributed lookup put the whole 2^LINE_BITS-deep asynchronous mux between
+// the CPU's address and the register that holds the bit, and that was the
+// design's worst path (25.2 ns from the address register at 48 MHz). A block
+// RAM keeps that mux inside the hard block, so the address reaches its input
+// register instead. The bit is only a replacement hint: it never affects the
+// data a lookup returns, so it is also the one array where a read-during-write
+// result may be discarded.
+// Clearing shares the existing tag sweep, so no wide reset is needed.
+ reg mru[0:(1<<LINE_BITS)-1] /* synthesis syn_ramstyle = "block_ram" */;
+ // Read-through for a write that lands on the address being read, registered
+ // one cycle later so the memory's own output stays a plain registered read.
+ reg entry_mru_raw,entry_mru_bypass,entry_mru_write;
+ wire entry_mru=entry_mru_bypass ? entry_mru_write:entry_mru_raw;
  reg [31:0] rom[0:511];
  initial $readmemh(ROM_FILE,rom);
  reg v1,v2,w1,w2,hit2,keep2,way2,conflict2,fill_way;
@@ -74,6 +82,7 @@ module sdram_pipeline_cache #(
  wire mru_write=clearing || tag_fill || (advance && v2 && hit2 && !a2[21]);
  wire [LINE_BITS-1:0] mru_index=clearing ? clear_index:a2[LINE_BITS+1:2];
  wire mru_value=clearing ? 1'b0:way2;
+ wire mru_bypass=mru_write && mru_index==cpu_address[LINE_BITS+1:2];
  assign memory_req=!reset && (state==WRITE_SEND || state==READ_SEND);
  assign memory_write=state==WRITE_SEND || state==WRITE_WAIT;
  assign memory_address=memory_write ? write_address[write_head]:{a2[20:2],2'b00};
@@ -116,8 +125,10 @@ module sdram_pipeline_cache #(
  end
  always @(posedge clk)begin
    if(!reset && mru_write)mru[mru_index]<=mru_value;
-   if(advance)entry_mru<=(mru_write && mru_index==cpu_address[LINE_BITS+1:2]) ?
-     mru_value:mru[cpu_address[LINE_BITS+1:2]];
+   if(advance)begin
+     entry_mru_raw<=mru[cpu_address[LINE_BITS+1:2]];
+     entry_mru_bypass<=mru_bypass;entry_mru_write<=mru_value;
+   end
  end
  function [31:0] merged(input [31:0] before_word,input [31:0] data,input [3:0] lanes);
  integer k;

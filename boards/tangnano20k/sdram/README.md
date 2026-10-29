@@ -240,6 +240,22 @@ python3 boards/tangnano20k/sdram/sweep_place.py --out output/tangnano20k/place-s
 It writes `sweep-results.json` beside the per-case build directories. Neither
 the sweep nor the region hook qualifies SDRAM I/O.
 
+Five synthesis and routing options are reachable as well; all are unset by
+default, and `SDRAM_PRESET=fprisc-48` rejects them:
+
+| Variable | `set_option` | Range |
+|---|---|---|
+| `SDRAM_MAP_OPTION` | `-map_option` | 1-4 (3/4 are LUT5-oriented for timing) |
+| `SDRAM_ROUTE_OPTION` | `-route_option` | 0-2 (1 spends compile time on routing) |
+| `SDRAM_REPLICATE` | `-replicate_resources` | 0/1 (Arora V/III only) |
+| `SDRAM_MAX_FANOUT` | `-max_fanout` | integer (global `syn_maxfan`, default 1000) |
+| `SDRAM_ROUTE_MAXFAN` | `-route_maxfan` | 1-100 (routing-tree fan-out, default 23) |
+
+`SDRAM_ROUTE_OPTION=1` is worth having on this design: it took the 2026-10-29
+netlist from 54.863 MHz to 63.401 MHz at identical area, because the processor
+is routing dominated and the stock routing effort stops early. See
+[HOLD-ENABLE-AND-MRU-LOOKUP](../../../docs/2026-10-29-HOLD-ENABLE-AND-MRU-LOOKUP.md).
+
 The host starts the standalone test after opening the UART, preventing lost
 initial reports. Build uses the licensed macOS Gowin flow and rejects internal
 timing violations. Programming is SRAM-only. Both clocks run at the selected frequency. The default remains 54 MHz.
