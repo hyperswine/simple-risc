@@ -186,6 +186,43 @@ also outside the frequency set the I/O tooling models (`io_timing.py` and
 `check_phase_window.py` accept 27, 48, 54 and 66 MHz), so the next supported
 step up is 66 MHz, and it needs the core past 66 MHz first.
 
+## Attacking the hold enable directly
+
+Two attempts, one of them a dead end worth recording.
+
+**Freeing the payload registers does not work.** The D, E1 and E2 payloads are
+965 of the ~3,900 flops on the hold enable, and each one's next value looked
+idempotent: during a hold it recomputes the same payload it already holds, so
+loading it every cycle instead of only on `~holding` should be a no-op. It is
+not, and the RTL guest caught it (timeout after 22 fills, `hold=x` reaching the
+cache). A payload register advances *one stage ahead of its own token*: while
+the pipeline is held, `e2Advance` is frozen true, so a free-running E2 payload
+is overwritten with `e1Out(E1)` - the instruction *behind* it - while the pipe
+register that carries the M token is frozen. When the hold ends, M takes that
+payload, which is `e2Moved` of the frozen E2 payload. Payload and token must
+move together; only the token registers are what make a payload meaningful.
+The 965 flops therefore stay on the enable, and the change was reverted.
+
+**`-route_maxfan` is the one knob that reaches this net.** It is a routing
+resource limit, not one of the synthesis nets `syn_maxfan` refuses to touch
+(clock, enable, reset), so it changes how the router builds the buffer tree for
+a thousands-of-loads net. Swept at the 60 MHz constraint, everything else fixed
+(place 2, `-route_option 1 -map_option 3`, target 66):
+
+| `SDRAM_ROUTE_MAXFAN` | Fmax at the 60 MHz constraint | Slack |
+|---|---:|---:|
+| 45 | 63.577 MHz | +0.938 ns |
+| default (23) | 63.577 MHz | +0.938 ns |
+| 12 | 65.697 MHz | +1.445 ns |
+| 10 | 64.056 MHz | +1.055 ns |
+| **8** | **65.749 MHz** | **+1.457 ns** |
+
+Lowering the per-node fan-out shortens the tree and is worth about half a
+nanosecond, consistently - the only lever measured that changes this path's
+routing without touching the netlist. It is not enough to make 60 MHz usable
+(the board still reports `S?RAM BAD` with garbled UART output at +1.457 ns), but
+it is free and should ride along with any build where the enable is critical.
+
 **The remaining wall is fan-out, not depth.** The hold enable's buffer tree
 alone costs 9-16 ns of the 20.8 ns period, whichever way the driver is built.
 No expression change fixes that: the design has one control signal that 5,000

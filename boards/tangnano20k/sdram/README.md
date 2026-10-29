@@ -249,7 +249,7 @@ default, and `SDRAM_PRESET=fprisc-48` rejects them:
 | `SDRAM_ROUTE_OPTION` | `-route_option` | 0-2 (1 spends compile time on routing) |
 | `SDRAM_REPLICATE` | `-replicate_resources` | 0/1 (Arora V/III only) |
 | `SDRAM_MAX_FANOUT` | `-max_fanout` | integer (global `syn_maxfan`, default 1000) |
-| `SDRAM_ROUTE_MAXFAN` | `-route_maxfan` | 1-100 (routing-tree fan-out, default 23) |
+| `SDRAM_ROUTE_MAXFAN` | `-route_maxfan` | 1-100 (routing-tree fan-out, default 23; 8 is worth ~0.5 ns here) |
 
 Two of them are worth having on this design. `SDRAM_ROUTE_OPTION=1` took the
 2026-10-29 netlist from 54.863 MHz to 63.401 MHz at identical area, and adding
