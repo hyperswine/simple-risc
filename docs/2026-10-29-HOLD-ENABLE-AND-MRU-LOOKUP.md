@@ -277,6 +277,29 @@ already partitioned into 172 nets. What remains, in rough order of effort:
    device. `set_option -replicate_resources` is Arora V/III only, and
    `syn_maxfan` explicitly excludes clock, enable and reset nets.
 
+### Reporting the hold from a flop made it worse
+
+The second item on the list was to have the cache report its hold one cycle
+early, so the CPU's enable would come straight off a flop instead of through
+`reset || clearing || read_miss || write_full`. That is equivalent: A2's `v2`,
+`w2` and `hit2` are A1's `v1`, `w1` and `hit1`, so the miss can be decided a
+cycle earlier and registered, and the refill's completion clears it exactly
+where `hit2` is forced to 1.
+
+It measured **62.330 MHz, +0.623 ns** against 70.901 MHz, +2.563 ns - 8.6 MHz
+worse - so it was reverted. Two lessons:
+
+- It confirms the corrected diagnosis. `hold_cpu` was never the deep part;
+  replacing one term of its four-way OR with a flop cannot recover the 15 ns of
+  absorbed select logic, and it does not.
+- The enable is a *net*, and where that net is driven from matters more than how
+  the expression is written. A flop that fans out to every pipeline flop is
+  harder to place than two LUT levels feeding the same load.
+
+The all-green regression suite (18 cache cases, MRU, bridge, fence, the pipeline
+guest with 101 fills / 20 writes / 58,049 held clocks) passed before the revert,
+so the negative result is a measurement, not a broken experiment.
+
 ## 60 MHz is still not usable, for a different reason
 
 The +2.563 ns build was flashed and exercised. It does **not** work, but the
