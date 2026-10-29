@@ -251,9 +251,12 @@ default, and `SDRAM_PRESET=fprisc-48` rejects them:
 | `SDRAM_MAX_FANOUT` | `-max_fanout` | integer (global `syn_maxfan`, default 1000) |
 | `SDRAM_ROUTE_MAXFAN` | `-route_maxfan` | 1-100 (routing-tree fan-out, default 23) |
 
-`SDRAM_ROUTE_OPTION=1` is worth having on this design: it took the 2026-10-29
-netlist from 54.863 MHz to 63.401 MHz at identical area, because the processor
-is routing dominated and the stock routing effort stops early. See
+Two of them are worth having on this design. `SDRAM_ROUTE_OPTION=1` took the
+2026-10-29 netlist from 54.863 MHz to 63.401 MHz at identical area, and adding
+`SDRAM_MAP_OPTION=3` (LUT5-oriented mapping, 13 % more logic) reached
+74.483 MHz. With both, the RV32IMC image runs on the board at 54 MHz with the
+full check suite passing; 60 MHz closes timing but reports `SDRAM BAD`, and 66
+needs more work. See
 [HOLD-ENABLE-AND-MRU-LOOKUP](../../../docs/2026-10-29-HOLD-ENABLE-AND-MRU-LOOKUP.md).
 
 The host starts the standalone test after opening the UART, preventing lost
