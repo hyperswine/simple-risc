@@ -45,6 +45,9 @@ library
       , SdramPipeline
       , SdramSimpleRisc
       , SimpleRisc
+      , SimpleRisc.Types
+      , SimpleRisc.Uart
+      , SimpleRisc.Decode
 
 -- The Clash compiler, for the board builds: cabal run clash -- <file> --verilog
 executable clash

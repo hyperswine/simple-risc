@@ -75,22 +75,16 @@
 -- iterative unit: 68 unit cycles per nonzero-divisor instruction, with each
 -- 33-bit add/subtract followed by a separate registered commit.  Division by zero and overflow give the results the RISC-V spec
 -- requires.
-module SimpleRisc where
+module SimpleRisc (module SimpleRisc, module SimpleRisc.Types, module SimpleRisc.Uart, module SimpleRisc.Decode) where
 
-import Clash.Annotations.BitRepresentation (ConstrRepr (..), DataReprAnn (..), liftQ)
 import Clash.Prelude
 import Data.Maybe (fromMaybe, isJust, isNothing)
 import Language.Haskell.TH.Syntax (addDependentFile, runIO)
 import qualified RiscVCompressed as C
 import qualified Prelude as P
-
-type Word32 = Unsigned 32
-
-type Byte = Unsigned 8
-
--- | A physical word index: bit 14 selects the boot ROM (512 words), otherwise
--- the low 14 bits index the 64 KiB RAM.
-type MemAddr = Unsigned 15
+import SimpleRisc.Types
+import SimpleRisc.Uart
+import SimpleRisc.Decode
 
 -- | The boot ROM image, embedded at compile time from the output of
 -- boards/tangnano20k/bootrom/build.sh.
@@ -106,162 +100,15 @@ bootRomContents =
          else listToVecTH (P.map P.fromInteger romWords :: [Unsigned 32])
    )
 
--- | CPU pipeline stage.  Every stage starts from flip-flops and does one kind
--- of work, so the clock can run fast (the design targets 100 MHz on a GW2A):
--- Fetch and register reads retain their existing registered stages.
--- OperandSelect registers ALU controls; ExecuteFinish selects registered results.
--- Ordinary instructions take nine cycles; shifts insert ShiftFinish for ten.
--- The BRAM and the UART transmitter are only ever driven from registers, in
--- stages of their own (Fetch, BusLoadIssue, BusRamWrite, BusTx...): on the GW2A
--- their input timing is worse than nextpnr models.  The
--- values passed between stages live in their own 'Machine' fields, each
--- written by a single stage, rather than in the phase: overlapping them in one
--- register put a many-way mux in front of every bit.
-data CpuPhase
-  = Fetch
-  | FetchDelay
-  | FetchCapture
-  | FetchWait
-  | Decode
-  | OperandSelect
-  | Execute
-  | ExecuteFinish
-  | ShiftFinish
-  | MulDiv
-  | Commit
-  | Trap
-  | CsrRead
-  | CsrWrite
-  | TrapReturn
-  | BusWait
-  | MemoryWait
-  | MemoryCapture
-  | FetchTargetWait
-  | FetchCross
-  | FetchCrossDelay
-  | FetchCrossCapture
-  | FetchCrossWait
-  deriving (Generic, NFDataX, Show, Eq)
-
--- One dedicated state bit per CPU stage.
-{-# ANN
-  module
-  ( DataReprAnn
-      $(liftQ [t|CpuPhase|])
-      23
-      [ ConstrRepr 'Fetch 1 1 [],
-        ConstrRepr 'FetchDelay 2 2 [],
-        ConstrRepr 'FetchCapture 4 4 [],
-        ConstrRepr 'FetchWait 8 8 [],
-        ConstrRepr 'Decode 16 16 [],
-        ConstrRepr 'OperandSelect 32 32 [],
-        ConstrRepr 'Execute 64 64 [],
-        ConstrRepr 'ShiftFinish 128 128 [],
-        ConstrRepr 'MulDiv 256 256 [],
-        ConstrRepr 'Commit 512 512 [],
-        ConstrRepr 'Trap 1024 1024 [],
-        ConstrRepr 'CsrRead 2048 2048 [],
-        ConstrRepr 'CsrWrite 4096 4096 [],
-        ConstrRepr 'TrapReturn 8192 8192 [],
-        ConstrRepr 'BusWait 16384 16384 [],
-        ConstrRepr 'ExecuteFinish 32768 32768 [],
-        ConstrRepr 'MemoryWait 65536 65536 [],
-        ConstrRepr 'MemoryCapture 131072 131072 [],
-        ConstrRepr 'FetchTargetWait 262144 262144 [],
-        ConstrRepr 'FetchCross 524288 524288 [],
-        ConstrRepr 'FetchCrossDelay 1048576 1048576 [],
-        ConstrRepr 'FetchCrossCapture 2097152 2097152 [],
-        ConstrRepr 'FetchCrossWait 4194304 4194304 []
-      ]
-  )
-  #-}
-
--- | Everything an instruction needs from the adders and the ALU, computed in
--- the Execute stage so the Commit stage only selects between registers.
-data Computed = Computed
-  { -- | Result for LUI, AUIPC, OP-IMM and OP; Nothing for an illegal encoding.
-    cAlu :: Maybe Word32,
-    -- | PC + 4: the fall-through PC and the JAL/JALR link value.
-    cLink :: Word32,
-    -- | Jump or taken-branch target.
-    cTarget :: Word32,
-    -- | Branch condition; Nothing for an illegal funct3.
-    cTaken :: Maybe Bool,
-    -- | Load/store effective address.
-    cAddress :: Word32
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | Where the multiply/divide unit is in an instruction.
-data MdStep
-  = -- | Take the operands' magnitudes, or answer a division by zero.
-    MdPrepare
-  | -- | One of 32 shift-and-add (multiply) or restoring-division steps.
-    MdLoop (Index 32)
-  | -- | Commit the registered adder/subtractor result, separately from arithmetic.
-    MdCommit (Index 32)
-  | -- | Negate the low word if needed, recording the carry out of it.
-    MdFixLo
-  | -- | Negate the high word if needed, taking that carry.
-    MdFixHi
-  | -- | Pick the requested half.
-    MdFinish
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | The multiply/divide unit's working registers.  A multiply keeps the
--- 64-bit product in 'mdHi' and 'mdLo' (the multiplier shifts out of 'mdLo' as
--- the product shifts in); a division keeps the remainder in 'mdHi' and the
--- quotient in 'mdLo' (the dividend shifts out as quotient bits shift in).
-data MulDivUnit = MulDivUnit
-  { mdStep :: MdStep,
-    mdHi :: Word32,
-    mdLo :: Word32,
-    -- | The magnitude of the multiplicand or the divisor.
-    mdOperand :: Word32,
-    mdTotal :: Unsigned 33,
-    -- | Negate the low word (product low half or quotient) at the end.
-    mdNegLo :: Bool,
-    -- | Negate the high word (product high half or remainder) at the end.
-    mdNegHi :: Bool,
-    -- | The low word was zero before negation: the carry into the high word.
-    mdCarry :: Bool,
-    -- | Registered at Prepare, so Finish's result mux does not decode the
-    -- global instruction register on the way to register-file writeback.
-    mdTakeLow :: Bool
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | Why the CPU last entered the boot ROM through a reset.  BOOTCAUSE reads
--- it and clears it to 'causeNone', so the ROM can tell a reset from a trap.
+-- | BOOTCAUSE values: why the CPU last reset into the boot ROM.
 causeNone, causePowerOn, causeBreak, causeExit :: Unsigned 2
 causeNone = 0
 causePowerOn = 1
 causeBreak = 2
 causeExit = 3
 
--- | Software-visible machine-mode trap registers. Only machine mode is used.
-data TrapRegisters = TrapRegisters
-  { trapVector :: Word32,
-    trapEpc :: Word32,
-    trapCause :: Word32,
-    trapValue :: Word32,
-    trapMie :: Bool,
-    trapMpie :: Bool
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
 initialTrapRegisters :: TrapRegisters
 initialTrapRegisters = TrapRegisters 0 0 0 0 False False
-
--- | The low word increments independently; its overflow is registered and
--- applied to the high word on the following clock. CSR reads wait out that
--- single carry cycle rather than adding another carry chain to the read mux.
-data Counter64 = Counter64
-  { counterLo :: Word32,
-    counterHi :: Word32,
-    counterCarry :: Bool
-  }
-  deriving (Generic, NFDataX, Show, Eq)
 
 initialCounter :: Counter64
 initialCounter = Counter64 0 0 False
@@ -278,63 +125,6 @@ tickCounter increment write counter =
         Just (False, value) -> Counter64 value carriedHi False
         Just (True, value) -> Counter64 lo value False
         Nothing -> Counter64 (if increment then lo + 1 else lo) carriedHi (increment && lo == maxBound)
-
--- | Where the next Fetch finds its word, decided by the instruction that
--- set the pc: the sequential prefetch (pc + 4), the branch-target read, or
--- the word decode-ahead already captured (FromNext), or neither (fetch from
--- memory). Fetch consumes it, so a trap, MRET, an interrupt or a reset
--- always fetches from memory. No address compare.
-data FetchSource = FromMemory | FromPrefetch | FromTarget | FromNext
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | Interrupt-source state: the CLINT, the PLIC with its one source (the
--- UART, IRQ 10) and the UART's interrupt enables. Comparisons and the
--- pending bits are registered, so no wide compare or OR feeds the CPU.
-data Devices = Devices
-  { devMsip :: Bool,
-    devMtimecmpLo :: Word32,
-    devMtimecmpHi :: Word32,
-    -- | Counts every core clock; a split counter like mcycle.
-    devMtime :: Counter64,
-    -- | mtime >= mtimecmp in two registered stages: the halves compared,
-    -- then combined.
-    devHiAbove :: Bool,
-    devHiEqual :: Bool,
-    devLoAtLeast :: Bool,
-    devMtip :: Bool,
-    devPlicPriority :: Unsigned 3,
-    devPlicEnable :: Bool,
-    devPlicThreshold :: Unsigned 3,
-    -- | The gateway forwarded a request that has not been claimed yet.
-    devPlicPending :: Bool,
-    -- | Claimed and not yet completed: the gateway holds new requests.
-    devPlicClaimed :: Bool,
-    devMeip :: Bool,
-    devUartRxInterrupt :: Bool,
-    devUartTxInterrupt :: Bool,
-    -- | The I/O complex's answer this cycle, injected by the circuit around
-    -- the CPU (never stepped here).
-    devIo :: Maybe Word32
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | An SPI master, mode 0 (SCK idle low, sample on the rising edge, shift
--- on the falling edge), for the microSD slot. Every pin is a register.
-data Spi = Spi
-  { spiSelect :: Bool,
-    -- | Half an SCK period in clocks, minus one.
-    spiDivider :: Unsigned 8,
-    spiCount :: Unsigned 8,
-    -- | Rising edges still to come in this byte; 0 when idle.
-    spiBits :: Unsigned 4,
-    spiSck :: Bool,
-    -- | MSB first; ones shift in, so MOSI idles high.
-    spiOut :: Byte,
-    spiIn :: Byte,
-    -- | MISO, already synchronised to the core clock.
-    spiMiso :: Bit
-  }
-  deriving (Generic, NFDataX, Show, Eq)
 
 -- | Deselected, idle, and slow enough (about 190 kHz at 96 MHz) for a card's
 -- identification phase.
@@ -379,10 +169,6 @@ initialDevices =
     False
     Nothing
 
--- | The UART's interrupt number on the PLIC, as on QEMU virt.
-uartIrq :: Word32
-uartIrq = 10
-
 -- | The PLIC would grant a claim now.
 plicClaimable :: Devices -> Bool
 plicClaimable devices = devPlicPending devices && devPlicEnable devices && devPlicPriority devices > devPlicThreshold devices
@@ -391,172 +177,8 @@ plicClaimable devices = devPlicPending devices && devPlicEnable devices && devPl
 pendingInterrupts :: Devices -> Word32
 pendingInterrupts devices = (if devMeip devices then 0x800 else 0) .|. (if devMtip devices then 0x80 else 0) .|. (if devMsip devices then 0x8 else 0)
 
--- Registered memory target; wide address comparisons stay out of Commit.
-data MemoryTarget
-  = RamTarget
-  | RomTarget
-  | UartTxTarget
-  | UartStatusTarget
-  | UartRxTarget
-  | ExitTarget
-  | BootCauseTarget
-  | ClintMsipTarget
-  | ClintCompareLoTarget
-  | ClintCompareHiTarget
-  | ClintTimeLoTarget
-  | ClintTimeHiTarget
-  | PlicPriorityTarget
-  | PlicPendingTarget
-  | PlicEnableTarget
-  | PlicThresholdTarget
-  | PlicClaimTarget
-  | UartControlTarget
-  | IoTarget
-  | UnmappedTarget
-  deriving (Generic, NFDataX, Show)
-
--- GHC's derived equality for an enumeration uses dataToTag#, which Clash
--- 1.8's Verilog backend cannot lower for a custom sum representation.
--- Constructor matches preserve the custom decode-bit representation.
-instance Eq MemoryTarget where
-  a == b = case a of
-    RamTarget -> case b of RamTarget -> True; _ -> False
-    RomTarget -> case b of RomTarget -> True; _ -> False
-    UartTxTarget -> case b of UartTxTarget -> True; _ -> False
-    UartStatusTarget -> case b of UartStatusTarget -> True; _ -> False
-    UartRxTarget -> case b of UartRxTarget -> True; _ -> False
-    ExitTarget -> case b of ExitTarget -> True; _ -> False
-    BootCauseTarget -> case b of BootCauseTarget -> True; _ -> False
-    ClintMsipTarget -> case b of ClintMsipTarget -> True; _ -> False
-    ClintCompareLoTarget -> case b of ClintCompareLoTarget -> True; _ -> False
-    ClintCompareHiTarget -> case b of ClintCompareHiTarget -> True; _ -> False
-    ClintTimeLoTarget -> case b of ClintTimeLoTarget -> True; _ -> False
-    ClintTimeHiTarget -> case b of ClintTimeHiTarget -> True; _ -> False
-    PlicPriorityTarget -> case b of PlicPriorityTarget -> True; _ -> False
-    PlicPendingTarget -> case b of PlicPendingTarget -> True; _ -> False
-    PlicEnableTarget -> case b of PlicEnableTarget -> True; _ -> False
-    PlicThresholdTarget -> case b of PlicThresholdTarget -> True; _ -> False
-    PlicClaimTarget -> case b of PlicClaimTarget -> True; _ -> False
-    UartControlTarget -> case b of UartControlTarget -> True; _ -> False
-    IoTarget -> case b of IoTarget -> True; _ -> False
-    UnmappedTarget -> case b of UnmappedTarget -> True; _ -> False
-
--- Each target retains its own decode bit. In particular testing RAM/ROM
--- must not encode every peripheral through a binary priority tree first.
-{-# ANN
-  module
-  ( DataReprAnn
-      $(liftQ [t|MemoryTarget|])
-      20
-      [ ConstrRepr 'RamTarget 1 1 [],
-        ConstrRepr 'RomTarget 2 2 [],
-        ConstrRepr 'UartTxTarget 4 4 [],
-        ConstrRepr 'UartStatusTarget 8 8 [],
-        ConstrRepr 'UartRxTarget 16 16 [],
-        ConstrRepr 'ExitTarget 32 32 [],
-        ConstrRepr 'BootCauseTarget 64 64 [],
-        ConstrRepr 'ClintMsipTarget 128 128 [],
-        ConstrRepr 'ClintCompareLoTarget 256 256 [],
-        ConstrRepr 'ClintCompareHiTarget 512 512 [],
-        ConstrRepr 'ClintTimeLoTarget 1024 1024 [],
-        ConstrRepr 'ClintTimeHiTarget 2048 2048 [],
-        ConstrRepr 'PlicPriorityTarget 4096 4096 [],
-        ConstrRepr 'PlicPendingTarget 8192 8192 [],
-        ConstrRepr 'PlicEnableTarget 16384 16384 [],
-        ConstrRepr 'PlicThresholdTarget 32768 32768 [],
-        ConstrRepr 'PlicClaimTarget 65536 65536 [],
-        ConstrRepr 'UartControlTarget 131072 131072 [],
-        ConstrRepr 'IoTarget 262144 262144 [],
-        ConstrRepr 'UnmappedTarget 524288 524288 []
-      ]
-  )
-  #-}
-
-isRamTarget :: MemoryTarget -> Bool
-isRamTarget target = case target of RamTarget -> True; _ -> False
-
--- Single outstanding data transaction. The CPU registers the request and
--- waits for a registered response; the bus alone owns device side effects.
-data BusRequest = BusRequest
-  { busAddress :: Word32,
-    busWidth :: BitVector 3,
-    busWrite :: Bool,
-    busData :: Word32
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
-data BusResponse = BusResponse
-  {responseValue :: Word32, responseFault :: Bool, responseExit :: Bool}
-  deriving (Generic, NFDataX, Show, Eq)
-
-data BusPhase
-  = BusIdle
-  | BusDecode
-  | BusDispatch
-  | BusLoadIssue
-  | BusLoadDelay
-  | BusLoadCapture
-  | BusLoadWait
-  | BusLoadAlign
-  | BusReply
-  | BusStoreIssue
-  | BusStoreDelay
-  | BusStoreCapture
-  | BusStoreWait
-  | BusStoreMerge
-  | BusRamWrite
-  | BusTx
-  | BusIo
-  deriving (Generic, NFDataX, Show, Eq)
-
-{-# ANN
-  module
-  ( DataReprAnn
-      $(liftQ [t|BusPhase|])
-      17
-      [ ConstrRepr 'BusIdle 1 1 [],
-        ConstrRepr 'BusDecode 2 2 [],
-        ConstrRepr 'BusDispatch 4 4 [],
-        ConstrRepr 'BusLoadIssue 8 8 [],
-        ConstrRepr 'BusLoadDelay 16 16 [],
-        ConstrRepr 'BusLoadCapture 32 32 [],
-        ConstrRepr 'BusLoadWait 64 64 [],
-        ConstrRepr 'BusLoadAlign 128 128 [],
-        ConstrRepr 'BusReply 256 256 [],
-        ConstrRepr 'BusStoreIssue 512 512 [],
-        ConstrRepr 'BusStoreDelay 1024 1024 [],
-        ConstrRepr 'BusStoreCapture 2048 2048 [],
-        ConstrRepr 'BusStoreWait 4096 4096 [],
-        ConstrRepr 'BusStoreMerge 8192 8192 [],
-        ConstrRepr 'BusRamWrite 16384 16384 [],
-        ConstrRepr 'BusTx 32768 32768 [],
-        ConstrRepr 'BusIo 65536 65536 []
-      ]
-  )
-  #-}
-
-data BusState = BusState
-  { busPhase :: BusPhase,
-    busRequest :: BusRequest,
-    busTarget :: MemoryTarget,
-    busWord :: Word32,
-    busValue :: Word32
-  }
-  deriving (Generic, NFDataX)
-
 initialBus :: BusState
 initialBus = BusState BusIdle (BusRequest 0 0 False 0) UnmappedTarget 0 0
-
--- | The side effect of a completed device read.
-data BusEffect
-  = NoEffect
-  | ConsumeRx
-  | ConsumeBootCause
-  | -- | A word written to a device register.
-    DeviceWrite MemoryTarget Word32
-  | -- | A PLIC claim that granted the UART's interrupt.
-    ClaimInterrupt
-  deriving (Generic, NFDataX, Show, Eq)
 
 -- Response and effects are pulses. A stalled TX emits neither; a completed
 -- transfer emits exactly one response and, where appropriate, one side effect.
@@ -701,335 +323,11 @@ interruptCause machine
   where
     ready = cpuInterruptEnable machine .&. pendingInterrupts (cpuDevices machine)
 
--- | What Commit does with an instruction, decoded at OperandSelect and
--- carried in the stage register: later stages pick their action from one
--- flip-flop each rather than decoding the instruction word again. Encodings
--- with a reserved funct3 decode to 'KindInvalid' here.
-data CommitKind
-  = KindAlu
-  | KindJump
-  | KindBranch
-  | KindLoad
-  | KindStore
-  | KindFence
-  | KindFenceI
-  | KindEcall
-  | KindEbreak
-  | KindMret
-  | KindWfi
-  | KindCsr
-  | KindInvalid
-  deriving (Generic, NFDataX, Show, Eq)
-
-{-# ANN
-  module
-  ( DataReprAnn
-      $(liftQ [t|CommitKind|])
-      13
-      [ ConstrRepr 'KindAlu 1 1 [],
-        ConstrRepr 'KindJump 2 2 [],
-        ConstrRepr 'KindBranch 4 4 [],
-        ConstrRepr 'KindLoad 8 8 [],
-        ConstrRepr 'KindStore 16 16 [],
-        ConstrRepr 'KindFence 32 32 [],
-        ConstrRepr 'KindFenceI 64 64 [],
-        ConstrRepr 'KindEcall 128 128 [],
-        ConstrRepr 'KindEbreak 256 256 [],
-        ConstrRepr 'KindMret 512 512 [],
-        ConstrRepr 'KindWfi 1024 1024 [],
-        ConstrRepr 'KindCsr 2048 2048 [],
-        ConstrRepr 'KindInvalid 4096 4096 []
-      ]
-  )
-  #-}
-
-decodeCommitKind :: Word32 -> CommitKind
-decodeCommitKind instruction = case instruction .&. 0x7f of
-  0x37 -> KindAlu
-  0x17 -> KindAlu
-  0x13 -> KindAlu
-  0x33 -> KindAlu
-  0x6f -> KindJump
-  0x67 | funct3 == 0 -> KindJump
-  0x63 | funct3 /= 2 && funct3 /= 3 -> KindBranch
-  0x03 | validLoad funct3 -> KindLoad
-  0x23 | validStore funct3 -> KindStore
-  0x0f
-    | funct3 == 0 -> KindFence
-    | funct3 == 1 -> KindFenceI
-  0x73
-    | instruction == 0x0000_0073 -> KindEcall
-    | instruction == 0x0010_0073 -> KindEbreak
-    | instruction == 0x3020_0073 -> KindMret
-    | instruction == 0x1050_0073 -> KindWfi
-    | funct3 /= 0 && funct3 /= 4 -> KindCsr
-  _ -> KindInvalid
-  where
-    funct3 = instructionFunct3 instruction
-
--- Decode and operand selection are registered before the ALU carry chains;
--- the result mux runs in a separate stage after all candidates are registered.
--- This is the decoded half of the stage register between OperandSelect and
--- Execute; it stays with the instruction until it retires.
-data ExecuteControl = ExecuteControl
-  { execFunct3 :: BitVector 3,
-    execLegal :: Bool,
-    execSubtract :: Bool,
-    execArithmeticShift :: Bool,
-    execShift :: Bool,
-    execMulDiv :: Bool,
-    -- | A load or store; a branch or jump. Registered here so ExecuteFinish
-    -- picks its memory read from flip-flops.
-    execMemory :: Bool,
-    execJump :: Bool,
-    -- | ExecuteFinish's result: LUI's immediate, AUIPC's sum, or the ALU's
-    -- (OP-IMM and OP); none of them for anything else.
-    execLui :: Bool,
-    execAuipc :: Bool,
-    execAluOp :: Bool,
-    execStore :: Bool,
-    execKind :: CommitKind
-  }
-  deriving (Generic, NFDataX)
-
 initialExecuteControl :: ExecuteControl
 initialExecuteControl = ExecuteControl 0 False False False False False False False False False False False KindInvalid
 
-decodeExecuteControl :: Word32 -> ExecuteControl
-decodeExecuteControl instruction =
-  let opcode = instruction .&. 0x7f
-      funct3 = instructionFunct3 instruction
-      funct7 = (instruction `shiftR` 25) .&. 0x7f
-      regOperation = opcode == 0x33
-      shiftOperation = funct3 == 1 || funct3 == 5
-      alternate = funct7 == 0x20
-      legal = if regOperation then funct7 == 0 || (alternate && (funct3 == 0 || funct3 == 5)) else not shiftOperation || funct7 == 0 || (alternate && funct3 == 5)
-   in ExecuteControl funct3 legal (regOperation && alternate) alternate ((opcode == 0x13 || regOperation) && shiftOperation) (regOperation && funct7 == 1) (opcode == 0x03 || opcode == 0x23) (opcode == 0x63 || opcode == 0x6f || opcode == 0x67) (opcode == 0x37) (opcode == 0x17) (opcode == 0x13 || regOperation) (opcode == 0x23) (decodeCommitKind instruction)
-
--- High and low comparisons run in parallel; their registered results are
--- combined in ExecuteFinish, avoiding a full 32-bit comparison carry chain.
-data CompareResults = CompareResults
-  { compareEqual :: Bool,
-    compareHighEqual :: Bool,
-    compareLowLess :: Bool,
-    compareSignedHighLess :: Bool,
-    compareUnsignedHighLess :: Bool
-  }
-  deriving (Generic, NFDataX)
-
 initialCompareResults :: CompareResults
 initialCompareResults = CompareResults False False False False False
-
-compareOperands :: Word32 -> Word32 -> CompareResults
-compareOperands a b =
-  let highA = resize (a `shiftR` 16) :: Unsigned 16
-      highB = resize (b `shiftR` 16) :: Unsigned 16
-      lowA = resize a :: Unsigned 16
-      lowB = resize b :: Unsigned 16
-   in CompareResults
-        (a == b)
-        (highA == highB)
-        (lowA < lowB)
-        ((bitCoerce highA :: Signed 16) < (bitCoerce highB :: Signed 16))
-        (highA < highB)
-
-signedComparison, unsignedComparison :: CompareResults -> Bool
-signedComparison parts = compareSignedHighLess parts || (compareHighEqual parts && compareLowLess parts)
-unsignedComparison parts = compareUnsignedHighLess parts || (compareHighEqual parts && compareLowLess parts)
-
-branchTakenPrepared :: BitVector 3 -> CompareResults -> Maybe Bool
-branchTakenPrepared kind parts = case kind of
-  0 -> Just (compareEqual parts)
-  1 -> Just (not (compareEqual parts))
-  4 -> Just (signedComparison parts)
-  5 -> Just (not (signedComparison parts))
-  6 -> Just (unsignedComparison parts)
-  7 -> Just (not (unsignedComparison parts))
-  _ -> Nothing
-
-aluCandidates :: ExecuteControl -> Word32 -> Word32 -> Vec 8 Word32
-aluCandidates control a b =
-  (if execSubtract control then a - b else a + b)
-    :> (a `shiftL` fromIntegral (b .&. 3))
-    :> 0
-    :> 0
-    :> (a `xor` b)
-    :> (if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (b .&. 3)) else a `shiftR` fromIntegral (b .&. 3))
-    :> (a .|. b)
-    :> (a .&. b)
-    :> Nil
-
-selectedAlu :: ExecuteControl -> Vec 8 Word32 -> CompareResults -> Maybe Word32
-selectedAlu control candidates parts = if execLegal control then Just value else Nothing
-  where
-    value = case execFunct3 control of
-      2 -> boolWord (signedComparison parts)
-      3 -> boolWord (unsignedComparison parts)
-      _ -> candidates !! (fromIntegral (unpack (execFunct3 control) :: Unsigned 3) :: Index 8)
-
-data Machine = Machine
-  { -- | The register file as values: the simulation's mirror. The BRAM
-    -- circuit keeps the registers in distributed RAM instead (two read
-    -- ports, see 'registerReads'), injects their outputs as cpuRfA/cpuRfB
-    -- and leaves this constant, so synthesis removes it.
-    cpuRegs :: Vec 32 Word32,
-    -- | Which registers hold a value: a reset clears these instead of 32
-    -- words, and a register whose bit is clear reads as 0 (x0 never set).
-    cpuRegValid :: BitVector 32,
-    -- | This cycle's register-file outputs at 'registerReads', injected.
-    cpuRfA :: Word32,
-    cpuRfB :: Word32,
-    -- | Registered writeback request; consumed during the next fetch.
-    cpuPendingWrite :: RegisterWrite,
-    cpuPc :: Word32,
-    cpuPhase :: CpuPhase,
-    cpuInstruction :: Word32,
-    -- | Explicit board variant: the default IM frontend remains unchanged.
-    cpuCompressed :: Bool,
-    cpuInstructionRaw :: Word32,
-    cpuInstructionSize :: Unsigned 3,
-    cpuFetchHalf :: Unsigned 16,
-    -- | The PC being fetched is outside the ROM and RAM; registered at Fetch
-    -- and raised as an instruction access fault at Decode.
-    cpuFetchFault :: Bool,
-    -- | The CPU drives a local block RAM directly (the BRAM image), which
-    -- enables both overlaps below. Off on images whose memory is driven by
-    -- the CPU's phase (the SDRAM wrapper).
-    cpuLocalMemory :: Bool,
-    -- | An external cache supplies the pipeline's fixed-latency word port.
-    -- Preserve the full physical address beside the BRAM-sized legacy index.
-    cpuExternalMemory :: Bool,
-    cpuPortAddressFull :: Word32,
-    cpuPortWriteAddressFull :: Word32,
-    cpuPortByteEnable :: BitVector 4,
-    -- | The pipeline: on the BRAM image, ordinary instructions run in
-    -- 'cpuPipe' while the phases above run only the rest (see 'pipeStep').
-    -- cpuFast: the pipeline holds the machine; otherwise a commit-stage
-    -- action runs in the phases (Trap, CsrRead, CsrWrite, TrapReturn,
-    -- BusWait, MulDiv, Commit for WFI) and the pipeline resumes at Fetch.
-    cpuPipelined :: Bool,
-    cpuFast :: Bool,
-    cpuPipe :: Pipe,
-    -- | An interrupt is due (registered: the pipeline hands over a cycle
-    -- after it becomes due).
-    cpuInterruptDue :: Maybe Word32,
-    -- | The register file's read addresses this cycle, registered: the
-    -- next state's 'registerReads'.
-    cpuReadIndices :: (Index 32, Index 32),
-    -- | Fast RAM access: ExecuteFinish found an aligned load or store to
-    -- RAM and issued the word's read; Commit skips the bus.
-    cpuFastMemory :: Bool,
-    -- | The memory port's store, prepared at ExecuteFinish so the port's
-    -- write register is fed from flip-flops: the RAM word index, the data
-    -- already in its byte lanes and the lanes it replaces. A word store
-    -- writes at Commit (cpuStoreNow); a byte or halfword store merges into
-    -- the word read back, at MemoryCapture.
-    cpuPortIndex :: MemAddr,
-    cpuStoreData :: Word32,
-    cpuStoreMask :: Word32,
-    cpuStoreNow :: Bool,
-    -- Fetch overlap: Decode reads the word at pc + 4 while the CPU's RAM
-    -- port is otherwise idle; it arrives three cycles later. A Fetch whose
-    -- pc matches a valid prefetch goes straight to Decode.
-    cpuPrefetchAddress :: Word32,
-    cpuPrefetchWord :: Word32,
-    cpuPrefetchValid :: Bool,
-    -- | Cycles until the prefetched word is on the memory bus; 0 when none.
-    cpuPrefetchCount :: Unsigned 2,
-    -- | Branch-target prefetch: ExecuteFinish of a branch or jump reads the
-    -- target word (the port is free: no load or store is in flight). If
-    -- the jump is taken, Fetch finds it buffered or one cycle away.
-    cpuTargetAddress :: Word32,
-    cpuTargetWord :: Word32,
-    cpuTargetValid :: Bool,
-    cpuTargetCount :: Unsigned 2,
-    cpuFetchSource :: FetchSource,
-    -- | Registered at ExecuteFinish: this store writes the prefetched word,
-    -- or the branch-target word. Commit drops that buffer; every write path
-    -- finishes before the next Fetch.
-    cpuStoreHitsPrefetch :: Bool,
-    cpuStoreHitsTarget :: Bool,
-    -- | Decode-ahead: at ExecuteFinish of a plain ALU instruction the next
-    -- word is on the memory bus or in the prefetch buffer; it is kept here.
-    -- If it does not read this instruction's result (cpuAhead) and no
-    -- interrupt is due, Commit does its Decode and it continues at
-    -- OperandSelect, skipping Fetch. Otherwise Fetch takes it (FromNext).
-    cpuNextInstruction :: Word32,
-    cpuNextValid :: Bool,
-    cpuAhead :: Bool,
-    -- | A prefetch read was issued this cycle (Decode, or decode-ahead).
-    cpuPrefetchIssue :: Bool,
-    -- | Executing boot ROM code, registered at Fetch. Ctrl-C only breaks
-    -- programs: in the ROM a 0x03 byte is data, such as part of an image.
-    cpuInRom :: Bool,
-    -- | Decode's register reads (rs1, rs2).
-    cpuRegA :: Word32,
-    cpuRegB :: Word32,
-    cpuA :: Word32,
-    cpuB :: Word32,
-    -- | The instruction's immediate, whichever format it uses.
-    cpuImm :: Word32,
-    -- | OP (register-register) rather than OP-IMM: the ALU takes rs2, not the
-    -- immediate. Selected in OperandSelect so Decode's register read feeds
-    -- bank flip-flops directly; OperandSelect completes the read next cycle.
-    cpuIsRegOp :: Bool,
-    cpuOp2 :: Word32,
-    cpuExecuteControl :: ExecuteControl,
-    cpuAluCandidates :: Vec 8 Word32,
-    cpuAluCompare :: CompareResults,
-    cpuBranchCompare :: CompareResults,
-    cpuComputed :: Computed,
-    cpuTrapRegisters :: TrapRegisters,
-    cpuExceptionCause :: Word32,
-    cpuExceptionValue :: Word32,
-    cpuScratch :: Word32,
-    cpuInterruptEnable :: Word32,
-    cpuCsrSelection :: Vec 14 Bool,
-    -- | The CSR instruction writes (registered with the selection at Commit).
-    cpuCsrWrite :: Bool,
-    cpuCsrReadOnly :: Bool,
-    cpuCsrValue :: Word32,
-    cpuCsrSource :: Word32,
-    cpuCycle :: Counter64,
-    cpuInstret :: Counter64,
-    -- | Registered pulse and CSR write request, applied on the next clock.
-    cpuCountRetirement :: Bool,
-    cpuCounterWrite :: Maybe (Unsigned 12, Word32),
-    cpuMulDiv :: MulDivUnit,
-    -- | The pipelined multiply's four partial products, injected each cycle
-    -- like cpuRfA/cpuRfB. In hardware they come from two free-running
-    -- registers outside 'Machine' ('multiplyOperands' -> operand register
-    -- -> 'partialProductsOf' -> product register), so the DSP input and
-    -- output registers have no clock enable or next-state mux and are not
-    -- reached by stage-advance, hold or cancellation logic. The commit
-    -- stage waits long enough ('mWait') that both registers have reloaded
-    -- from its operands; holds only add edges, never remove them.
-    cpuMulProducts :: Vec 4 (Signed 34),
-    -- | The simulation's copy of those two registers (see
-    -- 'withMultiplyMirror'); the circuits keep them constant (removed).
-    cpuMulOperandsMirror :: (BitVector 3, Word32, Word32),
-    cpuMulProductsMirror :: Vec 4 (Signed 34),
-    systemBus :: BusState,
-    cpuBusRequest :: Maybe BusRequest,
-    cpuBusResponse :: Maybe BusResponse,
-    rxHolding :: Maybe Byte,
-    -- | BOOTCAUSE: why the CPU last reset into the boot ROM.
-    bootCause :: Unsigned 2,
-    cpuDevices :: Devices,
-    -- | mie & mip is nonzero: WFI may finish.
-    cpuWake :: Bool,
-    -- | Zero all registers on the next cycle.  Commands and resets set this
-    -- rather than clearing the 1024 register bits directly, so the clear is
-    -- driven straight from one flip-flop.
-    clearRegisters :: Bool
-  }
-  deriving (Generic, NFDataX)
-
--- | BRAM read address, optional BRAM write, and an optional UART TX byte.
-type StepOutput = (MemAddr, Maybe (MemAddr, Word32), Maybe Byte)
-
--- | A register-file write requested by the instruction being executed.
-type RegisterWrite = Maybe (Index 32, Word32)
 
 initialMachine :: Machine
 initialMachine =
@@ -1118,73 +416,6 @@ initialMachine =
       clearRegisters = False
     }
 
--- UART -----------------------------------------------------------------------
-
--- 100 MHz / 115200 is 868 clocks per bit (0.007% baud-rate error).  At any
--- other clock f the UART runs at f / 868 baud.
-type BaudCounter = Unsigned 10
-
-uartClocksPerBit :: BaudCounter
-uartClocksPerBit = 868
-
-fullBit :: BaudCounter
-fullBit = uartClocksPerBit - 1
-
-halfBit :: BaudCounter
-halfBit = uartClocksPerBit `div` 2 - 1
-
-data RxState
-  = RxIdle
-  | RxStart BaudCounter
-  | RxData (Index 8) BaudCounter Byte
-  | RxStop BaudCounter Byte
-  deriving (Generic, NFDataX)
-
-uartRx :: (HiddenClockResetEnable dom) => Signal dom Bit -> Signal dom (Maybe Byte)
-uartRx = mealy rxStep RxIdle
-
-rxStep :: RxState -> Bit -> (RxState, Maybe Byte)
-rxStep RxIdle serialBit
-  | serialBit == low = (RxStart halfBit, Nothing)
-  | otherwise = (RxIdle, Nothing)
-rxStep (RxStart n) serialBit
-  | n /= 0 = (RxStart (n - 1), Nothing)
-  | serialBit == low = (RxData 0 fullBit 0, Nothing)
-  | otherwise = (RxIdle, Nothing)
-rxStep (RxData bitNo n byte) serialBit
-  | n /= 0 = (RxData bitNo (n - 1) byte, Nothing)
-  | otherwise = let byte' = if serialBit == high then setBit byte (fromIntegral bitNo) else byte in if bitNo == maxBound then (RxStop fullBit byte', Nothing) else (RxData (succ bitNo) fullBit byte', Nothing)
-rxStep (RxStop n byte) serialBit
-  | n /= 0 = (RxStop (n - 1) byte, Nothing)
-  | serialBit == high = (RxIdle, Just byte)
-  | otherwise = (RxIdle, Nothing)
-
-data TxState
-  = TxIdle
-  | TxStart BaudCounter Byte
-  | TxData (Index 8) BaudCounter Byte
-  | TxStop BaudCounter
-  deriving (Generic, NFDataX)
-
-uartTx :: (HiddenClockResetEnable dom) => Signal dom (Maybe Byte) -> (Signal dom Bit, Signal dom Bool)
-uartTx request = unbundle (mealy txStep TxIdle request)
-
-txStep :: TxState -> Maybe Byte -> (TxState, (Bit, Bool))
-txStep TxIdle request =
-  (case request of Just byte -> TxStart fullBit byte; Nothing -> TxIdle, (high, True))
-txStep (TxStart n byte) _
-  | n /= 0 = (TxStart (n - 1) byte, (low, False))
-  | otherwise = (TxData 0 fullBit byte, (low, False))
-txStep (TxData bitNo n byte) _
-  | n /= 0 = (TxData bitNo (n - 1) byte, (boolToBit (testBit byte (fromIntegral bitNo)), False))
-  | bitNo == maxBound = (TxStop fullBit, (boolToBit (testBit byte 7), False))
-  | otherwise = (TxData (succ bitNo) fullBit byte, (boolToBit (testBit byte (fromIntegral bitNo)), False))
-txStep (TxStop n) _
-  | n /= 0 = (TxStop (n - 1), (high, False))
-  | otherwise = (TxIdle, (high, False))
-
--- Top level ------------------------------------------------------------------
-
 {-# ANN
   topEntity
   ( Synthesize
@@ -1194,6 +425,7 @@ txStep (TxStop n) _
       }
   )
   #-}
+
 -- XilinxSystem is System with a synchronous reset.  Gowin flip-flops have a
 -- synchronous-reset pin, and it keeps nextpnr from timing paths through
 -- every flip-flop's asynchronous clear.
@@ -1322,14 +554,6 @@ boardMachine = initialMachine {cpuPipelined = True, cpuLocalMemory = False, cpuC
 boardCompressed :: Bool
 boardCompressed = False
 
--- I/O complex ---------------------------------------------------------------------
-
--- | A small FIFO in registers. Inputs: flush, push, pop (pop only when the
--- head is present); outputs: the head and the count. A push to a full FIFO
--- is dropped.
-data Fifo n = Fifo {fifoData :: Vec n Byte, fifoRead :: Index n, fifoWrite :: Index n, fifoCount :: Index (n + 1)}
-  deriving (Generic, NFDataX, Show, Eq)
-
 initialFifo :: (KnownNat n, KnownNat (n + 1), 1 <= n) => Fifo n
 initialFifo = Fifo (repeat 0) 0 0 0
 
@@ -1360,29 +584,6 @@ ioRequest :: Machine -> Maybe BusRequest
 ioRequest machine = case busPhase (systemBus machine) of
   BusIo -> Just (busRequest (systemBus machine))
   _ -> Nothing
-
--- | The SPI DMA engine: moves bytes between the SPI master and RAM through
--- the RAM's second port while the CPU runs.
-data DmaPhase = DmaIdle | DmaToken | DmaReceive | DmaFetch | DmaFetchWait | DmaCapture | DmaSend
-  deriving (Generic, NFDataX, Show, Eq)
-
-data Dma = Dma
-  { dmaPhase :: DmaPhase,
-    dmaAddress :: Word32,
-    dmaCount :: Unsigned 16,
-    -- | The word being assembled (receive) or sent (send), little-endian.
-    dmaWord :: Word32,
-    dmaLane :: Unsigned 2,
-    -- | A byte this engine started is still shifting.
-    dmaInFlight :: Bool,
-    -- | 0xff bytes still allowed before the start token.
-    dmaPatience :: Unsigned 20,
-    dmaToken :: Byte,
-    dmaError :: Bool,
-    -- | This cycle's command to the RAM's second port (registered).
-    dmaRam :: Maybe (MemAddr, Maybe Word32)
-  }
-  deriving (Generic, NFDataX, Show, Eq)
 
 initialDma :: Dma
 initialDma = Dma DmaIdle 0 0 0 0 False 0 0 False Nothing
@@ -1433,12 +634,6 @@ stepDma dma spi ramWord = case dmaPhase dma of
         | lastByte -> afterByte {dmaPhase = DmaIdle}
         | dmaLane dma == 3 -> afterByte {dmaPhase = DmaFetch, dmaAddress = dmaAddress dma + 4}
         | otherwise -> afterByte
-
--- | Devices outside the CPU. A request is taken once (while no answer is
--- pending) and answered from a register the next cycle, so the CPU's bus
--- and the devices meet only at flip-flops.
-data Io = Io {ioSpi :: Spi, ioDma :: Dma, ioAnswered :: Maybe Word32}
-  deriving (Generic, NFDataX, Show, Eq)
 
 initialIo :: Io
 initialIo = Io initialSpi initialDma Nothing
@@ -1524,14 +719,6 @@ machineStepDecodedWith decodeTarget machine input = withMultiplyMirror (\m -> ma
 machineStepCoreWith :: (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput)
 machineStepCoreWith = machineStepCoreBy cpuStepDecodedWith
 
--- | One cycle with a given CPU step: the circuit passes 'pipelinedCpuStep'
--- itself, so the phases it never uses are not part of it.
-type CpuStep = (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput)
-
--- | A 'CpuStep' that also reports the stage payload group and its load
--- conditions, so a circuit can register each stage under its own enable.
-type CpuStepStages = (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
-
 machineStepCoreBy :: CpuStep -> (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput)
 machineStepCoreBy cpuStepWith decodeTarget machine input =
   let (next, output, _, _) = machineStepCoreStagesBy (dropStages cpuStepWith) decodeTarget machine input
@@ -1613,14 +800,6 @@ machineStepCoreStagesBy cpuStepWith decodeTarget machine (memoryWord, received, 
 tickHeld :: Machine -> Machine
 tickHeld machine = machine {cpuCycle = tickCounter True Nothing (cpuCycle machine), cpuDevices = (cpuDevices machine) {devMtime = tickCounter True Nothing (devMtime (cpuDevices machine))}}
 
--- | The state that keeps running while an external memory holds the core.
-data HeldState = HeldState
-  { heldCycle :: Counter64,
-    heldMtime :: Counter64,
-    heldRx :: Maybe Byte
-  }
-  deriving (Generic, NFDataX)
-
 initialHeldState :: HeldState
 initialHeldState = HeldState initialCounter initialCounter Nothing
 
@@ -1682,225 +861,16 @@ systemReset cause machine =
       cpuPipe = restartPipe 0 (cpuPipe machine)
     }
 
--- Pipeline -------------------------------------------------------------------
-
--- | A fetched instruction and its pc, with which source registers it reads
--- (decoded as it arrives, so decode's hazard check is only compares).
-data Fetched = Fetched
-  { fPc :: Word32,
-    fWord :: Word32,
-    fUsesRs1 :: Bool,
-    fUsesRs2 :: Bool,
-    -- | The pc fetched after it (the branch target buffer's prediction).
-    fPredicted :: Word32,
-    fRaw :: Word32,
-    fSize :: Unsigned 3
-  }
-  deriving (Generic, NFDataX, Show, Eq)
-
 fetchedWord :: (Word32, Word32) -> Word32 -> Fetched
 fetchedWord (pc, predicted) word =
   let opcode = word .&. 0x7f
    in Fetched pc word (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f) (opcode == 0x33 || opcode == 0x23 || opcode == 0x63) predicted word 4
-
--- | Decode/register read to the first execute stage: operands (forwarded),
--- the immediate and the decoded control.
-data ExecuteOne = ExecuteOne
-  { e1Pc :: Word32,
-    e1Predicted :: Word32,
-    e1Word :: Word32,
-    e1Raw :: Word32,
-    e1Size :: Unsigned 3,
-    e1Control :: ExecuteControl,
-    e1A :: Word32,
-    e1B :: Word32,
-    e1Imm :: Word32,
-    e1Op2 :: Word32,
-    e1Rd :: Index 32,
-    e1Writes :: Bool,
-    -- | The pc is outside the ROM and RAM: the word is not an instruction.
-    e1FetchFault :: Bool,
-    e1FaultValue :: Word32
-  }
-  deriving (Generic, NFDataX)
-
--- | The first execute stage's registered adders, comparisons and ALU
--- candidates (as in Execute), for the second to select from.
-data ExecuteTwo = ExecuteTwo
-  { e2Pc :: Word32,
-    e2Predicted :: Word32,
-    e2Control :: ExecuteControl,
-    e2Computed :: Computed,
-    e2Candidates :: Vec 8 Word32,
-    e2AluCompare :: CompareResults,
-    e2BranchCompare :: CompareResults,
-    e2B :: Word32,
-    e2Op2 :: Word32,
-    e2Imm :: Word32,
-    e2A :: Word32,
-    e2Word :: Word32,
-    e2Raw :: Word32,
-    e2Rd :: Index 32,
-    e2Writes :: Bool,
-    e2FetchFault :: Bool,
-    e2FaultValue :: Word32,
-    -- | Its result is selected here (an ALU result other than a shift or a
-    -- multiply, LUI, AUIPC, or a jump's link), so decode may take it.
-    e2Forwards :: Bool,
-    -- | E2's outcome, decided at the E1->E2 edge and registered here. The
-    -- E2->M transition and decode's hazard check read these flip-flops
-    -- instead of recomputing the exception/action priority encoder from
-    -- E2's payload, keeping that encoder off the hazard critical path.
-    e2Action :: Action,
-    e2LoadFast :: Bool,
-    e2StoreFast :: Bool,
-    e2StoreWordFast :: Bool,
-    e2ShiftFast :: Bool,
-    e2MultFast :: Bool,
-    e2WaitFast :: Unsigned 2,
-    e2Slot :: Bool,
-    e2Straddle :: Bool,
-    e2Refetch :: Bool,
-    e2PredictedTaken :: Bool
-  }
-  deriving (Generic, NFDataX)
-
--- | The commit stage: an instruction here is the oldest in the pipeline.
--- It writes RAM and the register file, or (slow) hands over to the phases.
-data MemoryStage = MemoryStage
-  { mPc :: Word32,
-    -- | The pc after it: pc + 4 or the taken target.
-    mNext :: Word32,
-    mValue :: Word32,
-    mRd :: Index 32,
-    mWrites :: Bool,
-    -- | mValue is the result (not a load, nor a shift still to finish), so
-    -- a later instruction may take it.
-    mFinal :: Bool,
-    mLoad :: Bool,
-    mStore :: Bool,
-    -- | A word store: writes without reading.
-    mStoreWord :: Bool,
-    mFunct3 :: BitVector 3,
-    mOffset :: Unsigned 2,
-    mIndex :: MemAddr,
-    mData :: Word32,
-    mMask :: Word32,
-    mShift :: Bool,
-    mArith :: Bool,
-    mAmount :: Word32,
-    -- | A multiply: mA x mB, formed by the free-running DSP registers
-    -- (see 'cpuMulProducts') and summed at commit.
-    mMultiply :: Bool,
-    -- | Cycles until the word read for a load or a sub-word store is on
-    -- the memory bus.
-    mWait :: Unsigned 2,
-    -- | What the commit stage does besides committing a result.
-    mAction :: Action,
-    -- (for the actions: the instruction, its operands and its address)
-    mWord :: Word32,
-    mA :: Word32,
-    mB :: Word32,
-    mAddress :: Word32
-  }
-  deriving (Generic, NFDataX)
-
--- | A commit-stage action. Plain instructions commit in the pipeline, as
--- does FENCE.I (which then refetches); the rest flush it and run in the
--- phases from the commit stage's registers, in the order the phases check
--- them.
-data Action
-  = Plain
-  | -- | an exception: mcause and mtval
-    Raise Word32 Word32
-  | CsrAccess
-  | Mret
-  | Wfi
-  | FenceI
-  | Divide
-  | -- | a load or store outside RAM
-    Bus
-  deriving (Generic, NFDataX, Show, Eq)
-
--- | A branch target buffer entry: a taken branch or jump in the tagged
--- 32-bit word went to the target last time. bSlot records whether the
--- control instruction ends at the word's low halfword (False) or high
--- halfword (True). The tag is pc bits 12..5 only: an alias costs a
--- redirect, never correctness (execute checks every prediction).
-data BtbEntry = BtbEntry {bValid :: Bool, bSlot :: Bool, bTag :: Unsigned 8, bTarget :: Word32}
-  deriving (Generic, NFDataX, Show, Eq)
 
 btbIndex :: Word32 -> Index 8
 btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 3)
 
 btbTag :: Word32 -> Unsigned 8
 btbTag pc = resize (pc `shiftR` 5)
-
-data Pipe = Pipe
-  { -- | The next pc to fetch.
-    pFetchPc :: Word32,
-    -- | C-mode byte PC within the fetched-word FIFO.
-    pInstructionPc :: Word32,
-    -- | Reads in flight, newest first; one of these words is on the memory
-    -- bus this cycle, 'inflightArrival' entries back.
-    -- (each with the pc predicted to follow it)
-    pInflight :: Vec 4 (Maybe (Word32, Word32)),
-    -- | Fetched words waiting for decode: a ring, read at pQueueRead and
-    -- written at pQueueWrite (each modulo 4; the difference is the count).
-    pQueue :: Vec 4 Fetched,
-    pQueueRead :: Unsigned 3,
-    pQueueWrite :: Unsigned 3,
-    -- | Words queued or in flight, kept as a register so fetch decides
-    -- from it directly.
-    pOutstanding :: Unsigned 3,
-    -- | Raw aligned instruction. Assembly of a cross-word instruction
-    -- ends here, before RV32C expansion. fWord/fRaw both hold the original
-    -- bits; fSize and fPc preserve precise compressed traps and links.
-    pA :: Maybe Fetched,
-    -- | Expanded instructions and source-use bits, in a two-entry FIFO.
-    -- A's readiness reads only its registered count; D's hazard/backpressure
-    -- cannot feed back into the wide A/F payload enables. The registered
-    -- head drives RF addresses and enters D on the same edge.
-    pFQueue :: Vec 2 Fetched,
-    pFRead :: Index 2,
-    pFWrite :: Index 2,
-    pFCount :: Unsigned 2,
-    pDSlot :: Slot Fetched,
-    -- | Decode's operands: on its first cycle (pDFresh) they come from the
-    -- register file, read the cycle before at the entering word's sources;
-    -- while it waits, from here, refreshed by forwarding.
-    pDOperands :: (Word32, Word32),
-    pDFresh :: Bool,
-    -- | D's hazard against these registered producer stages, calculated
-    -- from their next state on the preceding edge. Comparisons terminate
-    -- here rather than driving the wide D payload enable in the same cycle.
-    pDBlocked :: Bool,
-    -- D, E1, E2 and M keep their validity token apart from their payload
-    -- (see 'Slot'): cancellation (handover, FENCE.I, a redirect) clears the
-    -- token only, and each payload is loaded under a local stage enable.
-    pE1Slot :: Slot ExecuteOne,
-    pE2Slot :: Slot ExecuteTwo,
-    pMSlot :: Slot MemoryStage,
-    -- | A taken branch or jump left the second execute stage last cycle:
-    -- this cycle the younger stages are flushed and its target fetched.
-    pRedirect :: Maybe Word32,
-    -- | Eight entries, indexed by pc bits 4..2: fetch follows a hit's
-    -- target; the second execute stage corrects a wrong guess.
-    pBtb :: Vec 8 BtbEntry
-  }
-  deriving (Generic, NFDataX)
-
--- | A pipeline stage register split into a one-bit validity token and its
--- payload. Only 'slotValid' depends on cancellation (handover, FENCE.I,
--- redirects, resets); 'slotPayload' is loaded by the stage's own advance
--- decision, which reads registered stage state only. A Maybe-typed stage
--- made every payload bit's next-state mux depend on the whole-pipeline
--- cancellation logic (the 2026-10-28 reports trace pM.mAction and
--- cpuInterruptDue through 400-550-load selects into pD/E2 payload and the
--- DSP operand registers). A payload of an invalid slot is a don't-care and is
--- never observed: everything reads stages through 'pD', 'pE1', 'pE2', 'pM'.
-data Slot a = Slot {slotValid :: Bool, slotPayload :: a}
-  deriving (Generic, NFDataX)
 
 slotView :: Slot a -> Maybe a
 slotView (Slot valid payload) = if valid then Just payload else Nothing
@@ -1937,15 +907,6 @@ emptyExecuteTwo =
 emptyMemoryStage :: MemoryStage
 emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 Plain 0 0 0 0
 
--- | One payload per pipeline stage.
-data StagePayloads = StagePayloads
-  { spD :: Fetched,
-    spE1 :: ExecuteOne,
-    spE2 :: ExecuteTwo,
-    spM :: MemoryStage
-  }
-  deriving (Generic, NFDataX)
-
 initialStagePayloads :: StagePayloads
 initialStagePayloads =
   StagePayloads (Fetched 0 0 False False 0 0 4) emptyExecuteOne emptyExecuteTwo emptyMemoryStage
@@ -1977,15 +938,6 @@ withStagePayloads StagePayloads {..} machine =
                 pMSlot = (pMSlot pipe) {slotPayload = spM}
               }
         }
-
--- | When each stage's payload register loads.
-data StageLoad = StageLoad
-  { slD :: Bool,
-    slE1 :: Bool,
-    slE2 :: Bool,
-    slM :: Bool
-  }
-  deriving (Generic, NFDataX)
 
 noStageLoad :: StageLoad
 noStageLoad = StageLoad False False False False
@@ -2043,19 +995,6 @@ restartPipe pc pipe =
       pMSlot = slotCancel (pMSlot pipe),
       pRedirect = Nothing
     }
-
--- | The decode-stage dependency contract. E2 results wait until registered
--- in M, keeping its ALU result mux out of decode's operand forwarding path.
-decodeHazard :: Maybe Fetched -> Maybe ExecuteOne -> Maybe ExecuteTwo -> Maybe MemoryStage -> Bool
-decodeHazard fetched one two memory = case fetched of
-  Nothing -> False
-  Just f ->
-    let rs1 = instructionRs1 (fWord f)
-        rs2 = instructionRs2 (fWord f)
-        conflicts r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
-     in maybe False (\x -> conflicts (e1Rd x) (e1Writes x)) one
-          || maybe False (\x -> conflicts (e2Rd x) (e2Writes x)) two
-          || maybe False (\m -> not (mFinal m) && conflicts (mRd m) (mWrites m)) memory
 
 -- | A multiply's operands as 33-bit signed values (sign- or zero-extended
 -- as MUL, MULH, MULHSU or MULHU needs), split into a signed high 17 bits
@@ -3147,50 +2086,6 @@ withRegister index value (machine, output) = (machine, Just (index, value), outp
 withoutRegister :: (Machine, StepOutput) -> (Machine, RegisterWrite, StepOutput)
 withoutRegister (machine, output) = (machine, Nothing, output)
 
--- | Execute stage: every adder and the ALU, in parallel, for whichever
--- instruction this turns out to be. Shifts compute their low two levels here
--- and ShiftFinish completes the high three levels.
--- The immediate has already been decoded for the instruction's format, so
--- each adder has fixed, registered inputs and nothing is muxed in front of it.
-compute :: Word32 -> Word32 -> Word32 -> Word32 -> Word32 -> Word32 -> Computed
-compute pc instruction a b imm op2 =
-  Computed
-    { cAlu = case opcode of
-        0x37 -> Just imm -- LUI
-        0x17 -> Just pcPlusImm -- AUIPC
-        0x13 -> aluWithShiftMask 3 funct3 funct7 False a op2
-        0x33 -> aluWithShiftMask 3 funct3 funct7 True a op2
-        _ -> Nothing,
-      cLink = pc + 4,
-      cTarget = if opcode == 0x67 then aPlusImm .&. complement 1 else pcPlusImm, -- JALR; JAL and branches
-      cTaken = branchTaken funct3 a b,
-      cAddress = aPlusImm
-    }
-  where
-    opcode = instruction .&. 0x7f
-    funct3 = instructionFunct3 instruction
-    funct7 = (instruction `shiftR` 25) .&. 0x7f
-    pcPlusImm = pc + imm
-    aPlusImm = a + imm
-
--- | The immediate in whichever format the opcode uses.
-decodeImmediate :: Word32 -> Word32
-decodeImmediate instruction = case instruction .&. 0x7f of
-  0x37 -> immU instruction -- LUI
-  0x17 -> immU instruction -- AUIPC
-  0x6f -> immJ instruction -- JAL
-  0x63 -> immB instruction -- branches
-  0x23 -> immS instruction -- stores
-  _ -> immI instruction -- OP-IMM, loads, JALR
-
-instructionRd, instructionRs1, instructionRs2 :: Word32 -> Index 32
-instructionRd instruction = regIndex ((instruction `shiftR` 7) .&. 0x1f)
-instructionRs1 instruction = regIndex ((instruction `shiftR` 15) .&. 0x1f)
-instructionRs2 instruction = regIndex ((instruction `shiftR` 20) .&. 0x1f)
-
-instructionFunct3 :: Word32 -> BitVector 3
-instructionFunct3 instruction = pack (resize ((instruction `shiftR` 12) .&. 7) :: Unsigned 3)
-
 -- | Commit stage: act on the values the Execute stage computed.
 commitInstruction :: Machine -> Bool -> (Machine, RegisterWrite, StepOutput)
 commitInstruction committing _txReady =
@@ -3283,13 +2178,6 @@ commitInstruction committing _txReady =
             )
         KindInvalid -> invalid
 
--- | A halfword must be 2-aligned and a word 4-aligned; byte accesses are free.
-misalignedMemory :: BitVector 3 -> Word32 -> Bool
-misalignedMemory funct3 address
-  | funct3 == 0b010 = address .&. 3 /= 0
-  | funct3 == 0b001 || funct3 == 0b101 = testBit address 0
-  | otherwise = False
-
 -- | Capture the exception without retiring, advancing PC, writing rd or issuing
 -- a memory/UART request. The next stage owns the trap register write muxes.
 raiseException :: Machine -> Word32 -> Word32 -> (Machine, StepOutput)
@@ -3319,16 +2207,6 @@ enterTrap machine =
       -- the program.
       trapped = machine {cpuTrapRegisters = updated, cpuPc = trapVector regs .&. complement 3, cpuPhase = Fetch}
    in (trapped, (0, Nothing, Nothing))
-
--- | These CSRs have no read side effects, so CSRRW rd=x0 can share the same
--- read stage. Write suppression uses the encoded rs1/zimm, not its value.
-csrWriteRequested :: Word32 -> Bool
-csrWriteRequested instruction =
-  let kind = instructionFunct3 instruction
-   in kind == 1 || kind == 5 || instructionRs1 instruction /= 0
-
-csrAddress :: Word32 -> Unsigned 12
-csrAddress instruction = resize (instruction `shiftR` 20)
 
 readCsr :: Unsigned 12 -> Machine -> Maybe (Word32, Bool)
 readCsr address machine = case address of
@@ -3411,35 +2289,6 @@ csrReadStep machine =
         else
           withoutRegister
             (captured {cpuPhase = if busy then CsrRead else CsrWrite}, (0, Nothing, Nothing))
-
--- CSR address comparisons are registered at Commit, before the data mux.
-decodeCsrSelection :: Unsigned 12 -> Vec 14 Bool
-decodeCsrSelection address =
-  (address == 0x300)
-    :> (address == 0x301)
-    :> (address == 0x304)
-    :> (address == 0x305)
-    :> (address == 0x340)
-    :> (address == 0x341)
-    :> (address == 0x342)
-    :> (address == 0x343)
-    :> (address == 0xb00 || address == 0xc00)
-    :> (address == 0xb80 || address == 0xc80)
-    :> (address == 0xb02 || address == 0xc02)
-    :> (address == 0xb82 || address == 0xc82)
-    :> ( address
-           == 0x310
-           || address
-           == 0xf11
-           || address
-           == 0xf12
-           || address
-           == 0xf13
-           || address
-           == 0xf14
-       )
-    :> (address == 0x344)
-    :> Nil
 
 readSelectedCsr :: Vec 14 Bool -> Machine -> Word32
 readSelectedCsr selection machine =
@@ -3569,295 +2418,3 @@ writeRegister :: Index 32 -> Word32 -> Machine -> Machine
 writeRegister 0 _ machine = machine
 writeRegister index value machine@Machine {..} =
   machine {cpuRegs = replace index value cpuRegs, cpuRegValid = setBit cpuRegValid (fromIntegral index)}
-
-regIndex :: Word32 -> Index 32
-regIndex value = fromIntegral (resize value :: Unsigned 5)
-
--- | The physical word index: bit 31 clear means the boot ROM (bit 14 set,
--- low nine bits the ROM word), set means RAM (the low 14 bits). Only
--- meaningful for addresses the decoder maps to ROM or RAM.
-memoryIndex :: Word32 -> MemAddr
-memoryIndex address
-  | testBit address 31 = resize (address `shiftR` 2) .&. 0x3fff
-  | otherwise = 0x4000 .|. (resize (address `shiftR` 2) .&. 0x1ff)
-
-ramBase :: Word32
-ramBase = 0x8000_0000
-
--- | 64 KiB of RAM at 0x8000_0000, as a bit test.
-validMemoryAddress :: Word32 -> Bool
-validMemoryAddress address = address .&. 0xffff_0000 == ramBase
-
--- | The 2 KiB boot ROM at address 0, as a bit test.
-romAddress :: Word32 -> Bool
-romAddress address = address .&. 0xffff_f800 == 0
-
-fetchable :: MemoryTarget -> Bool
-fetchable target = case target of RamTarget -> True; RomTarget -> True; _ -> False
-
--- SiFive/QEMU-style finisher command register. DONE carries no status payload.
-exitDevice :: Word32
-exitDevice = 0x0010_0000
-
--- | BOOTCAUSE, read-only beside the finisher.
-bootCauseDevice :: Word32
-bootCauseDevice = 0x0010_0004
-
--- | CLINT and PLIC registers (QEMU virt layout) and the UART control register.
-clintMsip, clintCompareLo, clintCompareHi, clintTimeLo, clintTimeHi :: Word32
-clintMsip = 0x0200_0000
-clintCompareLo = 0x0200_4000
-clintCompareHi = 0x0200_4004
-clintTimeLo = 0x0200_bff8
-clintTimeHi = 0x0200_bffc
-
-plicPriorityUart, plicPending, plicEnable, plicThreshold, plicClaim, uartControl :: Word32
-plicPriorityUart = 0x0c00_0000 + 4 * uartIrq
-plicPending = 0x0c00_1000
-plicEnable = 0x0c00_2000
-plicThreshold = 0x0c20_0000
-plicClaim = 0x0c20_0004
-uartControl = 0x1000_000c
-
--- | The I/O complex's window and its registers' offsets within it.
-ioBase :: Word32
-ioBase = 0x1000_1000
-
-ioSpiData, ioSpiStatus, ioSpiControl, ioDmaAddress, ioDmaCount, ioDmaControl, ioDmaStatus :: Word32
-ioSpiData = 0x000
-ioSpiStatus = 0x004
-ioSpiControl = 0x008
-ioDmaAddress = 0x100
-ioDmaCount = 0x104
-ioDmaControl = 0x108
-ioDmaStatus = 0x10c
-
-uartTxData, uartStatus, uartRxData :: Word32
-uartTxData = 0x1000_0000
-uartStatus = 0x1000_0004
-uartRxData = 0x1000_0008
-
-decodeMemoryTarget :: Word32 -> MemoryTarget
-decodeMemoryTarget address
-  | validMemoryAddress address = RamTarget
-  | romAddress address = RomTarget
-  | address == bootCauseDevice = BootCauseTarget
-  | address == clintMsip = ClintMsipTarget
-  | address == clintCompareLo = ClintCompareLoTarget
-  | address == clintCompareHi = ClintCompareHiTarget
-  | address == clintTimeLo = ClintTimeLoTarget
-  | address == clintTimeHi = ClintTimeHiTarget
-  | address == plicPriorityUart = PlicPriorityTarget
-  | address == plicPending = PlicPendingTarget
-  | address == plicEnable = PlicEnableTarget
-  | address == plicThreshold = PlicThresholdTarget
-  | address == plicClaim = PlicClaimTarget
-  | address == uartControl = UartControlTarget
-  | address .&. 0xffff_f000 == ioBase = IoTarget
-  | address == uartTxData = UartTxTarget
-  | address == uartStatus = UartStatusTarget
-  | address == uartRxData = UartRxTarget
-  | address == exitDevice = ExitTarget
-  | otherwise = UnmappedTarget
-
-validLoad :: BitVector 3 -> Bool
-validLoad funct3 = funct3 == 0b000 || funct3 == 0b001 || funct3 == 0b010 || funct3 == 0b100 || funct3 == 0b101
-
-validStore :: BitVector 3 -> Bool
-validStore funct3 = funct3 == 0b000 || funct3 == 0b001 || funct3 == 0b010
-
-loadValue :: BitVector 3 -> Unsigned 2 -> Word32 -> Word32
-loadValue funct3 byteOffset word = case funct3 of
-  0b000 -> signExtend8 byte
-  0b001 -> signExtend16 half
-  0b010 -> word
-  0b100 -> resize byte
-  0b101 -> resize half
-  _ -> 0
-  where
-    shiftAmount = fromIntegral byteOffset * 8
-    byte = resize (word `shiftR` shiftAmount) :: Unsigned 8
-    half = resize (word `shiftR` shiftAmount) :: Unsigned 16
-
--- | A store's data in its byte lanes, and the lanes it replaces.
-storeLanes :: BitVector 3 -> Unsigned 2 -> Word32 -> Word32
-storeLanes funct3 byteOffset value = case funct3 of
-  0b000 -> (value .&. 0xff) `shiftL` (fromIntegral byteOffset * 8)
-  0b001 -> (value .&. 0xffff) `shiftL` (fromIntegral byteOffset * 8)
-  _ -> value
-
-storeMask :: BitVector 3 -> Unsigned 2 -> Word32
-storeMask funct3 byteOffset = storeLanes funct3 byteOffset maxBound
-
--- | The RAM word index of a RAM address (bit 14 clear): 'memoryIndex'
--- without its ROM case.
-ramWordIndex :: Word32 -> MemAddr
-ramWordIndex address = resize (address `shiftR` 2) .&. 0x3fff
-
-storeValue :: BitVector 3 -> Unsigned 2 -> Word32 -> Word32 -> Word32
-storeValue funct3 byteOffset value oldWord = case funct3 of
-  0b000 -> (oldWord .&. complement (0xff `shiftL` shiftAmount)) .|. ((value .&. 0xff) `shiftL` shiftAmount)
-  0b001 -> (oldWord .&. complement (0xffff `shiftL` shiftAmount)) .|. ((value .&. 0xffff) `shiftL` shiftAmount)
-  _ -> value
-  where
-    shiftAmount = fromIntegral byteOffset * 8
-
--- Decode/execute helpers ------------------------------------------------------
-
--- | OP (register-register) and OP-IMM arithmetic on @a@ and @op2@; Nothing for
--- an illegal funct7.
-alu :: BitVector 3 -> Word32 -> Bool -> Word32 -> Word32 -> Maybe Word32
-alu = aluWithShiftMask 0x1f
-
--- Only the shift distance is masked; adders retain their registered inputs.
-aluWithShiftMask :: Word32 -> BitVector 3 -> Word32 -> Bool -> Word32 -> Word32 -> Maybe Word32
-aluWithShiftMask mask funct3 funct7 isRegister a op2 = if legal then Just value else Nothing
-  where
-    alternate = funct7 == 0x20 -- SUB and SRA/SRAI
-    isShift = funct3 == 0b001 || funct3 == 0b101
-    legal
-      | isRegister = funct7 == 0 || (alternate && (funct3 == 0b000 || funct3 == 0b101))
-      | otherwise = not isShift || funct7 == 0 || (alternate && funct3 == 0b101)
-    shamt = fromIntegral (op2 .&. mask)
-    value = case funct3 of
-      0b000 -> if isRegister && alternate then a - op2 else a + op2 -- ADD(I), SUB
-      0b001 -> shiftResult funct3 funct7 a shamt -- SLL(I)
-      0b010 -> boolWord (signed32 a < signed32 op2) -- SLT(I)
-      0b011 -> boolWord (a < op2) -- SLT(I)U
-      0b100 -> a `xor` op2 -- XOR(I)
-      0b101 -> shiftResult funct3 funct7 a shamt -- SRL(I), SRA(I)
-      0b110 -> a .|. op2 -- OR(I)
-      _ -> a .&. op2 -- AND(I)
-
--- | One part of a shift; arithmetic shifts preserve the sign at both stages.
-shiftResult :: BitVector 3 -> Word32 -> Word32 -> Int -> Word32
-shiftResult funct3 funct7 value amount
-  | funct3 == 0b001 = value `shiftL` amount
-  | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
-  | otherwise = value `shiftR` amount
-
--- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
--- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.
-mulDivStep :: BitVector 3 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
-mulDivStep funct3 a b unit@MulDivUnit {..} = case mdStep of
-  MdPrepare
-    -- Division by zero: quotient all ones, remainder the dividend.
-    | isDiv && b == 0 -> Left unit {mdStep = MdFinish, mdLo = maxBound, mdHi = a, mdTakeLow = takeLow}
-    | otherwise ->
-        let magnitude negative x = if negative then negate x else x
-         in Left
-              MulDivUnit
-                { mdStep = MdLoop 0,
-                  mdHi = 0,
-                  mdLo = if isDiv then magnitude aNegative a else magnitude bNegative b,
-                  mdOperand = if isDiv then magnitude bNegative b else magnitude aNegative a,
-                  mdTotal = 0,
-                  mdNegLo = aNegative /= bNegative,
-                  mdNegHi = if isDiv then aNegative else aNegative /= bNegative,
-                  mdCarry = False,
-                  mdTakeLow = takeLow
-                }
-  MdLoop i ->
-    Left unit {mdStep = MdCommit i, mdTotal = if isDiv then divideDifference else multiplyTotal}
-  MdCommit i ->
-    let (hi, lo) = if isDiv then divideStep else multiplyStep
-     in Left unit {mdStep = if i == maxBound then MdFixLo else MdLoop (succ i), mdHi = hi, mdLo = lo}
-  MdFixLo -> Left unit {mdStep = MdFixHi, mdLo = if mdNegLo then negate mdLo else mdLo, mdCarry = mdLo == 0}
-  -- Negating the remainder is complement + 1; negating the product's high
-  -- half is complement + the carry out of the low half.
-  MdFixHi -> Left unit {mdStep = MdFinish, mdHi = if mdNegHi then complement mdHi + boolWord (isDiv || mdCarry) else mdHi}
-  -- MUL, DIV and DIVU take the low word; MULH*, REM and REMU the high word.
-  MdFinish -> Right (if mdTakeLow then mdLo else mdHi)
-  where
-    takeLow = funct3 == 0b000 || funct3 == 0b100 || funct3 == 0b101
-    isDiv = testBit funct3 2
-    -- MULH, MULHSU, DIV and REM treat rs1 as signed; MULH, DIV and REM rs2.
-    aSigned = funct3 == 0b001 || funct3 == 0b010 || funct3 == 0b100 || funct3 == 0b110
-    bSigned = funct3 == 0b001 || funct3 == 0b100 || funct3 == 0b110
-    aNegative = aSigned && testBit a 31
-    bNegative = bSigned && testBit b 31
-    -- Add the multiplicand into the high half if the multiplier's low bit is
-    -- set, then shift the 65-bit {carry, hi, lo} right by one.
-    multiplyStep =
-      let total = mdTotal
-       in (resize (total `shiftR` 1), (mdLo `shiftR` 1) .|. (if testBit total 0 then 0x8000_0000 else 0))
-    -- Shift the next dividend bit into the remainder; subtract the divisor if
-    -- it fits, recording a quotient bit.
-    divideStep =
-      let fits = not (testBit mdTotal 32)
-       in (resize (if fits then mdTotal else remainder), (mdLo `shiftL` 1) .|. boolWord fits)
-    multiplyTotal = if testBit mdLo 0 then resize mdHi + resize mdOperand else resize mdHi
-    remainder = (resize mdHi `shiftL` 1) .|. (if testBit mdLo 31 then 1 else 0) :: Unsigned 33
-    -- During restoring division remainder < 2*divisor. A successful subtract
-    -- is < divisor (fits in 32 bits); bit 32 therefore encodes the borrow.
-    divideDifference = remainder - resize mdOperand
-
-branchTaken :: BitVector 3 -> Word32 -> Word32 -> Maybe Bool
-branchTaken funct3 a b = case funct3 of
-  0b000 -> Just (a == b)
-  0b001 -> Just (a /= b)
-  0b100 -> Just (signed32 a < signed32 b)
-  0b101 -> Just (signed32 a >= signed32 b)
-  0b110 -> Just (a < b)
-  0b111 -> Just (a >= b)
-  _ -> Nothing
-
-boolWord :: Bool -> Word32
-boolWord False = 0
-boolWord True = 1
-
-signed32 :: Word32 -> Signed 32
-signed32 = bitCoerce
-
-unsigned32 :: Signed 32 -> Word32
-unsigned32 = bitCoerce
-
--- NEEDED FOR SIGN EXTENSION OF VALUES SINCE THE REGISTER SIZE IS 32 BITS
-
-signExtend8 :: Unsigned 8 -> Word32
-signExtend8 value = if testBit value 7 then resize value .|. 0xffff_ff00 else resize value
-
-signExtend12 :: Unsigned 12 -> Word32
-signExtend12 value = if testBit value 11 then resize value .|. 0xffff_f000 else resize value
-
-signExtend13 :: Unsigned 13 -> Word32
-signExtend13 value = if testBit value 12 then resize value .|. 0xffff_e000 else resize value
-
-signExtend16 :: Unsigned 16 -> Word32
-signExtend16 value = if testBit value 15 then resize value .|. 0xffff_0000 else resize value
-
-signExtend21 :: Unsigned 21 -> Word32
-signExtend21 value = if testBit value 20 then resize value .|. 0xffe0_0000 else resize value
-
--- DIFFERENT FORMATS have different immediate extraction methods
-
-immI :: Word32 -> Word32
-immI instruction = signExtend12 (resize (instruction `shiftR` 20))
-
-immS :: Word32 -> Word32
-immS instruction =
-  signExtend12
-    ( resize ((instruction `shiftR` 25) `shiftL` 5)
-        .|. resize ((instruction `shiftR` 7) .&. 0x1f)
-    )
-
-immB :: Word32 -> Word32
-immB instruction =
-  signExtend13
-    ( resize (((instruction `shiftR` 31) .&. 1) `shiftL` 12)
-        .|. resize (((instruction `shiftR` 7) .&. 1) `shiftL` 11)
-        .|. resize (((instruction `shiftR` 25) .&. 0x3f) `shiftL` 5)
-        .|. resize (((instruction `shiftR` 8) .&. 0x0f) `shiftL` 1)
-    )
-
-immU :: Word32 -> Word32
-immU instruction = instruction .&. 0xffff_f000
-
-immJ :: Word32 -> Word32
-immJ instruction =
-  signExtend21
-    ( resize (((instruction `shiftR` 31) .&. 1) `shiftL` 20)
-        .|. resize (((instruction `shiftR` 12) .&. 0xff) `shiftL` 12)
-        .|. resize (((instruction `shiftR` 20) .&. 1) `shiftL` 11)
-        .|. resize (((instruction `shiftR` 21) .&. 0x3ff) `shiftL` 1)
-    )
