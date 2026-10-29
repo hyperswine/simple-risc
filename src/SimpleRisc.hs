@@ -872,6 +872,14 @@ btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 3)
 btbTag :: Word32 -> Unsigned 8
 btbTag pc = resize (pc `shiftR` 5)
 
+-- | The effective table: the registered one, with last cycle's resolution
+-- overriding its entry. The update is deferred by one cycle for timing (see
+-- 'pBtbWrite'), which the override hides from every reader.
+applyBtbWrite :: Pipe -> Vec 8 BtbEntry
+applyBtbWrite pipe = case pBtbWrite pipe of
+  Just (index, resolved) -> replace index resolved (pBtb pipe)
+  Nothing -> pBtb pipe
+
 slotView :: Slot a -> Maybe a
 slotView (Slot valid payload) = if valid then Just payload else Nothing
 
@@ -966,6 +974,7 @@ emptyPipe =
     (Slot False emptyMemoryStage)
     Nothing
     (repeat (BtbEntry False False 0 0))
+    Nothing
 
 -- | Expanded FIFO head, stable while D stalls. Data words are only written
 -- by A, so popping this head changes pointers rather than a wide shift mux.
@@ -1199,10 +1208,14 @@ pipeStepStagesWith decodeTarget machine memoryWord =
         Just x | e2Advance && isNothing flushing -> Just (e2Out x)
         _ -> Nothing
       redirect = e2Moved >>= (\(_, r, _, _) -> r)
-      btb = pBtb pipe
-      btb' = case e2Moved >>= (\(_, _, t, _) -> t) of
-        Just (pc, taken, slotBit, target) -> replace (btbIndex pc) (BtbEntry taken slotBit (btbTag pc) target) btb
-        Nothing -> btb
+      -- The registered table plus last cycle's resolution: what fetch sees is
+      -- exactly what the old combinationally-written table showed, because at
+      -- most one entry changes per cycle and the pending one overrides it.
+      btb = applyBtbWrite pipe
+      btb' = btb
+      btbWrite' = case e2Moved >>= (\(_, _, t, _) -> t) of
+        Just (pc, taken, slotBit, target) -> Just (btbIndex pc, BtbEntry taken slotBit (btbTag pc) target)
+        Nothing -> Nothing
       e2Reading = case pE2 pipe of
         Just x -> e2Reads x && isNothing flushing
         Nothing -> False
@@ -1530,7 +1543,8 @@ pipeStepStagesWith decodeTarget machine memoryWord =
                 pE2Slot = slotToken (pE2Slot pipe) nextE2,
                 pMSlot = slotToken (pMSlot pipe) nextM,
                 pRedirect = redirect,
-                pBtb = btb'
+                pBtb = btb',
+                pBtbWrite = btbWrite'
               }
       readAddress = if e2Reading then e2Index else memoryIndex fetchPc
       committed = case pM pipe of

@@ -904,7 +904,17 @@ data Pipe = Pipe
     pRedirect :: Maybe Word32,
     -- | Eight entries, indexed by pc bits 4..2: fetch follows a hit's
     -- target; the second execute stage corrects a wrong guess.
-    pBtb :: Vec 8 BtbEntry
+    pBtb :: Vec 8 BtbEntry,
+    -- | A resolution registered for one cycle before it reaches 'pBtb'. The
+    -- branch target is a thirteen-bit carry chain behind a wide select over
+    -- the second execute stage's fields, so writing the table combinationally
+    -- put that whole cone in front of the clock enable of the pipe register -
+    -- and pc bits 4..2 as the entry select made the enable itself depend on
+    -- them. Deferring by a cycle ends the cone at a seventy-three-bit
+    -- register instead. A predictor may be a cycle stale: entries are
+    -- validated against the fetch pc, so a late update only costs one more
+    -- mispredicted branch.
+    pBtbWrite :: Maybe (Index 8, BtbEntry)
   }
   deriving (Generic, NFDataX)
 

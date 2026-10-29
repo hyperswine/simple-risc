@@ -223,10 +223,50 @@ routing without touching the netlist. It is not enough to make 60 MHz usable
 (the board still reports `S?RAM BAD` with garbled UART output at +1.457 ns), but
 it is free and should ride along with any build where the enable is critical.
 
-**The remaining wall is fan-out, not depth.** The hold enable's buffer tree
-alone costs 9-16 ns of the 20.8 ns period, whichever way the driver is built.
-No expression change fixes that: the design has one control signal that 5,000
-flops must see. What would fix it, in rough order of effort:
+## The wall is enable depth, not fan-out
+
+The paragraphs above guessed wrong about this, and the netlist says so. Counting
+clock-enable pins per net in the 60 MHz build shows the tool has already
+partitioned the enable: 172 distinct `CE` nets, the widest with 641 loads, and
+the leading setup paths end at a *forty-one* load net. So the enable is not one
+5,000-load tree to be shortened by replication.
+
+What those paths actually contain is logic. In the pre-change build the worst
+path ran `ds5_732 -> case tree -> a thirteen-bit carry chain -> two LUTs -> CE`:
+7.6 ns to 22.8 ns, of which the buffer tree is the last 3 ns. `ds5[768:770]` is
+`e1Pc[4:2]`, and `btbIndex pc = pc >> 2` - the branch table's *entry select*.
+Synthesis had absorbed the "which entry am I writing" select, and therefore the
+whole branch-target adder behind it, into the clock enable of the pipe register.
+
+**Fix: register the table update, and let the read bypass it.** `Pipe` gains
+`pBtbWrite :: Maybe (Index 8, BtbEntry)`: the resolution is registered for one
+cycle and installed from a flop. The fetch read is `applyBtbWrite pipe`, the
+registered table with the pending entry overriding it - and since at most one
+entry changes per cycle, that override makes the deferral invisible to every
+reader. Behaviour is unchanged (the RTL guest reports identical 101 fills, 20
+writes and 58,049 held clocks), but the adder and the entry select now end at a
+forty-six-bit register instead of at the pipe enable.
+
+| 60 MHz constraint, place 2, `-route_option 1 -map_option 3 -route_maxfan 8` | Fmax | Slack |
+|---|---:|---:|
+| before | 65.749 MHz | +1.457 ns |
+| after (RV32IM) | **69.388 MHz** | **+2.255 ns** |
+| after (RV32IMC) | **70.901 MHz** | **+2.563 ns** |
+
+At the 54 MHz constraint the same RV32IMC source reports 68.489 MHz and
++3.918 ns. The leading paths no longer start at a payload bit: they start at a
+fetch bit and run through the table hit compare and the `+4` of the sequential
+fetch address, which is the next enable-absorption site.
+
+Adding the field moved every Clash record offset, which silently broke the
+testbench: `pipeline_cpu_tb.v` hard-codes bit slices of the packed machine
+(`+46` here) for the FENCE.I monitor. The coverage assertion fails loudly
+(`commits=0`) rather than passing vacuously, and the dependency is now commented
+at both places.
+
+**Where that leaves the enable.** Correction: the wall is not fan-out (see
+below) but the depth of the logic synthesis folds into the enables. Fan-out is
+already partitioned into 172 nets. What remains, in rough order of effort:
 
 1. Fewer flops behind the hold enable. The fetch queue, the in-flight window
    and the branch table (~1,500 bits) are register arrays that could become
@@ -236,6 +276,29 @@ flops must see. What would fix it, in rough order of effort:
 3. A tool that supports fan-out replication for control signals on this
    device. `set_option -replicate_resources` is Arora V/III only, and
    `syn_maxfan` explicitly excludes clock, enable and reset nets.
+
+## 60 MHz is still not usable, for a different reason
+
+The +2.563 ns build was flashed and exercised. It does **not** work, but the
+failure has changed shape and the new shape is informative: execution completes
+(the program prints `DONE` at the end of every run) and every byte *before* the
+last line is lost.
+
+| 60/60 MHz, RV32IMC, `btbdef-60-rvc` (`5158dc5a...`) | Result |
+|---|---|
+| `check_finisher` | PASS |
+| `check_core`, `check_traps`, `check_counters` | `b'DONE'` only |
+| `check_bus` | expected marker `S`, received `b'DONE'` |
+| `check_rv32i` | `(1, b'DONE')` |
+
+So the core computes and the program runs to completion, and the defect is in
+getting the program's output out - not in the internal timing the Fmax figure
+measures. Earlier 60 MHz builds produced *garbled* variants of the same dump
+(`S?RAM BAD`), consistent with a marginal serial link rather than a marginal
+CPU. 60 MHz is also outside the modelled I/O set (27/48/54/66), and the UART's
+bit period is a fixed 868 clocks, so at 60 MHz both ends must agree on 69,124
+baud. The next step is to qualify that link - separating ROM-upload throughput
+from program-output throughput at 60 MHz - rather than to keep pushing the core.
 
 ## New build knobs
 

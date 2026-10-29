@@ -43,16 +43,21 @@ module pipeline_cpu_tb #(
  // new fetch of mNext with every pre-fence pipeline valid/queue field empty.
  // Offsets follow the generated Machine packing; they moved by +203 when the
  // multiply's partial products left MemoryStage (-136) and the injected
- // product/mirror fields were added below cpuPipe (+339). The M slot is now
- // valid bit 3165 and payload [3164:2743] (mPc, mNext at the top, mWord at
- // payload [127:96]).
+ // product/mirror fields were added below cpuPipe (+339), and by +46 when the
+ // branch table's deferred update register was added below cpuPipe. The M slot
+ // is now valid bit 3211 and payload [3210:2789] (mPc, mNext at the top,
+ // mWord at payload [127:96]).
  wire fence_pipeline_empty =
-   (cpu.c$ds1_app_arg[4897:4895]==0) && !cpu.c$ds1_app_arg[4894] &&
-   (cpu.c$ds1_app_arg[4492:4491]==0) &&
-   !cpu.c$ds1_app_arg[4490] && !cpu.c$ds1_app_arg[4290] &&
-   !cpu.c$ds1_app_arg[3964] && !cpu.c$ds1_app_arg[3165];
+   (cpu.c$ds1_app_arg[4943:4941]==0) && !cpu.c$ds1_app_arg[4940] &&
+   (cpu.c$ds1_app_arg[4538:4537]==0) &&
+   !cpu.c$ds1_app_arg[4536] && !cpu.c$ds1_app_arg[4336] &&
+   !cpu.c$ds1_app_arg[4010] && !cpu.c$ds1_app_arg[3211];
  pipeline_fence_assertions fence_i_monitor(clk,core_reset,hold_cpu,
-   cpu.mCommits,cpu.c$ds1_app_arg[2870:2839],cpu.c$ds1_app_arg[3164:3133],cpu.c$ds1_app_arg[3132:3101],
+   // Offsets of the committed instruction, its next pc and its pc inside the
+   // packed machine register. They move whenever a field is added to a Clash
+   // record the pipeline carries; the FENCE.I coverage assertion at the end of
+   // the run fails loudly (commits=0) if they are stale.
+   cpu.mCommits,cpu.c$ds1_app_arg[2916:2885],cpu.c$ds1_app_arg[3210:3179],cpu.c$ds1_app_arg[3178:3147],
    cpu.issue,cpu.fetchPc,fence_pipeline_empty);
  wire req,write,ready;wire [20:0] address;wire [31:0] wdata;wire [3:0] mask;
  wire done,valid;wire [31:0] rdata;wire [1:0] word_index;
