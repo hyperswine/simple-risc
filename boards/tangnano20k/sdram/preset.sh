@@ -16,7 +16,8 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
   sdram_preset_setting SDRAM_CACHE_LINE_BITS 12
   sdram_preset_setting SDRAM_PHASE_DEGREES 135
   sdram_preset_setting SDRAM_PLACE_OPTION 2
-  for name in SDRAM_RTL_FILE SDRAM_CACHE_RTL SDRAM_BRIDGE_RTL; do
+  sdram_preset_setting SDRAM_TARGET_MHZ 48
+  for name in SDRAM_RTL_FILE SDRAM_CACHE_RTL SDRAM_BRIDGE_RTL SDRAM_REGION_CST SDRAM_SKIP_TIMING_CHECK; do
     [[ -z "${!name:-}" ]] || { echo "$name is incompatible with SDRAM_PRESET=fprisc-48" >&2; exit 1; }
   done
   unset -f sdram_preset_setting

@@ -1,5 +1,12 @@
 # Tang Nano 20K SDRAM experiment
 
+The [four-cycle cache port record](../../../docs/2026-10-29-SDRAM-PIPELINE-FOUR-CYCLE-PORT.md)
+registers the cache's BSRAM read return, making its CPU port four logical
+clocks for the SDRAM images only; the BRAM image keeps three. It also adds the
+build knobs for an over-constrained placement target, a region constraint and a
+placement/cache sweep. The recorded RTL regressions pass; no timing result is
+claimed.
+
 The [integration report](../../../docs/2026-10-19-TANGNANO20K-INTEGRATION.md) records the combined
 cache and architecture-test branches, the selected decode-hazard timing
 change, and fresh simulation and physical regressions at CPU72/SDRAM54.
@@ -61,9 +68,11 @@ CPU72/SDRAM54 image at 135 degrees was restored and FP-RISC numeric checks
 passed. This is an ambient board result, with full I/O signoff still pending.
 
 The board's 64-Mbit, 32-bit SDR SDRAM is usable as 8 MiB of main memory.
-The current [pipelined experiment](../../../docs/2026-10-16-TANGNANO20K-SDRAM-PIPELINE.md) uses a unified cache
+The [pipelined experiment](../../../docs/2026-10-16-TANGNANO20K-SDRAM-PIPELINE.md) uses a unified cache
 (64 KiB since 2026-10-19, originally 2 KiB) with 16-byte lines, four posted
-masked writes and four-word SDRAM bursts.
+masked writes and four-word SDRAM bursts. Its CPU port is four logical clocks
+since 2026-10-29: the word after the BSRAM read is registered, and only
+external-memory images pay that extra cycle.
 `build.sh core` or `pipeline` selects it; `serial` retains the earlier 1 KiB
 word-cache image described in the historical results below. The BRAM image
 remains separate. RV32IM is the default. The optional C frontend passes board
@@ -208,6 +217,21 @@ openFPGALoader -b tangnano20k output/tangnano20k/sdram-core/impl/pnr/sdram_test.
 python3 boards/tangnano20k/sdram/check_core.py
 python3 boards/tangnano20k/check_counters.py --freq-mhz 54 --sdram
 ```
+
+Placement experiments use three extra settings. `SDRAM_TARGET_MHZ` raises the
+placer's target above the real clock (the SDC still constrains the real
+clocks), `SDRAM_REGION_CST` appends a FloorPlanner-generated constraint file to
+`pins.cst`, and `SDRAM_SKIP_TIMING_CHECK=1` records a build that misses the
+over-constrained target. `sweep_place.py` runs the combination:
+
+```bash
+python3 boards/tangnano20k/sdram/sweep_place.py --out output/tangnano20k/place-sweep \
+  --base-freq-mhz 72 --memory-freq-mhz 54 --target-pct 10 \
+  --place-options 0 1 2 3 4 --cache-line-bits 11
+```
+
+It writes `sweep-results.json` beside the per-case build directories. Neither
+the sweep nor the region hook qualifies SDRAM I/O.
 
 The host starts the standalone test after opening the UART, preventing lost
 initial reports. Build uses the licensed macOS Gowin flow and rejects internal

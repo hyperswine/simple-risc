@@ -53,15 +53,17 @@ module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0, WAYS=1);
  end
  always @(posedge clk)begin
    if(!reset && !hold_cpu)begin
-     if(logical>=3 && check_read[logical-3])begin
-       if(rdata!==expected[logical-3])$fatal(1,"reply %0d expected %h got %h",logical-3,expected[logical-3],rdata);
+     // Four logical clocks: three lookup/select stages plus the registered
+     // return after the BSRAM read.
+     if(logical>=4 && check_read[logical-4])begin
+       if(rdata!==expected[logical-4])$fatal(1,"reply %0d expected %h got %h",logical-4,expected[logical-4],rdata);
        checked=checked+1;
      end
      expected[logical]=address[21] ? rom[address[8:0]]:reference[address[20:0]];
      check_read[logical]=!wr && issued<n;
      if(wr)for(j=0;j<4;j=j+1)if(mask[j])reference[address[20:0]][j*8+:8]=data[j*8+:8];
      logical=logical+1;if(issued<n)issued=issued+1;
-     if(issued==n && logical>n+6 && cache.write_count==0 && cache.state==0)begin
+     if(issued==n && logical>n+7 && cache.write_count==0 && cache.state==0)begin
        if(writes!=expected_writes)$fatal(1,"writes expected %0d got %0d",expected_writes,writes);
        for(j=0;j<16384;j=j+1)if(ram[j]!==reference[j])$fatal(1,"backing write mismatch %0d",j);
        $display("PASS: %0d reads, %0d ordered masked writes, %0d line fills, %0d held clocks",checked,writes,reads,stalls);$finish;

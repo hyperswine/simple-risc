@@ -10,6 +10,9 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
 fi
 freq="${SDRAM_FREQ_MHZ:-54}"
 cpu_freq="${SDRAM_CPU_FREQ_MHZ:-$freq}"
+# The placer/optimizer target. Set this above cpu_freq (typically ~10% high)
+# to over-constrain placement; the SDC still constrains the real clocks.
+target="${SDRAM_TARGET_MHZ:-$cpu_freq}"
 cache="${SDRAM_CACHE:-1}"
 rvc="${SDRAM_RVC:-0}"
 cache_ways="${SDRAM_CACHE_WAYS:-2}"
@@ -28,6 +31,15 @@ if [[ "$cache_ways" == 2 && "$cache_line_bits" == 12 ]];then
   echo "SDRAM_CACHE_WAYS=2 requires SDRAM_CACHE_LINE_BITS<=11 (64 KiB max on GW2AR-18)" >&2;exit 1
 fi
 case "$freq" in 27|48|54|60|66) ;; *) echo "supported SDRAM clocks: 27, 48, 54, 60, 66 MHz" >&2;exit 1;; esac
+python3 - "$target" "$cpu_freq" <<'PYTHON'
+import sys
+try:
+    target = int(sys.argv[1]); cpu = int(sys.argv[2])
+    if target <= 0 or target < cpu:
+        raise ValueError()
+except ValueError:
+    raise SystemExit('SDRAM_TARGET_MHZ must be an integer frequency >= SDRAM_CPU_FREQ_MHZ')
+PYTHON
 if [[ "$cpu_freq" != "$freq" ]];then
   if [[ ( "$cpu_freq" != 108 && "$cpu_freq" != 96 && "$cpu_freq" != 72 ) || ( "$freq" != 54 && "$freq" != 48 ) || ( "$mode" != core && "$mode" != pipeline ) ]];then
     echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ=72, 96 or 108 and SDRAM_FREQ_MHZ=48 or 54" >&2;exit 1
@@ -138,6 +150,13 @@ pll=pll.replace('PSDA_SEL("1010")',f'PSDA_SEL("{phase_bits}")')
 (out/'pll.v').write_text(pll)
 (out/'memory.v').write_text((src/'memory.v').read_text().replace('FREQ=54000000',f'FREQ={freq*1000000}'))
 PYTHON
+if [[ -n "${SDRAM_REGION_CST:-}" ]]; then
+  region="${SDRAM_REGION_CST}"
+  [[ "$region" != /* ]] && region="$root/$region"
+  [[ -f "$region" ]] || { echo "SDRAM_REGION_CST does not exist: $region" >&2; exit 1; }
+  printf '\n' >> "$out/pins.cst"
+  cat "$region" >> "$out/pins.cst"
+fi
 top="$out/${mode}_top.v"
 cat > "$out/build.tcl" <<TCL
 set_device -name GW2AR-18C GW2AR-LV18QN88C8/I7
@@ -145,8 +164,8 @@ set_option -top_module top
 set_option -output_base_name sdram_test
 set_option -opt_goal timing
 set_option -place_option $placement
-set_option -frequency $cpu_freq
-set_option -global_freq $cpu_freq
+set_option -frequency $target
+set_option -global_freq $target
 set_option -num_critical_paths 20
 set_option -gen_verilog_sim_netlist 1
 add_file "$top"
@@ -199,7 +218,7 @@ else
   echo "SDRAM I/O remains unqualified: this build checks internal FPGA timing only."
 fi
 if [[ "${SDRAM_GENERATE_ONLY:-0}" == 1 ]];then
-  echo "Generated $out: CPU/cache $cpu_freq MHz, SDRAM $freq MHz, phase $phase degrees"
+  echo "Generated $out: CPU/cache $cpu_freq MHz, SDRAM $freq MHz, phase $phase degrees, placement target $target MHz"
   exit 0
 fi
 export DYLD_LIBRARY_PATH="$ide/lib"
@@ -207,9 +226,13 @@ export DYLD_FRAMEWORK_PATH="$ide/lib"
 cd "$out"
 rm -f "$out/impl/pnr/sdram_test.tr"
 "$ide/bin/gw_sh" build.tcl
-timing_args=(--freq-mhz "$cpu_freq")
-if [[ "$cpu_freq" != "$freq" ]];then timing_args+=(--memory-freq-mhz "$freq");fi
-python3 "$here/../check_gowin_timing.py" "$out/impl/pnr/sdram_test.tr" "${timing_args[@]}"
+if [[ "${SDRAM_SKIP_TIMING_CHECK:-0}" == 1 ]];then
+  echo "Timing check skipped (SDRAM_SKIP_TIMING_CHECK=1); report at $out/impl/pnr/sdram_test.tr"
+else
+  timing_args=(--freq-mhz "$cpu_freq")
+  if [[ "$cpu_freq" != "$freq" ]];then timing_args+=(--memory-freq-mhz "$freq");fi
+  python3 "$here/../check_gowin_timing.py" "$out/impl/pnr/sdram_test.tr" "${timing_args[@]}"
+fi
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
   python3 "$here/preset_manifest.py" finish "$out" "$rtl"
 fi

@@ -130,9 +130,9 @@ def main():
         word_checked, expected=1, failure='reply')
     # The fixture's backend sometimes completes with the final beat, as the
     # clock bridge does: the reply must then take that beat directly.
-    capture = 'cpu_rdata<=(memory_word_valid && memory_word_index==a2[1:0]) ? memory_rdata:fill_target;'
+    capture = 'cpu_word<=(memory_word_valid && memory_word_index==a2[1:0]) ? memory_rdata:fill_target;'
     assert source.count(capture) == 1
-    run('missing-final-beat-capture', source.replace(capture, 'cpu_rdata<=fill_target;'), fixture,
+    run('missing-final-beat-capture', source.replace(capture, 'cpu_word<=fill_target;'), fixture,
         expected=1, failure='reply')
     # Assertion negative controls mirror the Maude refill/queue guards and
     # prove that the four-beat protocol checks are exercised, not vacuous.
