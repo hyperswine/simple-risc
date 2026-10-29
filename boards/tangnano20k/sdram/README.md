@@ -1,5 +1,12 @@
 # Tang Nano 20K SDRAM experiment
 
+The [stage-enable record](../../../docs/2026-10-29-STAGE-ENABLES-AND-REGISTERED-HOLD.md)
+gives each pipeline stage (and the pipeline itself) its own clock-enabled
+register and turns the cache hold into a clock enable rather than a
+machine-wide next-state select. At 48/48 MHz it reports 13,293 logic cells
+against 15,911 (16.5% fewer) at essentially the same Fmax, with placement
+option 3 the better mode (51.712 MHz, +1.495 ns).
+
 The [four-cycle cache port record](../../../docs/2026-10-29-SDRAM-PIPELINE-FOUR-CYCLE-PORT.md)
 registers the cache's BSRAM read return, making its CPU port four logical
 clocks for the SDRAM images only; the BRAM image keeps three. It also adds the

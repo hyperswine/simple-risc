@@ -1223,10 +1223,10 @@ simpleRiscSd serialRx sdMiso = bundle (serialTx, sck, mosi, cs)
     -- register: a byte is offered only while the holding register is empty
     -- and no offer is in flight. A Ctrl-C that breaks a program discards
     -- everything unread, as the reset itself does to the holding register.
-    breaking = breakRequested <$> machineState <*> emergencyReset
+    breaking = breakRequested <$> runningState <*> emergencyReset
     rxWanted =
       (\m offered headByte -> isNothing (rxHolding m) && isNothing offered && isJust headByte)
-        <$> machineState
+        <$> runningState
         <*> received
         <*> rxHead
     rxPop = (&&) <$> rxWanted <*> (not <$> breaking)
@@ -1245,25 +1245,34 @@ simpleRiscSd serialRx sdMiso = bundle (serialTx, sck, mosi, cs)
     machineInput = bundle (memoryOut, received, txReady, emergencyReset)
     -- MISO is asynchronous: two flip-flops, then into the I/O complex.
     miso = register high (register high sdMiso)
-    machineState = register boardMachine (fst <$> stepped)
-    stepped = withIo <$> machineState <*> machineInput <*> ioAnswer <*> rfA <*> rfB <*> mulProducts
+    machineState = register boardMachine ((\(m, _, _, _) -> m) <$> stepped)
+    -- One clock-enabled register per pipeline stage (see 'StageLoad'): each
+    -- loads only when its own stage advances, so the machine register no
+    -- longer carries the payloads or their advance decision.
+    stageRegisters = StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM
+    stageD = regEn (spD initialStagePayloads) ((\(_, _, _, l) -> slD l) <$> stepped) ((\(_, _, ps, _) -> spD ps) <$> stepped)
+    stageE1 = regEn (spE1 initialStagePayloads) ((\(_, _, _, l) -> slE1 l) <$> stepped) ((\(_, _, ps, _) -> spE1 ps) <$> stepped)
+    stageE2 = regEn (spE2 initialStagePayloads) ((\(_, _, _, l) -> slE2 l) <$> stepped) ((\(_, _, ps, _) -> spE2 ps) <$> stepped)
+    stageM = regEn (spM initialStagePayloads) ((\(_, _, _, l) -> slM l) <$> stepped) ((\(_, _, ps, _) -> spM ps) <$> stepped)
+    runningState = withStagePayloads <$> stageRegisters <*> machineState
+    stepped = withIo <$> runningState <*> machineInput <*> ioAnswer <*> rfA <*> rfB <*> mulProducts
     -- Free-running DSP operand and product registers (see 'cpuMulProducts').
-    mulOperands = register (0, 0, 0) (multiplyOperands <$> machineState)
+    mulOperands = register (0, 0, 0) (multiplyOperands <$> runningState)
     mulProducts = register (repeat 0) (partialProductsOf <$> mulOperands)
     -- The register file is distributed RAM: two copies, one per read port,
     -- written together. The mirror in the machine stays constant (removed).
     withIo m input answer a b products =
-      let (m', output) =
-            machineStepCoreBy
-              pipelinedCpuStep
+      let (m', output, stages, loads) =
+            machineStepCoreStagesBy
+              pipelinedCpuStepStages
               decodeMemoryTarget
               m {cpuDevices = (cpuDevices m) {devIo = answer}, cpuRfA = a, cpuRfB = b, cpuMulProducts = products}
               input
-       in (m' {cpuRegs = repeat 0, cpuMulOperandsMirror = (0, 0, 0), cpuMulProductsMirror = repeat 0}, output)
-    rfWrite = (\m cancel -> if cancel then Nothing else cpuPendingWrite m) <$> machineState <*> breaking
-    rfA = asyncRam (SNat @32) (fst . cpuReadIndices <$> machineState) rfWrite
-    rfB = asyncRam (SNat @32) (snd . cpuReadIndices <$> machineState) rfWrite
-    machineOutput = snd <$> stepped
+       in (m' {cpuRegs = repeat 0, cpuMulOperandsMirror = (0, 0, 0), cpuMulProductsMirror = repeat 0}, output, stages, loads)
+    rfWrite = (\m cancel -> if cancel then Nothing else cpuPendingWrite m) <$> runningState <*> breaking
+    rfA = asyncRam (SNat @32) (fst . cpuReadIndices <$> runningState) rfWrite
+    rfB = asyncRam (SNat @32) (snd . cpuReadIndices <$> runningState) rfWrite
+    machineOutput = (\(_, output, _, _) -> output) <$> stepped
     -- The I/O complex sees the CPU's request as registered bus state and
     -- answers a cycle later; a system reset returns it to idle.
     (ioAnswer, ioPins, ioRam) =
@@ -1271,7 +1280,7 @@ simpleRiscSd serialRx sdMiso = bundle (serialTx, sck, mosi, cs)
         ( mealy
             ioStep
             initialIo
-            (bundle (ioRequest <$> machineState, clearRegisters <$> machineState, miso, ramOutB))
+            (bundle (ioRequest <$> runningState, clearRegisters <$> runningState, miso, ramOutB))
         )
     (sck, mosi, cs) = unbundle ioPins
     (memoryAddressNow, memoryWriteNow, txRequestNow) = unbundle machineOutput
@@ -1519,13 +1528,27 @@ machineStepCoreWith = machineStepCoreBy cpuStepDecodedWith
 -- itself, so the phases it never uses are not part of it.
 type CpuStep = (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput)
 
+-- | A 'CpuStep' that also reports the stage payload group and its load
+-- conditions, so a circuit can register each stage under its own enable.
+type CpuStepStages = (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
+
 machineStepCoreBy :: CpuStep -> (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput)
-machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txReady, emergencyRequest) =
+machineStepCoreBy cpuStepWith decodeTarget machine input =
+  let (next, output, _, _) = machineStepCoreStagesBy (dropStages cpuStepWith) decodeTarget machine input
+   in (next, output)
+
+dropStages :: CpuStep -> CpuStepStages
+dropStages cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset =
+  let (next, write, output) = cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset
+   in (next, write, output, initialStagePayloads, noStageLoad)
+
+machineStepCoreStagesBy :: CpuStepStages -> (Word32 -> MemoryTarget) -> Machine -> (Word32, Maybe Byte, Bool, Bool) -> (Machine, StepOutput, StagePayloads, StageLoad)
+machineStepCoreStagesBy cpuStepWith decodeTarget machine (memoryWord, received, txReady, emergencyRequest) =
   let emergencyReset = breakRequested machine emergencyRequest
       receivedMachine = case (not emergencyReset, received, rxHolding machine) of
         (True, Just byte, Nothing) -> machine {rxHolding = Just byte}
         _ -> machine
-      (machine', coreOutput) = runningStepBy cpuStepWith decodeTarget receivedMachine {clearRegisters = False, cpuCountRetirement = False, cpuCounterWrite = Nothing, cpuBusRequest = Nothing, cpuPrefetchIssue = False} memoryWord received txReady emergencyReset
+      (machine', coreOutput, stages, loads) = runningStepStagesBy cpuStepWith decodeTarget receivedMachine {clearRegisters = False, cpuCountRetirement = False, cpuCounterWrite = Nothing, cpuBusRequest = Nothing, cpuPrefetchIssue = False} memoryWord received txReady emergencyReset
       cancelled = emergencyReset
       (busStepped, busResponse, busOutput, busEffect) = busStepWith decodeTarget (systemBus machine) (cpuBusRequest machine) memoryWord txReady (rxHolding machine) (bootCause machine) (cpuDevices machine)
       (bus', response, effect) = if cancelled then ((systemBus machine) {busPhase = BusIdle}, Nothing, NoEffect) else (busStepped, busResponse, busEffect)
@@ -1580,11 +1603,37 @@ machineStepCoreBy cpuStepWith decodeTarget machine (memoryWord, received, txRead
    in -- The register file's next read: a pipelined machine's is the
       -- pipeline's choice (its phases read no registers); otherwise
       -- Decode's sources.
-      (if cpuPipelined machine then final else final {cpuReadIndices = registerReads final}, output)
+      ( if cpuPipelined machine then final else final {cpuReadIndices = registerReads final},
+        output,
+        stages,
+        loads
+      )
 
 -- | Keep time while an external memory holds the core (the SDRAM wrapper).
 tickHeld :: Machine -> Machine
 tickHeld machine = machine {cpuCycle = tickCounter True Nothing (cpuCycle machine), cpuDevices = (cpuDevices machine) {devMtime = tickCounter True Nothing (devMtime (cpuDevices machine))}}
+
+-- | The state that keeps running while an external memory holds the core.
+data HeldState = HeldState
+  { heldCycle :: Counter64,
+    heldMtime :: Counter64,
+    heldRx :: Maybe Byte
+  }
+  deriving (Generic, NFDataX)
+
+initialHeldState :: HeldState
+initialHeldState = HeldState initialCounter initialCounter Nothing
+
+heldStateOf :: Machine -> HeldState
+heldStateOf machine = HeldState (cpuCycle machine) (devMtime (cpuDevices machine)) (rxHolding machine)
+
+applyHeldState :: HeldState -> Machine -> Machine
+applyHeldState HeldState {..} machine =
+  machine
+    { cpuCycle = heldCycle,
+      cpuDevices = (cpuDevices machine) {devMtime = heldMtime},
+      rxHolding = heldRx
+    }
 
 -- | Ctrl-C: reset the CPU into the boot ROM with cause BREAK.
 resetCpu :: Machine -> Machine
@@ -1888,6 +1937,59 @@ emptyExecuteTwo =
 emptyMemoryStage :: MemoryStage
 emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 Plain 0 0 0 0
 
+-- | One payload per pipeline stage.
+data StagePayloads = StagePayloads
+  { spD :: Fetched,
+    spE1 :: ExecuteOne,
+    spE2 :: ExecuteTwo,
+    spM :: MemoryStage
+  }
+  deriving (Generic, NFDataX)
+
+initialStagePayloads :: StagePayloads
+initialStagePayloads =
+  StagePayloads (Fetched 0 0 False False 0 0 4) emptyExecuteOne emptyExecuteTwo emptyMemoryStage
+
+-- | Replace the pipeline state, for a circuit that keeps it in its own
+-- clock-enabled register: 'cpuPipe' is the largest single field, so taking it
+-- off the machine register's enable keeps that enable's fanout small.
+withPipe :: Pipe -> Machine -> Machine
+withPipe pipe machine = machine {cpuPipe = pipe}
+
+stagePayloadsOf :: Machine -> StagePayloads
+stagePayloadsOf machine =
+  let pipe = cpuPipe machine
+   in StagePayloads
+        (slotPayload (pDSlot pipe))
+        (slotPayload (pE1Slot pipe))
+        (slotPayload (pE2Slot pipe))
+        (slotPayload (pMSlot pipe))
+
+withStagePayloads :: StagePayloads -> Machine -> Machine
+withStagePayloads StagePayloads {..} machine =
+  let pipe = cpuPipe machine
+   in machine
+        { cpuPipe =
+            pipe
+              { pDSlot = (pDSlot pipe) {slotPayload = spD},
+                pE1Slot = (pE1Slot pipe) {slotPayload = spE1},
+                pE2Slot = (pE2Slot pipe) {slotPayload = spE2},
+                pMSlot = (pMSlot pipe) {slotPayload = spM}
+              }
+        }
+
+-- | When each stage's payload register loads.
+data StageLoad = StageLoad
+  { slD :: Bool,
+    slE1 :: Bool,
+    slE2 :: Bool,
+    slM :: Bool
+  }
+  deriving (Generic, NFDataX)
+
+noStageLoad :: StageLoad
+noStageLoad = StageLoad False False False False
+
 emptyPipe :: Pipe
 emptyPipe =
   Pipe
@@ -2022,6 +2124,11 @@ pipeStep = pipeStepDecodedWith decodeMemoryTarget
 
 pipeStepDecodedWith :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> (Machine, RegisterWrite, StepOutput)
 pipeStepDecodedWith decodeTarget machine memoryWord =
+  let (next, write, output, _, _) = pipeStepStagesWith decodeTarget machine memoryWord
+   in (next, write, output)
+
+pipeStepStagesWith :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
+pipeStepStagesWith decodeTarget machine memoryWord =
   let pipe = cpuPipe machine
       -- Every stall and port decision below reads registers (stage valid
       -- bits, kinds, wait counts, queue pointers), never another stage's
@@ -2535,9 +2642,22 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
                       pMSlot = (pMSlot p) {slotPayload = payloadM}
                     }
               }
+      stages = StagePayloads payloadD payloadE1 payloadE2 payloadM
+      -- Each enable admits every cycle in which the payload above may differ
+      -- from the stage's current one (see 'StageLoad'). It is a superset: an
+      -- empty stage can take a new instruction even when it cannot advance
+      -- because the stage after it is stalled, so those cycles must load too.
+      -- Where the two agree the register reloads its own value.
+      loads = StageLoad (dFree && pFCount pipe /= 0) (e1Advance || dAdvance) (e2Advance || e1Advance) (mHold || e2Advance)
    in if handover
-        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing))
-        else (withPayloads (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}), registerWriteNow, (readAddress, memoryWrite, Nothing))
+        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing), stages, loads)
+        else
+          ( withPayloads (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}),
+            registerWriteNow,
+            (readAddress, memoryWrite, Nothing),
+            stages,
+            loads
+          )
 
 -- | Leave the pipeline for the phases at the commit stage: an interrupt
 -- (before the instruction), an exception, or an action the phases run from
@@ -2613,14 +2733,24 @@ busWaitStep machine =
 -- only the commit-stage actions. The phases' fetch, decode and execute
 -- stages are not part of it.
 pipelinedCpuStep :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput)
-pipelinedCpuStep decodeTarget machine memoryWord _received _txReady emergencyReset
+pipelinedCpuStep decodeTarget machine memoryWord received txReady emergencyReset =
+  let (next, write, output, _, _) = pipelinedCpuStepStages decodeTarget machine memoryWord received txReady emergencyReset
+   in (next, write, output)
+
+pipelinedCpuStepStages :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
+pipelinedCpuStepStages decodeTarget machine memoryWord _received _txReady emergencyReset
   | cpuFast machine =
-      let (machine', write, (address, memoryWrite, tx)) = pipeStepDecodedWith decodeTarget machine memoryWord
+      let (machine', write, (address, memoryWrite, tx), stages, loads) = pipeStepStagesWith decodeTarget machine memoryWord
        in if emergencyReset
-            then ((resetCpu machine) {cpuReadIndices = cpuReadIndices machine'}, Nothing, (address, Nothing, Nothing))
-            else (machine', write, (address, memoryWrite, tx))
-  | emergencyReset = (resetCpu machine, Nothing, idle)
-  | otherwise = case cpuPhase machine of
+            then ((resetCpu machine) {cpuReadIndices = cpuReadIndices machine'}, Nothing, (address, Nothing, Nothing), stages, loads)
+            else (machine', write, (address, memoryWrite, tx), stages, loads)
+  | otherwise =
+      let (next, write, output) = phases
+       in (next, write, output, stagePayloadsOf next, noStageLoad)
+  where
+    phases
+      | emergencyReset = (resetCpu machine, Nothing, idle)
+      | otherwise = case cpuPhase machine of
       -- an action has finished (or a trap, MRET or reset set the pc)
       Fetch ->
         ( machine {cpuFast = True, cpuPipe = restartPipe (cpuPc machine) (cpuPipe machine), cpuInRom = romAddress (cpuPc machine)},
@@ -2646,7 +2776,6 @@ pipelinedCpuStep decodeTarget machine memoryWord _received _txReady emergencyRes
         | cpuWake machine -> withoutRegister (finishInstruction machine {cpuPc = cLink (cpuComputed machine)} Nothing)
         | otherwise -> (machine, Nothing, idle)
       _ -> (machine {cpuPhase = Fetch}, Nothing, idle)
-  where
     idle = (0, Nothing, Nothing)
 
 -- CPU ------------------------------------------------------------------------
@@ -2665,10 +2794,15 @@ runningStepDecodedWith = runningStepBy cpuStepDecodedWith
 
 runningStepBy :: CpuStep -> (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, StepOutput)
 runningStepBy cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset =
-  let (machine', registerWrite, output) = cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset
+  let (next, output, _, _) = runningStepStagesBy (dropStages cpuStepWith) decodeTarget machine memoryWord received txReady emergencyReset
+   in (next, output)
+
+runningStepStagesBy :: CpuStepStages -> (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, StepOutput, StagePayloads, StageLoad)
+runningStepStagesBy cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset =
+  let (machine', registerWrite, output, stages, loads) = cpuStepWith decodeTarget machine memoryWord received txReady emergencyReset
       pending = if emergencyReset then Nothing else cpuPendingWrite machine
       written = maybe machine' (\(index, value) -> writeRegister index value machine') pending
-   in (written {cpuPendingWrite = registerWrite}, output)
+   in (written {cpuPendingWrite = registerWrite}, output, stages, loads)
 
 -- | One CPU cycle.  Register writes are returned rather than applied in each
 -- branch, so the generated hardware has a single register-file write port

@@ -73,31 +73,32 @@ requestMask machine slot
   | slotBusActive slot || not (slotWrite slot) = 15
   | otherwise = R.cpuPortByteEnable machine
 
-step :: R.Machine -> Input -> (R.Machine,Output)
-step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer,products)
-  | held =
-      let ticking=R.tickHeld machine
-          breaking=R.breakRequested machine emergency
-          buffered=case (received,R.rxHolding ticking) of
-            (Just byte,Nothing) | not breaking -> ticking {R.rxHolding=Just byte}
-            _ -> ticking
-       in (if breaking then R.resetCpu buffered else buffered,(0x20_0000,False,0,15,Nothing))
-  | otherwise =
-      let injected=machine {R.cpuRfA=a,R.cpuRfB=b,R.cpuMulProducts=products,R.cpuDevices=(R.cpuDevices machine) {R.devIo=ioAnswer}}
-          (next,(index,write,tx))=R.machineStepCoreBy R.pipelinedCpuStep decodeTarget injected (memoryWord,received,txReady,emergency)
-          bus=R.systemBus machine
-          busActive=case R.busPhase bus of R.BusIdle -> isJust (R.cpuBusRequest machine); _ -> True
-          busAddress=R.busAddress (R.busRequest bus)
-          readAddress
-            | busActive = busAddress
-            | R.cpuFast machine = R.cpuPortAddressFull next
-            | otherwise = 0
-          writeAddress=if busActive then busAddress else R.cpuPortWriteAddressFull next
-          mask=if busActive then 15 else R.cpuPortByteEnable next
-          output=case write of
-            Just (_,value) -> (physical writeAddress,True,value,mask,tx)
-            Nothing -> (physical readAddress,False,0,15,tx)
-       in (next {R.cpuRegs=repeat 0,R.cpuMulOperandsMirror=(0,0,0),R.cpuMulProductsMirror=repeat 0},output)
+-- A hold no longer selects the whole machine's next state. The step always
+-- runs; the circuit registers 'HeldState' (counters and the received byte)
+-- unconditionally, the pipeline stages under their own per-stage enables, and
+-- the rest of 'Machine' under a hold-aware enable, so a held cycle simply
+-- does not load those registers and the outputs are idled.
+step :: R.Machine -> Input -> (R.Machine,Output,R.StagePayloads,R.StageLoad)
+step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer,products) =
+  let injected=machine {R.cpuRfA=a,R.cpuRfB=b,R.cpuMulProducts=products,R.cpuDevices=(R.cpuDevices machine) {R.devIo=ioAnswer}}
+      (next,(index,write,tx),stages,loads)=R.machineStepCoreStagesBy R.pipelinedCpuStepStages decodeTarget injected (memoryWord,received,txReady,emergency)
+      bus=R.systemBus machine
+      busActive=case R.busPhase bus of R.BusIdle -> isJust (R.cpuBusRequest machine); _ -> True
+      busAddress=R.busAddress (R.busRequest bus)
+      readAddress
+        | busActive = busAddress
+        | R.cpuFast machine = R.cpuPortAddressFull next
+        | otherwise = 0
+      writeAddress=if busActive then busAddress else R.cpuPortWriteAddressFull next
+      mask=if busActive then 15 else R.cpuPortByteEnable next
+      output=case write of
+        Just (_,value) -> (physical writeAddress,True,value,mask,tx)
+        Nothing -> (physical readAddress,False,0,15,tx)
+   in ( next {R.cpuRegs=repeat 0,R.cpuMulOperandsMirror=(0,0,0),R.cpuMulProductsMirror=repeat 0}
+      , if held then (0x20_0000,False,0,15,Nothing) else output
+      , stages
+      , loads )
+
 
 -- Only the SPI byte port is exposed. The BRAM image's DMA engine has a
 -- 64 KiB second RAM port and cannot address SDRAM, so its registers stay
@@ -146,9 +147,31 @@ circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,ma
  where
  receivedNow=R.uartRx (register high (register high serialRx))
  emergency=register False ((==Just 3) <$> receivedNow)
- machine=register initialMachine (fst <$> stepped)
- breaking=R.breakRequested <$> machine <*> emergency
- rxWanted=(\m offered headByte -> isNothing (R.rxHolding m) && isNothing offered && isJust headByte) <$> machine <*> received <*> rxHead
+ -- A hold is a clock enable on the machine register, not a next-state select:
+ -- the counters and the received-byte holding register load every cycle, and
+ -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
+ stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
+ machineNext=(\(m,_,_,_) -> m) <$> stepped
+ stageNext=(\(_,_,ps,_) -> ps) <$> stepped
+ stageLoad=(\(_,_,_,l) -> l) <$> stepped
+ machineOutput=(\(_,o,_,_) -> o) <$> stepped
+ holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
+ machine=regEn initialMachine (not <$> holding) machineNext
+ -- One clock-enabled register per pipeline stage: D, E1, E2 and M each load
+ -- only when their own stage advances, so the far larger machine register no
+ -- longer carries the stage payloads or their advance decision.
+ stageD=regEn (R.spD R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slD <$> stageLoad)) ((\ps -> R.spD ps) <$> stageNext)
+ stageE1=regEn (R.spE1 R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slE1 <$> stageLoad)) ((\ps -> R.spE1 ps) <$> stageNext)
+ stageE2=regEn (R.spE2 R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slE2 <$> stageLoad)) ((\ps -> R.spE2 ps) <$> stageNext)
+ stageM=regEn (R.spM R.initialStagePayloads) (liftA2 (&&) (not <$> holding) (R.slM <$> stageLoad)) ((\ps -> R.spM ps) <$> stageNext)
+ stages=R.StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM
+ heldState=register R.initialHeldState (R.heldStateOf <$> machineNext)
+ -- The pipeline itself is the largest remaining field, so it gets its own
+ -- enable too: one 5,000-load enable would otherwise be the critical path.
+ pipeState=regEn (R.cpuPipe initialMachine) (not <$> holding) (R.cpuPipe <$> machineNext)
+ running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> pipeState <*> machine))
+ breaking=R.breakRequested <$> running <*> emergency
+ rxWanted=(\m offered headByte -> isNothing (R.rxHolding m) && isNothing offered && isJust headByte) <$> running <*> received <*> rxHead
  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
  received=register Nothing (mux rxPop rxHead (pure Nothing))
  (rxHead,_)=unbundle (mealy R.fifoStep (R.initialFifo :: R.Fifo 32) (bundle (breaking,receivedNow,rxPop)))
@@ -158,21 +181,20 @@ circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,ma
  txOffer=mux txPop txHead (pure Nothing)
  (txHead,txCount)=unbundle (mealy R.fifoStep (R.initialFifo :: R.Fifo 16) (bundle (pure False,txPush,txPop)))
  txReady=register False ((<15) <$> txCount)
- rfWrite=(\m stop pause -> if stop || pause then Nothing else R.cpuPendingWrite m) <$> machine <*> breaking <*> memoryHeld
- rfA=asyncRam (SNat @32) (fst . R.cpuReadIndices <$> machine) rfWrite
- rfB=asyncRam (SNat @32) (snd . R.cpuReadIndices <$> machine) rfWrite
+ rfWrite=(\m stop pause -> if stop || pause then Nothing else R.cpuPendingWrite m) <$> running <*> breaking <*> memoryHeld
+ rfA=asyncRam (SNat @32) (fst . R.cpuReadIndices <$> running) rfWrite
+ rfB=asyncRam (SNat @32) (snd . R.cpuReadIndices <$> running) rfWrite
  miso=register high (register high sdMiso)
  (ioAnswer,ioPins)=unbundle (mealy spiIoStep initialSpiIo
-   (bundle (R.ioRequest <$> machine,R.clearRegisters <$> machine,memoryHeld,miso)))
+   (bundle (R.ioRequest <$> running,R.clearRegisters <$> running,memoryHeld,miso)))
  (sck,mosi,cs)=unbundle ioPins
- stepped=step <$> machine <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
  -- Free-running DSP operand and product registers: no enable, no reset
  -- mux, so the MULT18X18 input/output registers absorb them (R.cpuMulProducts).
- mulOperands=register (0,0,0) (R.multiplyOperands <$> machine)
+ mulOperands=register (0,0,0) (R.multiplyOperands <$> running)
  mulProducts=register (repeat 0) (R.partialProductsOf <$> mulOperands)
- request=regEn initialRequestSlot (not <$> memoryHeld) (requestSlot <$> machine <*> (snd <$> stepped))
- address=requestAddress <$> machine <*> request
+ request=regEn initialRequestSlot (not <$> memoryHeld) (requestSlot <$> running <*> machineOutput)
+ address=requestAddress <$> running <*> request
  write=slotWrite <$> request
  wdata=slotData <$> request
- mask=requestMask <$> machine <*> request
- txNow=(\(_,_,_,_,tx) -> tx) <$> (snd <$> stepped)
+ mask=requestMask <$> running <*> request
+ txNow=(\(_,_,_,_,tx) -> tx) <$> machineOutput
