@@ -125,9 +125,53 @@ design and recovers 1.2 MHz.
   restructure, not a pipeline change.
 - Gowin V1.9.12.04, GW2AR-LV18QN88C8/I7, two builds plus a two-case sweep, all
   with zero setup and hold violating endpoints.
+- The placement-3 bitstream passes the board's regression set at 48 MHz; see
+  the physical-run table below.
 
 SDRAM I/O remains unqualified; every timing number here is internal placement
 and routing.
+
+## Physical run, 2026-10-29
+
+The placement-3 build was programmed into FPGA SRAM on the Tang Nano 20K and
+the board's own regression scripts were run against it at 48 MHz.
+
+| Item | Value |
+|---|---|
+| Bitstream | `output/tangnano20k/sweep-new/place3-l11/impl/pnr/sdram_test.fs` |
+| SHA-256 | `a78ee6508f91cd36386c8b8b568d30de93927092e175088c02ba73bc7b5b1d16` |
+| ROM identity | `isa=rv32im cpu=48 mem=48 ram=8 MiB max=2 MiB cap=PMXQVHTUICG id=fe28365ea09c4e00` |
+| Internal STA | 51.712 MHz Fmax, +1.495 ns at 48 MHz, 0 setup / 0 hold |
+
+| Check | Result |
+|---|---|
+| `sdram/check_core.py --freq-mhz 48` | PASS: high-address execution, 1 MiB working set, all banks, last word and byte lanes |
+| `check_rv32i.py` | PASS: 38,400 hardware reference checks, 10 runs |
+| `check_rv32m.py` | PASS: 30,720 hardware reference checks, 20 runs |
+| `check_bus.py` | PASS: 3,852 RAM/RX bus checks |
+| `check_finisher.py` | PASS: word, halfword, success, failure and ignored-command cases |
+| `check_traps.py` | PASS: 90 guest CSR/exception/mret checks per run |
+| `check_exceptions.py` | PASS: 31 exception/encoding and legal-access checks |
+| `check_processor.py` | PASS: five exact C arithmetic runs, byte/halfword/word stress, UART RX/TX, Ctrl-C recovery, memory clear and reload |
+| `check_counters.py --sdram` | PASS: 27 counter/retirement/trap checks per run, 10 runs |
+| `check_interrupts.py` | PASS: 27 interrupt checks per run with 67 bytes received by interrupt while busy, 5 runs |
+
+This is the same coverage the earlier 48 MHz boards reports list, so the
+enable-register restructure and the four-cycle cache port are exercised on
+hardware: interrupt handling and Ctrl-C during cache misses, exact
+retirement counters, traps and `mret`, the finisher, and the full 1 MiB RAM.
+
+Two things were not run: `check_sd.py`, because it writes over a test block on
+the microSD card, and the compressed-board and FP-RISC classifier runs, which
+need the RV32IMC bitstream and the sibling `fprisc` checkout.
+
+The CRC-framed `U` upload still answers `ERR HDR` on this image. That
+reproduces the [recorded board result](2026-10-28-ROM-IDENTITY-AND-VERIFIED-UPLOAD.md);
+the frame is accepted in RTL simulation, and every legacy `P`/`Q`/`V`/`H`
+upload used by the checks above works, so it is not a consequence of this
+change. `run_program.py --identify` also refuses this ROM because it requires
+a capability `R` that the ROM's identity line does not advertise, although the
+ROM implements `R`; both are ROM/tool issues outside this change.
 
 ## Next
 
