@@ -1,0 +1,2 @@
+PASS: FENCE.I commit requires a memory fetch
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_fence_assertions_tb.v:31: $finish called at 66000 (1ps)

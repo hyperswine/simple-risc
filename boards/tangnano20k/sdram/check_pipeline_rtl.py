@@ -8,9 +8,12 @@ guest and must be paired with a RISCV_COMPRESSED-generated top entity.
 """
 from pathlib import Path
 import argparse
+import hashlib
+import json
+import math
 import re
 import subprocess
-from run_perf import sv_safe
+from run_perf import sv_safe, require_observations
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -292,6 +295,35 @@ timer_taken:
     sw s5,24(s8)
     csrw mtvec,zero
 
+    # One externally visible store must be accepted exactly once, even when
+    # its request is held. A younger store after the jump must be cancelled.
+    li t4,0x80600100
+    li t5,0x71e77e55
+    .option push
+    .option norvc
+    .balign 4
+    # Fill the four-entry write queue faster than the delayed backend drains
+    # it, so the owned request must survive write-full backpressure as well.
+    .rept 8
+    sw t5,-4(t4)
+    .endr
+effect_once:
+    sw t5,0(t4)
+    sw t5,4(t4)
+    sw t5,8(t4)
+    sw t5,12(t4)
+    sw t5,16(t4)
+    sw t5,20(t4)
+    sw t5,24(t4)
+    sw t5,28(t4)
+effect_padding:
+    .word 0x00000013
+effect_skip:
+    j effect_join
+    sw t5,32(t4)
+effect_join:
+    .option pop
+
     li t0,0x10000000
     li t1,80
 uart_pass:
@@ -391,7 +423,8 @@ def run(args, expected=0, timeout=180):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--generated', type=Path,
-                        help='generated Clash directory; defaults to SdramPipeline-0 or -1 matching --compressed')
+                        help='generated Clash directory; defaults to SdramPipelineObserved-0 or -1 matching --compressed')
+    parser.add_argument('--out', type=Path, help='explicit isolated experiment output directory')
     parser.add_argument('--compressed', action='store_true')
     parser.add_argument('--simulator', choices=['iverilog', 'verilator'], default='iverilog')
     parser.add_argument('--cache-line-bits', type=int, choices=range(7, 13), default=11,
@@ -404,12 +437,15 @@ def main():
                         help='simulation-only UART timing override; hardware timing is 868')
     parser.add_argument('--pin-model',action='store_true',help='actual burst controller plus functional SDRAM pins; requires --boot-loader')
     parser.add_argument('--pin-freq-mhz',type=int,default=48,help='pin-model core/SDRAM frequency')
-    parser.add_argument('--pin-phase-degrees',type=int,default=180,help='pin-model SDRAM clock edge delay relative to core')
+    parser.add_argument('--pin-phase-degrees',type=float,default=180,help='pin-model SDRAM clock edge delay relative to core; fractional phases are preserved')
     parser.add_argument('--pin-tac-ns',type=float,default=0.0,help='pin-model read data output-access delay')
     parser.add_argument('--burst-rtl',type=Path,default=HERE/'burst_memory.v',help='burst adapter RTL override for controlled diagnostics')
     parser.add_argument('--sdram-rtl',type=Path,default=HERE/'sdram.v',help='SDRAM controller RTL override for controlled diagnostics')
     parser.add_argument('--rom-file',type=Path,help='simulation ROM override')
     parser.add_argument('--loader-command',choices=['R','D','H','U'],default='R',help='H checks the Base T/Q/V/H protocol; D checks an eight-word debug-ROM dump; U checks the I/U/C/G framed CRC32 upload')
+    parser.add_argument('--upload-pattern', choices=['zero', 'ones', 'sequence'], help='I/U/C only: never execute the uploaded pattern; check three readback CRCs and backing RAM')
+    parser.add_argument('--upload-words', type=int, default=512)
+    parser.add_argument('--raw-readback', action='store_true', help='verify diagnostic D raw words after CRCs; requires upload pattern and diagnostic ROM')
     args = parser.parse_args()
     if args.uart_bit_cycles<32 or args.uart_bit_cycles>1024 or args.uart_bit_cycles%2:
         parser.error('--uart-bit-cycles must be even and between 32 and 1024')
@@ -417,7 +453,7 @@ def main():
         parser.error('--pin-model currently requires --boot-loader')
     if args.pin_freq_mhz<1 or args.pin_freq_mhz>100:
         parser.error('--pin-freq-mhz must be between 1 and 100')
-    if args.pin_phase_degrees<1 or args.pin_phase_degrees>359:
+    if not math.isfinite(args.pin_phase_degrees) or args.pin_phase_degrees<1 or args.pin_phase_degrees>359:
         parser.error('--pin-phase-degrees must be between 1 and 359')
     if not 0<=args.pin_tac_ns<1000/args.pin_freq_mhz:
         parser.error('--pin-tac-ns must be finite, nonnegative and less than one clock')
@@ -425,18 +461,26 @@ def main():
         parser.error('pin timing overrides require --pin-model')
     if args.loader_command!='R' and not args.boot_loader:
         parser.error('--loader-command requires --boot-loader')
-    unit_output = run(['python3', HERE/'check_fence_assertion.py'])
-    print(unit_output, end='', flush=True)
-    generated = (args.generated or ROOT/f'output/tangnano20k/sdram-generated/SdramPipeline-{int(args.compressed)}/SdramPipeline.topEntity').resolve()
+    if args.upload_pattern and not (args.boot_loader and args.loader_command=='U'):
+        parser.error('--upload-pattern requires --boot-loader --loader-command U')
+    if not 1 <= args.upload_words <= 16384:
+        parser.error('--upload-words must be 1..16384')
+    if args.raw_readback and not (args.upload_pattern and args.rom_file):
+        parser.error('--raw-readback requires --upload-pattern and --rom-file')
+    generated = (args.generated or ROOT/f'output/tangnano20k/sdram-generated/SdramPipelineObserved-{int(args.compressed)}/SdramPipelineObserved.topEntity').resolve()
     sources = [generated] if generated.is_file() else sorted(generated.glob('*.v'))
     if not sources:
-        raise SystemExit(f'No generated Clash Verilog in {generated}; build SdramPipeline first.')
+        raise SystemExit(f'No generated Clash Verilog in {generated}; build SdramPipelineObserved first.')
+    require_observations(sources)
+    generated_hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
     out = ROOT/('output/tangnano20k/pipeline-rtl'+('-c' if args.compressed else '')+('-loader' if args.boot_loader else '')+
                ('-cdc' if args.cdc_bridge else '')+
                ('-pins' if args.pin_model else '')+(f'-uart{args.uart_bit_cycles}' if args.uart_bit_cycles!=868 else ''))
     if args.loader_command=='D':out=out.with_name(out.name+'-dump')
     if args.loader_command=='H':out=out.with_name(out.name+'-extended')
     if args.loader_command=='U':out=out.with_name(out.name+'-framed')
+    if args.upload_pattern:out=out.with_name(out.name+f'-upload-{args.upload_pattern}-{args.upload_words}')
+    if args.raw_readback:out=out.with_name(out.name+'-raw')
     if args.pin_model and (args.pin_freq_mhz!=48 or args.pin_phase_degrees!=180 or args.pin_tac_ns!=0):
         out=out.with_name(out.name+f'-f{args.pin_freq_mhz}-p{args.pin_phase_degrees}-t{args.pin_tac_ns:g}')
     if args.burst_rtl.resolve()!=(HERE/'burst_memory.v').resolve():
@@ -444,7 +488,18 @@ def main():
     if args.sdram_rtl.resolve()!=(HERE/'sdram.v').resolve():
         out=out.with_name(out.name+'-controller-'+args.sdram_rtl.stem)
     out=out.with_name(out.name+f'-w{args.cache_ways}-l{args.cache_line_bits}-{args.simulator}')
+    if args.out:
+        out=args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
+    receipt = dict(passed=False, requested=vars(args), generated=generated_hashes,
+                   sources={str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                     [Path(__file__), HERE/'pipeline_cpu_tb.v', HERE/'pipeline_fence_assertions.v',
+                      HERE/'check_fence_assertion.py', HERE/'pipeline_cache.v', HERE/'clock_bridge.v',
+                      args.sdram_rtl.resolve(), args.burst_rtl.resolve()]})
+    result_path=out/'results.json'
+    result_path.write_text(json.dumps(receipt, indent=2, default=str)+'\n')
+    unit_output = run(['python3', HERE/'check_fence_assertion.py', '--out', out/'fence-assertion'])
+    print(unit_output, end='', flush=True)
     if args.uart_bit_cycles!=868:
         # Change only UART reload constants in simulation copies, never the
         # generated synthesis source. This accelerates loader debugging.
@@ -469,7 +524,17 @@ def main():
          *(['-DRVC_GUEST'] if args.compressed else []), '-Wl,--no-relax',
          '-T',out/'link.ld',out/'program.S','-o',out/'program.elf'])
     run(['riscv64-unknown-elf-objcopy','-O','binary',out/'program.elf',out/'program.bin'])
+    effect_args=[]
+    if not args.boot_loader:
+        symbols=run(['riscv64-unknown-elf-nm','-n',out/'program.elf'])
+        labels={name:int(address,16) for address,name in re.findall(r'^([0-9a-fA-F]+)\s+\w\s+(effect_\w+)$',symbols,re.MULTILINE)}
+        assert {'effect_once','effect_padding','effect_skip'} <= labels.keys(),labels
+        effect_args=[f'+{key.upper()}={labels[key]:08x}' for key in ['effect_once','effect_padding','effect_skip']]
+        receipt['effect_symbols']=labels
     image=(out/'program.bin').read_bytes(); image+=b'\0'*((-len(image))%4)
+    if args.upload_pattern:
+        image=bytes(0 if args.upload_pattern=='zero' else 255 if args.upload_pattern=='ones' else (i*73+19)%256 for i in range(args.upload_words*4))
+        (out/'upload.bin').write_bytes(image)
     (out/'image.hex').write_text('\n'.join(f'{int.from_bytes(image[i:i+4],"little"):08x}'
                                          for i in range(0,len(image),4))+'\n')
     # Clash's Verilog backend can emit identifiers such as "new" and "byte";
@@ -488,6 +553,8 @@ def main():
          '-P',f'pipeline_cpu_tb.LOADER_DUMP={int(args.loader_command=="D")}',
          '-P',f'pipeline_cpu_tb.LOADER_EXTENDED={int(args.loader_command=="H")}',
          '-P',f'pipeline_cpu_tb.LOADER_FRAMED={int(args.loader_command=="U")}',
+         '-P',f'pipeline_cpu_tb.LOADER_UPLOAD_ONLY={int(bool(args.upload_pattern))}',
+         '-P',f'pipeline_cpu_tb.LOADER_RAW_READBACK={int(args.raw_readback)}',
          '-o',out/'sim',*sources,HERE/'pipeline_fence_assertions.v',HERE/'pipeline_cache.v',HERE/'clock_bridge.v',args.sdram_rtl.resolve(),args.burst_rtl.resolve(),HERE/'pipeline_cpu_tb.v']
     if args.simulator=='verilator':
         params=[str(command[i+1]).replace('pipeline_cpu_tb.', '-G', 1) for i,x in enumerate(command) if x=='-P']
@@ -502,9 +569,10 @@ def main():
     else:
         run(command)
         executable=['vvp',out/'sim']
-    common=[*executable,f'+IMAGE={out}/image.hex',f'+WORDS={len(image)//4}']
+    common=[*executable,f'+IMAGE={out}/image.hex',f'+WORDS={len(image)//4}',*effect_args]
     output=run(common,timeout=900 if args.boot_loader else 240)
-    expected=('PASS: debug ROM memory dump' if args.loader_command=='D' else
+    expected=('PASS: ROM I/U/C upload-only' if args.upload_pattern else
+              'PASS: debug ROM memory dump' if args.loader_command=='D' else
               'PASS: extended ROM T/Q/V/H UART loader' if args.loader_command=='H' else
               'PASS: ROM I/U/C/G framed upload' if args.loader_command=='U' else
               'PASS: actual ROM UART loader' if args.boot_loader else 'PASS: pipeline/cache guest')
@@ -512,11 +580,24 @@ def main():
     (out/'pass.log').write_text(output)
     print(output,end='',flush=True)
     if args.boot_loader:
+        receipt.update(passed=True, output_sha256=hashlib.sha256(output.encode()).hexdigest(),
+                       image_sha256=hashlib.sha256(image).hexdigest(), rom_sha256=hashlib.sha256((out/'rom.hex').read_bytes()).hexdigest())
+        result_path.write_text(json.dumps(receipt, indent=2, default=str)+'\n')
         return
     failed=run([*common,'+CORRUPT'],expected=None,timeout=240)
     assert 'guest failure stage=2' in failed,failed
     (out/'corrupt.log').write_text(failed)
+    for flag,diagnostic in [('DUPLICATE_EFFECT','duplicate owned store'),('WRONG_PATH_EFFECT','cancelled store reached memory')]:
+        negative=run([*common,'+'+flag],expected=None,timeout=240)
+        assert diagnostic in negative,negative
+        (out/(flag.lower()+'.log')).write_text(negative)
+    receipt.update(passed=True, output_sha256=hashlib.sha256(output.encode()).hexdigest(),
+                   image_sha256=hashlib.sha256(image).hexdigest(), rom_sha256=hashlib.sha256((out/'rom.hex').read_bytes()).hexdigest(),
+                   corrupt_rejected=True, corrupt_output_sha256=hashlib.sha256(failed.encode()).hexdigest(),
+                   duplicate_store_rejected=True,cancelled_store_rejected=True)
+    result_path.write_text(json.dumps(receipt, indent=2, default=str)+'\n')
     print('PASS: corrupt backend beat is rejected by the executing guest',flush=True)
+    print('PASS: duplicate and wrong-path store controls are rejected by the effect monitor',flush=True)
 
 
 if __name__=='__main__':

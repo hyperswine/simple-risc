@@ -1,0 +1,78 @@
+*** Two-entry expanded instruction queue storage contract. Physical banks may
+*** receive writes while token time is held, but only into unowned slots.
+*** Token changes and the final write share an edge. Cancellation clears only
+*** ownership. Offered data may vary during holds, stronger than registered A.
+*** This finite refinement model is not an RTL equivalence proof.
+mod FQUEUE-STORAGE is
+  protecting BOOL .
+  sorts Bank Entry Table Count Offer Fault State .
+  ops bank0 bank1 : -> Bank [ctor] .
+  ops empty a b : -> Entry [ctor] .
+  op table : Entry Entry -> Table [ctor] .
+  ops zero one two : -> Count [ctor] .
+  op idle : -> Offer [ctor] .
+  op offer : Entry -> Offer [ctor] .
+  ops good wrongSlot noCommit noHold : -> Fault [ctor] .
+  op st : Table Table Bank Count Offer Fault Bool -> State [ctor] .
+  vars R H : Table .
+  vars X Y V : Entry .
+  var I : Bank .
+  var N : Count .
+  var O : Offer .
+  var F : Fault .
+  var Seen : Bool .
+
+  op other : Bank -> Bank .
+  eq other(bank0) = bank1 .
+  eq other(bank1) = bank0 .
+  op get : Table Bank -> Entry .
+  eq get(table(X, Y), bank0) = X .
+  eq get(table(X, Y), bank1) = Y .
+  op put : Table Bank Entry -> Table .
+  eq put(table(X, Y), bank0, V) = table(V, Y) .
+  eq put(table(X, Y), bank1, V) = table(X, V) .
+  op dest : Bank Count Fault -> Bank .
+  eq dest(I, one, wrongSlot) = I .
+  eq dest(I, one, F) = other(I) [owise] .
+  eq dest(I, zero, F) = I .
+  eq dest(I, two, F) = I .
+  op install : Table Bank Count Offer Fault -> Table .
+  eq install(H, I, N, idle, F) = H .
+  eq install(H, I, two, O, F) = H .
+  eq install(H, I, N, offer(V), F) = put(H, dest(I, N, F), V) [owise] .
+  op physical : Table Bank Count Offer Fault -> Table .
+  eq physical(H, I, N, O, noCommit) = H .
+  eq physical(H, I, N, O, F) = install(H, I, N, O, F) [owise] .
+  op visibleEqual : Table Table Bank Count -> Bool .
+  eq visibleEqual(R, H, I, zero) = true .
+  eq visibleEqual(R, H, I, one) = get(R, I) == get(H, I) .
+  eq visibleEqual(R, H, I, two) = R == H .
+  op bad : State -> Bool .
+  eq bad(st(R, H, I, N, O, F, Seen)) = not visibleEqual(R, H, I, N) .
+  op witnessedHold : State -> Bool .
+  eq witnessedHold(st(R, H, I, N, O, F, Seen)) = Seen and (R =/= H) and visibleEqual(R, H, I, N) .
+
+  ops initialGood initialWrongSlot initialNoCommit initialNoHold : -> State .
+  eq initialGood = st(table(empty, empty), table(empty, empty), bank0, zero, idle, good, false) .
+  eq initialWrongSlot = st(table(empty, empty), table(empty, empty), bank0, zero, idle, wrongSlot, false) .
+  eq initialNoCommit = st(table(empty, empty), table(empty, empty), bank0, zero, idle, noCommit, false) .
+  eq initialNoHold = st(table(empty, empty), table(empty, empty), bank0, zero, idle, noHold, false) .
+
+  rl [offer-a] : st(R, H, I, N, O, F, Seen) => st(R, H, I, N, offer(a), F, Seen) .
+  rl [offer-b] : st(R, H, I, N, O, F, Seen) => st(R, H, I, N, offer(b), F, Seen) .
+  rl [offer-idle] : st(R, H, I, N, O, F, Seen) => st(R, H, I, N, idle, F, Seen) .
+  crl [hold] : st(R, H, I, N, O, F, Seen) => st(R, install(H, I, N, O, F), I, N, O, F, true) if F =/= noHold .
+  rl [push-empty] : st(R, H, I, zero, offer(V), F, Seen) => st(put(R, I, V), physical(H, I, zero, offer(V), F), I, one, offer(V), F, Seen) .
+  rl [push-one] : st(R, H, I, one, offer(V), F, Seen) => st(put(R, other(I), V), physical(H, I, one, offer(V), F), I, two, offer(V), F, Seen) .
+  rl [push-pop] : st(R, H, I, one, offer(V), F, Seen) => st(put(R, other(I), V), physical(H, I, one, offer(V), F), other(I), one, offer(V), F, Seen) .
+  rl [pop-one] : st(R, H, I, one, idle, F, Seen) => st(R, H, other(I), zero, idle, F, Seen) .
+  rl [pop-two] : st(R, H, I, two, O, F, Seen) => st(R, H, other(I), one, O, F, Seen) .
+  rl [cancel] : st(R, H, I, N, O, F, Seen) => st(R, physical(H, I, N, O, F), bank0, zero, O, F, Seen) .
+  rl [reset] : st(R, H, I, N, O, F, Seen) => st(table(empty, empty), table(empty, empty), bank0, zero, idle, F, Seen) .
+endm
+
+search in FQUEUE-STORAGE : initialGood =>* S:State such that bad(S:State) .
+search [1] in FQUEUE-STORAGE : initialWrongSlot =>* S:State such that bad(S:State) .
+search [1] in FQUEUE-STORAGE : initialNoCommit =>* S:State such that bad(S:State) .
+search [1] in FQUEUE-STORAGE : initialGood =>* S:State such that witnessedHold(S:State) .
+search in FQUEUE-STORAGE : initialNoHold =>* S:State such that witnessedHold(S:State) .

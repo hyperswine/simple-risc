@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "requested": {
+    "generated": "output/tangnano20k/structural-next-20261030/e2/generated-im/SdramPipelineObserved.topEntity",
+    "out": "output/tangnano20k/structural-next-20261030/e2/rtl-im",
+    "compressed": false,
+    "simulator": "verilator",
+    "cache_line_bits": 7,
+    "cache_ways": 2,
+    "cdc_bridge": false,
+    "boot_loader": false,
+    "uart_bit_cycles": 868,
+    "pin_model": false,
+    "pin_freq_mhz": 48,
+    "pin_phase_degrees": 180,
+    "pin_tac_ns": 0.0,
+    "burst_rtl": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v",
+    "sdram_rtl": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v",
+    "rom_file": null,
+    "loader_command": "R",
+    "upload_pattern": null,
+    "upload_words": 512,
+    "raw_readback": false
+  },
+  "generated": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/generated-im/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "f97f0dd5954bd24466ab3d881d721cb9222b96ef65b5854ffcc65163d775f952"
+  },
+  "sources": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/check_pipeline_rtl.py": "efea6d3c7890213b7fae30a05c5cc0815b00af9db140b2493ae286fc556947ba",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v": "ec3c570c9f1b8a0321a8b04e29d414e3ac8a4ae1abeac17bf8b3676a49211b89",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_fence_assertions.v": "81ccd36d783d0ae947a1c511d89da7f25a2cdb972a0dcfd65a522c7975771f00",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/check_fence_assertion.py": "b4156b58451c7815dc67322dd78cc0821ff5c5bde4e03669f42c175665e01d39",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a"
+  },
+  "output_sha256": "ff5f2cbf81d661f4fb289b6e1320aad0276a4513a7588524e36f55861d85ec24",
+  "image_sha256": "d6c7d7d6d426692940a562d5950ff8e2265f1486e9ad794fed05b78b548d15bf",
+  "rom_sha256": "190fddc89a00f6af5491b8fe319ebc4bb5063640d786eb8318073b0781463521",
+  "corrupt_rejected": true,
+  "corrupt_output_sha256": "0849459a9d3693748a52b1f34e34c176bfefa51291c82c0d20aa66c3ef38cb99"
+}

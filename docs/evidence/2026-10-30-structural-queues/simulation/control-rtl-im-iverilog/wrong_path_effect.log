@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:107: cancelled store reached memory
+       Time: 5061250000  Scope: pipeline_cpu_tb

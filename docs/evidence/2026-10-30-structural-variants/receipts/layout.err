@@ -1,0 +1,1 @@
+ld: warning: -U option is redundant when using -undefined dynamic_lookup

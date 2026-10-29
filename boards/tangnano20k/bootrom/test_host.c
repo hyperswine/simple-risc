@@ -13,6 +13,11 @@
 #endif
 #define RAM_WORDS (2097152u)
 #define FILL (0xdeadbeefu)
+#ifdef ROM_DIAGNOSTIC_READBACK
+#define CAPS "PMXQVHTUICGD"
+#else
+#define CAPS "PMXQVHTUICG"
+#endif
 volatile uint32_t host_ram[RAM_WORDS];
 uint32_t host_cause, host_register, host_misa;
 uint32_t host_meta[4];
@@ -27,7 +32,7 @@ void rom_main(void);
 uint32_t host_getc(void) {
   if (position == input_size) longjmp(stop, 1);
   uint32_t value = input[position++];
-  if (corrupt && (value == 'V' || value == 'C') && position == input_size)
+  if (corrupt && (value == 'V' || value == 'C' || value == 'D') && position == input_size)
     host_ram[19] ^= 0x08001234u;
   return value;
 }
@@ -164,11 +169,11 @@ int main(void) {
 #ifdef ROM_SDRAM
   assert(!strcmp(output,
                  "SRID1 isa=rv32im cpu=00000030 mem=00000030 ram=00800000 "
-                 "max=00200000 cap=PMXQVHTUICG id=0123456789abcdef\n"));
+                 "max=00200000 cap=" CAPS " id=0123456789abcdef\n"));
 #else
   assert(!strcmp(output,
                  "SRID1 isa=rv32im cpu=00000030 mem=00000030 ram=00010000 "
-                 "max=0000ff00 cap=PMXQVHTUICG id=0123456789abcdef\n"));
+                 "max=0000ff00 cap=" CAPS " id=0123456789abcdef\n"));
 #endif
   begin();
   host_misa = 0x40001104u;
@@ -181,11 +186,24 @@ int main(void) {
 #ifdef ROM_SDRAM
   assert(!strcmp(output,
                  "SRID1 isa=rv32imc cpu=00000060 mem=00000060 ram=00800000 "
-                 "max=00200000 cap=PMXQVHTUICG id=fedcba9876543210\n"));
+                 "max=00200000 cap=" CAPS " id=fedcba9876543210\n"));
 #else
   assert(!strcmp(output,
                  "SRID1 isa=rv32imc cpu=00000060 mem=00000060 ram=00010000 "
-                 "max=0000ff00 cap=PMXQVHTUICG id=fedcba9876543210\n"));
+                 "max=0000ff00 cap=" CAPS " id=fedcba9876543210\n"));
+#endif
+
+#ifdef ROM_DIAGNOSTIC_READBACK
+  begin(); byte('D'); run(); assert(!strcmp(output, "00000000\nEND\n"));
+  for (int mutated = 0; mutated < 2; mutated++) {
+    begin(); load(37, 1); corrupt = mutated; byte('D'); run();
+    char raw_expected[400];
+    int n = sprintf(raw_expected, "00000025\n");
+    for (unsigned i = 0; i < 37; i++)
+      n += sprintf(raw_expected + n, "%08x\n", word(i) ^ ((mutated && i == 19) ? 0x08001234u : 0));
+    strcpy(raw_expected + n, "END\n");
+    assert(!strcmp(output, raw_expected) && !ran);
+  }
 #endif
 
   /* Valid 'U' upload, 'C' CRC32 readback, 'G' guarded run, and CAP bound. */

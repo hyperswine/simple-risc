@@ -1,0 +1,26 @@
+{
+  "base_revision": "44fcaf0ef95d01433a299bac5a19ec20db6b9c86",
+  "files": {
+    "simple-risc.cabal": "187e494d5bc7582390ae3dd30972185957ee62400145c77f289e0138a8762744",
+    "test/RvcDecodeDump.hs": "ba255854814409458187fae1c337883caa30165f2495e7c8876c7141a618644c",
+    "test/PsramRegs.hs": "4ab719d8a98861fc044408eb5bae9fefb30f45e401a8a72540b993d72fc8b916",
+    "test/SimpleRisc.hs": "e09a66ff9432d01280029d52570da0025e366278fd80b47747a6bc282231ee66",
+    "test/Rv32Model.hs": "7a2b9c795939b86886c400c23fa52bde6498552be6a7428b245cbc29adb994e8",
+    "test/Spec.hs": "92a84e4e9dd5fd18aee1df893f446a78159d43ec4f006a9e0f7cef077cdc07c7",
+    "src/SdramPipeline.hs": "e568566c986b7da22c41a96aa4f556a091240198dacc6d5a307d85ce73d716e1",
+    "src/SdramPipelineObserved.hs": "474a1d872255cd216e400fa6e8feb76e807390a86d78365ffb897aa598675ae5",
+    "src/PsramRegs.hs": "566e97bb019da4979230f9e57c1ffc418a978b21fd8ed93afbaf38362261fe0e",
+    "src/SimpleRisc.hs": "f56574e11248f1556daeba31365f25d098c07d9a26df34fed353b2983ad123ba",
+    "src/RiscVCompressed.hs": "520c40f397db58660ff1ba9ad1a09e4c0e95aee50f5b25cc9f2ffdb0423bd327",
+    "src/SdramSimpleRisc.hs": "ba3bab4382f25fdd72c73b30b1aa5c9b791c3655e9958d4dee56866c70a75373",
+    "src/SimpleRisc/Uart.hs": "c96fa43b69a7b639d6ef49130acee2e6f1361b5003c043ca034f73d6c4ef228d",
+    "src/SimpleRisc/Decode.hs": "e0b07e0d3da4281b83618a74361b9cf67e9e808e120c8c002ee3911214c3c2c3",
+    "src/SimpleRisc/Types.hs": "fb526931ff7d1d378ac611ff1d841020757ec9966b162f3ce62c3af6896fcd80",
+    "boards/tangnano20k/sdram/build.sh": "e2771d513634296fd0c0427847933714944c336d1779c7fb3c9bc4ee25b1c1ab",
+    "boards/tangnano20k/sdram/preset.sh": "7f6c81df0efeb8214753b2e0d2c17f5fee72afa5a0f5c1c82e25ae6e6d87154d",
+    "boards/tangnano20k/bootrom/bootrom.c": "e43a95a8df8d3edca4223875ed331ec73c5061e280fe17f858f63ef71ea1bf8b"
+  },
+  "control_ordinary_rtl": "../structural-20261030/observed/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v",
+  "control_observed_rtl": "../structural-20261030/observed/generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+  "note": "Pre-E2-change working-tree source, including the tested named observations."
+}

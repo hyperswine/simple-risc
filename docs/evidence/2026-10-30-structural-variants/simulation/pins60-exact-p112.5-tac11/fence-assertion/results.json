@@ -1,0 +1,20 @@
+{
+  "complete": true,
+  "cases": [
+    {
+      "name": "memory-refetch",
+      "passed": true,
+      "expected_exit": 0
+    },
+    {
+      "name": "stale-prefetch",
+      "passed": true,
+      "expected_exit": 1
+    },
+    {
+      "name": "surviving-buffer",
+      "passed": true,
+      "expected_exit": 1
+    }
+  ]
+}

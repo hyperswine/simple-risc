@@ -1,0 +1,846 @@
+{
+  "passed": false,
+  "cpu_mhz": 60.0,
+  "baud": 69124,
+  "cases": [],
+  "bitstream_sha256": "cb3cec708850b218ffa5df9da38798edd2454276a5b2d3db4fe2757e725c0db8",
+  "images": {},
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "81833107db37714151e7199bde42e8a25b152293ae67cbe2b63671654b02e12a",
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICGD id=35d22c65c2e3025e",
+  "upload_probes": [
+    {
+      "words": 1,
+      "pattern": "zero",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "unexpected ROM upload reply: b'DONEERR HDR\\n'"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "ones",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "ROM rejected upload with ERR TMO"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "sequence",
+      "readbacks": [
+        "928c776a",
+        "928c776a",
+        "928c776a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "928c776a",
+      "passed": true,
+      "xor_readback": "eea55c13",
+      "expected_xor": "eea55c13",
+      "raw_reply": "00000001\neea55c13\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "928c776a",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "zero",
+      "readbacks": [
+        "3d564921",
+        "3d564921",
+        "3d564921"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "758d6336",
+      "passed": false,
+      "xor_readback": "0000f000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "3d564921",
+      "raw_word_mismatches": [
+        {
+          "index": 12,
+          "expected": "00000000",
+          "actual": "00f00000"
+        }
+      ]
+    },
+    {
+      "words": 16,
+      "pattern": "ones",
+      "readbacks": [
+        "0f6187ba",
+        "0f6187ba",
+        "0f6187ba"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "0f6187ba",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "0f6187ba",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "sequence",
+      "readbacks": [
+        "96afc5a6",
+        "96afc5a6",
+        "96afc5a6"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "96afc5a6",
+      "passed": true,
+      "xor_readback": "c040c000",
+      "expected_xor": "c040c000",
+      "raw_reply": "00000010\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "96afc5a6",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "zero",
+      "readbacks": [
+        "8fa97b01",
+        "8fa97b01",
+        "8fa97b01"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "b2aa7578",
+      "passed": false,
+      "xor_readback": "01000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0100f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "8fa97b01",
+      "raw_word_mismatches": [
+        {
+          "index": 16,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 20,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 24,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 28,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 32,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 36,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 40,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 44,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 48,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 52,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 56,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 60,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 64,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 68,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 72,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 76,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 80,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 84,
+          "expected": "00000000",
+          "actual": "00f00001"
+        },
+        {
+          "index": 88,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 92,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 96,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 100,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 104,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 108,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 112,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 116,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 120,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 124,
+          "expected": "00000000",
+          "actual": "00f00000"
+        }
+      ]
+    },
+    {
+      "words": 128,
+      "pattern": "ones",
+      "readbacks": [
+        "bd7bc39f",
+        "bd7bc39f",
+        "bd7bc39f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "bd7bc39f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "bd7bc39f",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "sequence",
+      "readbacks": [
+        "7b802688",
+        "7b802688",
+        "7b802688"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "7b802688",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "7b802688",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "zero",
+      "readbacks": [
+        "c97fb8bd",
+        "c97fb8bd",
+        "c97fb8bd"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "f1e8ba9e",
+      "passed": false,
+      "xor_readback": "01000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0100f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\n0000f000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "c97fb8bd",
+      "raw_word_mismatches": [
+        {
+          "index": 128,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 132,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 136,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 140,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 144,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 148,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 152,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 156,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 160,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 164,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 168,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 172,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 176,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 180,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 184,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 188,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 192,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 196,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 200,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 204,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 208,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 212,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 216,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 220,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 224,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 228,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 232,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 236,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 240,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 244,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 248,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 252,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 256,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 260,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 264,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 268,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 272,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 276,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 280,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 284,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 288,
+          "expected": "00000000",
+          "actual": "00f00001"
+        },
+        {
+          "index": 292,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 296,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 300,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 304,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 308,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 312,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 316,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 320,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 324,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 328,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 332,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 336,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 340,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 344,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 348,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 352,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 356,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 360,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 364,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 368,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 372,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 376,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 380,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 384,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 388,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 392,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 396,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 400,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 404,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 408,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 412,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 416,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 420,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 424,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 428,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 432,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 436,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 440,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 444,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 448,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 452,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 456,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 460,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 464,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 468,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 472,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 476,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 480,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 484,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 488,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 492,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 496,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 500,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 504,
+          "expected": "00000000",
+          "actual": "00f00000"
+        },
+        {
+          "index": 508,
+          "expected": "00000000",
+          "actual": "00f00000"
+        }
+      ]
+    },
+    {
+      "words": 512,
+      "pattern": "ones",
+      "readbacks": [
+        "3f55d17f",
+        "3f55d17f",
+        "3f55d17f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "3f55d17f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "3f55d17f",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "sequence",
+      "readbacks": [
+        "60b7615e",
+        "60b7615e",
+        "60b7615e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "60b7615e",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "60b7615e",
+      "raw_word_mismatches": []
+    }
+  ],
+  "phase": "upload probes complete; no guest executed"
+}

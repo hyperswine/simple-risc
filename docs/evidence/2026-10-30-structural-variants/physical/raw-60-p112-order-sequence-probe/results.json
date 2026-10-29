@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "cpu_mhz": 60.0,
+  "baud": 69124,
+  "cases": [],
+  "bitstream_sha256": "51481ef7bda8781a656aac348e978782c248ceedb9597960e1ee197841a311a9",
+  "images": {},
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "04254a7e27d5b8b92ef624b7ce5a1655f9121097533432603ce47c2e6667fd2e",
+  "pattern_order": [
+    "sequence",
+    "zero",
+    "ones"
+  ],
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICGD id=35d22c65c2e3025e",
+  "upload_probes": [
+    {
+      "words": 1,
+      "pattern": "sequence",
+      "readbacks": [
+        "928c776a",
+        "928c776a",
+        "928c776a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "928c776a",
+      "passed": true,
+      "xor_readback": "eea55c13",
+      "expected_xor": "eea55c13",
+      "raw_reply": "00000001\neea55c13\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "928c776a",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 1,
+      "pattern": "zero",
+      "readbacks": [
+        "2144df1c",
+        "2144df1c",
+        "2144df1c"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "2144df1c",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000001\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "2144df1c",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 1,
+      "pattern": "ones",
+      "readbacks": [
+        "ffffffff",
+        "ffffffff",
+        "ffffffff"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "ffffffff",
+      "passed": true,
+      "xor_readback": "ffffffff",
+      "expected_xor": "ffffffff",
+      "raw_reply": "00000001\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "ffffffff",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "sequence",
+      "readbacks": [
+        "96afc5a6",
+        "96afc5a6",
+        "96afc5a6"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "96afc5a6",
+      "passed": true,
+      "xor_readback": "c040c000",
+      "expected_xor": "c040c000",
+      "raw_reply": "00000010\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "96afc5a6",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "zero",
+      "readbacks": [
+        "758d6336",
+        "758d6336",
+        "758d6336"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "758d6336",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "758d6336",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "ones",
+      "readbacks": [
+        "0f6187ba",
+        "0f6187ba",
+        "0f6187ba"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "0f6187ba",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "0f6187ba",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "sequence",
+      "readbacks": [
+        "7b802688",
+        "7b802688",
+        "7b802688"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "7b802688",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "7b802688",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "zero",
+      "readbacks": [
+        "b2aa7578",
+        "b2aa7578",
+        "b2aa7578"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "b2aa7578",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "b2aa7578",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "ones",
+      "readbacks": [
+        "bd7bc39f",
+        "bd7bc39f",
+        "bd7bc39f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "bd7bc39f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "bd7bc39f",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "sequence",
+      "readbacks": [
+        "60b7615e",
+        "60b7615e",
+        "60b7615e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "60b7615e",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "60b7615e",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "zero",
+      "readbacks": [
+        "f1e8ba9e",
+        "f1e8ba9e",
+        "f1e8ba9e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "f1e8ba9e",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "f1e8ba9e",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "ones",
+      "readbacks": [
+        "3f55d17f",
+        "3f55d17f",
+        "3f55d17f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "3f55d17f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "3f55d17f",
+      "raw_word_mismatches": []
+    }
+  ],
+  "phase": "upload probes complete; no guest executed"
+}

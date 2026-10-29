@@ -1,0 +1,41 @@
+{
+  "passed": false,
+  "cpu_mhz": 54.0,
+  "baud": 62212,
+  "cases": [
+    {
+      "mode": "silent",
+      "repetition": 1,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": false,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": false,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": false,
+      "upload_crc_verified": true
+    }
+  ],
+  "bitstream_sha256": "f01fdf0bb48c3f5842cf8f8ad0d7d24bc1a746c9959993089e26a4661e207038",
+  "images": {
+    "silent": "a577a0153ad212573c45d161de42aff0c13df995c59cf8baeb7f1ed82750980e",
+    "burst": "3ff485f5b132a0e3fcbb0d32bd70a1ee9aeff7525c730448240861bd11474c88",
+    "paced": "ee70bbe993fdd7cab770178e0fb4f4178012611bc03904462fc2d460d63f8ecb",
+    "reporter": "efee7e6de19edbbe3bd26a58613bafc3814b7e9bdfd2495df1764b4375df7983"
+  },
+  "source_sha256": "7b3669a6d8c573a83bd7b7f13d4a5e031b2682f4c6b8726894ac66b4ed510a68",
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=00000036 mem=00000036 ram=00800000 max=00200000 cap=PMXQVHTUICG id=9819062505a27795"
+}

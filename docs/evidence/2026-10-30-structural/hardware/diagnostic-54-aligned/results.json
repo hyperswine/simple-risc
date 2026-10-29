@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "cpu_mhz": 54.0,
+  "baud": 62212,
+  "cases": [
+    {
+      "mode": "silent",
+      "repetition": 1,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "silent",
+      "repetition": 2,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 2,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 2,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "silent",
+      "repetition": 3,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 3,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 3,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    }
+  ],
+  "bitstream_sha256": "f01fdf0bb48c3f5842cf8f8ad0d7d24bc1a746c9959993089e26a4661e207038",
+  "images": {
+    "silent": "a577a0153ad212573c45d161de42aff0c13df995c59cf8baeb7f1ed82750980e",
+    "burst": "3ff485f5b132a0e3fcbb0d32bd70a1ee9aeff7525c730448240861bd11474c88",
+    "paced": "ee70bbe993fdd7cab770178e0fb4f4178012611bc03904462fc2d460d63f8ecb",
+    "reporter": "887757828ddf41f94b535e76fd3843bd7b5fd0d6455bb075c78c5fca1577eae8"
+  },
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "a856351620b26c33ec36a8b5df4955b8d09f1f136344e703cbd593de74e18ac3",
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=00000036 mem=00000036 ram=00800000 max=00200000 cap=PMXQVHTUICG id=9819062505a27795"
+}

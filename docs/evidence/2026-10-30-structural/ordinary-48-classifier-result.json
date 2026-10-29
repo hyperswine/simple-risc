@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "runs": 1,
+  "guest_elapsed_us": 2031356,
+  "guest_timer_mhz": 72,
+  "physical_cpu_mhz": 48,
+  "corrected_elapsed_us": 3047034.0,
+  "oracle_sha256": "56e5d5e7f58a8b2e698f6569e00a6acbd23aeee95033a5105d1be35acd2b4eab",
+  "output_sha256": "577a63d2ced291dc963f526ee67602267cd2ac3e6cbe2e4ed459c2e3569b96d2",
+  "scope": "One physical classifier acceptance run; not endurance or higher-clock qualification."
+}

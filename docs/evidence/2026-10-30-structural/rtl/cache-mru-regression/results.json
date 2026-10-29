@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "source_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+  "cases": [
+    {
+      "name": "small-update",
+      "passed": true,
+      "expected_refusal": false,
+      "output": "PASS: 51 MRU decisions, 267 lookup/write collisions\nPASS: 297 reads, 137 ordered masked writes, 47 line fills, 2147 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cache-mru-regression/small-update-tb.v:92: $finish called at 25925000 (1ps)\n"
+    },
+    {
+      "name": "full-update",
+      "passed": true,
+      "expected_refusal": false,
+      "output": "PASS: 31 MRU decisions, 253 lookup/write collisions\nPASS: 297 reads, 137 ordered masked writes, 47 line fills, 4065 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cache-mru-regression/full-update-tb.v:92: $finish called at 45105000 (1ps)\n"
+    },
+    {
+      "name": "full-invalidate",
+      "passed": true,
+      "expected_refusal": false,
+      "output": "PASS: 31 MRU decisions, 215 lookup/write collisions\nPASS: 297 reads, 137 ordered masked writes, 105 line fills, 5073 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cache-mru-regression/full-invalidate-tb.v:92: $finish called at 55185000 (1ps)\n"
+    },
+    {
+      "name": "poisoned-read",
+      "passed": true,
+      "expected_refusal": false,
+      "output": "PASS: 31 MRU decisions, 253 lookup/write collisions\nPASS: 297 reads, 137 ordered masked writes, 47 line fills, 4065 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cache-mru-regression/poisoned-read-tb.v:92: $finish called at 45105000 (1ps)\n"
+    },
+    {
+      "name": "missing-bypass",
+      "passed": true,
+      "expected_refusal": true,
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cache-mru-regression/missing-bypass-tb.v:29: MRU replacement differs from register-vector reference\n       Time: 40965000  Scope: pipeline_cache_tb\n"
+    }
+  ]
+}

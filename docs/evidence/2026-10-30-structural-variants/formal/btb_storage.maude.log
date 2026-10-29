@@ -1,0 +1,35 @@
+==========================================
+search in BTB-STORAGE : initialGood =>* S:State such that bad(S:State) = true .
+
+No solution.
+states: 162  rewrites: 5995 in 1ms cpu (1ms real) (5687855 rewrites/second)
+==========================================
+search [1] in BTB-STORAGE : initialNoBypass =>* S:State such that bad(S:State)
+    = true .
+
+Solution 1 (state 1)
+states: 2  rewrites: 17 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(table(empty, empty), table(empty, empty), write(bank0, a),
+    noBypass, false)
+==========================================
+search [1] in BTB-STORAGE : initialNoCommit =>* S:State such that bad(S:State)
+    = true .
+
+Solution 1 (state 8)
+states: 9  rewrites: 74 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(table(a, empty), table(empty, empty), none, noCommit, false)
+==========================================
+search [1] in BTB-STORAGE : initialGood =>* S:State such that witnessedHold(
+    S:State) = true .
+
+Solution 1 (state 15)
+states: 16  rewrites: 240 in 0ms cpu (0ms real) (30000000 rewrites/second)
+S:State --> st(table(empty, empty), table(a, empty), write(bank0, a), good,
+    true)
+==========================================
+search in BTB-STORAGE : initialNoHold =>* S:State such that witnessedHold(
+    S:State) = true .
+
+No solution.
+states: 63  rewrites: 2584 in 0ms cpu (0ms real) (6476190 rewrites/second)
+Bye.

@@ -947,3 +947,19 @@ data StageLoad = StageLoad
     slM :: Bool
   }
   deriving (Generic, NFDataX)
+
+-- | Simulation observations, produced at the same decision sites as the
+-- pipeline transitions. These are not stored in Machine or Pipe. The ordinary
+-- board top drops them; SdramPipelineObserved exports named ports instead of
+-- requiring tests to know the packed representation of those records.
+data PipelineTrace = PipelineTrace
+  { ptCommit :: Bool,
+    ptWord :: Word32,
+    ptPc :: Word32,
+    ptNextPc :: Word32,
+    ptIssue :: Bool,
+    ptFetchPc :: Word32,
+    ptEmpty :: Bool,
+    ptRedirect :: Bool
+  }
+  deriving (Generic, NFDataX)

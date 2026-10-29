@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "bitstream_sha256": "153a4f067dc49b576b64e05136a8f6e9635869582f5fdebf1bcae2874bffa468",
+  "runs": [
+    {
+      "repetition": 1,
+      "guest_elapsed_us": 2031152,
+      "corrected_us": 2437382.4,
+      "output_sha256": "9b498f68a04d73eca7960639eb6cdeac2b3dae3291b3d358382fcb8e96d402ec"
+    },
+    {
+      "repetition": 2,
+      "guest_elapsed_us": 2031151,
+      "corrected_us": 2437381.2,
+      "output_sha256": "765cfe6c3ffae42b0c2020d009bf71a200b11ea640ae32353f24121d310b1a23"
+    },
+    {
+      "repetition": 3,
+      "guest_elapsed_us": 2031152,
+      "corrected_us": 2437382.4,
+      "output_sha256": "9b498f68a04d73eca7960639eb6cdeac2b3dae3291b3d358382fcb8e96d402ec"
+    }
+  ],
+  "scope": "60 MHz experimental phase-112.5 physical acceptance; original 54 MHz image restored"
+}

@@ -1,0 +1,32 @@
+Reading netlist file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/gwsynthesis/sdram_test.vg"
+Parsing netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/gwsynthesis/sdram_test.vg" completed
+Processing netlist completed
+Reading constraint file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/pins.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+WARN  (PR1014) : Generic routing resource will be used to clock signal 'clk_27m_d' by the specified constraint. And then it may lead to the excessive delay or skew
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.power.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.pin.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.rpt.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.rpt.txt" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.vo" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.tr.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/e2/hardware-48/impl/pnr/sdram_test.tr" completed
+Fri Oct 30 03:10:03 2026
+

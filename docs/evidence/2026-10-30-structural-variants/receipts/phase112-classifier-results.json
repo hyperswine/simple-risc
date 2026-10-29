@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "repetition": 1,
+      "guest_elapsed_us": 2031152,
+      "guest_timer_mhz": 72,
+      "cpu_mhz": 60,
+      "corrected_us": 2437382.4,
+      "output_sha256": "9b498f68a04d73eca7960639eb6cdeac2b3dae3291b3d358382fcb8e96d402ec"
+    },
+    {
+      "repetition": 2,
+      "guest_elapsed_us": 2031152,
+      "guest_timer_mhz": 72,
+      "cpu_mhz": 60,
+      "corrected_us": 2437382.4,
+      "output_sha256": "9b498f68a04d73eca7960639eb6cdeac2b3dae3291b3d358382fcb8e96d402ec"
+    },
+    {
+      "repetition": 3,
+      "guest_elapsed_us": 2031151,
+      "guest_timer_mhz": 72,
+      "cpu_mhz": 60,
+      "corrected_us": 2437381.2,
+      "output_sha256": "765cfe6c3ffae42b0c2020d009bf71a200b11ea640ae32353f24121d310b1a23"
+    }
+  ],
+  "scope": "Three small frozen classifier runs at 60 MHz/112.5 degrees; not I/O/PVT or large-workload qualification"
+}

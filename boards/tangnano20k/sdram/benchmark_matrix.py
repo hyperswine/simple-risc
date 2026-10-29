@@ -35,7 +35,7 @@ def check_controls(cases):
         assert bridges[case['bridge']] == bridge_hash
         generated.setdefault(case['predictor'], config['generated'])
         assert generated[case['predictor']] == config['generated']
-        common.append((config['image_sha256'], config['elf_sha256'], inputs))
+        common.append((config['image_sha256'], config['elf_sha256'], config.get('profile_abi'), inputs))
     assert all(value == common[0] for value in common), 'shared inputs changed during the experiment'
 
 
@@ -74,7 +74,8 @@ def main():
                 name = f'btb-{predictor}-ways-{ways}-bridge-{bridge}'
                 directory = out/name
                 directory.mkdir(exist_ok=True)
-                generated = out/f'generated-{predictor}/SdramPipeline.topEntity'
+                observed = experiment.get('profiling_abi') == 'named-v1'
+                generated = out/f'generated-{predictor}'/('SdramPipelineObserved.topEntity' if observed else 'SdramPipeline.topEntity')
                 if not (generated/'sdram_pipeline_risc.v').is_file():
                     raise SystemExit(f'missing generated CPU: {generated}')
                 command = [sys.executable, str(HERE/'run_perf.py'), str(out/'input/base.bin'),
@@ -84,6 +85,8 @@ def main():
                            '--cache-rtl', str(args.cache_rtl.resolve()),
                            '--write-update', '1', '--profile-cpu', '--jobs', '2', '--timeout', '1800',
                            '--out', str(directory)]
+                if not observed:
+                    command += ['--legacy-profile-20261028']
                 case = dict(name=name, predictor=predictor, ways=ways, bridge=bridge, passed=False)
                 cases.append((case, directory, command))
                 report['cases'].append(case)

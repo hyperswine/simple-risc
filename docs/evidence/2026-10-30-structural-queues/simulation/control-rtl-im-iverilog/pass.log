@@ -1,0 +1,2 @@
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 108 fills 36 writes 56534 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no cancelled store, 108 owned-effect hold clocks
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:459: $finish called at 7130700000 (100fs)

@@ -1,0 +1,20 @@
+{
+  "retained_as_default": false,
+  "reason": "Separate F banks preserve ownership in focused checks, but fixed-48-MHz routing uses 223 more logic cells with no register saving and reported Fmax falls 8.44 percent. Preserve the candidate and actual-bank contract tests; restore the BTB-only production boundary.",
+  "control_resources": {
+    "Logic": 14426.0,
+    "Register": 5308.0,
+    "CLS": 8508.0,
+    "BSRAM": 38.0,
+    "DSP": 3.5
+  },
+  "candidate_resources": {
+    "Logic": 14649.0,
+    "Register": 5308.0,
+    "CLS": 8397.0,
+    "BSRAM": 38.0,
+    "DSP": 3.5
+  },
+  "control_fmax_mhz": 80.779,
+  "candidate_fmax_mhz": 73.965
+}

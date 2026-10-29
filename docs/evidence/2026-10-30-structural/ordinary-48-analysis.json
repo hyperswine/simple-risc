@@ -1,0 +1,6023 @@
+{
+  "resources": {
+    "Logic": {
+      "used": 14153.0,
+      "available": 20736,
+      "percent": 69
+    },
+    "Register": {
+      "used": 5307.0,
+      "available": 15915,
+      "percent": 34
+    },
+    "CLS": {
+      "used": 8474.0,
+      "available": 10368,
+      "percent": 82
+    },
+    "BSRAM": {
+      "used": 38.0,
+      "available": 46,
+      "percent": 83
+    },
+    "DSP": {
+      "used": 3.5,
+      "available": 24,
+      "percent": 15
+    }
+  },
+  "synthesized_modules": {
+    "sdram_pll": {
+      "cells": {
+        "rPLL": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 0,
+      "lut_primitives": 0,
+      "mux_primitives": 0,
+      "clock_enable_nets": []
+    },
+    "sdram_pipeline_risc": {
+      "cells": {
+        "LUT5": 3278,
+        "LUT3": 1581,
+        "LUT4": 1984,
+        "LUT2": 1489,
+        "DFFRE": 3675,
+        "DFFR": 280,
+        "DFF": 113,
+        "DFFS": 12,
+        "DFFE": 463,
+        "DFFSE": 93,
+        "SDPB": 2,
+        "MULTADDALU18X18": 2,
+        "MULT18X18": 1,
+        "ALU54D": 1,
+        "ALU": 590,
+        "INV": 20,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 4636,
+      "lut_primitives": 8332,
+      "mux_primitives": 0,
+      "clock_enable_nets": [
+        {
+          "net": "ds5_797_9",
+          "register_loads": 548
+        },
+        {
+          "net": "\\c$running_app_arg_3431_6",
+          "register_loads": 521
+        },
+        {
+          "net": "ds4_173_10",
+          "register_loads": 310
+        },
+        {
+          "net": "machine_0_1458_8",
+          "register_loads": 162
+        },
+        {
+          "net": "\\c$running_app_arg_2432_9",
+          "register_loads": 132
+        },
+        {
+          "net": "\\c$running_app_arg_2299_9",
+          "register_loads": 132
+        },
+        {
+          "net": "ds3_0_132_9",
+          "register_loads": 122
+        },
+        {
+          "net": "advance",
+          "register_loads": 82
+        },
+        {
+          "net": "machine_0_380_9",
+          "register_loads": 68
+        },
+        {
+          "net": "\\c$running_app_arg_3107_9",
+          "register_loads": 66
+        },
+        {
+          "net": "\\c$running_app_arg_2974_9",
+          "register_loads": 66
+        },
+        {
+          "net": "\\c$running_app_arg_2841_9",
+          "register_loads": 66
+        },
+        {
+          "net": "\\c$running_app_arg_2708_9",
+          "register_loads": 66
+        },
+        {
+          "net": "\\c$running_app_arg_2028_9",
+          "register_loads": 64
+        },
+        {
+          "net": "machine_0_5843_11",
+          "register_loads": 64
+        },
+        {
+          "net": "machine_0_2011_11",
+          "register_loads": 64
+        },
+        {
+          "net": "machine_0_1556_10",
+          "register_loads": 64
+        },
+        {
+          "net": "machine_0_1200_9",
+          "register_loads": 48
+        },
+        {
+          "net": "\\c$running_app_arg_381_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_339_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_297_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_255_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_213_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_171_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_129_9",
+          "register_loads": 42
+        },
+        {
+          "net": "\\c$running_app_arg_87_9",
+          "register_loads": 42
+        },
+        {
+          "net": "machine_0_1328_10",
+          "register_loads": 37
+        },
+        {
+          "net": "machine_0_872_10",
+          "register_loads": 34
+        },
+        {
+          "net": "ds6_357_10",
+          "register_loads": 33
+        },
+        {
+          "net": "machine_0_6017_8",
+          "register_loads": 33
+        },
+        {
+          "net": "machine_0_840_11",
+          "register_loads": 33
+        },
+        {
+          "net": "machine_0_1184_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_1055_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_1023_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_359_9",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_327_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_179_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_147_8",
+          "register_loads": 32
+        },
+        {
+          "net": "heldState_138_8",
+          "register_loads": 32
+        },
+        {
+          "net": "heldState_106_8",
+          "register_loads": 32
+        },
+        {
+          "net": "heldState_73_8",
+          "register_loads": 32
+        },
+        {
+          "net": "heldState_41_8",
+          "register_loads": 32
+        },
+        {
+          "net": "machine_0_904_11",
+          "register_loads": 31
+        },
+        {
+          "net": "\\c$running_app_arg_3399_8",
+          "register_loads": 30
+        },
+        {
+          "net": "ds6_255_255",
+          "register_loads": 30
+        },
+        {
+          "net": "machine_0_941_9",
+          "register_loads": 29
+        },
+        {
+          "net": "machine_0_5962_13",
+          "register_loads": 22
+        },
+        {
+          "net": "machine_0_379_9",
+          "register_loads": 20
+        },
+        {
+          "net": "ds3_0_93_8",
+          "register_loads": 10
+        },
+        {
+          "net": "machine_0_2340_23",
+          "register_loads": 10
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_71_8",
+          "register_loads": 9
+        },
+        {
+          "net": "machine_0_5975_9",
+          "register_loads": 8
+        },
+        {
+          "net": "machine_0_912_10",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_127_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_119_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_111_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_103_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_95_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_87_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_79_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_71_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_63_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_55_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_47_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_39_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_31_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_23_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_15_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$app_arg_264_7_5",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_271_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_263_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_255_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_247_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_239_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_231_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_223_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_215_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_207_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_199_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_191_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_183_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_175_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_167_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_159_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_151_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_143_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_135_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_127_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_119_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_111_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_103_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_95_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_87_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_79_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_71_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_63_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_55_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_47_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_39_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_31_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_23_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_62_8",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_49_6",
+          "register_loads": 8
+        },
+        {
+          "net": "\\c$ds3_app_arg_5_8",
+          "register_loads": 6
+        },
+        {
+          "net": "\\c$ds3_app_arg_15_8",
+          "register_loads": 5
+        },
+        {
+          "net": "\\c$ds_app_arg_29_7_8",
+          "register_loads": 5
+        },
+        {
+          "net": "\\c$ds_app_arg_31_7_8",
+          "register_loads": 5
+        },
+        {
+          "net": "\\c$ds3_app_arg_10_12",
+          "register_loads": 4
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_54_8",
+          "register_loads": 4
+        },
+        {
+          "net": "\\c$running_app_arg_2575_8",
+          "register_loads": 3
+        },
+        {
+          "net": "machine_0_2011_9",
+          "register_loads": 3
+        },
+        {
+          "net": "machine_0_46_8",
+          "register_loads": 3
+        },
+        {
+          "net": "machine_0_42_8",
+          "register_loads": 3
+        },
+        {
+          "net": "txPop",
+          "register_loads": 3
+        },
+        {
+          "net": "\\c$ds_app_arg_29_20_8",
+          "register_loads": 3
+        },
+        {
+          "net": "\\c$ds_app_arg_31_20_8",
+          "register_loads": 3
+        },
+        {
+          "net": "\\c$ds_app_arg_31_10_8",
+          "register_loads": 3
+        },
+        {
+          "net": "\\c$ds3_app_arg_3_4_13",
+          "register_loads": 3
+        },
+        {
+          "net": "\\c$running_app_arg_2572_20",
+          "register_loads": 2
+        },
+        {
+          "net": "\\c$running_app_arg_45_54",
+          "register_loads": 2
+        },
+        {
+          "net": "ds6_319_11",
+          "register_loads": 2
+        },
+        {
+          "net": "machine_0_182_8",
+          "register_loads": 2
+        },
+        {
+          "net": "machine_0_36_8",
+          "register_loads": 2
+        },
+        {
+          "net": "pushed_0",
+          "register_loads": 2
+        },
+        {
+          "net": "\\c$ds_app_arg_29_9_8",
+          "register_loads": 2
+        },
+        {
+          "net": "\\c$running_app_arg_3369_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$running_app_arg_3368_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$running_app_arg_2566_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$running_app_arg_2165_11",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$running_app_arg_837_8",
+          "register_loads": 1
+        },
+        {
+          "net": "ds6_319_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6151_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6150_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6149_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6148_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6147_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6146_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6145_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6144_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6143_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6142_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6141_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6140_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6139_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6138_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6137_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6136_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6135_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6134_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6133_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6132_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6131_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6130_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6129_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6128_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6127_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6126_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6125_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6124_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6123_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6122_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_6121_9",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_873_14",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_805_10",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_804_12",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_180_8",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_43_8",
+          "register_loads": 1
+        },
+        {
+          "net": "machine_0_39_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_32_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_29_10_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_29_2_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_29_1_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_29_0_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds3_app_arg_2_50_9",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_29_21_8",
+          "register_loads": 1
+        },
+        {
+          "net": "\\c$ds_app_arg_31_21_8",
+          "register_loads": 1
+        }
+      ]
+    },
+    "sdram_pipeline_cache": {
+      "cells": {
+        "LUT4": 724,
+        "LUT3": 222,
+        "LUT5": 192,
+        "LUT2": 8,
+        "DFFE": 351,
+        "DFF": 1,
+        "DFFS": 1,
+        "DFFR": 23,
+        "DFFSE": 6,
+        "DFFRE": 110,
+        "SDPX9B": 2,
+        "SDPB": 33,
+        "pROM": 1,
+        "RAM16SDP4": 17,
+        "ALU": 196,
+        "INV": 2,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 492,
+      "lut_primitives": 1146,
+      "mux_primitives": 0,
+      "clock_enable_nets": [
+        {
+          "net": "advance",
+          "register_loads": 248
+        },
+        {
+          "net": "hit2_8",
+          "register_loads": 34
+        },
+        {
+          "net": "advanced",
+          "register_loads": 32
+        },
+        {
+          "net": "fill_target_31_6",
+          "register_loads": 32
+        },
+        {
+          "net": "write_address_319",
+          "register_loads": 21
+        },
+        {
+          "net": "write_address_321",
+          "register_loads": 21
+        },
+        {
+          "net": "write_address_323",
+          "register_loads": 21
+        },
+        {
+          "net": "write_address_325",
+          "register_loads": 21
+        },
+        {
+          "net": "fill_line_18_5",
+          "register_loads": 20
+        },
+        {
+          "net": "clearing",
+          "register_loads": 11
+        },
+        {
+          "net": "state_0_9",
+          "register_loads": 2
+        },
+        {
+          "net": "n9444_3",
+          "register_loads": 1
+        },
+        {
+          "net": "pop",
+          "register_loads": 1
+        },
+        {
+          "net": "n6937_26",
+          "register_loads": 1
+        },
+        {
+          "net": "state_1_9",
+          "register_loads": 1
+        }
+      ]
+    },
+    "sdram": {
+      "cells": {
+        "LUT5": 33,
+        "LUT4": 48,
+        "LUT2": 10,
+        "LUT3": 29,
+        "DFF": 6,
+        "DFFR": 5,
+        "DFFS": 4,
+        "DFFE": 117,
+        "DFFRE": 26,
+        "ALU": 14,
+        "INV": 4,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 158,
+      "lut_primitives": 120,
+      "mux_primitives": 0,
+      "clock_enable_nets": [
+        {
+          "net": "n1162_3",
+          "register_loads": 36
+        },
+        {
+          "net": "n1198_6",
+          "register_loads": 34
+        },
+        {
+          "net": "n366_9",
+          "register_loads": 32
+        },
+        {
+          "net": "n838_6",
+          "register_loads": 14
+        },
+        {
+          "net": "n1139_3",
+          "register_loads": 8
+        },
+        {
+          "net": "SDRAM_A_0_4",
+          "register_loads": 8
+        },
+        {
+          "net": "n407_3",
+          "register_loads": 4
+        },
+        {
+          "net": "n380_14",
+          "register_loads": 2
+        },
+        {
+          "net": "n408_21",
+          "register_loads": 2
+        },
+        {
+          "net": "SDRAM_BA_1_6",
+          "register_loads": 2
+        },
+        {
+          "net": "SDRAM_A_10_6",
+          "register_loads": 1
+        }
+      ]
+    },
+    "sdram_burst_memory": {
+      "cells": {
+        "LUT4": 8,
+        "LUT2": 2,
+        "LUT3": 2,
+        "LUT5": 5,
+        "DFFRE": 17,
+        "DFFR": 2,
+        "ALU": 15,
+        "sdram": 1,
+        "VCC": 1,
+        "GND": 1
+      },
+      "flip_flops": 19,
+      "lut_primitives": 17,
+      "mux_primitives": 0,
+      "clock_enable_nets": [
+        {
+          "net": "n36_9",
+          "register_loads": 15
+        },
+        {
+          "net": "accept",
+          "register_loads": 1
+        },
+        {
+          "net": "seen_busy_8",
+          "register_loads": 1
+        }
+      ]
+    },
+    "top": {
+      "cells": {
+        "IBUF": 4,
+        "IOBUF": 32,
+        "OBUF": 29,
+        "LUT2": 1,
+        "DFFP": 2,
+        "sdram_pll": 1,
+        "sdram_pipeline_risc": 1,
+        "sdram_pipeline_cache": 1,
+        "sdram_burst_memory": 1,
+        "VCC": 1,
+        "GND": 1,
+        "GSR": 1
+      },
+      "flip_flops": 2,
+      "lut_primitives": 1,
+      "mux_primitives": 0,
+      "clock_enable_nets": []
+    }
+  },
+  "high_fanout": [
+    {
+      "net": "clk",
+      "fanout": 5402,
+      "worst_slack_ns": 7.147,
+      "max_delay_ns": 2.274,
+      "driver": null
+    },
+    {
+      "net": "memory_reset_sync[1]",
+      "fanout": 4141,
+      "worst_slack_ns": 7.627,
+      "max_delay_ns": 1.748,
+      "driver": null
+    },
+    {
+      "net": "core/machine_0_0[5806]",
+      "fanout": 987,
+      "worst_slack_ns": 9.468,
+      "max_delay_ns": 5.543,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5806_s0",
+        "ports": {
+          "Q": "machine_0_0[5806]",
+          "D": "ds_30[5916]",
+          "CLK": "clk",
+          "CE": "\\c$running_app_arg_3431_6 ",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/machine_0_5806_5",
+      "fanout": 985,
+      "worst_slack_ns": 8.721,
+      "max_delay_ns": 5.52,
+      "driver": {
+        "cell_type": "DFFRE",
+        "instance": "machine_0_5806_s2",
+        "ports": {
+          "Q": "machine_0_5806_5",
+          "D": "ds_30_5916_8",
+          "CLK": "clk",
+          "CE": "\\c$running_app_arg_3431_6 ",
+          "RESET": "memory_reset_sync[1]"
+        },
+        "init": "1'b0"
+      }
+    },
+    {
+      "net": "core/c$running_app_arg_3431_6",
+      "fanout": 588,
+      "worst_slack_ns": 11.283,
+      "max_delay_ns": 1.817,
+      "driver": null
+    },
+    {
+      "net": "core/ds5_797_9",
+      "fanout": 548,
+      "worst_slack_ns": 7.627,
+      "max_delay_ns": 6.577,
+      "driver": {
+        "cell_type": "LUT3",
+        "instance": "ds5_797_s5",
+        "ports": {
+          "F": "ds5_797_9",
+          "I0": "\\c$running_app_arg [1962]",
+          "I1": "result_214_6128_8",
+          "I2": "result_214_2780_5"
+        },
+        "init": "8'h20"
+      }
+    },
+    {
+      "net": "advance",
+      "fanout": 358,
+      "worst_slack_ns": 10.556,
+      "max_delay_ns": 2.178,
+      "driver": null
+    },
+    {
+      "net": "core/result_214_7535_5",
+      "fanout": 320,
+      "worst_slack_ns": 8.28,
+      "max_delay_ns": 4.293,
+      "driver": {
+        "cell_type": "LUT5",
+        "instance": "result_214_7535_s2",
+        "ports": {
+          "F": "result_214_7535_5",
+          "I0": "\\c$case_alt_323_47_5 ",
+          "I1": "result_207_47_8",
+          "I2": "result_214_7535_8",
+          "I3": "result_214_7535_9",
+          "I4": "result_214_7535_10"
+        },
+        "init": "32'h15550000"
+      }
+    },
+    {
+      "net": "core/ds4_173_10",
+      "fanout": 310,
+      "worst_slack_ns": 8.682,
+      "max_delay_ns": 5.181,
+      "driver": {
+        "cell_type": "LUT4",
+        "instance": "ds4_173_s5",
+        "ports": {
+          "F": "ds4_173_10",
+          "I0": "result_326_38_10",
+          "I1": "\\c$running_app_arg [2162]",
+          "I2": "\\c$running_app_arg [1963]",
+          "I3": "result_214_2780_5"
+        },
+        "init": "16'h0400"
+      }
+    },
+    {
+      "net": "core/result_214_2780_5",
+      "fanout": 286,
+      "worst_slack_ns": 7.627,
+      "max_delay_ns": 2.297,
+      "driver": {
+        "cell_type": "LUT5",
+        "instance": "result_214_2780_s2",
+        "ports": {
+          "F": "result_214_2780_5",
+          "I0": "machine_0_0[5806]",
+          "I1": "\\c$case_alt_323_47_5 ",
+          "I2": "n9698_6",
+          "I3": "n9698_7",
+          "I4": "n9698_8"
+        },
+        "init": "32'h88A8A8A8"
+      }
+    }
+  ],
+  "setup_paths": [
+    {
+      "number": 1,
+      "slack_ns": 7.147,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_214_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.651
+    },
+    {
+      "number": 2,
+      "slack_ns": 7.147,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_256_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.651
+    },
+    {
+      "number": 3,
+      "slack_ns": 7.147,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_297_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.651
+    },
+    {
+      "number": 4,
+      "slack_ns": 7.148,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_340_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.65
+    },
+    {
+      "number": 5,
+      "slack_ns": 7.153,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_339_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.646
+    },
+    {
+      "number": 6,
+      "slack_ns": 7.169,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_172_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.63
+    },
+    {
+      "number": 7,
+      "slack_ns": 7.18,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_381_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.618
+    },
+    {
+      "number": 8,
+      "slack_ns": 7.194,
+      "source": "core/c$running_app_arg_2574_s0/Q",
+      "destination": "core/c$running_app_arg_3377_s0/D",
+      "relation_ns": 20.833,
+      "delay_ns": 13.604
+    },
+    {
+      "number": 9,
+      "slack_ns": 7.194,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2181_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.604
+    },
+    {
+      "number": 10,
+      "slack_ns": 7.229,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_254_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.57
+    },
+    {
+      "number": 11,
+      "slack_ns": 7.229,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_212_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.569
+    },
+    {
+      "number": 12,
+      "slack_ns": 7.229,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_213_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.569
+    },
+    {
+      "number": 13,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2616_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 14,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2653_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 15,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2654_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 16,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2656_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 17,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2659_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 18,
+      "slack_ns": 7.289,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2660_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 19,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2634_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 20,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2636_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 21,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2648_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 22,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2657_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 23,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2658_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 24,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2664_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    },
+    {
+      "number": 25,
+      "slack_ns": 7.29,
+      "source": "core/machine_0_2076_s0/Q",
+      "destination": "core/c$running_app_arg_2666_s0/CE",
+      "relation_ns": 20.833,
+      "delay_ns": 13.509
+    }
+  ],
+  "detailed_setup_paths": [
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_214_s0",
+      "slack_ns": 7.147,
+      "endpoint": "core/c$running_app_arg_214_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.923,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[1][A]",
+          "node": "core/c$running_app_arg_255_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_255_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_255_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[1][A]",
+          "node": "core/c$running_app_arg_255_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_255_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_255_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 21.252,
+          "delay_ns": 1.453,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R23C47[2][A]",
+          "node": "core/c$running_app_arg_214_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_214_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [214]",
+              "D": "\\c$ds_case_alt_2530_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_255_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_256_s0",
+      "slack_ns": 7.147,
+      "endpoint": "core/c$running_app_arg_256_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.923,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[0][B]",
+          "node": "core/c$running_app_arg_297_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_297_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_297_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[0][B]",
+          "node": "core/c$running_app_arg_297_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_297_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_297_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.252,
+          "delay_ns": 1.453,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R23C46[0][A]",
+          "node": "core/c$running_app_arg_256_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_256_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [256]",
+              "D": "\\c$ds_case_alt_2530_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_297_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_297_s0",
+      "slack_ns": 7.147,
+      "endpoint": "core/c$running_app_arg_297_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.923,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[0][B]",
+          "node": "core/c$running_app_arg_297_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_297_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_297_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[0][B]",
+          "node": "core/c$running_app_arg_297_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_297_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_297_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.252,
+          "delay_ns": 1.453,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R20C44[0][B]",
+          "node": "core/c$running_app_arg_297_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_297_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [297]",
+              "D": "\\c$ds_case_alt_2571_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_297_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_340_s0",
+      "slack_ns": 7.148,
+      "endpoint": "core/c$running_app_arg_340_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.922,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[0][A]",
+          "node": "core/c$running_app_arg_381_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_381_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_381_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[0][A]",
+          "node": "core/c$running_app_arg_381_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_381_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_381_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.251,
+          "delay_ns": 1.452,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R23C46[1][A]",
+          "node": "core/c$running_app_arg_340_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_340_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [340]",
+              "D": "\\c$ds_case_alt_2530_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_381_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_339_s0",
+      "slack_ns": 7.153,
+      "endpoint": "core/c$running_app_arg_339_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.918,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[2][A]",
+          "node": "core/c$running_app_arg_339_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_339_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_339_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[2][A]",
+          "node": "core/c$running_app_arg_339_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_339_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_339_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 21.246,
+          "delay_ns": 1.447,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R21C44[2][B]",
+          "node": "core/c$running_app_arg_339_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_339_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [339]",
+              "D": "\\c$ds_case_alt_2571_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_339_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_172_s0",
+      "slack_ns": 7.169,
+      "endpoint": "core/c$running_app_arg_172_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.902,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.212,
+          "delay_ns": 3.514,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.782,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.23,
+          "delay_ns": 1.448,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R23C48[0][A]",
+          "node": "core/c$running_app_arg_172_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_172_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [172]",
+              "D": "\\c$ds_case_alt_2530_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_213_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_381_s0",
+      "slack_ns": 7.18,
+      "endpoint": "core/c$running_app_arg_381_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.89,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[0][A]",
+          "node": "core/c$running_app_arg_381_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_381_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_381_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[0][A]",
+          "node": "core/c$running_app_arg_381_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_381_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_381_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_381_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.219,
+          "delay_ns": 1.42,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R20C44[1][B]",
+          "node": "core/c$running_app_arg_381_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_381_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [381]",
+              "D": "\\c$ds_case_alt_2571_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_381_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/c$running_app_arg_2574_s0",
+      "destination": "core/c$running_app_arg_3377_s0",
+      "slack_ns": 7.194,
+      "endpoint": "core/c$running_app_arg_3377_s0/D",
+      "endpoint_pin": "D",
+      "logic_levels": 9,
+      "cell_ns": 3.616,
+      "route_ns": 9.756,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 121,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 121,
+          "location": "R23C52[0][A]",
+          "node": "core/c$running_app_arg_2574_s0/Q",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2574_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2574]",
+              "D": "result_214[6740]",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2575_8 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        },
+        {
+          "arrival_ns": 9.953,
+          "delay_ns": 2.12,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 2,
+          "location": "R11C46[0][B]",
+          "node": "core/n545547_s0/I1",
+          "cell": {
+            "cell_type": "ALU",
+            "instance": "n545547_s0",
+            "ports": {
+              "SUM": "n545547_1_SUM",
+              "COUT": "n545547_3",
+              "I0": "\\c$running_app_arg [2571]",
+              "I1": "\\c$running_app_arg [2574]",
+              "I3": "GND",
+              "CIN": "n545546_3"
+            },
+            "init": null
+          }
+        },
+        {
+          "arrival_ns": 10.523,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 1,
+          "location": "R11C46[0][B]",
+          "node": "core/n545547_s0/COUT",
+          "cell": {
+            "cell_type": "ALU",
+            "instance": "n545547_s0",
+            "ports": {
+              "SUM": "n545547_1_SUM",
+              "COUT": "n545547_3",
+              "I0": "\\c$running_app_arg [2571]",
+              "I1": "\\c$running_app_arg [2574]",
+              "I3": "GND",
+              "CIN": "n545546_3"
+            },
+            "init": null
+          }
+        },
+        {
+          "arrival_ns": 10.523,
+          "delay_ns": 0.0,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 2,
+          "location": "R11C46[1][A]",
+          "node": "core/n545548_s0/CIN",
+          "cell": {
+            "cell_type": "ALU",
+            "instance": "n545548_s0",
+            "ports": {
+              "SUM": "n545548_1_SUM",
+              "COUT": "waiting_0",
+              "I0": "\\c$running_app_arg [2572]",
+              "I1": "\\c$running_app_arg [2575]",
+              "I3": "GND",
+              "CIN": "n545547_3"
+            },
+            "init": null
+          }
+        },
+        {
+          "arrival_ns": 10.558,
+          "delay_ns": 0.035,
+          "kind": "tINS",
+          "edge": "RF",
+          "fanout": 78,
+          "location": "R11C46[1][A]",
+          "node": "core/n545548_s0/COUT",
+          "cell": {
+            "cell_type": "ALU",
+            "instance": "n545548_s0",
+            "ports": {
+              "SUM": "n545548_1_SUM",
+              "COUT": "waiting_0",
+              "I0": "\\c$running_app_arg [2572]",
+              "I1": "\\c$running_app_arg [2575]",
+              "I3": "GND",
+              "CIN": "n545547_3"
+            },
+            "init": null
+          }
+        },
+        {
+          "arrival_ns": 14.302,
+          "delay_ns": 3.744,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R21C53[1]",
+          "node": "core/ds_30_4918_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "ds_30_4918_s5",
+            "ports": {
+              "F": "ds_30_4918_10",
+              "I0": "rdata[0]",
+              "I1": "rdata[1]",
+              "I2": "waiting_0",
+              "I3": "\\c$decodeTarget_$j1_$j3Out_case_alt_0 [4]",
+              "I4": "\\c$decodeTarget_$j1_$j3Out_case_alt_0 [3]"
+            },
+            "init": "32'h07F7F7F7"
+          }
+        },
+        {
+          "arrival_ns": 14.776,
+          "delay_ns": 0.474,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 17,
+          "location": "R21C53[1]",
+          "node": "core/ds_30_4918_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "ds_30_4918_s5",
+            "ports": {
+              "F": "ds_30_4918_10",
+              "I0": "rdata[0]",
+              "I1": "rdata[1]",
+              "I2": "waiting_0",
+              "I3": "\\c$decodeTarget_$j1_$j3Out_case_alt_0 [4]",
+              "I4": "\\c$decodeTarget_$j1_$j3Out_case_alt_0 [3]"
+            },
+            "init": "32'h07F7F7F7"
+          }
+        },
+        {
+          "arrival_ns": 15.01,
+          "delay_ns": 0.234,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C53[2][A]",
+          "node": "core/result_214_7565_s32/I2",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s32",
+            "ports": {
+              "F": "result_214_7565_40",
+              "I0": "\\c$running_app_arg [3369]",
+              "I1": "waiting_0",
+              "I2": "ds_30_4918_10",
+              "I3": "\\c$running_app_arg [3140]"
+            },
+            "init": "16'h4050"
+          }
+        },
+        {
+          "arrival_ns": 15.565,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 5,
+          "location": "R20C53[2][A]",
+          "node": "core/result_214_7565_s32/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s32",
+            "ports": {
+              "F": "result_214_7565_40",
+              "I0": "\\c$running_app_arg [3369]",
+              "I1": "waiting_0",
+              "I2": "ds_30_4918_10",
+              "I3": "\\c$running_app_arg [3140]"
+            },
+            "init": "16'h4050"
+          }
+        },
+        {
+          "arrival_ns": 16.457,
+          "delay_ns": 0.891,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R15C46[3][A]",
+          "node": "core/c$running_app_arg_2575_s5/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$running_app_arg_2575_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2575_9 ",
+              "I0": "result_214_7565_14",
+              "I1": "result_214_7565_40"
+            },
+            "init": "4'h4"
+          }
+        },
+        {
+          "arrival_ns": 16.828,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 32,
+          "location": "R15C46[3][A]",
+          "node": "core/c$running_app_arg_2575_s5/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$running_app_arg_2575_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2575_9 ",
+              "I0": "result_214_7565_14",
+              "I1": "result_214_7565_40"
+            },
+            "init": "4'h4"
+          }
+        },
+        {
+          "arrival_ns": 17.819,
+          "delay_ns": 0.992,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R22C51[3]",
+          "node": "core/ds_30_4961_s3/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "ds_30_4961_s3",
+            "ports": {
+              "F": "ds_30_4961_8",
+              "I0": "\\c$running_app_arg [3377]",
+              "I1": "\\c$running_app_arg [3369]",
+              "I2": "\\c$running_app_arg_2575_9 ",
+              "I3": "\\c$running_app_arg_3369_9 ",
+              "I4": "ds_30_4960_17"
+            },
+            "init": "32'h10105550"
+          }
+        },
+        {
+          "arrival_ns": 18.439,
+          "delay_ns": 0.62,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 2,
+          "location": "R22C51[3]",
+          "node": "core/ds_30_4961_s3/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "ds_30_4961_s3",
+            "ports": {
+              "F": "ds_30_4961_8",
+              "I0": "\\c$running_app_arg [3377]",
+              "I1": "\\c$running_app_arg [3369]",
+              "I2": "\\c$running_app_arg_2575_9 ",
+              "I3": "\\c$running_app_arg_3369_9 ",
+              "I4": "ds_30_4960_17"
+            },
+            "init": "32'h10105550"
+          }
+        },
+        {
+          "arrival_ns": 19.482,
+          "delay_ns": 1.043,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C49[1][A]",
+          "node": "core/result_214_7543_s3/I0",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "result_214_7543_s3",
+            "ports": {
+              "F": "result_214_7543_6",
+              "I0": "ds_30_4961_8",
+              "I1": "ds_30_4961_9"
+            },
+            "init": "4'h4"
+          }
+        },
+        {
+          "arrival_ns": 19.999,
+          "delay_ns": 0.517,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C49[1][A]",
+          "node": "core/result_214_7543_s3/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "result_214_7543_s3",
+            "ports": {
+              "F": "result_214_7543_6",
+              "I0": "ds_30_4961_8",
+              "I1": "ds_30_4961_9"
+            },
+            "init": "4'h4"
+          }
+        },
+        {
+          "arrival_ns": 20.721,
+          "delay_ns": 0.721,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R23C49[2]",
+          "node": "core/result_214_7543_s1/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "result_214_7543_s1",
+            "ports": {
+              "F": "result_214[7543]",
+              "I0": "\\c$running_app_arg [414]",
+              "I1": "result_214_7543_5",
+              "I2": "result_214_7543_6",
+              "I3": "result_214_7543_7",
+              "I4": "result_214_7543_8"
+            },
+            "init": "32'h1033FFFF"
+          }
+        },
+        {
+          "arrival_ns": 21.195,
+          "delay_ns": 0.474,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R23C49[2]",
+          "node": "core/result_214_7543_s1/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "result_214_7543_s1",
+            "ports": {
+              "F": "result_214[7543]",
+              "I0": "\\c$running_app_arg [414]",
+              "I1": "result_214_7543_5",
+              "I2": "result_214_7543_6",
+              "I3": "result_214_7543_7",
+              "I4": "result_214_7543_8"
+            },
+            "init": "32'h1033FFFF"
+          }
+        },
+        {
+          "arrival_ns": 21.205,
+          "delay_ns": 0.01,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R23C49[2][A]",
+          "node": "core/c$running_app_arg_3377_s0/D",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_3377_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [3377]",
+              "D": "result_214[7543]",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_3399_8 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2181_s0",
+      "slack_ns": 7.194,
+      "endpoint": "core/c$running_app_arg_2181_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.475,
+      "route_ns": 11.897,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 17.444,
+          "delay_ns": 1.746,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R12C38[0][B]",
+          "node": "core/c$running_app_arg_2299_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_2299_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2299_9 ",
+              "I0": "\\c$running_app_arg [2165]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_2165_9 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 17.993,
+          "delay_ns": 0.549,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 132,
+          "location": "R12C38[0][B]",
+          "node": "core/c$running_app_arg_2299_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_2299_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2299_9 ",
+              "I0": "\\c$running_app_arg [2165]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_2165_9 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 21.204,
+          "delay_ns": 3.212,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R34C25[2][B]",
+          "node": "core/c$running_app_arg_2181_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2181_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2181]",
+              "D": "\\c$ds_case_alt_4665_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2299_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_254_s0",
+      "slack_ns": 7.229,
+      "endpoint": "core/c$running_app_arg_254_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.842,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.229,
+          "delay_ns": 3.531,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C21[1][A]",
+          "node": "core/c$running_app_arg_255_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_255_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_255_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 19.799,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C21[1][A]",
+          "node": "core/c$running_app_arg_255_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_255_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_255_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_297_10 "
+            },
+            "init": "16'h8000"
+          }
+        },
+        {
+          "arrival_ns": 21.17,
+          "delay_ns": 1.371,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R18C46[0][A]",
+          "node": "core/c$running_app_arg_254_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_254_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [254]",
+              "D": "\\c$ds_case_alt_2570_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_255_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_212_s0",
+      "slack_ns": 7.229,
+      "endpoint": "core/c$running_app_arg_212_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.841,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.212,
+          "delay_ns": 3.514,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.782,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.17,
+          "delay_ns": 1.388,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R18C43[1][A]",
+          "node": "core/c$running_app_arg_212_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_212_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [212]",
+              "D": "\\c$ds_case_alt_2570_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_213_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_213_s0",
+      "slack_ns": 7.229,
+      "endpoint": "core/c$running_app_arg_213_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.496,
+      "route_ns": 11.841,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 19.212,
+          "delay_ns": 3.514,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/I1",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 19.782,
+          "delay_ns": 0.57,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 42,
+          "location": "R8C22[1][A]",
+          "node": "core/c$running_app_arg_213_s5/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "c$running_app_arg_213_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_213_9 ",
+              "I0": "\\c$running_app_arg [42]",
+              "I1": "result_214_7565_32",
+              "I2": "advance",
+              "I3": "\\c$running_app_arg_213_10 "
+            },
+            "init": "16'h4000"
+          }
+        },
+        {
+          "arrival_ns": 21.17,
+          "delay_ns": 1.388,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R18C43[1][B]",
+          "node": "core/c$running_app_arg_213_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_213_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [213]",
+              "D": "\\c$ds_case_alt_2571_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_213_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2616_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2616_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R14C53[0][A]",
+          "node": "core/c$running_app_arg_2616_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2616_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2616]",
+              "D": "\\c$ds_case_alt_5100_20 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2653_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2653_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R9C50[1][B]",
+          "node": "core/c$running_app_arg_2653_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2653_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2653]",
+              "D": "\\c$ds_case_alt_5071_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2654_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2654_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R14C50[0][B]",
+          "node": "core/c$running_app_arg_2654_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2654_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2654]",
+              "D": "\\c$ds_case_alt_5072_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2656_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2656_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R14C53[1][B]",
+          "node": "core/c$running_app_arg_2656_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2656_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2656]",
+              "D": "\\c$ds_case_alt_5074_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2659_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2659_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R14C50[2][A]",
+          "node": "core/c$running_app_arg_2659_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2659_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2659]",
+              "D": "\\c$ds_case_alt_5077_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2660_s0",
+      "slack_ns": 7.289,
+      "endpoint": "core/c$running_app_arg_2660_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.11,
+          "delay_ns": 3.781,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R9C50[2][B]",
+          "node": "core/c$running_app_arg_2660_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2660_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2660]",
+              "D": "\\c$ds_case_alt_5078_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2634_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2634_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R5C50[0][A]",
+          "node": "core/c$running_app_arg_2634_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2634_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2634]",
+              "D": "\\c$ds_case_alt_5118_20 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2636_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2636_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R4C48[0][A]",
+          "node": "core/c$running_app_arg_2636_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2636_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2636]",
+              "D": "\\c$ds_case_alt_5120_20 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2648_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2648_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R11C48[2][B]",
+          "node": "core/c$running_app_arg_2648_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2648_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2648]",
+              "D": "\\c$ds_case_alt_5066_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2657_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2657_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R13C49[2][B]",
+          "node": "core/c$running_app_arg_2657_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2657_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2657]",
+              "D": "\\c$ds_case_alt_5075_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2658_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2658_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R12C47[0][B]",
+          "node": "core/c$running_app_arg_2658_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2658_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2658]",
+              "D": "\\c$ds_case_alt_5076_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2664_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2664_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R11C51[1][B]",
+          "node": "core/c$running_app_arg_2664_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2664_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2664]",
+              "D": "\\c$ds_case_alt_5082_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    },
+    {
+      "source": "core/machine_0_2076_s0",
+      "destination": "core/c$running_app_arg_2666_s0",
+      "slack_ns": 7.29,
+      "endpoint": "core/c$running_app_arg_2666_s0/CE",
+      "endpoint_pin": "CE",
+      "logic_levels": 4,
+      "cell_ns": 1.58,
+      "route_ns": 11.697,
+      "clock_to_q_ns": 0.232,
+      "max_data_fanout": 285,
+      "hops": [
+        {
+          "arrival_ns": 7.833,
+          "delay_ns": 0.232,
+          "kind": "tC2Q",
+          "edge": "RF",
+          "fanout": 40,
+          "location": "R35C41[0][A]",
+          "node": "core/machine_0_2076_s0/Q",
+          "cell": {
+            "cell_type": "DFFSE",
+            "instance": "machine_0_2076_s0",
+            "ports": {
+              "Q": "machine_0_0[2076]",
+              "D": "result_214[3868]",
+              "CLK": "clk",
+              "CE": "machine_0_6017_8",
+              "SET": "memory_reset_sync[1]"
+            },
+            "init": "1'b1"
+          }
+        },
+        {
+          "arrival_ns": 10.205,
+          "delay_ns": 2.372,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/I1",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 10.76,
+          "delay_ns": 0.555,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 285,
+          "location": "R7C9[0][B]",
+          "node": "core/c$case_alt_323_47_s2/F",
+          "cell": {
+            "cell_type": "LUT2",
+            "instance": "c$case_alt_323_47_s2",
+            "ports": {
+              "F": "\\c$case_alt_323_47_5 ",
+              "I0": "emergency",
+              "I1": "machine_0_0[2076]"
+            },
+            "init": "4'h2"
+          }
+        },
+        {
+          "arrival_ns": 15.327,
+          "delay_ns": 4.567,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/I0",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 15.698,
+          "delay_ns": 0.371,
+          "kind": "tINS",
+          "edge": "FF",
+          "fanout": 121,
+          "location": "R20C42[1][B]",
+          "node": "core/result_214_7565_s28/F",
+          "cell": {
+            "cell_type": "LUT4",
+            "instance": "result_214_7565_s28",
+            "ports": {
+              "F": "result_214_7565_32",
+              "I0": "\\c$case_alt_323_47_5 ",
+              "I1": "result_214_7565_10",
+              "I2": "machine_0_5806_5",
+              "I3": "\\c$running_app_arg [414]"
+            },
+            "init": "16'h0010"
+          }
+        },
+        {
+          "arrival_ns": 16.675,
+          "delay_ns": 0.978,
+          "kind": "tNET",
+          "edge": "FF",
+          "fanout": 1,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/I2",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 17.329,
+          "delay_ns": 0.654,
+          "kind": "tINS",
+          "edge": "FR",
+          "fanout": 66,
+          "location": "R13C44[0]",
+          "node": "core/c$running_app_arg_2708_s5/F",
+          "cell": {
+            "cell_type": "LUT5",
+            "instance": "c$running_app_arg_2708_s5",
+            "ports": {
+              "F": "\\c$running_app_arg_2708_9 ",
+              "I0": "\\c$running_app_arg [2570]",
+              "I1": "\\c$running_app_arg [2571]",
+              "I2": "result_214_7565_32",
+              "I3": "advance",
+              "I4": "\\c$running_app_arg_2572_21 "
+            },
+            "init": "32'h00008000"
+          }
+        },
+        {
+          "arrival_ns": 21.109,
+          "delay_ns": 3.78,
+          "kind": "tNET",
+          "edge": "RR",
+          "fanout": 1,
+          "location": "R12C47[0][A]",
+          "node": "core/c$running_app_arg_2666_s0/CE",
+          "cell": {
+            "cell_type": "DFFRE",
+            "instance": "c$running_app_arg_2666_s0",
+            "ports": {
+              "Q": "\\c$running_app_arg [2666]",
+              "D": "\\c$ds_case_alt_5084_18 ",
+              "CLK": "clk",
+              "CE": "\\c$running_app_arg_2708_9 ",
+              "RESET": "memory_reset_sync[1]"
+            },
+            "init": "1'b0"
+          }
+        }
+      ]
+    }
+  ],
+  "setup_endpoint_pins": {
+    "CE": 24,
+    "D": 1
+  },
+  "target_mhz": 48.0,
+  "fmax_mhz": 73.066,
+  "inputs": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-20261030/ordinary-48/impl/gwsynthesis/sdram_test.vg": "6d1adb5a65a53f454949310ec07ba64ab8f447285cca9ba8f9f0a5427fc9f17b",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-20261030/ordinary-48/impl/pnr/sdram_test.tr": "1e01fa51c8f94b57d5d0efdf5f6c988f58b2f07086cd74177a8f532cebe08ba4",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-20261030/ordinary-48/impl/pnr/sdram_test.rpt.txt": "5a721a2a16665fba6b8e395d97026906d65ef108e6ae16cf7be8bc7c6d6cf9e2"
+  }
+}

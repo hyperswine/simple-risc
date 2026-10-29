@@ -1,0 +1,68 @@
+Warning: The package list for 'hackage.haskell.org' is 16 days old.
+Run 'cabal update' to get the latest list of available packages.
+Resolving dependencies...
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (lib) (configuration changed)
+ - simple-risc-0.1.0.0 (exe:pipeline-layout) (first run)
+Configuring library for simple-risc-0.1.0.0...
+Preprocessing library for simple-risc-0.1.0.0...
+Building library for simple-risc-0.1.0.0...
+Configuring executable 'pipeline-layout' for simple-risc-0.1.0.0...
+Preprocessing executable 'pipeline-layout' for simple-risc-0.1.0.0...
+Building executable 'pipeline-layout' for simple-risc-0.1.0.0...
+[1 of 1] Compiling Main             ( tools/PipelineLayout.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/x/pipeline-layout/build/pipeline-layout/pipeline-layout-tmp/Main.o )
+
+tools/PipelineLayout.hs:31:32: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+31 |   gwidth _ = gwidth (Proxy @(f p))
+   |                                ^
+
+tools/PipelineLayout.hs:33:47: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+33 |   gwidth _ = let (ac, aw) = gwidth (Proxy @(a p)); (bc, bw) = gwidth (Proxy @(b p))
+   |                                               ^
+
+tools/PipelineLayout.hs:33:81: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+33 |   gwidth _ = let (ac, aw) = gwidth (Proxy @(a p)); (bc, bw) = gwidth (Proxy @(b p))
+   |                                                                                 ^
+
+tools/PipelineLayout.hs:36:41: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+36 |   gwidth _ = (1, snd (gwidth (Proxy @(a p))) + snd (gwidth (Proxy @(b p))))
+   |                                         ^
+
+tools/PipelineLayout.hs:36:71: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+36 |   gwidth _ = (1, snd (gwidth (Proxy @(a p))) + snd (gwidth (Proxy @(b p))))
+   |                                                                       ^
+
+tools/PipelineLayout.hs:66:79: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+66 | instance GFields f => GFields (M1 D c f) where gfields _ = gfields (Proxy @(f p))
+   |                                                                               ^
+
+tools/PipelineLayout.hs:67:79: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+67 | instance GFields f => GFields (M1 C c f) where gfields _ = gfields (Proxy @(f p))
+   |                                                                               ^
+
+tools/PipelineLayout.hs:69:34: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+69 |   gfields _ = gfields (Proxy @(a p)) ++ gfields (Proxy @(b p))
+   |                                  ^
+
+tools/PipelineLayout.hs:69:60: error: [GHC-76037]
+    Not in scope: type variable ‘p’
+   |
+69 |   gfields _ = gfields (Proxy @(a p)) ++ gfields (Proxy @(b p))
+   |                                                            ^

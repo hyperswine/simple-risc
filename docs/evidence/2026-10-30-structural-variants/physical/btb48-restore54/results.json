@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "cpu_mhz": 54.0,
+  "baud": 62212,
+  "cases": [],
+  "bitstream_sha256": "f01fdf0bb48c3f5842cf8f8ad0d7d24bc1a746c9959993089e26a4661e207038",
+  "images": {},
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "04254a7e27d5b8b92ef624b7ce5a1655f9121097533432603ce47c2e6667fd2e",
+  "pattern_order": [
+    "zero",
+    "ones",
+    "sequence"
+  ],
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=00000036 mem=00000036 ram=00800000 max=00200000 cap=PMXQVHTUICG id=9819062505a27795",
+  "upload_probes": [
+    {
+      "words": 1,
+      "pattern": "zero",
+      "readbacks": [
+        "2144df1c",
+        "2144df1c",
+        "2144df1c"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "2144df1c",
+      "passed": true
+    },
+    {
+      "words": 1,
+      "pattern": "ones",
+      "readbacks": [
+        "ffffffff",
+        "ffffffff",
+        "ffffffff"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "ffffffff",
+      "passed": true
+    },
+    {
+      "words": 1,
+      "pattern": "sequence",
+      "readbacks": [
+        "928c776a",
+        "928c776a",
+        "928c776a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "928c776a",
+      "passed": true
+    },
+    {
+      "words": 16,
+      "pattern": "zero",
+      "readbacks": [
+        "758d6336",
+        "758d6336",
+        "758d6336"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "758d6336",
+      "passed": true
+    },
+    {
+      "words": 16,
+      "pattern": "ones",
+      "readbacks": [
+        "0f6187ba",
+        "0f6187ba",
+        "0f6187ba"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "0f6187ba",
+      "passed": true
+    },
+    {
+      "words": 16,
+      "pattern": "sequence",
+      "readbacks": [
+        "96afc5a6",
+        "96afc5a6",
+        "96afc5a6"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "96afc5a6",
+      "passed": true
+    },
+    {
+      "words": 128,
+      "pattern": "zero",
+      "readbacks": [
+        "b2aa7578",
+        "b2aa7578",
+        "b2aa7578"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "b2aa7578",
+      "passed": true
+    },
+    {
+      "words": 128,
+      "pattern": "ones",
+      "readbacks": [
+        "bd7bc39f",
+        "bd7bc39f",
+        "bd7bc39f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "bd7bc39f",
+      "passed": true
+    },
+    {
+      "words": 128,
+      "pattern": "sequence",
+      "readbacks": [
+        "7b802688",
+        "7b802688",
+        "7b802688"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "7b802688",
+      "passed": true
+    },
+    {
+      "words": 512,
+      "pattern": "zero",
+      "readbacks": [
+        "f1e8ba9e",
+        "f1e8ba9e",
+        "f1e8ba9e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "f1e8ba9e",
+      "passed": true
+    },
+    {
+      "words": 512,
+      "pattern": "ones",
+      "readbacks": [
+        "3f55d17f",
+        "3f55d17f",
+        "3f55d17f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "3f55d17f",
+      "passed": true
+    },
+    {
+      "words": 512,
+      "pattern": "sequence",
+      "readbacks": [
+        "60b7615e",
+        "60b7615e",
+        "60b7615e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "60b7615e",
+      "passed": true
+    }
+  ],
+  "phase": "upload probes complete; no guest executed"
+}

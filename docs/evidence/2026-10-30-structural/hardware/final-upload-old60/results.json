@@ -1,0 +1,158 @@
+{
+  "passed": false,
+  "cpu_mhz": 60.0,
+  "baud": 69124,
+  "cases": [],
+  "bitstream_sha256": "5158dc5ae5c152776f3e904a04b6ee50c30fdd6743c40576d647b65115c1c846",
+  "images": {},
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "48bc3a3b93c14e8649681be34e110acc123f6c8ff0537a7eb66e7155c468c788",
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICG id=44535dec1979d39c",
+  "upload_probes": [
+    {
+      "words": 1,
+      "pattern": "zero",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "unexpected ROM upload reply: b'DONEERR HDR\\n'"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "ones",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "ROM rejected upload with ERR TMO"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "sequence",
+      "readbacks": [
+        "928c776a",
+        "928c776a",
+        "928c776a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "928c776a",
+      "passed": true
+    },
+    {
+      "words": 16,
+      "pattern": "zero",
+      "readbacks": [
+        "686ad78a",
+        "686ad78a",
+        "686ad78a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "758d6336",
+      "passed": false
+    },
+    {
+      "words": 16,
+      "pattern": "ones",
+      "readbacks": [
+        "0f6187ba",
+        "0f6187ba",
+        "0f6187ba"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "0f6187ba",
+      "passed": true
+    },
+    {
+      "words": 16,
+      "pattern": "sequence",
+      "readbacks": [
+        "96afc5a6",
+        "96afc5a6",
+        "96afc5a6"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "96afc5a6",
+      "passed": true
+    },
+    {
+      "words": 128,
+      "pattern": "zero",
+      "readbacks": [
+        "f81fc09a",
+        "f81fc09a",
+        "f81fc09a"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "b2aa7578",
+      "passed": false
+    },
+    {
+      "words": 128,
+      "pattern": "ones",
+      "readbacks": [
+        "bd7bc39f",
+        "bd7bc39f",
+        "bd7bc39f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "bd7bc39f",
+      "passed": true
+    },
+    {
+      "words": 128,
+      "pattern": "sequence",
+      "readbacks": [
+        "7b802688",
+        "7b802688",
+        "7b802688"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "7b802688",
+      "passed": true
+    },
+    {
+      "words": 512,
+      "pattern": "zero",
+      "readbacks": [
+        "f1da2d69",
+        "f1da2d69",
+        "f1da2d69"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "f1e8ba9e",
+      "passed": false
+    },
+    {
+      "words": 512,
+      "pattern": "ones",
+      "readbacks": [
+        "3f55d17f",
+        "3f55d17f",
+        "3f55d17f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "3f55d17f",
+      "passed": true
+    },
+    {
+      "words": 512,
+      "pattern": "sequence",
+      "readbacks": [
+        "60b7615e",
+        "60b7615e",
+        "60b7615e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "60b7615e",
+      "passed": true
+    }
+  ],
+  "phase": "upload probes complete; no guest executed"
+}

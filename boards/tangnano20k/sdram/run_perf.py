@@ -30,6 +30,18 @@ def sv_safe(text):
                   lambda m: m[1]+'_sv', text)
 
 
+OBSERVATION_PORTS = ('commit', 'word', 'pc', 'next_pc', 'issue', 'fetch_pc', 'empty', 'redirect')
+
+
+def require_observations(sources):
+    """Refuse ordinary or stale generated tops before compiling a testbench."""
+    text = '\n'.join(Path(source).read_text() for source in sources)
+    missing = [name for name in OBSERVATION_PORTS
+               if not re.search(r'\boutput\s+(?:wire\s+)?(?:\[\d+:\d+\]\s+)?observe_' + name + r'\b', text)]
+    if missing:
+        raise ValueError('generate SdramPipelineObserved for simulation; missing observation ports: ' + ', '.join(missing))
+
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -80,7 +92,8 @@ def main():
     stage.add_argument('--run-only', action='store_true', help='require matching source/configuration and binary hashes')
     p.add_argument('--jobs', type=int, default=2, help='bounded Verilator C++ build parallelism')
     p.add_argument('--timeout', type=float, default=1800, help='wall-clock limit per simulator execution')
-    p.add_argument('--profile-cpu', action='store_true', help='count current-ABI pipeline commits and redirects')
+    p.add_argument('--profile-cpu', action='store_true', help='count pipeline commits and redirects through named observation ports')
+    p.add_argument('--legacy-profile-20261028', action='store_true', help='explicit historical replay of the frozen 2026-10-28 profiling layout')
     a = p.parse_args()
     if (not all(math.isfinite(v) and v > 0 for v in [a.cpu_mhz, a.mem_mhz, a.timeout])
             or a.jobs < 1 or not 7 <= a.line_bits <= 12):
@@ -95,10 +108,15 @@ def main():
     sources = sorted(a.generated.glob('*.v'))
     if not sources:
         raise SystemExit(f'no generated Verilog in {a.generated}')
+    if a.legacy_profile_20261028 and not a.profile_cpu:
+        p.error('--legacy-profile-20261028 requires --profile-cpu')
     if a.profile_cpu:
-        text = '\n'.join(source.read_text() for source in sources)
-        if not re.search(r'wire\s+\[659:0\]\s+e2Moved\s*;', text) or not re.search(r'wire\s+mCommits\s*;', text):
-            raise SystemExit('generated CPU profiling ABI changed; revalidate the probe layout')
+        if a.legacy_profile_20261028:
+            text = '\n'.join(source.read_text() for source in sources)
+            if not re.search(r'wire\s+\[659:0\]\s+e2Moved\s*;', text) or not re.search(r'wire\s+mCommits\s*;', text):
+                raise SystemExit('archived profiling ABI mismatch; use named observations for current CPUs')
+        else:
+            require_observations(sources)
     copied = []
     for source in sources:
         text = source.read_text()
@@ -127,11 +145,13 @@ def main():
              '--top-module', 'perf_tb', '--Mdir', out/'obj', '-j', str(a.jobs),
              f'-GROM_FILE="{out}/rom.hex"', f'-GCDC_BRIDGE={cdc}', f'-GCPU_MHZ={a.cpu_mhz}',
              f'-GMEM_MHZ={a.mem_mhz}', f'-GPROFILE_CPU={int(a.profile_cpu)}', f'-GLINE_BITS={a.line_bits}', f'-GWAYS={a.ways}', f'-GWRITE_UPDATE={a.write_update}',
+             *(['-DLEGACY_PROFILE_20261028'] if a.legacy_profile_20261028 else []),
+             *(['-DNAMED_PIPELINE_OBSERVATIONS'] if a.profile_cpu and not a.legacy_profile_20261028 else []),
              *copied, a.cache_rtl.resolve(), a.bridge_rtl.resolve(), HERE/'sdram.v', HERE/'burst_memory.v',
              HERE/'perf_tb.v']
     config = dict(cpu_mhz=a.cpu_mhz, mem_mhz=a.mem_mhz, cdc=bool(cdc),
                   line_bits=a.line_bits, ways=a.ways, write_update=a.write_update,
-                  profile_cpu=a.profile_cpu, image_sha256=sha(a.image),
+                  profile_cpu=a.profile_cpu, profile_abi=('legacy-20261028' if a.legacy_profile_20261028 else 'named-v1') if a.profile_cpu else None, image_sha256=sha(a.image),
                   elf_sha256=sha(a.elf) if a.elf else None,
                   generated={str(p.resolve()): sha(p) for p in sources},
                   inputs={str(p.resolve()): sha(p) for p in [a.cache_rtl, a.bridge_rtl,

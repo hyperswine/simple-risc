@@ -1,0 +1,13 @@
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICG id=44535dec1979d39c
+OK f1e8ba9e
+f1e8ba9e
+f1e8ba9e
+f1e8ba9e
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:258: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 333ms; walltime 50.643 s; speed 6.567 ms/s
+- Verilator: cpu 50.595 s on 1 threads; allocated 13 MB

@@ -121,9 +121,12 @@ ide="/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA/IDE"
 # Diagnostic overrides: build with another cache or clock-bridge source.
 cache_rtl="${SDRAM_CACHE_RTL:-$here/pipeline_cache.v}"
 bridge_rtl="${SDRAM_BRIDGE_RTL:-$here/clock_bridge.v}"
+rom_file="${SDRAM_ROM_FILE:-$here/../bootrom/bootrom-sdram.hex}"
+if [[ "$rom_file" != /* ]];then rom_file="$root/$rom_file";fi
+[[ -f "$rom_file" ]] || { echo "missing ROM override: $rom_file" >&2;exit 1; }
 for f in "$cache_rtl" "$bridge_rtl";do [[ -f "$f" ]] || { echo "missing RTL override: $f" >&2;exit 1; };done
 mkdir -p "$out"
-python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" "$cache_ways" <<'PYTHON'
+python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" "$cache_ways" "$rom_file" <<'PYTHON'
 from pathlib import Path
 import hashlib, json, sys
 src,out=map(Path,sys.argv[1:3]);freq=int(sys.argv[3])
@@ -134,7 +137,9 @@ sd_slot=sys.argv[4] in ('core','pipeline')
 (out/'pins.cst').write_text(''.join(line for line in (src.parent/'tangnano20k.cst').read_text().splitlines(True) if sd_slot or '"sd_' not in line))
 if sys.argv[4] in ('core','pipeline','serial'):
     pipelined=sys.argv[4]!='serial'
-    rom_words=(src.parent/'bootrom/bootrom-sdram.hex').read_text().splitlines()[:508]
+    rom_words=Path(sys.argv[10]).read_text().splitlines()[:508]
+    if len(rom_words)!=508 or any(len(w)!=8 or any(c not in '0123456789abcdefABCDEF' for c in w) for w in rom_words):
+        raise SystemExit('boot ROM must provide 508 valid code words before metadata')
     manifest_path=out/'build-manifest.json'
     build_id=None
     if manifest_path.is_file():

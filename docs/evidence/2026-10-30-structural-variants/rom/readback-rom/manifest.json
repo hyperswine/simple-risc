@@ -1,0 +1,43 @@
+{
+  "ready": true,
+  "diagnostic": true,
+  "code_bytes": 1936,
+  "command": [
+    "riscv64-unknown-elf-gcc",
+    "-DROM_SDRAM",
+    "-DROM_DIAGNOSTIC_READBACK",
+    "-march=rv32i_zicsr",
+    "-mabi=ilp32",
+    "-Os",
+    "-Wall",
+    "-Wextra",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdlib",
+    "-nostartfiles",
+    "-msmall-data-limit=0",
+    "-fno-pic",
+    "-fno-jump-tables",
+    "-ffunction-sections",
+    "-Wl,--gc-sections",
+    "-Wl,--no-warn-rwx-segments",
+    "-T",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/readback-rom/link.ld",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/readback-rom/crt0.S",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/readback-rom/bootrom.c",
+    "-o",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/readback-rom/readback.elf"
+  ],
+  "sources": {
+    "bootrom.c": "e136b05b10e2f00a2089fc7ffa567657ab787746f76ebc32a5e0a40854100f08",
+    "crt0.S": "f7a52d9db102bdf2883da48370f15c61f065449d15d10208ec1633070e5b5f24",
+    "link.ld": "a0e6afaf06d449f0c001933c708ac20043a9c0a98d1d3f6de412514bf174c0bd",
+    "build_readback_rom.py": "021e61c07893b9110c02a4d658c6256b226bd455bc53bc2a5b4505f085eaf408"
+  },
+  "artifacts": {
+    "readback.bin": "9367f45006d52593e868c7ecdd09baf8e560bf74ee009787a737d1bf6b22dd00",
+    "readback.elf": "adbc3e947b27e21ec9edbcd83d23e97b7aa0d19889da8a4ac2282f301fdab2e4",
+    "readback.hex": "08a6b7f7d8d8321271017fcbc4e1f64ea5e63582945ed12e5ae3c7fbad587559",
+    "readback.lst": "629a7be314be0c339b5c2ccc9e93e76e266ebc45b455b3c4ef77146ffc5c5902"
+  }
+}

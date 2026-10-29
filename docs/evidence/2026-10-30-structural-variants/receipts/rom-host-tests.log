@@ -1,0 +1,3 @@
+PASS: 65280-byte loader bounds, I/U/C/G, Q/V/H/T, CRC32 & timeout recovery, P/R/M/X and reset causes
+PASS: 2097152-byte loader bounds, I/U/C/G, Q/V/H/T, CRC32 & timeout recovery, P/R/M/X and reset causes
+PASS: 2097152-byte loader bounds, I/U/C/G, Q/V/H/T, CRC32 & timeout recovery, P/R/M/X and reset causes

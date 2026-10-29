@@ -43,6 +43,7 @@ library
         PsramRegs
       , RiscVCompressed
       , SdramPipeline
+      , SdramPipelineObserved
       , SdramSimpleRisc
       , SimpleRisc
       , SimpleRisc.Types
@@ -57,6 +58,14 @@ executable clash
   build-depends: base, clash-ghc
   ghc-options: -threaded -rtsopts
 
+-- Host-only field metadata for attributing frozen generated timing reports.
+executable pipeline-layout
+  import: warnings
+  main-is: PipelineLayout.hs
+  hs-source-dirs: tools
+  build-depends: base, clash-prelude, simple-risc
+  ghc-options: -O0 -Wno-orphans
+
 test-suite simple-risc-test
   import: warnings, deps
   type: exitcode-stdio-1.0
@@ -64,6 +73,7 @@ test-suite simple-risc-test
   hs-source-dirs: test
   other-modules:
       PsramRegs
+    , FQueueVariant
     , Rv32Model
     , SimpleRisc
   build-depends: simple-risc, hedgehog

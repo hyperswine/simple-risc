@@ -143,8 +143,37 @@ topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en (circuit
 
 circuit :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal dom R.Word32,Signal dom (BitVector 4),Signal dom Bit,Signal dom Bit,Signal dom Bit)
-circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,mask,sck,mosi,cs)
+circuit serialRx memoryData memoryHeld sdMiso = fst (circuitWithObservations serialRx memoryData memoryHeld sdMiso)
+
+type BoardOutput dom = (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal dom R.Word32,Signal dom (BitVector 4),Signal dom Bit,Signal dom Bit,Signal dom Bit)
+
+-- A separate write port for the predictor table. Its index and entry come
+-- directly from the registered pending resolution, never the fetch arithmetic
+-- or Machine's fast/slow selector. Installation may repeat during a hold: it
+-- is idempotent, and applyBtbWrite still bypasses that same pending entry.
+-- Before the pending register changes, its old value has reached the table.
+-- Thus the effective predictor is identical even while logical CPU time stops.
+btbStorage :: HiddenClockResetEnable dom => Signal dom (Maybe (Index 8, R.BtbEntry)) -> Signal dom (Vec 8 R.BtbEntry)
+btbStorage pending = bundle (imap bank (repeat ()))
  where
+ bank index _ = regEn (R.BtbEntry False False 0 0)
+   ((\write -> maybe False ((==index) . fst) write) <$> pending)
+   ((\write -> maybe (R.BtbEntry False False 0 0) snd write) <$> pending)
+
+withoutBtb :: R.Pipe -> R.Pipe
+withoutBtb pipe = pipe {R.pBtb=repeat (R.BtbEntry False False 0 0)}
+
+withBtb :: Vec 8 R.BtbEntry -> R.Pipe -> R.Pipe
+withBtb table pipe = pipe {R.pBtb=table}
+
+-- The production top selects only the first component, so synthesis removes
+-- the observation cone. The observed top is a functional simulation target;
+-- it must never supply a board timing/resource measurement.
+circuitWithObservations :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
+ (BoardOutput dom, Signal dom R.PipelineTrace)
+circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace)
+ where
+ trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
  receivedNow=R.uartRx (register high (register high serialRx))
  emergency=register False ((==Just 3) <$> receivedNow)
  -- A hold is a clock enable on the machine register, not a next-state select:
@@ -172,8 +201,10 @@ circuit serialRx memoryData memoryHeld sdMiso = (serialTx,address,write,wdata,ma
  -- The pipeline itself is the largest remaining field, so it gets its own
  -- register: the hold enable is the widest net in the design either way, and
  -- one 5,000-load enable was the critical path before the split.
- pipeState=regEn (R.cpuPipe initialMachine) (not <$> holding) (R.cpuPipe <$> machineNext)
- running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> pipeState <*> machine))
+ pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
+ btb=btbStorage (R.pBtbWrite <$> pipeState)
+ effectivePipe=withBtb <$> btb <*> pipeState
+ running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
  -- Both the Ctrl-C reset and the hold clock-enable start at a register, not at
  -- the assembled pipeline: 'cpuInRom' only ever comes from the machine
  -- register, so reading it through 'running' put the enable that every

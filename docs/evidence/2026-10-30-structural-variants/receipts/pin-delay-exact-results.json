@@ -1,0 +1,16 @@
+[
+  {
+    "phase_degrees": 135,
+    "read_access_ns": 11,
+    "expected_success": false,
+    "exit": 1,
+    "matched_expectation": true
+  },
+  {
+    "phase_degrees": 112.5,
+    "read_access_ns": 11,
+    "expected_success": true,
+    "exit": 0,
+    "matched_expectation": true
+  }
+]

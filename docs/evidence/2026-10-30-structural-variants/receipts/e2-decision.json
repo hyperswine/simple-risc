@@ -1,0 +1,11 @@
+{
+  "retained_as_default": false,
+  "reason": "The 228-bit packed reduction removes 163 routed registers, but only 86 logic cells and 29 CLS; reported Fmax falls 5.33 percent at fixed 48 MHz settings. Preserve as an evaluated area/timing tradeoff, restore wide E2 for independent BTB comparison.",
+  "control_logic": 14153,
+  "candidate_logic": 14067,
+  "control_registers": 5307,
+  "candidate_registers": 5144,
+  "control_fmax_mhz": 73.066,
+  "candidate_fmax_mhz": 69.169,
+  "all_classifier_counters_identical": true
+}

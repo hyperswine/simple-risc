@@ -11,12 +11,15 @@ module pipeline_cpu_tb #(
  parameter LOADER_DUMP=0,
  parameter LOADER_EXTENDED=0,
  parameter LOADER_FRAMED=0,
+ parameter LOADER_UPLOAD_ONLY=0,
+ parameter LOADER_RAW_READBACK=0,
  parameter PIN_FREQ_MHZ=48,
- parameter PIN_PHASE_DEGREES=180,
+ parameter real PIN_PHASE_DEGREES=180.0,
  parameter real PIN_TAC_NS=0.0
 );
  localparam STATUS=21'h180000,BOOT_COUNT=21'h1ffc00;
  localparam COUNTER_LINE=21'h140000,LONG_LINE=21'h0c0000;
+ localparam EFFECT_WORD=21'h180040;
  localparam real CLOCK_NS=PIN_MODEL ? 1000.0/PIN_FREQ_MHZ/(CDC_BRIDGE ? 2.0:1.0):10.0;
  localparam real MEMORY_CLOCK_NS=CLOCK_NS*(CDC_BRIDGE ? 2.0:1.0);
  reg clk=0;always #(CLOCK_NS/2.0) clk=~clk;
@@ -39,26 +42,11 @@ module pipeline_cpu_tb #(
    .uart_rx(uart_rx),.uart_tx(uart_tx),.memory_data(cpu_rdata),.memory_hold(hold_cpu),
    .memory_address(cpu_address),.memory_write(cpu_write),.memory_wdata(cpu_wdata),.memory_mask(cpu_mask),
    .sd_miso(sd_mosi),.sd_sck(sd_sck),.sd_mosi(sd_mosi),.sd_cs(sd_cs));
- // Generated pipeline commit/fetch fields: a post-fence commit must follow a
- // new fetch of mNext with every pre-fence pipeline valid/queue field empty.
- // Offsets follow the generated Machine packing; they moved by +203 when the
- // multiply's partial products left MemoryStage (-136) and the injected
- // product/mirror fields were added below cpuPipe (+339), and by +46 when the
- // branch table's deferred update register was added below cpuPipe. The M slot
- // is now valid bit 3211 and payload [3210:2789] (mPc, mNext at the top,
- // mWord at payload [127:96]).
- wire fence_pipeline_empty =
-   (cpu.c$ds1_app_arg[4943:4941]==0) && !cpu.c$ds1_app_arg[4940] &&
-   (cpu.c$ds1_app_arg[4538:4537]==0) &&
-   !cpu.c$ds1_app_arg[4536] && !cpu.c$ds1_app_arg[4336] &&
-   !cpu.c$ds1_app_arg[4010] && !cpu.c$ds1_app_arg[3211];
+ // Named simulation-only ports from SdramPipelineObserved. No generated
+ // internal identifier or Machine/Pipe bit offset is part of this contract.
  pipeline_fence_assertions fence_i_monitor(clk,core_reset,hold_cpu,
-   // Offsets of the committed instruction, its next pc and its pc inside the
-   // packed machine register. They move whenever a field is added to a Clash
-   // record the pipeline carries; the FENCE.I coverage assertion at the end of
-   // the run fails loudly (commits=0) if they are stale.
-   cpu.mCommits,cpu.c$ds1_app_arg[2916:2885],cpu.c$ds1_app_arg[3210:3179],cpu.c$ds1_app_arg[3178:3147],
-   cpu.issue,cpu.fetchPc,fence_pipeline_empty);
+   cpu.observe_commit,cpu.observe_word,cpu.observe_pc,cpu.observe_next_pc,
+   cpu.observe_issue,cpu.observe_fetch_pc,cpu.observe_empty);
  wire req,write,ready;wire [20:0] address;wire [31:0] wdata;wire [3:0] mask;
  wire done,valid;wire [31:0] rdata;wire [1:0] word_index;
  wire c_req,c_write,c_ready,c_done,c_valid;
@@ -89,6 +77,8 @@ module pipeline_cpu_tb #(
  // word-wise crc32_word computes over a little-endian word.
  reg [31:0] expected_header_crc=0,expected_payload_crc=0;
  reg identity_finished=0,upload_finished=0,readback_finished=0;
+ integer readback_count=0,read_index;
+ integer raw_lines=0,raw_footer_index=0;reg raw_finished=0;
  reg [47:0] framed_head=0;reg [23:0] framed_three=0;reg [47:0] framed_six=0;
  reg [127:0] framed_msg=0;integer framed_len=0;
  integer tick=0,backend_tick=0,delay=0,phase=0,reads=0,writes=0,held_clocks=0;
@@ -97,6 +87,38 @@ module pipeline_cpu_tb #(
  reg saved_write=0,long_seen=0,break_sent=0,corrupt=0;
  reg [20:0] saved_address=0;reg [31:0] saved_data=0;reg [3:0] saved_mask=0;
  integer lane;
+ integer effect_stores[0:7],effect_commits[0:7];
+ integer effect_held_clocks=0,backend_effect_index,commit_effect_index,effect_init;
+ initial for(effect_init=0;effect_init<8;effect_init=effect_init+1)begin
+   effect_stores[effect_init]=0;effect_commits[effect_init]=0;
+ end
+ reg [31:0] effect_once_pc=0,effect_padding_pc=0,effect_skip_pc=0;
+ // Count external acceptance and architectural retirement separately. Memory
+ // writes can be queued across a hold; a repeated identical write would be
+ // invisible in final RAM data, so it must be counted at this handshake.
+ always @(posedge backend_clk)begin
+   if(!LOADER_TEST && !backend_reset && req && ready && write)begin
+     if(address>=EFFECT_WORD && address<EFFECT_WORD+8)begin
+       backend_effect_index=address-EFFECT_WORD;
+       if(effect_stores[backend_effect_index]!=0)$fatal(1,"duplicate owned store");
+       if(wdata!==32'h71e77e55 || mask!==4'hf)$fatal(1,"owned store payload changed");
+       effect_stores[backend_effect_index]<=effect_stores[backend_effect_index]+1;
+     end
+     if(address==EFFECT_WORD+8)$fatal(1,"cancelled store reached memory");
+   end
+ end
+ always @(posedge clk)begin
+   if(!LOADER_TEST && !core_reset && hold_cpu &&
+      ((cpu.observe_pc>=effect_once_pc && cpu.observe_pc<effect_once_pc+32) ||
+       (cache.v2 && cache.w2 && cache.a2>={1'b0,EFFECT_WORD} && cache.a2<{1'b0,EFFECT_WORD}+8)))
+     effect_held_clocks<=effect_held_clocks+1;
+   if(!LOADER_TEST && !core_reset && !hold_cpu && cpu.observe_commit &&
+      cpu.observe_pc>=effect_once_pc && cpu.observe_pc<effect_once_pc+32)begin
+     commit_effect_index=(cpu.observe_pc-effect_once_pc)>>2;
+     if(effect_commits[commit_effect_index]!=0)$fatal(1,"duplicate owned retirement");
+     effect_commits[commit_effect_index]<=effect_commits[commit_effect_index]+1;
+   end
+ end
  always @(posedge clk)begin
    tick<=tick+1;
    if(!reset && hold_cpu)held_clocks<=held_clocks+1;
@@ -258,9 +280,19 @@ module pipeline_cpu_tb #(
          send_byte(expected_image[send_index/4] >> ((send_index%4)*8));
        send_word32(expected_payload_crc);
        wait(upload_finished);repeat(UART_BIT)@(negedge clk);
-       send_byte(8'h43);
-       wait(readback_finished);repeat(UART_BIT)@(negedge clk);
-       send_byte(8'h47);
+       for(read_index=0;read_index<(LOADER_UPLOAD_ONLY ? 3:1);read_index=read_index+1)begin
+         send_byte(8'h43);
+         wait(readback_count>read_index);repeat(UART_BIT)@(negedge clk);
+       end
+       if(LOADER_UPLOAD_ONLY)begin
+         if(LOADER_RAW_READBACK)begin send_byte(8'h44);wait(raw_finished);end
+         wait(cache.write_count==0 && cache.state==0);
+         @(negedge clk);
+         for(j=0;j<words;j=j+1)if(ram[j]!==expected_image[j])$fatal(1,"upload-only backing word %0d mismatch",j);
+         if(ram[words]!==0)$fatal(1,"upload-only missing zero sentinel");
+         $display("PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed");
+         $finish;
+       end else send_byte(8'h47);
      end else begin
      if(LOADER_EXTENDED)begin
        send_byte(8'h54);wait(probe_finished);repeat(UART_BIT)@(negedge clk);
@@ -317,9 +349,34 @@ module pipeline_cpu_tb #(
          end else begin
            if(dump_digits!=8 || dump_value!==expected_payload_crc)
              $fatal(1,"ROM 'C' readback CRC=%h expected=%h digits=%0d",dump_value,expected_payload_crc,dump_digits);
-           readback_finished=1;dump_value=0;dump_digits=0;
+           readback_count=readback_count+1;
+           if(!LOADER_UPLOAD_ONLY || readback_count==3)readback_finished=1;
+           dump_value=0;dump_digits=0;
          end
          framed_head=0;framed_msg=0;framed_len=0;
+       end
+     end else if(LOADER_RAW_READBACK && readback_finished && !raw_finished)begin
+       if(raw_lines<=words)begin
+         if(transmitted==10)begin
+           if(dump_digits!=8)$fatal(1,"raw readback needs exactly eight hex digits");
+           if(raw_lines==0)begin
+             if(dump_value!==words[31:0])$fatal(1,"raw readback count mismatch");
+           end else if(dump_value!==expected_image[raw_lines-1])
+             $fatal(1,"raw readback word %0d=%h expected=%h",raw_lines-1,dump_value,expected_image[raw_lines-1]);
+           raw_lines=raw_lines+1;dump_value=0;dump_digits=0;last_four=0;
+         end else begin
+           if(transmitted>=48 && transmitted<=57)nibble=transmitted-48;
+           else if(transmitted>=97 && transmitted<=102)nibble=transmitted-87;
+           else $fatal(1,"raw readback nonhex output");
+           dump_value={dump_value[27:0],nibble[3:0]};dump_digits=dump_digits+1;
+         end
+       end else begin
+         if((raw_footer_index==0 && transmitted!=8'h45) ||
+            (raw_footer_index==1 && transmitted!=8'h4e) ||
+            (raw_footer_index==2 && transmitted!=8'h44) ||
+            (raw_footer_index==3 && transmitted!=8'h0a))$fatal(1,"raw readback footer mismatch");
+         if(raw_footer_index==3)raw_finished=1;
+         raw_footer_index=raw_footer_index+1;
        end
      end else if(LOADER_EXTENDED && !probe_finished)begin
        last_four={last_four[23:0],transmitted};
@@ -382,6 +439,10 @@ module pipeline_cpu_tb #(
        if(ram[21'h1fffff]!==32'habcdef01)$fatal(1,"last SDRAM word");
        if(ram[21'h080400]!==32'h02b00513 || ram[21'h080401]!==32'h00008067)$fatal(1,"instruction patch backing data");
        if(ram[STATUS+4]!==32'hbbccaa44)$fatal(1,"forwarded partial result");
+       for(j=0;j<8;j=j+1)
+         if(effect_stores[j]!=1 || effect_commits[j]!=1 || ram[EFFECT_WORD+j]!==32'h71e77e55)
+           $fatal(1,"effect ownership coverage slot=%0d stores=%0d commits=%0d",j,effect_stores[j],effect_commits[j]);
+       if(effect_held_clocks==0 || ram[EFFECT_WORD+8]!==0)$fatal(1,"effect ownership hold/cancellation coverage");
        if(ram[STATUS+5]!==5691265)$fatal(1,"branch/multiply loop");
        if(ram[STATUS+6]!==EXPECT_TRAPS)$fatal(1,"precise trap count");
        if(ram[STATUS+2]<1000 || ram[STATUS+3]==0 || ram[STATUS+3]>=64)$fatal(1,"hold/counter contract");
@@ -394,11 +455,28 @@ module pipeline_cpu_tb #(
          fence_i_monitor.awaiting_commit)$fatal(1,"FENCE.I coverage commits=%0d fetches=%0d verified=%0d pending=%b/%b",
          fence_i_monitor.commits,fence_i_monitor.memory_fetches,fence_i_monitor.verified_fences,
          fence_i_monitor.awaiting_memory_fetch,fence_i_monitor.awaiting_commit);
-       $display("PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; %0d fills %0d writes %0d held clocks; %0d fence.i epoch assertions",reads,writes,held_clocks,fence_i_monitor.verified_fences);
+       $display("PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; %0d fills %0d writes %0d held clocks; %0d fence.i epoch assertions; eight owned stores/retirements accepted once each, no cancelled store, %0d owned-effect hold clocks",reads,writes,held_clocks,fence_i_monitor.verified_fences,effect_held_clocks);
        $finish;
      end
    end else quiet=0;
  end
+ // Guest mutations also support a 32-bit instruction crossing a word boundary
+ // in an RV32C guest. Keep the surrounding halfwords intact.
+ function [31:0] instruction_at(input [31:0] pc);
+ integer index;
+ begin
+   index=(pc-32'h80000000)>>2;
+   instruction_at=pc[1] ? {ram[index+1][15:0],ram[index][31:16]}:ram[index];
+ end
+ endfunction
+ task patch_instruction(input [31:0] pc,input [31:0] instruction);
+ integer index;
+ begin
+   index=(pc-32'h80000000)>>2;
+   if(pc[1])begin ram[index][31:16]=instruction[15:0];ram[index+1][15:0]=instruction[31:16];end
+   else ram[index]=instruction;
+ end
+ endtask
  initial begin
    corrupt=$test$plusargs("CORRUPT");
    if(!$value$plusargs("IMAGE=%s",image_file) || !$value$plusargs("WORDS=%d",words))$fatal(1,"missing image/word count");
@@ -425,12 +503,25 @@ module pipeline_cpu_tb #(
        expected_payload_crc=~expected_payload_crc;
      end
    end
-   else $readmemh(image_file,ram,0,words-1);
+   else begin
+     $readmemh(image_file,ram,0,words-1);
+     if(!$value$plusargs("EFFECT_ONCE=%h",effect_once_pc) ||
+        !$value$plusargs("EFFECT_PADDING=%h",effect_padding_pc) ||
+        !$value$plusargs("EFFECT_SKIP=%h",effect_skip_pc))$fatal(1,"missing effect symbols");
+     if(effect_once_pc[0] || effect_padding_pc[0] || effect_skip_pc[0])$fatal(1,"effect fixture alignment");
+     // Executing the duplicate padding or the cancelled path is a real guest
+     // mutation. Final RAM alone cannot detect the identical duplicate write.
+     if($test$plusargs("DUPLICATE_EFFECT"))patch_instruction(effect_padding_pc,instruction_at(effect_once_pc));
+     if($test$plusargs("WRONG_PATH_EFFECT"))patch_instruction(effect_skip_pc,32'h00000013);
+   end
    ram[COUNTER_LINE]=32'h13579bdf;
    repeat(5)@(negedge clk);reset=0;
  end
  initial begin
-   repeat(LOADER_TEST ? 700000:200000)@(posedge clk);
+   // Long pattern uploads use the actual UART divider and three CRC reads.
+   // A fixed budget for a tiny loader guest can expire inside a valid frame.
+   wait(words>0);
+   repeat(LOADER_TEST ? 2000000+(words*4+128)*UART_BIT*12:200000)@(posedge clk);
    $fatal(1,"timeout status=%h stage=%0d boots=%0d cpu=%h hold=%b cache=%0d fills=%0d writes=%0d markers=%0d long=%b",
      ram[STATUS],ram[STATUS+1],ram[BOOT_COUNT],cpu_address,hold_cpu,cache.state,reads,writes,markers,long_seen);
  end

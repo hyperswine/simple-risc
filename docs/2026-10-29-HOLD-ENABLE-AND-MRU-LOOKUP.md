@@ -1,5 +1,11 @@
 # The hold enable and the MRU lookup: two paths, and what the placer does with them
 
+Later evidence: [the 2026-10-30 structural baseline](2026-10-30-STRUCTURAL-BASELINE.md)
+checks endpoint pins and source fields, fixes a startup trap that produces only
+`DONE`, and separates receive CRC from physical memory-readback CRC failures.
+The hypotheses below are historical; they do not establish a UART-only cause
+for the 60 MHz failures or one persistent critical path across mappings.
+
 Kind: implementation change with Gowin builds, RTL regressions and a board run,
 2026-10-29. Every number is 48/48 MHz, two-way, `LINE_BITS=11`, placement 2
 unless stated. The baseline is the split-module build of the same day

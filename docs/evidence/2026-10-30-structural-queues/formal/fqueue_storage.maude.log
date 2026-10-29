@@ -1,0 +1,37 @@
+==========================================
+search in FQUEUE-STORAGE : initialGood =>* S:State such that bad(S:State) =
+    true .
+
+No solution.
+states: 438  rewrites: 10277 in 2ms cpu (2ms real) (3739810 rewrites/second)
+==========================================
+search [1] in FQUEUE-STORAGE : initialWrongSlot =>* S:State such that bad(
+    S:State) = true .
+
+Solution 1 (state 17)
+states: 18  rewrites: 184 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(table(a, a), table(a, empty), bank0, two, offer(a), wrongSlot,
+    false)
+==========================================
+search [1] in FQUEUE-STORAGE : initialNoCommit =>* S:State such that bad(
+    S:State) = true .
+
+Solution 1 (state 5)
+states: 6  rewrites: 48 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(table(a, empty), table(empty, empty), bank0, one, offer(a),
+    noCommit, false)
+==========================================
+search [1] in FQUEUE-STORAGE : initialGood =>* S:State such that witnessedHold(
+    S:State) = true .
+
+Solution 1 (state 4)
+states: 5  rewrites: 44 in 0ms cpu (0ms real) (~ rewrites/second)
+S:State --> st(table(empty, empty), table(a, empty), bank0, zero, offer(a),
+    good, true)
+==========================================
+search in FQUEUE-STORAGE : initialNoHold =>* S:State such that witnessedHold(
+    S:State) = true .
+
+No solution.
+states: 213  rewrites: 4444 in 0ms cpu (1ms real) (4557948 rewrites/second)
+Bye.

@@ -1,0 +1,59 @@
+Warning: The package list for 'hackage.haskell.org' is 16 days old.
+Run 'cabal update' to get the latest list of available packages.
+Resolving dependencies...
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (lib) (configuration changed)
+ - simple-risc-0.1.0.0 (exe:clash) (configuration changed)
+Configuring library for simple-risc-0.1.0.0...
+Configuring executable 'clash' for simple-risc-0.1.0.0...
+Preprocessing library for simple-risc-0.1.0.0...
+Building library for simple-risc-0.1.0.0...
+Preprocessing executable 'clash' for simple-risc-0.1.0.0...
+Building executable 'clash' for simple-risc-0.1.0.0...
+[3 of 9] Compiling SimpleRisc.Types ( src/SimpleRisc/Types.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Types.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Types.dyn_o ) [Source file changed]
+[4 of 9] Compiling SimpleRisc.Decode ( src/SimpleRisc/Decode.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Decode.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Decode.dyn_o ) [SimpleRisc.Types changed]
+[5 of 9] Compiling SimpleRisc.Uart  ( src/SimpleRisc/Uart.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Uart.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc/Uart.dyn_o ) [SimpleRisc.Types changed]
+[6 of 9] Compiling SimpleRisc       ( src/SimpleRisc.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SimpleRisc.dyn_o ) [Source file changed]
+
+src/SimpleRisc.hs:557:16: warning: [GHC-30606] [-Wredundant-constraints]
+    Redundant constraint: 1 <= n
+    In the type signature for:
+         initialFifo :: forall (n :: Nat).
+                        (KnownNat n, KnownNat (n + 1), 1 <= n) =>
+                        Fifo n
+    |
+557 | initialFifo :: (KnownNat n, KnownNat (n + 1), 1 <= n) => Fifo n
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/SimpleRisc.hs:674:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘at’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at src/SimpleRisc.hs:80:1-20
+      (and originally defined in ‘Clash.Sized.Vector’)
+    |
+674 |     writing at = case taken of
+    |             ^^
+
+src/SimpleRisc.hs:2306:7: warning: [GHC-40910] [-Wunused-local-binds]
+    Defined but not used: ‘instruction’
+     |
+2306 |   let instruction = cpuInstruction machine
+     |       ^^^^^^^^^^^
+[7 of 9] Compiling SdramSimpleRisc  ( src/SdramSimpleRisc.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramSimpleRisc.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramSimpleRisc.dyn_o ) [SimpleRisc changed]
+[8 of 9] Compiling SdramPipeline    ( src/SdramPipeline.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramPipeline.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramPipeline.dyn_o ) [Source file changed]
+
+src/SdramPipeline.hs:84:14: warning: [GHC-40910] [-Wunused-local-binds]
+    Defined but not used: ‘index’
+   |
+84 |       (next,(index,write,tx),stages,loads)=R.machineStepCoreStagesBy R.pipelinedCpuStepStages decodeTarget injected (memoryWord,received,txReady,emergency)
+   |              ^^^^^
+
+src/SdramPipeline.hs:120:10: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘at’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at src/SdramPipeline.hs:4:1-20
+      (and originally defined in ‘Clash.Sized.Vector’)
+    |
+120 |  writing at=case taken of
+    |          ^^
+[9 of 9] Compiling SdramPipelineObserved ( src/SdramPipelineObserved.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramPipelineObserved.o, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/build/SdramPipelineObserved.dyn_o )
+/Users/jasonqin/.cache/cabal/logs/build.log: withFile: permission denied (Operation not permitted)

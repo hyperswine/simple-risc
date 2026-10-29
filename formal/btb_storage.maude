@@ -1,0 +1,63 @@
+*** Refinement model for separately clock-enabled predictor banks.
+*** Two banks and three abstract entries form a finite domain. Reference
+*** storage installs the pending entry only on logical advance; physical
+*** storage may install it on every physical edge, including a hold. Both
+*** reads bypass the current pending write. Reset clears both stores/pending.
+*** This is an abstract storage contract, not a synthesized-RTL proof.
+mod BTB-STORAGE is
+  protecting BOOL .
+  sorts Bank Entry Table Pending Fault State .
+  ops bank0 bank1 : -> Bank [ctor] .
+  ops empty a b : -> Entry [ctor] .
+  op table : Entry Entry -> Table [ctor] .
+  op none : -> Pending [ctor] .
+  op write : Bank Entry -> Pending [ctor] .
+  ops good noBypass noCommit noHold : -> Fault [ctor] .
+  op st : Table Table Pending Fault Bool -> State [ctor] .
+  vars R H : Table .
+  vars X Y V : Entry .
+  var P : Pending .
+  var F : Fault .
+  var Seen : Bool .
+
+  op install : Pending Table -> Table .
+  eq install(none, H) = H .
+  eq install(write(bank0, V), table(X, Y)) = table(V, Y) .
+  eq install(write(bank1, V), table(X, Y)) = table(X, V) .
+
+  op physical : Pending Table Fault -> Table .
+  eq physical(P, H, noCommit) = H .
+  eq physical(P, H, F) = install(P, H) [owise] .
+  op read : Pending Table Fault -> Table .
+  eq read(P, H, noBypass) = H .
+  eq read(P, H, F) = install(P, H) [owise] .
+  op bad : State -> Bool .
+  eq bad(st(R, H, P, F, Seen)) = install(P, R) =/= read(P, H, F) .
+  op witnessedHold : State -> Bool .
+  eq witnessedHold(st(R, H, P, F, Seen)) = Seen and (R =/= H) and not bad(st(R, H, P, F, Seen)) .
+
+  ops initialGood initialNoBypass initialNoCommit initialNoHold : -> State .
+  eq initialGood = st(table(empty, empty), table(empty, empty), none, good, false) .
+  eq initialNoBypass = st(table(empty, empty), table(empty, empty), none, noBypass, false) .
+  eq initialNoCommit = st(table(empty, empty), table(empty, empty), none, noCommit, false) .
+  eq initialNoHold = st(table(empty, empty), table(empty, empty), none, noHold, false) .
+
+  *** Each resolution is a single registered write, including invalidation.
+  rl [advance-none] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), none, F, Seen) .
+  rl [advance-0a] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank0, a), F, Seen) .
+  rl [advance-0b] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank0, b), F, Seen) .
+  rl [advance-0empty] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank0, empty), F, Seen) .
+  rl [advance-1a] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank1, a), F, Seen) .
+  rl [advance-1b] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank1, b), F, Seen) .
+  rl [advance-1empty] : st(R, H, P, F, Seen) => st(install(P, R), physical(P, H, F), write(bank1, empty), F, Seen) .
+  crl [hold-install] : st(R, H, P, F, Seen) => st(R, install(P, H), P, F, true) if F =/= noHold .
+  rl [reset] : st(R, H, P, F, Seen) => st(table(empty, empty), table(empty, empty), none, F, Seen) .
+endm
+
+*** Complete safety search, two broken controls, a real hold witness, and a
+*** mutant that cannot reach that witness when physical holds are removed.
+search in BTB-STORAGE : initialGood =>* S:State such that bad(S:State) .
+search [1] in BTB-STORAGE : initialNoBypass =>* S:State such that bad(S:State) .
+search [1] in BTB-STORAGE : initialNoCommit =>* S:State such that bad(S:State) .
+search [1] in BTB-STORAGE : initialGood =>* S:State such that witnessedHold(S:State) .
+search in BTB-STORAGE : initialNoHold =>* S:State such that witnessedHold(S:State) .

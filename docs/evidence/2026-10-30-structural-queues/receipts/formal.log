@@ -1,0 +1,6 @@
+PASS: cache_coherence.maude: 5 individually checked searches
+PASS: cache_cycle.maude: 8 individually checked searches
+PASS: instruction_fence.maude: 2 individually checked searches
+PASS: branch_prediction.maude: 4 individually checked searches
+PASS: btb_storage.maude: 5 individually checked searches
+PASS: fqueue_storage.maude: 5 individually checked searches

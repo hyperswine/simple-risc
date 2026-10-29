@@ -1,0 +1,9 @@
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 103 fills 20 writes 56134 held clocks; 2 fence.i epoch assertions
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:422: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 709us; walltime 0.143 s; speed 4.939 ms/s
+- Verilator: cpu 0.143 s on 1 threads; allocated 12 MB
+PASS: corrupt backend beat is rejected by the executing guest

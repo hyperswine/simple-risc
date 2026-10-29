@@ -1,0 +1,28 @@
+SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICGD id=fe474caf3063b97d
+OK 96afc5a6
+96afc5a6
+96afc5a6
+96afc5a6
+00000010
+eea55c13
+12c98037
+36eda45b
+5a11c87f
+7e35eca3
+a25910c7
+c67d34eb
+eaa1580f
+0ec57c33
+32e9a057
+560dc47b
+7a31e89f
+9e550cc3
+c27930e7
+e69d540b
+0ac1782f
+END
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:261: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 57ms; walltime 9.009 s; speed 6.298 ms/s
+- Verilator: cpu 8.983 s on 1 threads; allocated 13 MB

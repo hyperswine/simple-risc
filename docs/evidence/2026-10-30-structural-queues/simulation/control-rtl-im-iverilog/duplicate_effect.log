@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:103: duplicate owned store
+       Time: 5057850000  Scope: pipeline_cpu_tb

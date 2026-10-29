@@ -1,0 +1,4 @@
+silent-1: output=True, independent guest signature=False
+burst-1: output=True, independent guest signature=False
+paced-1: output=True, independent guest signature=False
+Diagnostic differences recorded; do not qualify this image.

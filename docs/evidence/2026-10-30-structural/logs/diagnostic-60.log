@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/diagnose_output.py", line 136, in <module>
+    main()
+    ~~~~^^
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/diagnose_output.py", line 110, in main
+    actual = run_guest(transport, images[mode], args.timeout)
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/diagnose_output.py", line 49, in run_guest
+    rp.upload_image_u(transport, image, timeout=timeout)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/rom_protocol.py", line 474, in upload_image_u
+    raise UploadError(last_error)
+rom_protocol.UploadError: readback 'C' CRC mismatch: got b'9d5860e3', expected '3c41d13f'

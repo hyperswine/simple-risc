@@ -70,6 +70,14 @@ class PresetManifest(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('requires SDRAM_CACHE_WAYS=1', result.stderr)
 
+    def test_preset_rejects_diagnostic_rom_override(self):
+        env = os.environ.copy()
+        env.update(SDRAM_PRESET='fprisc-48', SDRAM_ROM_FILE='/tmp/diagnostic.hex')
+        result = subprocess.run(['bash', '-c', 'source "$1"', 'bash', str(PRESET)],
+                                env=env, capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('SDRAM_ROM_FILE is incompatible', result.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()

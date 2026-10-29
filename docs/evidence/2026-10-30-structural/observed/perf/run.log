@@ -1,0 +1,17 @@
+DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2
+DTREE DATA READY
+DTREE nodes=23 depth=5
+DTREE train hits=124/128 digest=21562
+DTREE test hits=61/64 digest=909572
+root split: col 1 @ 0.750635343138128
+DTREE elapsed_us=2020072
+FPR EXIT 0
+PERF cycles=145955655 held=8501834 held_read_miss=2962346 held_write_full=5537440 held_clear=2048
+PERF miss_draining=448285 miss_filling=2360949 fills=260457 code_fills=26117 writes=5807436 stores=5807439
+PERF store_updates=4037595 store_hit_invalidations=0 store_invalidated_fills=0
+PERF window_cycles=145460221 window_held=8450881 window_fills=260094 window_writes=5778058
+PERF window_pipeline_commits=39517185 window_redirects=5364322
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v:181: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 3s; walltime 333.161 s; speed 9.127 ms/s
+- Verilator: cpu 332.226 s on 1 threads; allocated 12 MB

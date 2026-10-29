@@ -1,0 +1,8 @@
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (exe:pipeline-layout) (file tools/PipelineLayout.hs changed)
+Preprocessing executable 'pipeline-layout' for simple-risc-0.1.0.0...
+Building executable 'pipeline-layout' for simple-risc-0.1.0.0...
+[1 of 1] Compiling Main             ( tools/PipelineLayout.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/x/pipeline-layout/build/pipeline-layout/pipeline-layout-tmp/Main.o ) [Source file changed]
+[2 of 2] Linking dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/x/pipeline-layout/build/pipeline-layout/pipeline-layout [Objects changed]
+ld: warning: -U option is redundant when using -undefined dynamic_lookup

@@ -1,0 +1,22 @@
+
+Symbol table '.symtab' contains 19 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 80000000     0 SECTION LOCAL  DEFAULT    1 .text
+     2: 8000015c     0 SECTION LOCAL  DEFAULT    2 .rodata
+     3: 80000167     0 SECTION LOCAL  DEFAULT    3 .bss
+     4: 00000000     0 SECTION LOCAL  DEFAULT    4 .riscv.attributes
+     5: 00000000     0 SECTION LOCAL  DEFAULT    5 .comment
+     6: 00000000     0 FILE    LOCAL  DEFAULT  ABS cccNWuV0.o
+     7: 80000000     0 NOTYPE  LOCAL  DEFAULT    1 $xrv32i2p1_m2p0_[...]
+     8: 00000000     0 FILE    LOCAL  DEFAULT  ABS output_diagnostic.c
+     9: 80000058     0 NOTYPE  LOCAL  DEFAULT    1 $xrv32i2p1_m2p0_[...]
+    10: 80000967     0 NOTYPE  GLOBAL DEFAULT    2 __global_pointer$
+    11: 80000167     0 NOTYPE  GLOBAL DEFAULT    3 _bss_start
+    12: 807f0000     0 NOTYPE  GLOBAL DEFAULT  ABS _heap_end
+    13: 80000168     0 NOTYPE  GLOBAL DEFAULT    3 _bss_end
+    14: 80000168     0 NOTYPE  GLOBAL DEFAULT    3 _heap_start
+    15: 80800000     0 NOTYPE  GLOBAL DEFAULT    3 _stack_top
+    16: 80000000     0 NOTYPE  GLOBAL DEFAULT    1 _start
+    17: 80000058   260 FUNC    GLOBAL DEFAULT    1 main
+    18: 80000168     0 NOTYPE  GLOBAL DEFAULT    3 _image_end

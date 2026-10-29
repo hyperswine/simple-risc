@@ -28,6 +28,16 @@ CASES = {
         ('initialCorrect', 'safe'), ('initialWrong', 'safe'),
         ('initialNoFlush', 'counterexample'), ('initialBubbleFault', 'counterexample'),
     ],
+    'btb_storage.maude': [
+        ('initialGood', 'safe'), ('initialNoBypass', 'counterexample'),
+        ('initialNoCommit', 'counterexample'), ('initialGood', 'witness'),
+        ('initialNoHold', 'unreachable'),
+    ],
+    'fqueue_storage.maude': [
+        ('initialGood', 'safe'), ('initialWrongSlot', 'counterexample'),
+        ('initialNoCommit', 'counterexample'), ('initialGood', 'witness'),
+        ('initialNoHold', 'unreachable'),
+    ],
 }
 
 

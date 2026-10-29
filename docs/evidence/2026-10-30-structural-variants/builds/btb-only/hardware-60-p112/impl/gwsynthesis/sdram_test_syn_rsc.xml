@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="top" Register="2" Lut="1" T_Register="5308(2)" T_Alu="814(0)" T_Lut="13301(1)" T_MULT18X18="1(0)" T_MULTADDALU18X18="2(0)" T_ALU54D="1(0)" T_Bsram="38(0)" T_Ssram="17(0)">
+ <SubModule name="pll"/>
+ <SubModule name="core" Register="4637" Alu="589" Lut="11794" MULT18X18="1" MULTADDALU18X18="2" ALU54D="1" Bsram="2" T_Register="4637(4637)" T_Alu="589(589)" T_Lut="11794(11794)" T_MULT18X18="1(1)" T_MULTADDALU18X18="2(2)" T_ALU54D="1(1)" T_Bsram="2(2)"/>
+ <SubModule name="cache" Register="492" Alu="196" Lut="1320" Bsram="36" Ssram="17" T_Register="492(492)" T_Alu="196(196)" T_Lut="1320(1320)" T_Bsram="36(36)" T_Ssram="17(17)"/>
+ <SubModule name="mem" Register="19" Alu="15" Lut="21" T_Register="177(19)" T_Alu="29(15)" T_Lut="186(21)">
+  <SubModule name="ram" Register="158" Alu="14" Lut="165" T_Register="158(158)" T_Alu="14(14)" T_Lut="165(165)"/>
+ </SubModule>
+</Module>

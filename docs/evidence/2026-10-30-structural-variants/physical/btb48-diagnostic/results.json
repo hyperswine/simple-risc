@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "cpu_mhz": 48.0,
+  "baud": 55300,
+  "cases": [
+    {
+      "mode": "silent",
+      "repetition": 1,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 1,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "silent",
+      "repetition": 2,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 2,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 2,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "silent",
+      "repetition": 3,
+      "output_bytes": 4,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "burst",
+      "repetition": 3,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    },
+    {
+      "mode": "paced",
+      "repetition": 3,
+      "output_bytes": 4100,
+      "output_matches": true,
+      "signature_matches": true,
+      "upload_crc_verified": true
+    }
+  ],
+  "bitstream_sha256": "6fd5c83cb1a7e215652a117134a0818fdc5336fa6b5bde755d3ea1a85c029a8f",
+  "images": {
+    "silent": "a577a0153ad212573c45d161de42aff0c13df995c59cf8baeb7f1ed82750980e",
+    "burst": "3ff485f5b132a0e3fcbb0d32bd70a1ee9aeff7525c730448240861bd11474c88",
+    "paced": "ee70bbe993fdd7cab770178e0fb4f4178012611bc03904462fc2d460d63f8ecb",
+    "reporter": "887757828ddf41f94b535e76fd3843bd7b5fd0d6455bb075c78c5fca1577eae8"
+  },
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "04254a7e27d5b8b92ef624b7ce5a1655f9121097533432603ce47c2e6667fd2e",
+  "pattern_order": [
+    "zero",
+    "ones",
+    "sequence"
+  ],
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=fe28365ea09c4e00",
+  "phase": "complete"
+}

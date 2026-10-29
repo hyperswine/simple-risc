@@ -240,8 +240,24 @@ void rom_main(void) {
       }
       put_hex32(use_crc ? ~value : value);
       putc_raw('\n');
+#ifdef ROM_DIAGNOSTIC_READBACK
+    } else if (cmd == 'D') {
+      /* Diagnostic-only, bounded to the last loaded image. No guest executes,
+       * and the host compares every word independently of the ROM's CRC. */
+      put_hex32(loaded);
+      putc_raw('\n');
+      for (uint32_t i = 0; i < loaded; i++) {
+        put_hex32(RAM[i]);
+        putc_raw('\n');
+      }
+      put_str("END\n");
+#endif
     } else if (cmd == 'I') {
-      const char *p = "SRID1 isa=rv32im\x01 cpu=% mem=% ram=% max=% cap=PMXQVHTUICG id=%%\n";
+      const char *p = "SRID1 isa=rv32im\x01 cpu=% mem=% ram=% max=% cap=PMXQVHTUICG"
+#ifdef ROM_DIAGNOSTIC_READBACK
+                      "D"
+#endif
+                      " id=%%\n";
       uint32_t idx = 0;
       while (*p) {
         uint8_t c = (uint8_t)*p++;

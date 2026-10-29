@@ -17,7 +17,7 @@ module SimpleRisc where
 import Clash.Prelude hiding (And, Xor)
 import qualified Data.IntMap.Strict as IntMap
 import qualified Data.List as List
-import Data.Maybe (fromMaybe, isNothing)
+import Data.Maybe (fromMaybe, isNothing, isJust)
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
@@ -25,6 +25,7 @@ import "simple-risc" SimpleRisc
 import qualified Prelude as P
 import qualified "simple-risc" SdramSimpleRisc as S
 import qualified "simple-risc" SdramPipeline as SP
+import qualified FQueueVariant as FV
 import qualified Rv32Model as Model
 import qualified RiscVCompressed as C
 import Control.Monad (when)
@@ -2087,11 +2088,90 @@ prop_compressed_btb_prediction_and_aliases = withTests 1 . property $ do
   counterLo (cpuInstret aliasM) === 6
   bValid (pBtb (cpuPipe aliasM) !! (1 :: Index 8)) === False
 
+-- A pending resolution may be installed on every physical clock, including
+-- repeated holds. Compare the actual separately enabled bank registers with a
+-- reference that installs only when logical CPU time advances. Both readers
+-- bypass the current pending entry, so their effective tables must agree.
+prop_btb_storage_preserves_effective_table_during_holds :: Property
+prop_btb_storage_preserves_effective_table_during_holds = withTests 200 . property $ do
+  -- Use the production top's domain, not System (whose reset is asynchronous).
+  vResetKind (knownVDomain @XilinxSystem) === Synchronous
+  operations <- forAll $ Gen.list (Range.linear 1 80) $ do
+    resetNow <- Gen.frequency [(1, pure True), (9, pure False)]
+    advance <- Gen.bool
+    validWrite <- Gen.bool
+    index <- Gen.integral (Range.linear 0 7)
+    valid <- Gen.bool
+    slotBit <- Gen.bool
+    tag <- Gen.integral (Range.linear 0 255)
+    target <- Gen.integral Range.constantBounded
+    pure (resetNow, advance, if validWrite then Just (index, BtbEntry valid slotBit tag target) else Nothing)
+  let initialTable = repeat (BtbEntry False False 0 0)
+      effective table pending = applyBtbWrite (emptyPipe {pBtb=table,pBtbWrite=pending})
+      reference (table,pending) (resetNow,advance,proposed)
+        | resetNow = (initialTable,Nothing)
+        | advance = (effective table pending,proposed)
+        | otherwise = (table,pending)
+      states = P.scanl reference (initialTable,Nothing) operations
+      resetStream = P.map (\(resetNow,_,_) -> resetNow) operations P.++ P.repeat False
+      pendingStream = P.map P.snd states P.++ P.repeat Nothing
+      actual = sampleN @XilinxSystem (P.length states) $
+        withClockResetEnable clockGen (unsafeFromActiveHigh (fromList resetStream)) enableGen (SP.btbStorage (fromList pendingStream))
+  P.mapM_ (\((table,pending),stored) -> effective stored pending === effective table pending) (P.zip states actual)
+
+-- Compare only owned FIFO slots: a write to a free bank is allowed to happen
+-- early, and may change repeatedly during holds. Tokens advance atomically
+-- with the final write; cancellation empties them without clearing payloads.
+prop_fqueue_storage_preserves_owned_payloads :: Property
+prop_fqueue_storage_preserves_owned_payloads = withTests 200 . property $ do
+  vResetKind (knownVDomain @XilinxSystem) === Synchronous
+  operations <- forAll $ Gen.list (Range.linear 1 120) $ do
+    resetNow <- Gen.frequency [(1,pure True),(19,pure False)]
+    cancel <- Gen.frequency [(1,pure True),(9,pure False)]
+    advance <- Gen.bool
+    pop <- Gen.bool
+    offered <- Gen.maybe $ do
+      word <- Gen.integral Range.constantBounded
+      pc <- Gen.integral Range.constantBounded
+      size <- Gen.element [2,4]
+      pure (Fetched pc word False False (pc+4) word size)
+    pure (resetNow,cancel,advance,pop,offered)
+  let empty = Fetched 0 0 False False 0 0 4
+      initial = (repeat empty :: Vec 2 Fetched,0 :: Index 2,0 :: Index 2,0 :: Unsigned 2)
+      toggle i = if i == 0 then 1 else 0
+      expand f =
+        let word = if fSize f == 2 then fromMaybe 0 (C.decompress32 (resize (fRaw f))) else fRaw f
+         in (fetchedWord (fPc f,fPredicted f) word) {fRaw=fRaw f,fSize=fSize f}
+      reference (table,r,w,count) (resetNow,cancel,advance,wantPop,offered)
+        | resetNow = initial
+        | not advance = (table,r,w,count)
+        | cancel = (table,0,0,0)
+        | otherwise =
+            let push = count < 2 && isJust offered
+                pop = count /= 0 && wantPop
+                table' = if push then replace w (expand (fromMaybe empty offered)) table else table
+             in (table',if pop then toggle r else r,if push then toggle w else w,
+                 count + (if push then 1 else 0) - (if pop then 1 else 0))
+      states = P.scanl reference initial operations
+      inputs = P.zipWith (\(_,_,w,count) (_,_,_,_,offered) ->
+          FV.expandedQueueWrite (emptyPipe {pFWrite=w,pFCount=count,pA=offered})) states operations
+      resets = P.map (\(resetNow,_,_,_,_) -> resetNow) operations P.++ P.repeat False
+      actual = sampleN @XilinxSystem (P.length states) $
+        withClockResetEnable clockGen (unsafeFromActiveHigh (fromList resets)) enableGen
+          (FV.fQueueStorage (fromList (inputs P.++ P.repeat Nothing)))
+      owned table r count = case count of
+        0 -> []
+        1 -> [table !! r]
+        _ -> [table !! r,table !! toggle r]
+  P.mapM_ (\((table,r,_,count),stored) -> owned stored r count === owned table r count) (P.zip states actual)
+
 simpleRiscGroup :: Group
 simpleRiscGroup =
   Group
     "SimpleRisc"
-    [ ("Frontend assembly, expansion and register reads have separate boundaries", prop_frontend_register_boundaries),
+    [ ("Experimental F queue banks preserve owned payloads through holds and cancellation", prop_fqueue_storage_preserves_owned_payloads),
+      ("Separate BTB storage preserves effective reads through repeated holds", prop_btb_storage_preserves_effective_table_during_holds),
+      ("Frontend assembly, expansion and register reads have separate boundaries", prop_frontend_register_boundaries),
       ("Compressed BTB predicts halfword branches and recovers from straddle aliases", prop_compressed_btb_prediction_and_aliases),
       ("Registered decode hazards match arriving producer stages", prop_registered_decode_hazard),
       ("Compressed mret and FENCE.I discard stale halfwords", prop_compressed_handler_and_fence_i),

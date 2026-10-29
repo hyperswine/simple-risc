@@ -1,0 +1,213 @@
+{
+  "netlist_sha256": "a828aa3d7274eb107618b6191b86d2413aa4b2691ccc7cd9ced6774f2cad7b19",
+  "layout_sha256": "0e9a691bcd51410f51c420b393014de1de2db5a320e585db35ec48d37485dc14",
+  "binding": "pipeState=Pipe; generated width 3432; direct Q names only, merged/renamed aliases are not attributed",
+  "fields": {
+    "pFetchPc": {
+      "packed_bits": 32,
+      "mapped_direct_q_registers": 31,
+      "enables": {
+        "pipeState_3431_6": 31
+      },
+      "high": 3431,
+      "low": 3400
+    },
+    "pInstructionPc": {
+      "packed_bits": 32,
+      "mapped_direct_q_registers": 32,
+      "enables": {
+        "pipeState_3399_8": 30,
+        "pipeState_3369_8": 1,
+        "pipeState_3368_8": 1
+      },
+      "high": 3399,
+      "low": 3368
+    },
+    "pInflight": {
+      "packed_bits": 260,
+      "mapped_direct_q_registers": 140,
+      "enables": {
+        "pipeState_3431_6": 140
+      },
+      "high": 3367,
+      "low": 3108
+    },
+    "pQueue": {
+      "packed_bits": 532,
+      "mapped_direct_q_registers": 264,
+      "enables": {
+        "pipeState_3107_11": 66,
+        "pipeState_2974_11": 66,
+        "pipeState_2841_11": 66,
+        "pipeState_2708_11": 66
+      },
+      "high": 3107,
+      "low": 2576
+    },
+    "pQueueRead": {
+      "packed_bits": 3,
+      "mapped_direct_q_registers": 3,
+      "enables": {
+        "pipeState_2575_14": 2,
+        "<none>": 1
+      },
+      "high": 2575,
+      "low": 2573
+    },
+    "pQueueWrite": {
+      "packed_bits": 3,
+      "mapped_direct_q_registers": 3,
+      "enables": {
+        "pipeState_2572_17": 2,
+        "<none>": 1
+      },
+      "high": 2572,
+      "low": 2570
+    },
+    "pOutstanding": {
+      "packed_bits": 3,
+      "mapped_direct_q_registers": 3,
+      "enables": {
+        "pipeState_3431_6": 3
+      },
+      "high": 2569,
+      "low": 2567
+    },
+    "pA": {
+      "packed_bits": 134,
+      "mapped_direct_q_registers": 99,
+      "enables": {
+        "pipeState_2566_8": 1,
+        "pipeState_3431_6": 98
+      },
+      "high": 2566,
+      "low": 2433
+    },
+    "pFQueue": {
+      "packed_bits": 266,
+      "mapped_direct_q_registers": 264,
+      "enables": {
+        "pipeState_2432_11": 132,
+        "pipeState_2299_11": 132
+      },
+      "high": 2432,
+      "low": 2167
+    },
+    "pFRead": {
+      "packed_bits": 1,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_2166_8": 1
+      },
+      "high": 2166,
+      "low": 2166
+    },
+    "pFWrite": {
+      "packed_bits": 1,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_2165_11": 1
+      },
+      "high": 2165,
+      "low": 2165
+    },
+    "pFCount": {
+      "packed_bits": 2,
+      "mapped_direct_q_registers": 2,
+      "enables": {
+        "pipeState_3431_6": 2
+      },
+      "high": 2164,
+      "low": 2163
+    },
+    "pDSlot": {
+      "packed_bits": 134,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_3431_6": 1
+      },
+      "high": 2162,
+      "low": 2029
+    },
+    "pDOperands": {
+      "packed_bits": 64,
+      "mapped_direct_q_registers": 64,
+      "enables": {
+        "pipeState_2028_9": 64
+      },
+      "high": 2028,
+      "low": 1965
+    },
+    "pDFresh": {
+      "packed_bits": 1,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_3431_6": 1
+      },
+      "high": 1964,
+      "low": 1964
+    },
+    "pDBlocked": {
+      "packed_bits": 1,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_3431_6": 1
+      },
+      "high": 1963,
+      "low": 1963
+    },
+    "pE1Slot": {
+      "packed_bits": 326,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_3431_6": 1
+      },
+      "high": 1962,
+      "low": 1637
+    },
+    "pE2Slot": {
+      "packed_bits": 799,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_3431_6": 1
+      },
+      "high": 1636,
+      "low": 838
+    },
+    "pMSlot": {
+      "packed_bits": 423,
+      "mapped_direct_q_registers": 1,
+      "enables": {
+        "pipeState_837_8": 1
+      },
+      "high": 837,
+      "low": 415
+    },
+    "pRedirect": {
+      "packed_bits": 33,
+      "mapped_direct_q_registers": 33,
+      "enables": {
+        "pipeState_3431_6": 33
+      },
+      "high": 414,
+      "low": 382
+    },
+    "pBtb": {
+      "packed_bits": 336,
+      "mapped_direct_q_registers": 0,
+      "enables": {},
+      "high": 381,
+      "low": 46
+    },
+    "pBtbWrite": {
+      "packed_bits": 46,
+      "mapped_direct_q_registers": 46,
+      "enables": {
+        "pipeState_45_9": 46
+      },
+      "high": 45,
+      "low": 0
+    }
+  },
+  "generated_sha256": "86539532805a14134101c8ebec4b87a390da98536f44107b7075ad58e474107b"
+}

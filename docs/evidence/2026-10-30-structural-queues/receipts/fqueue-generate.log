@@ -1,0 +1,27 @@
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (exe:clash) (configuration changed)
+Configuring executable 'clash' for simple-risc-0.1.0.0...
+Preprocessing executable 'clash' for simple-risc-0.1.0.0...
+Building executable 'clash' for simple-risc-0.1.0.0...
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.311s
+GHC: Compiling and loading modules took: 30.616s
+Clash: Parsing and compiling primitives took 0.123s
+GHC+Clash: Loading modules cumulatively took 1m4s
+Clash: Compiling SdramPipelineObserved.topEntity
+Clash: Compiling SdramPipeline.topEntity
+Clash: Compiling SimpleRisc.topEntity
+Clash: Normalization took 45.754s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 0.982s
+Clash: Normalization took 1m6s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.102s
+Clash: Normalization took 1m12s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.567s
+Clash: Compiling SimpleRisc.topEntity took 1m25s
+Clash: Compiling SdramPipelineObserved.topEntity took 1m41s
+Clash: Compiling SdramPipeline.topEntity took 1m43s
+Clash: Total compilation took 2m49s

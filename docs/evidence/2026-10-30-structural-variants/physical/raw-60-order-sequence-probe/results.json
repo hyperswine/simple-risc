@@ -1,0 +1,1901 @@
+{
+  "passed": false,
+  "cpu_mhz": 60.0,
+  "baud": 69124,
+  "cases": [],
+  "bitstream_sha256": "cb3cec708850b218ffa5df9da38798edd2454276a5b2d3db4fe2757e725c0db8",
+  "images": {},
+  "source_sha256": "9fabe1fd9cc51a921b1d1e7d8c552e5ffcab61f6bd7e4af9c9811b703deb2d4f",
+  "linker_sha256": "78e9bf30a1337aab6571b2e1f644e7880d6d4f055a661d3782bad916b3c6f851",
+  "runner_sha256": "04254a7e27d5b8b92ef624b7ce5a1655f9121097533432603ce47c2e6667fd2e",
+  "pattern_order": [
+    "sequence",
+    "zero",
+    "ones"
+  ],
+  "reference_digest": 2311643899,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICGD id=35d22c65c2e3025e",
+  "upload_probes": [
+    {
+      "words": 1,
+      "pattern": "sequence",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "unexpected ROM upload reply: b'DONEERR HDR\\n'"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "zero",
+      "readbacks": [],
+      "receive_crc_verified": false,
+      "passed": false,
+      "error": {
+        "type": "UploadError",
+        "message": "ROM rejected upload with ERR TMO"
+      }
+    },
+    {
+      "words": 1,
+      "pattern": "ones",
+      "readbacks": [
+        "ffffffff",
+        "ffffffff",
+        "ffffffff"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "ffffffff",
+      "passed": true,
+      "xor_readback": "ffffffff",
+      "expected_xor": "ffffffff",
+      "raw_reply": "00000001\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "ffffffff",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "sequence",
+      "readbacks": [
+        "11c9d62d",
+        "11c9d62d",
+        "11c9d62d"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "96afc5a6",
+      "passed": false,
+      "xor_readback": "c0401000",
+      "expected_xor": "c040c000",
+      "raw_reply": "00000010\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "11c9d62d",
+      "raw_word_mismatches": [
+        {
+          "index": 12,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 14,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        }
+      ]
+    },
+    {
+      "words": 16,
+      "pattern": "zero",
+      "readbacks": [
+        "758d6336",
+        "758d6336",
+        "758d6336"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "758d6336",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "758d6336",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 16,
+      "pattern": "ones",
+      "readbacks": [
+        "0f6187ba",
+        "0f6187ba",
+        "0f6187ba"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "0f6187ba",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000010\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "0f6187ba",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "sequence",
+      "readbacks": [
+        "6e9d5862",
+        "6e9d5862",
+        "6e9d5862"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "7b802688",
+      "passed": false,
+      "xor_readback": "00002000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "6e9d5862",
+      "raw_word_mismatches": [
+        {
+          "index": 16,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 17,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 19,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 20,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 21,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 23,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 24,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 25,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 26,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 28,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 30,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 32,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 33,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 35,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 36,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 37,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 39,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 41,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 42,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 44,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 46,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 48,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 49,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 51,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 52,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 53,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 55,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 56,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 57,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 58,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 60,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 62,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 64,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 65,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 67,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 68,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 69,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 71,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 72,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 73,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 74,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 76,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 78,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 80,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 81,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 83,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 84,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 85,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 87,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 88,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 89,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 90,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 92,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 94,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 96,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 97,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 99,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 100,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 101,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 103,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 105,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 106,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 108,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 110,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 112,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 113,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 115,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 116,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 117,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 119,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 120,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 121,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 122,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 124,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 126,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        }
+      ]
+    },
+    {
+      "words": 128,
+      "pattern": "zero",
+      "readbacks": [
+        "b2aa7578",
+        "b2aa7578",
+        "b2aa7578"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "b2aa7578",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "b2aa7578",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 128,
+      "pattern": "ones",
+      "readbacks": [
+        "bd7bc39f",
+        "bd7bc39f",
+        "bd7bc39f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "bd7bc39f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000080\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "bd7bc39f",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "sequence",
+      "readbacks": [
+        "0c7c2d82",
+        "0c7c2d82",
+        "0c7c2d82"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "60b7615e",
+      "passed": false,
+      "xor_readback": "01000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea55c13\n12c98037\n36eda45b\n5a11c87f\n7e35eca3\na25910c7\nc67d34eb\neaa1580f\n0ec57c33\n32e9a057\n560dc47b\n7a31e89f\n9e550cc3\nc27930e7\ne69d540b\n0ac1782f\n2ee59c53\n5209c077\n762de49b\n9a5108bf\nbe752ce3\ne2995007\n06bd742b\n2ae1984f\n4e05bc73\n7229e097\n964d04bb\nba7128df\nde954c03\n02b97027\n26dd944b\n4a01b86f\n6e25dc93\n924900b7\nb66d24db\nda9148ff\nfeb56c23\n22d99047\n46fdb46b\n6a21d88f\n8e45fcb3\nb26920d7\nd68d44fb\nfab1681f\n1ed58c43\n42f9b067\n661dd48b\n8a41f8af\nae651cd3\nd28940f7\nf6ad641b\n1ad1883f\n3ef5ac63\n6219d087\n863df4ab\naa6118cf\nce853cf3\nf2a96017\n16cd843b\n3af1a85f\n5e15cc83\n8239f0a7\na65d14cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9f55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1fd5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7f35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\neea5fc13\n12c9d037\n36eda45b\n5a11e87f\n7e35fca3\na259f0c7\nc67d34eb\neaa1780f\n0ec5fc33\n32e9f057\n560de47b\n7a31e89f\n9e55fcc3\nc27930e7\ne69d740b\n0ac1782f\n2ee5fc53\n5209d077\n762de49b\n9a51e8bf\nbe75fce3\ne2997007\n06bd742b\n2ae1f84f\n4e05fc73\n7229f097\n964de4bb\nba7128df\nde95fc03\n02b97027\n26ddf44b\n4a01b86f\n6e25fc93\n9249d0b7\nb66d24db\nda9168ff\nfeb5fc23\n22d9f047\n46fdb46b\n6a21f88f\n8e45fcb3\nb269f0d7\nd68d64fb\nfab1681f\n1ed5fc43\n42f9b067\n661df48b\n8a41f8af\nae65fcd3\nd28950f7\nf6ad641b\n1ad1e83f\n3ef5fc63\n6219f087\n863df4ab\naa61f8cf\nce85fcf3\nf2a97017\n16cde43b\n3af1a85f\n5e15fc83\n8239f0a7\na65df4cb\nca8138ef\nEND\n",
+      "raw_matches": false,
+      "host_crc_of_raw": "0c7c2d82",
+      "raw_word_mismatches": [
+        {
+          "index": 128,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 129,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 131,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 132,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 133,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 135,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 136,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 137,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 138,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 140,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 142,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 144,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 145,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 147,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 148,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 149,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 151,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 152,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 153,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 154,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 156,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 158,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 160,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 161,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 163,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 164,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 165,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 167,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 169,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 170,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 172,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 174,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 176,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 177,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 179,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 180,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 181,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 183,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 184,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 185,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 186,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 188,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 190,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 192,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 193,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 195,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 196,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 197,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 199,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 200,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 201,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 202,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 204,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 206,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 208,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 209,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 211,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 212,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 213,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 215,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 216,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 217,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 218,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 220,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 222,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 224,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 225,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 227,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 228,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 229,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 231,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 233,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 234,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 236,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 238,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 240,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 241,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 243,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 244,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 245,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 247,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 248,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 249,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 250,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 252,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 254,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 256,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 257,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 259,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 260,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 261,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 263,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 264,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 265,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 266,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 268,
+          "expected": "c30c559e",
+          "actual": "c3fc559f"
+        },
+        {
+          "index": 270,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 272,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 273,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 275,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 276,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 277,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 279,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 280,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 281,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 282,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 284,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 286,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 288,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 289,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 291,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 292,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 293,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 295,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 297,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 298,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 300,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 302,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 304,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 305,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 307,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 308,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 309,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 311,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 312,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 313,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 314,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 316,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 318,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 320,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 321,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 323,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 324,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 325,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 327,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 328,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 329,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 330,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 332,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 334,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 336,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 337,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 339,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 340,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 341,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 343,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 344,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 345,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 346,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 348,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 350,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 352,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 353,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 355,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 356,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 357,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 359,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 361,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 362,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 364,
+          "expected": "438cd51e",
+          "actual": "43fcd51f"
+        },
+        {
+          "index": 366,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 368,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 369,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 371,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 372,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 373,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 375,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 376,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 377,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 378,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 380,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 382,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 384,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 385,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 387,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 388,
+          "expected": "a3ec357e",
+          "actual": "a3fc357f"
+        },
+        {
+          "index": 389,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 391,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 392,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 393,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 394,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 396,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 398,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 400,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 401,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 403,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 404,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 405,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 407,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 408,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 409,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 410,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 412,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 414,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 416,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 417,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 419,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 420,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 421,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 423,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 425,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 426,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 428,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 430,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 432,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 433,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 435,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 436,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 437,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 439,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 440,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 441,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 442,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 444,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 446,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        },
+        {
+          "index": 448,
+          "expected": "135ca5ee",
+          "actual": "13fca5ee"
+        },
+        {
+          "index": 449,
+          "expected": "3780c912",
+          "actual": "37d0c912"
+        },
+        {
+          "index": 451,
+          "expected": "7fc8115a",
+          "actual": "7fe8115a"
+        },
+        {
+          "index": 452,
+          "expected": "a3ec357e",
+          "actual": "a3fc357e"
+        },
+        {
+          "index": 453,
+          "expected": "c71059a2",
+          "actual": "c7f059a2"
+        },
+        {
+          "index": 455,
+          "expected": "0f58a1ea",
+          "actual": "0f78a1ea"
+        },
+        {
+          "index": 456,
+          "expected": "337cc50e",
+          "actual": "33fcc50e"
+        },
+        {
+          "index": 457,
+          "expected": "57a0e932",
+          "actual": "57f0e932"
+        },
+        {
+          "index": 458,
+          "expected": "7bc40d56",
+          "actual": "7be40d56"
+        },
+        {
+          "index": 460,
+          "expected": "c30c559e",
+          "actual": "c3fc559e"
+        },
+        {
+          "index": 462,
+          "expected": "0b549de6",
+          "actual": "0b749de6"
+        },
+        {
+          "index": 464,
+          "expected": "539ce52e",
+          "actual": "53fce52e"
+        },
+        {
+          "index": 465,
+          "expected": "77c00952",
+          "actual": "77d00952"
+        },
+        {
+          "index": 467,
+          "expected": "bf08519a",
+          "actual": "bfe8519a"
+        },
+        {
+          "index": 468,
+          "expected": "e32c75be",
+          "actual": "e3fc75be"
+        },
+        {
+          "index": 469,
+          "expected": "075099e2",
+          "actual": "077099e2"
+        },
+        {
+          "index": 471,
+          "expected": "4f98e12a",
+          "actual": "4ff8e12a"
+        },
+        {
+          "index": 472,
+          "expected": "73bc054e",
+          "actual": "73fc054e"
+        },
+        {
+          "index": 473,
+          "expected": "97e02972",
+          "actual": "97f02972"
+        },
+        {
+          "index": 474,
+          "expected": "bb044d96",
+          "actual": "bbe44d96"
+        },
+        {
+          "index": 476,
+          "expected": "034c95de",
+          "actual": "03fc95de"
+        },
+        {
+          "index": 478,
+          "expected": "4b94dd26",
+          "actual": "4bf4dd26"
+        },
+        {
+          "index": 480,
+          "expected": "93dc256e",
+          "actual": "93fc256e"
+        },
+        {
+          "index": 481,
+          "expected": "b7004992",
+          "actual": "b7d04992"
+        },
+        {
+          "index": 483,
+          "expected": "ff4891da",
+          "actual": "ff6891da"
+        },
+        {
+          "index": 484,
+          "expected": "236cb5fe",
+          "actual": "23fcb5fe"
+        },
+        {
+          "index": 485,
+          "expected": "4790d922",
+          "actual": "47f0d922"
+        },
+        {
+          "index": 487,
+          "expected": "8fd8216a",
+          "actual": "8ff8216a"
+        },
+        {
+          "index": 489,
+          "expected": "d72069b2",
+          "actual": "d7f069b2"
+        },
+        {
+          "index": 490,
+          "expected": "fb448dd6",
+          "actual": "fb648dd6"
+        },
+        {
+          "index": 492,
+          "expected": "438cd51e",
+          "actual": "43fcd51e"
+        },
+        {
+          "index": 494,
+          "expected": "8bd41d66",
+          "actual": "8bf41d66"
+        },
+        {
+          "index": 496,
+          "expected": "d31c65ae",
+          "actual": "d3fc65ae"
+        },
+        {
+          "index": 497,
+          "expected": "f74089d2",
+          "actual": "f75089d2"
+        },
+        {
+          "index": 499,
+          "expected": "3f88d11a",
+          "actual": "3fe8d11a"
+        },
+        {
+          "index": 500,
+          "expected": "63acf53e",
+          "actual": "63fcf53e"
+        },
+        {
+          "index": 501,
+          "expected": "87d01962",
+          "actual": "87f01962"
+        },
+        {
+          "index": 503,
+          "expected": "cf1861aa",
+          "actual": "cff861aa"
+        },
+        {
+          "index": 504,
+          "expected": "f33c85ce",
+          "actual": "f3fc85ce"
+        },
+        {
+          "index": 505,
+          "expected": "1760a9f2",
+          "actual": "1770a9f2"
+        },
+        {
+          "index": 506,
+          "expected": "3b84cd16",
+          "actual": "3be4cd16"
+        },
+        {
+          "index": 508,
+          "expected": "83cc155e",
+          "actual": "83fc155e"
+        },
+        {
+          "index": 510,
+          "expected": "cb145da6",
+          "actual": "cbf45da6"
+        }
+      ]
+    },
+    {
+      "words": 512,
+      "pattern": "zero",
+      "readbacks": [
+        "f1e8ba9e",
+        "f1e8ba9e",
+        "f1e8ba9e"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "f1e8ba9e",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "f1e8ba9e",
+      "raw_word_mismatches": []
+    },
+    {
+      "words": 512,
+      "pattern": "ones",
+      "readbacks": [
+        "3f55d17f",
+        "3f55d17f",
+        "3f55d17f"
+      ],
+      "receive_crc_verified": true,
+      "expected_crc": "3f55d17f",
+      "passed": true,
+      "xor_readback": "00000000",
+      "expected_xor": "00000000",
+      "raw_reply": "00000200\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nffffffff\nEND\n",
+      "raw_matches": true,
+      "host_crc_of_raw": "3f55d17f",
+      "raw_word_mismatches": []
+    }
+  ],
+  "phase": "upload probes complete; no guest executed"
+}

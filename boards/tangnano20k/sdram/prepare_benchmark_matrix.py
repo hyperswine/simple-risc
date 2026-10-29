@@ -59,7 +59,7 @@ def main():
         for path in sorted(directory.rglob('*.hs')):
             experiment['sources'][str(path.relative_to(out))] = sha(path)
         command = ['cabal', 'run', 'clash', '--', f'-i{directory}', '-hide-package', 'simple-risc',
-                   '-DRISCV_COMPRESSED', str(directory/'SdramPipeline.hs'), '--verilog',
+                   '-DRISCV_COMPRESSED', str(directory/'SdramPipelineObserved.hs'), '--verilog',
                    '-fclash-clear', '-outputdir', str(out/f'generated-{predictor}')]
         with (out/f'generate-{predictor}.log').open('w') as log:
             subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
@@ -68,8 +68,9 @@ def main():
         experiment['sources'][name] = sha(out/name)
     experiment['frozen_inputs'] = {
         name: sha(out/name) for name in ['input/base.bin', 'input/base.elf', 'bridge-old.v', 'bridge-new.v',
-            'generated-on/SdramPipeline.topEntity/sdram_pipeline_risc.v',
-            'generated-off/SdramPipeline.topEntity/sdram_pipeline_risc.v']}
+            'generated-on/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v',
+            'generated-off/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v']}
+    experiment['profiling_abi'] = 'named-v1'
     (out/'experiment.json').write_text(json.dumps(experiment, indent=2)+'\n')
     print(f'Prepared {out}; run benchmark_matrix.py --out {out}')
 

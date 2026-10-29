@@ -1,0 +1,151 @@
+{
+  "complete": true,
+  "source_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+  "fixture_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+  "cases": [
+    {
+      "name": "normal-write-update",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 241 reads, 137 ordered masked writes, 37 line fills, 1998 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/normal-write-update-tb.v:69: $finish called at 23875000 (1ps)\n"
+    },
+    {
+      "name": "normal-invalidate",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "03f39b79e7209dddf0c8e566d827243d9a0544deb6b1f1afdccfc9de7b9289d6",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 241 reads, 137 ordered masked writes, 91 line fills, 2936 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/normal-invalidate-tb.v:69: $finish called at 33255000 (1ps)\n"
+    },
+    {
+      "name": "two-way-write-update",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "797f843fd409f3b545e00a2a3561b54e35746f38c60eee264f1e54ee670b10a0",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 241 reads, 137 ordered masked writes, 23 line fills, 1760 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/two-way-write-update-tb.v:69: $finish called at 21495000 (1ps)\n"
+    },
+    {
+      "name": "two-way-invalidate",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "069ecd2a2ec1edd68b41078645997a704631c711935abce460daa163894762a3",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 241 reads, 137 ordered masked writes, 87 line fills, 2870 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/two-way-invalidate-tb.v:69: $finish called at 32595000 (1ps)\n"
+    },
+    {
+      "name": "all-32-banks-write-update",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 497 reads, 201 ordered masked writes, 181 line fills, 8734 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/all-32-banks-write-update-tb.v:69: $finish called at 94435000 (1ps)\n"
+    },
+    {
+      "name": "all-32-banks-invalidate",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "03f39b79e7209dddf0c8e566d827243d9a0544deb6b1f1afdccfc9de7b9289d6",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 497 reads, 201 ordered masked writes, 271 line fills, 10270 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/all-32-banks-invalidate-tb.v:69: $finish called at 109795000 (1ps)\n"
+    },
+    {
+      "name": "all-16-banks-two-way-write-update",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "797f843fd409f3b545e00a2a3561b54e35746f38c60eee264f1e54ee670b10a0",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 369 reads, 169 ordered masked writes, 69 line fills, 4659 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/all-16-banks-two-way-write-update-tb.v:69: $finish called at 52085000 (1ps)\n"
+    },
+    {
+      "name": "all-16-banks-two-way-invalidate",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "069ecd2a2ec1edd68b41078645997a704631c711935abce460daa163894762a3",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "PASS: 369 reads, 169 ordered masked writes, 175 line fills, 6446 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/all-16-banks-two-way-invalidate-tb.v:69: $finish called at 69955000 (1ps)\n"
+    },
+    {
+      "name": "missing-bank-write-select",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "22c8460a269b6ede67a7db10905ebf57a9575eb6b33a5864109705e52195c002",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/missing-bank-write-select-tb.v:59: reply 388 expected abc00400 got abc00200\n       Time: 62125000  Scope: pipeline_cache_tb\n"
+    },
+    {
+      "name": "missing-way1-bank-write-select",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "24d02af9ac7c5ee7ffe984ef5e3de2980e559a847eb8ff7b97720ec4cf441536",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/missing-way1-bank-write-select-tb.v:59: reply 522 expected abc043ff got 12c01fff\n       Time: 51895000  Scope: pipeline_cache_tb\n"
+    },
+    {
+      "name": "tag-collision-poison",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "d35a86b4cf8597db692b8e814615f8a9ce5c9684db83ddfbe234ad510dab7a09",
+      "testbench_sha256": "d31b09e17922dc8a460482d13ddbd896d7c25db477c097d30165b0be3ac817ef",
+      "output": "PASS: 98 logical tag collisions ignored\nPASS: 241 reads, 137 ordered masked writes, 91 line fills, 2936 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/tag-collision-poison-tb.v:76: $finish called at 33255000 (1ps)\n"
+    },
+    {
+      "name": "missing-collision-guard",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "299bdd8fb1337bedef408c09d02825a0169bfecf7b022ea625aa299b17242dd6",
+      "testbench_sha256": "d31b09e17922dc8a460482d13ddbd896d7c25db477c097d30165b0be3ac817ef",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/missing-collision-guard-tb.v:22: undefined tag collision used as a hit\n       Time: 3525000  Scope: pipeline_cache_tb\n"
+    },
+    {
+      "name": "data-collision-poison",
+      "passed": true,
+      "expected_exit": 0,
+      "rtl_sha256": "bf748bb6cd6aa27ef5a270383c4979369d64ca2fe7a37453d52a4d2ea553fc5e",
+      "testbench_sha256": "ccd5428b0bae7f81d08724ae6a4c817775f8f36141bfe69a0eae90dd69d381b1",
+      "output": "PASS: 16 data read/write collisions forwarded\nPASS: 241 reads, 137 ordered masked writes, 37 line fills, 1998 held clocks\n/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/data-collision-poison-tb.v:74: $finish called at 23875000 (1ps)\n"
+    },
+    {
+      "name": "missing-data-forward",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "e29a0ffbda96da2c6697eb1385cb40e007eb13fc2dfeba1478ba2e192bceec75",
+      "testbench_sha256": "ccd5428b0bae7f81d08724ae6a4c817775f8f36141bfe69a0eae90dd69d381b1",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/missing-data-forward-tb.v:62: reply 330 expected abc00000 got xxxxxx00\n       Time: 21775000  Scope: pipeline_cache_tb\n"
+    },
+    {
+      "name": "missing-final-beat-capture",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "6d4098e5a0beeb5ffa32b7f4b68f6cd601efcde835f4d52bd957c317267820c4",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/missing-final-beat-capture-tb.v:59: reply 81 expected abc00403 got deadbeed\n       Time: 4875000  Scope: pipeline_cache_tb\n"
+    },
+    {
+      "name": "assert-missing-same-line-drain",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "1de5b98c6b00398a0e11ffe01153e4f94a269bbedb8852c736073ea69b368947",
+      "testbench_sha256": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/assert-missing-same-line-drain.v:288: ASSERT: refill overlaps a queued store to its line\n       Time: 3545000  Scope: pipeline_cache_tb.cache\n"
+    },
+    {
+      "name": "assert-incomplete-refill",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "testbench_sha256": "354a0dcc04c4ca9f56a88b4910a58ae48a0fffa01be51fa89f3327515760cf55",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/assert-incomplete-refill.v:299: ASSERT: refill completed before all four beats\n       Time: 2375000  Scope: pipeline_cache_tb.cache\n"
+    },
+    {
+      "name": "assert-duplicate-refill-beat",
+      "passed": true,
+      "expected_exit": 1,
+      "rtl_sha256": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "testbench_sha256": "892eecf848ccabf96c203b8fb59bebf1b01661d51c8ad0b3c467d9544c19e4e5",
+      "output": "FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pipeline-cache-regression/assert-duplicate-refill-beat.v:294: ASSERT: duplicate refill beat\n       Time: 1565000  Scope: pipeline_cache_tb.cache\n"
+    }
+  ]
+}

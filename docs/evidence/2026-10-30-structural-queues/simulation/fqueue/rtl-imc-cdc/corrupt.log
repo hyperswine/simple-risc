@@ -1,0 +1,3 @@
+[811000000] %Fatal: pipeline_cpu_tb.v:432: Assertion failed in pipeline_cpu_tb: guest failure stage=2 cycles=2138 retired=3
+%Error: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:432: Verilog $stop
+Aborting...

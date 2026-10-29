@@ -32,11 +32,18 @@ jobs:
       - run: cabal update
       - run: cabal build all
       - run: cabal test --test-show-details=direct
+      - name: Source field metadata
+        run: |
+          mkdir -p output
+          cabal run -v0 pipeline-layout > output/pipeline-layout.json
       - name: Generated RTL tools
-        run: sudo apt-get update && sudo apt-get install -y iverilog gcc-riscv64-unknown-elf
+        run: sudo apt-get update && sudo apt-get install -y iverilog verilator gcc-riscv64-unknown-elf
+      - name: Diagnostic guest and startup alignment regressions
+        run: python3 -m unittest discover -s boards/tangnano20k/sdram -p test_output_diagnostic.py
       - name: Generate and execute fresh IM and IMC pipeline RTL
         timeout-minutes: 30
         run: |
+          python3 boards/tangnano20k/bootrom/build_readback_rom.py --out output/ci-readback-rom
           for compressed in 0 1; do
             flags=()
             check_flags=()
@@ -46,21 +53,32 @@ jobs:
             fi
             generated="$PWD/output/ci-generated-$compressed"
             cabal run clash -- -isrc -hide-package simple-risc "${flags[@]}" \
-              src/SdramPipeline.hs --verilog -fclash-clear -outputdir "$generated"
+              src/SdramPipelineObserved.hs --verilog -fclash-clear -outputdir "$generated"
             python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
-              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --generated "$generated/SdramPipelineObserved.topEntity" "${check_flags[@]}" \
               --cache-ways 2 --cache-line-bits 7
             # The ROM's I/U/C/G framed CRC32 upload, end to end through the
             # actual boot ROM, over the one-way geometry and a tiny cache that
             # maximises refill holds while the UART receives.
             python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
-              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --generated "$generated/SdramPipelineObserved.topEntity" "${check_flags[@]}" \
               --boot-loader --loader-command U --uart-bit-cycles 32 \
               --cache-ways 1 --cache-line-bits 12
             python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
-              --generated "$generated/SdramPipeline.topEntity" "${check_flags[@]}" \
+              --generated "$generated/SdramPipelineObserved.topEntity" "${check_flags[@]}" \
               --boot-loader --loader-command U --uart-bit-cycles 32 \
               --cache-ways 1 --cache-line-bits 7
+            # Real UART timing and a non-executable zero payload distinguish
+            # upload acceptance from memory readback and guest computation.
+            python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
+              --generated "$generated/SdramPipelineObserved.topEntity" "${check_flags[@]}" \
+              --boot-loader --loader-command U --upload-pattern zero --upload-words 16 \
+              --cache-ways 2 --cache-line-bits 7 --simulator verilator
+            python3 boards/tangnano20k/sdram/check_pipeline_rtl.py \
+              --generated "$generated/SdramPipelineObserved.topEntity" "${check_flags[@]}" \
+              --boot-loader --loader-command U --upload-pattern sequence --upload-words 16 \
+              --raw-readback --rom-file output/ci-readback-rom/readback.hex \
+              --cache-ways 2 --cache-line-bits 7 --simulator verilator
           done
       - name: Generated RTL evidence
         if: always()
@@ -71,6 +89,8 @@ jobs:
           path: |
             output/tangnano20k/pipeline-rtl*/**/*.json
             output/tangnano20k/pipeline-rtl*/**/*.log
+            output/pipeline-layout.json
+            output/ci-readback-rom/manifest.json
 
   formal-and-rtl:
     runs-on: ubuntu-latest
@@ -85,6 +105,10 @@ jobs:
           python3 formal/check_formal.py
       - name: Benchmark result guard tests
         run: python3 -m unittest discover -s boards/tangnano20k/sdram -p test_run_perf.py
+      - name: Structural evidence parser tests
+        run: |
+          python3 -m unittest discover -s boards/tangnano20k/sdram -p test_analyze_implementation.py
+          python3 -m unittest discover -s boards/tangnano20k/sdram -p test_output_diagnostic.py
       - name: Cache, CDC and instruction-fence RTL checks
         run: |
           python3 boards/tangnano20k/sdram/check_pipeline_cache.py

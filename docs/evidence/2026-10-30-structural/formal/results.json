@@ -1,0 +1,143 @@
+{
+  "complete": true,
+  "models": [
+    {
+      "file": "cache_coherence.maude",
+      "sha256": "c56dbe7a266c23c9b757c1b64c5c9d12c3f9fe08502abb36306142646376a150",
+      "checks": [
+        {
+          "name": "initialUpdate",
+          "expected": "safe",
+          "passed": true,
+          "states": 432
+        },
+        {
+          "name": "initialInvalidate",
+          "expected": "safe",
+          "passed": true,
+          "states": 702
+        },
+        {
+          "name": "initialBroken",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 51
+        },
+        {
+          "name": "initialEviction0",
+          "expected": "witness",
+          "passed": true,
+          "states": 3
+        },
+        {
+          "name": "initialEviction1",
+          "expected": "witness",
+          "passed": true,
+          "states": 3
+        }
+      ]
+    },
+    {
+      "file": "cache_cycle.maude",
+      "sha256": "79f4b99e74eade189ef6add2b94867d2446be9731cb7cff9ba993d86688c8ab0",
+      "checks": [
+        {
+          "name": "initialUpdate",
+          "expected": "safe",
+          "passed": true,
+          "states": 710033
+        },
+        {
+          "name": "initialInvalidate",
+          "expected": "safe",
+          "passed": true,
+          "states": 631913
+        },
+        {
+          "name": "initialBadWay1",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 31
+        },
+        {
+          "name": "initialNoDrain",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 1591
+        },
+        {
+          "name": "initialRead",
+          "expected": "witness",
+          "passed": true,
+          "states": 531
+        },
+        {
+          "name": "initialStuck",
+          "expected": "unreachable",
+          "passed": true,
+          "states": 930
+        },
+        {
+          "name": "initialEviction0",
+          "expected": "witness",
+          "passed": true,
+          "states": 531
+        },
+        {
+          "name": "initialEviction1",
+          "expected": "witness",
+          "passed": true,
+          "states": 531
+        }
+      ]
+    },
+    {
+      "file": "instruction_fence.maude",
+      "sha256": "9f94654679c6ff313dfe8c3714fd1d9aa08ee39cf244aeca1e94b7a79cfd2e7e",
+      "checks": [
+        {
+          "name": "initialGood",
+          "expected": "safe",
+          "passed": true,
+          "states": 2824
+        },
+        {
+          "name": "initialNoFlush",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 167
+        }
+      ]
+    },
+    {
+      "file": "branch_prediction.maude",
+      "sha256": "83da6ec00cb4c876473ec9a85b20085987474c3a3f18dccfb221f134e22a2cae",
+      "checks": [
+        {
+          "name": "initialCorrect",
+          "expected": "safe",
+          "passed": true,
+          "states": 4
+        },
+        {
+          "name": "initialWrong",
+          "expected": "safe",
+          "passed": true,
+          "states": 4
+        },
+        {
+          "name": "initialNoFlush",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 5
+        },
+        {
+          "name": "initialBubbleFault",
+          "expected": "counterexample",
+          "passed": true,
+          "states": 4
+        }
+      ]
+    }
+  ]
+}

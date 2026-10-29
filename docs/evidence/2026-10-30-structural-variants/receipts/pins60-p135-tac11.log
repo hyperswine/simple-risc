@@ -1,0 +1,17 @@
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+Traceback (most recent call last):
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/check_pipeline_rtl.py", line 561, in <module>
+    main()
+    ~~~~^^
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/check_pipeline_rtl.py", line 536, in main
+    output=run(common,timeout=900 if args.boot_loader else 240)
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/check_pipeline_rtl.py", line 389, in run
+    raise AssertionError(f'{args}: exit {p.returncode}\n{p.stdout}\n{p.stderr}')
+AssertionError: [PosixPath('/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/pins60-p135-tac11/obj/Vpipeline_cpu_tb'), '+IMAGE=/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/pins60-p135-tac11/image.hex', '+WORDS=16']: exit 1
+SRID1 isa=rv32[22323490000] %Fatal: pipeline_cpu_tb.v:157: Assertion failed in pipeline_cpu_tb.physical_backend: SDRAM capture word 1fffe4 beat0=00000000 expected=00000055
+%Error: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:157: Verilog $stop
+Aborting...
+
+

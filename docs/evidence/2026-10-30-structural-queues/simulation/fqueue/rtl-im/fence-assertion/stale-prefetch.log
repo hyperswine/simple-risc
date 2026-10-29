@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_fence_assertions.v:23: ASSERT: FENCE.I consumed pre-fence buffered instruction before memory refetch
+       Time: 45000  Scope: pipeline_fence_assertions_tb.monitor

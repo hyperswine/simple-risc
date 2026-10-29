@@ -40,7 +40,35 @@ variants; `benchmark_matrix.py --out NEW_DIRECTORY` runs all eight cases.
 Use `--resume` to reuse source- and output-validated results. Each result must
 pass the independent classifier oracle as well as successful exit and counter
 checks. `run_perf.py` also supports `--build-only`, `--run-only`, bounded `--jobs`
-and `--timeout`, and optional current-ABI `--profile-cpu` observations.
+and `--timeout`, and optional named-port `--profile-cpu` observations. Generate
+`SdramPipelineObserved` for profiling and CPU-level RTL tests; ordinary board
+builds continue to use `SdramPipeline`. Historical matrix receipts without a
+profiling-ABI field explicitly select the archived 2026-10-28 layout.
+
+The [structural experiment plan](../../../docs/2026-10-30-STRUCTURAL-EXPERIMENTS.md)
+records the baseline, acceptance criteria and pending experiments. For example:
+
+```sh
+cabal run clash -- -isrc -hide-package simple-risc -DRISCV_COMPRESSED \
+  src/SdramPipelineObserved.hs --verilog -fclash-clear -outputdir output/observed
+python3 boards/tangnano20k/sdram/check_pipeline_rtl.py --compressed \
+  --generated output/observed/SdramPipelineObserved.topEntity --simulator verilator
+cabal run -v0 pipeline-layout > output/pipeline-layout.json
+```
+
+`analyze_implementation.py` now retains detailed physical endpoint pins,
+per-hop cell and route delays, LUT drivers and synthesized CE loads. Optional
+`--generated`, `--layout` and repeated `--register-layout REGISTER=TYPE` attribute
+bits to source fields with checked register widths and explicit ownership
+bindings. They are analysis metadata; functional tests use named ports.
+
+`diagnose_output.py --build-only --out NEW_DIRECTORY` builds a memory-signature
+workload and a separate paced reporter. Physical runs require `--freq-mhz` and
+`--bitstream` for the image already loaded into SRAM; they keep one UART
+descriptor open. `--uploads-only` never executes its zero/ones/sequence
+payloads: it compares the receive CRC with three memory readback CRCs.
+The RTL checker supports the same upload-only experiment through
+`--boot-loader --loader-command U --upload-pattern zero --upload-words 512`.
 
 The [control-fanout and area analysis](../../../docs/2026-10-28-CONTROL-FANOUT-AND-AREA.md)
 traces the global hold/break and execution-mode enables, and replaces two-way

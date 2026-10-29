@@ -152,8 +152,14 @@ module perf_tb #(
  reg [63:0] window_pipeline_commits=0,window_redirects=0;
  generate if(PROFILE_CPU)begin: cpu_profile
    always @(posedge clk)if(!core_reset && !hold_cpu && measuring)begin
+`ifdef LEGACY_PROFILE_20261028
+     // Explicit opt-in for exact replay of archived pre-observation netlists.
      if(cpu.mCommits)window_pipeline_commits<=window_pipeline_commits+1;
      if(cpu.e2Moved[659] && cpu.e2Moved[100])window_redirects<=window_redirects+1;
+`elsif NAMED_PIPELINE_OBSERVATIONS
+     if(cpu.observe_commit)window_pipeline_commits<=window_pipeline_commits+1;
+     if(cpu.observe_redirect)window_redirects<=window_redirects+1;
+`endif
    end
  end endgenerate
 

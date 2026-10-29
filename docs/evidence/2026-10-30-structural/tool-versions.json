@@ -1,0 +1,9 @@
+{
+  "ghc": "9.8.2",
+  "cabal": "3.16.1.0",
+  "iverilog": "Icarus Verilog version 13.0 (stable) (v13_0)",
+  "verilator": "Verilator 5.052 2026-09-05 rev vUNKNOWN-built20260905",
+  "maude": "3.1",
+  "riscv_gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+  "gowin": "V1.9.12.04(89079)"
+}

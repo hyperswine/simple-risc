@@ -11,10 +11,11 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 OUT = ROOT / 'output/tangnano20k/bootrom/host-test'
 OUT.mkdir(parents=True, exist_ok=True)
-for variant in ('bram', 'sdram'):
+for variant in ('bram', 'sdram', 'sdram-diagnostic'):
     image = OUT / variant
     subprocess.run(['cc', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror',
-                    '-DROM_HOST_TEST', *(['-DROM_SDRAM'] if variant == 'sdram' else []),
+                    '-DROM_HOST_TEST', *(['-DROM_SDRAM'] if variant.startswith('sdram') else []),
+                    *(['-DROM_DIAGNOSTIC_READBACK'] if variant == 'sdram-diagnostic' else []),
                     str(HERE / 'bootrom.c'), str(HERE / 'test_host.c'), '-o', str(image)], check=True)
     result = subprocess.run([str(image)], check=True, capture_output=True, text=True)
     (OUT / f'{variant}.log').write_text(result.stdout)

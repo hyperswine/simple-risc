@@ -1,0 +1,12 @@
+upload-only 1 words sequence: receive CRC=True, memory CRC=True
+upload-only 1 words zero: receive CRC=True, memory CRC=True
+upload-only 1 words ones: receive CRC=True, memory CRC=True
+upload-only 16 words sequence: receive CRC=True, memory CRC=True
+upload-only 16 words zero: receive CRC=True, memory CRC=True
+upload-only 16 words ones: receive CRC=True, memory CRC=True
+upload-only 128 words sequence: receive CRC=True, memory CRC=True
+upload-only 128 words zero: receive CRC=True, memory CRC=True
+upload-only 128 words ones: receive CRC=True, memory CRC=True
+upload-only 512 words sequence: receive CRC=True, memory CRC=True
+upload-only 512 words zero: receive CRC=True, memory CRC=True
+upload-only 512 words ones: receive CRC=True, memory CRC=True

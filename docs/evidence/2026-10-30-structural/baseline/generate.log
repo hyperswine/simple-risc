@@ -1,0 +1,16 @@
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.309s
+GHC: Compiling and loading modules took: 27.726s
+Clash: Parsing and compiling primitives took 0.103s
+GHC+Clash: Loading modules cumulatively took 56.618s
+Clash: Compiling SdramPipeline.topEntity
+Clash: Compiling SimpleRisc.topEntity
+Clash: Normalization took 27.115s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 0.708s
+Clash: Normalization took 29.033s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 0.372s
+Clash: Compiling SimpleRisc.topEntity took 58.891s
+Clash: Compiling SdramPipeline.topEntity took 59.193s
+Clash: Total compilation took 1m56s

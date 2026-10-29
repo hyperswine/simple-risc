@@ -1,0 +1,3 @@
+[5057850000] %Fatal: pipeline_cpu_tb.v:103: Assertion failed in pipeline_cpu_tb: duplicate owned store
+%Error: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:103: Verilog $stop
+Aborting...

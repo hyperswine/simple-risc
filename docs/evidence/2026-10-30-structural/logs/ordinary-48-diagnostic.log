@@ -1,0 +1,9 @@
+silent-1: output=True, independent guest signature=True
+burst-1: output=True, independent guest signature=True
+paced-1: output=True, independent guest signature=True
+silent-2: output=True, independent guest signature=True
+burst-2: output=True, independent guest signature=True
+paced-2: output=True, independent guest signature=True
+silent-3: output=True, independent guest signature=True
+burst-3: output=True, independent guest signature=True
+paced-3: output=True, independent guest signature=True

@@ -1,0 +1,342 @@
+Build profile: -w ghc-9.8.2 -O1
+In order, the following will be built (use -v for more details):
+ - simple-risc-0.1.0.0 (test:simple-risc-test) (file test/SimpleRisc.hs changed)
+Preprocessing test suite 'simple-risc-test' for simple-risc-0.1.0.0...
+Building test suite 'simple-risc-test' for simple-risc-0.1.0.0...
+[4 of 5] Compiling SimpleRisc       ( test/SimpleRisc.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/t/simple-risc-test/build/simple-risc-test/simple-risc-test-tmp/SimpleRisc.o ) [Source file changed]
+
+test/SimpleRisc.hs:994:7: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘settled’ shadows the existing binding
+      defined at test/SimpleRisc.hs:107:1
+    |
+994 |       settled = stepDevices False False NoEffect (stepDevices False False NoEffect devices)
+    |       ^^^^^^^
+
+test/SimpleRisc.hs:1028:3: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘delay’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Signal’)
+     |
+1028 |   delay <- forAll (Gen.integral (Range.linear 200 400))
+     |   ^^^^^
+
+test/SimpleRisc.hs:1074:18: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1074 |       fetching = P.head (P.dropWhile ((/= Fetch) . cpuPhase) (P.iterate step m))
+     |                  ^^^^^^
+
+test/SimpleRisc.hs:1080:21: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1080 |       let entered = P.head (P.dropWhile ((== Trap) . cpuPhase) (P.iterate step next))
+     |                     ^^^^^^
+
+test/SimpleRisc.hs:1114:15: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘at’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Sized.Vector’)
+     |
+1114 |   let request at wr value = Just (BusRequest (ioBase+at) 2 wr value)
+     |               ^^
+
+test/SimpleRisc.hs:1115:25: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘reset’ shadows the existing binding
+      bound at test/SimpleRisc.hs:1121:7
+     |
+1115 |       clock io req held reset = fst (SP.spiIoStep io (req,reset,held,high))
+     |                         ^^^^^
+
+test/SimpleRisc.hs:1146:15: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘rises’ shadows the existing binding
+      bound at test/SimpleRisc.hs:1156:20
+     |
+1146 |       run spi rises sent fuel
+     |               ^^^^^
+
+test/SimpleRisc.hs:1146:21: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘sent’ shadows the existing binding
+      bound at test/SimpleRisc.hs:1156:14
+     |
+1146 |       run spi rises sent fuel
+     |                     ^^^^
+
+test/SimpleRisc.hs:1207:23: warning: [GHC-40910] [-Wunused-local-binds]
+    Defined but not used: ‘sck’
+     |
+1207 |       (io', (answer, (sck, mosi, _), ramCommand)) = ioStep io (request, False, misoBit, rigRamOut rig)
+     |                       ^^^
+
+test/SimpleRisc.hs:1262:16: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1262 |       status = P.head (rigAnswers (rigAccess ioDmaStatus False 0 received))
+     |                ^^^^^^
+
+test/SimpleRisc.hs:1272:17: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1272 |       refusal = P.head (rigAnswers (rigAccess ioDmaStatus False 0 refused))
+     |                 ^^^^^^
+
+test/SimpleRisc.hs:1286:19: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘io’ shadows the existing binding
+      bound at test/SimpleRisc.hs:1293:17
+     |
+1286 |       go fuel sim io
+     |                   ^^
+
+test/SimpleRisc.hs:1347:16: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘odd’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Class.Parity’)
+     |
+1347 |     (8, (\f3 k odd rs1 rs2 -> [bType (4 * k + (if odd then 2 else 0)) rs2 rs1 f3 0])
+     |                ^^^
+
+test/SimpleRisc.hs:1353:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘odd’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Class.Parity’)
+     |
+1353 |     (3, (\k odd rd -> [(9 `shiftL` 7) .|. 0x17, iType (4 * (k + 1) + (if odd then 2 else 0)) 9 0 rd 0x67])
+     |             ^^^
+
+test/SimpleRisc.hs:1369:5: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘forward’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Signal.Delayed.Internal’)
+     |
+1369 |     forward = Gen.integral (Range.linear 1 remaining)
+     |     ^^^^^^^
+
+test/SimpleRisc.hs:1388:18: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘at’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘Clash.Sized.Vector’)
+     |
+1388 |             from at c = do
+     |                  ^^
+
+test/SimpleRisc.hs:1444:21: warning: [GHC-18042] [-Wtype-defaults]
+    • Defaulting the type variable ‘a0’ to type ‘Integer’ in the following constraints
+        (Num a0) arising from the literal ‘1’ at test/SimpleRisc.hs:1444:21
+        (Enum a0)
+          arising from the arithmetic sequence ‘1 .. 8’
+          at test/SimpleRisc.hs:1444:20-27
+        (Integral a0)
+          arising from a use of ‘fromIntegral’
+          at test/SimpleRisc.hs:1447:58-69
+        (Integral a0)
+          arising from a use of ‘fromIntegral’
+          at test/SimpleRisc.hs:1452:80-91
+    • In the expression: 1
+      In the first argument of ‘P.zip’, namely ‘[1 .. 8]’
+      In the first argument of ‘(P.++)’, namely ‘P.zip [1 .. 8] values’
+     |
+1444 |   let regs = P.zip [1 .. 8] values P.++ [(31, dataPointer)]
+     |                     ^
+
+test/SimpleRisc.hs:1505:21: warning: [GHC-18042] [-Wtype-defaults]
+    • Defaulting the type variable ‘a0’ to type ‘Integer’ in the following constraints
+        (Num a0) arising from the literal ‘1’ at test/SimpleRisc.hs:1505:21
+        (Enum a0)
+          arising from the arithmetic sequence ‘1 .. 8’
+          at test/SimpleRisc.hs:1505:20-27
+        (Integral a0)
+          arising from a use of ‘fromIntegral’
+          at test/SimpleRisc.hs:1507:53-64
+    • In the expression: 1
+      In the first argument of ‘P.zip’, namely ‘[1 .. 8]’
+      In the first argument of ‘(P.++)’, namely ‘P.zip [1 .. 8] values’
+     |
+1505 |       regs = P.zip [1 .. 8] values P.++ [(31, dataPointer)]
+     |                     ^
+
+test/SimpleRisc.hs:1509:15: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘cycle’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘GHC.List’)
+     |
+1509 |       run sim cycle pending
+     |               ^^^^^
+
+test/SimpleRisc.hs:1518:7: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘quiet’ shadows the existing binding
+      defined at test/SimpleRisc.hs:165:1
+     |
+1518 |       quiet = finish (run start (0 :: Int) [])
+     |       ^^^^^
+
+test/SimpleRisc.hs:1893:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘pipelined’ shadows the existing binding
+      defined at test/SimpleRisc.hs:1437:1
+     |
+1893 |   P.mapM_ (\pipelined -> do
+     |             ^^^^^^^^^
+
+test/SimpleRisc.hs:1912:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘pipelined’ shadows the existing binding
+      defined at test/SimpleRisc.hs:1437:1
+     |
+1912 |   P.mapM_ (\pipelined -> do
+     |             ^^^^^^^^^
+
+test/SimpleRisc.hs:1927:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘pipelined’ shadows the existing binding
+      defined at test/SimpleRisc.hs:1437:1
+     |
+1927 |   P.mapM_ (\pipelined -> do
+     |             ^^^^^^^^^
+
+test/SimpleRisc.hs:1948:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘pipelined’ shadows the existing binding
+      defined at test/SimpleRisc.hs:1437:1
+     |
+1948 |   P.mapM_ (\pipelined -> do
+     |             ^^^^^^^^^
+
+test/SimpleRisc.hs:1970:13: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘pipelined’ shadows the existing binding
+      defined at test/SimpleRisc.hs:1437:1
+     |
+1970 |   P.mapM_ (\pipelined -> do
+     |             ^^^^^^^^^
+
+test/SimpleRisc.hs:2139:7: warning: [GHC-63397] [-Wname-shadowing]
+    This binding for ‘empty’ shadows the existing binding
+      imported from ‘Clash.Prelude’ at test/SimpleRisc.hs:17:1-38
+      (and originally defined in ‘GHC.Base’)
+     |
+2139 |   let empty = Fetched 0 0 False False 0 0 4
+     |       ^^^^^
+
+test/SimpleRisc.hs:2165:32: warning: [GHC-18042] [-Wtype-defaults]
+    • Defaulting the type variable ‘i0’ to type ‘Integer’ in the following constraints
+        (Enum i0)
+          arising from a use of ‘!!’ at test/SimpleRisc.hs:2165:32-33
+        (Num i0)
+          arising from a use of ‘toggle’ at test/SimpleRisc.hs:2165:35-40
+    • In the expression: table !! toggle r
+      In the expression: [table !! r, table !! toggle r]
+      In a case alternative: _ -> [table !! r, table !! toggle r]
+     |
+2165 |         _ -> [table !! r,table !! toggle r]
+     |                                ^^
+[5 of 5] Compiling Main             ( test/Spec.hs, dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/t/simple-risc-test/build/simple-risc-test/simple-risc-test-tmp/Main.o ) [SimpleRisc changed]
+[6 of 6] Linking dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/t/simple-risc-test/build/simple-risc-test/simple-risc-test [Objects changed]
+ld: warning: -U option is redundant when using -undefined dynamic_lookup
+Running 1 test suites...
+Test suite simple-risc-test: RUNNING...
+━━━ SimpleRisc ━━━
+  ✓ Experimental F queue banks preserve owned payloads through holds and cancellation passed 200 tests.
+  ✓ Separate BTB storage preserves effective reads through repeated holds passed 200 tests.
+  ✓ Frontend assembly, expansion and register reads have separate boundaries passed 300 tests.
+  ✓ Compressed BTB predicts halfword branches and recovers from straddle aliases passed 1 test.
+  ✓ Registered decode hazards match arriving producer stages passed 200 tests.
+  ✓ Compressed mret and FENCE.I discard stale halfwords passed 1 test.
+  ✓ Compressed ALU stream matches independent RV32 interpreter passed 200 tests.
+  ✓ Compressed pipeline retains straight-line instruction throughput passed 1 test.
+  ✓ Compressed mixed fetch, stores and pc+2 links passed 1 test.
+  ✓ Compressed hints and precise raw illegal traps passed 1 test.
+  ✓ Compressed boundary fetch and mepc IALIGN16 passed 1 test.
+  ✓ Bus completes once and preserves concurrent RX passed 100 tests.
+  ✓ Bus waits, precise faults and cancellation passed 100 tests.
+  ✓ Registered memory target selection passed 100 tests.
+  ✓ Finisher exits reset into the ROM; BOOTCAUSE reads and clears passed 100 tests.
+  ✓ Split counters match a 64-bit reference passed 100 tests.
+  ✓ Counter CSR reads wait for carry passed 100 tests.
+  ✓ Precise retirement and UART stalls passed 1 test.
+  ✓ Counter writes override implicit increments passed 1 test.
+  ✓ All six CSR read/modify/write forms passed 100 tests.
+  ✓ CSR access rules and WARL masks passed 100 tests.
+  ✓ Guest trap handler resumes with mret passed 1 test.
+  ✓ MRET restores machine status passed 100 tests.
+  ✓ mtip compares all 64 bits passed 100 tests.
+  ✓ Timer interrupt wakes WFI passed 100 tests.
+  ✓ UART interrupt claims through the PLIC passed 100 tests.
+  ✓ Reset quietens interrupt sources passed 1 test.
+  ✓ SPI exchanges bytes in mode 0 passed 100 tests.
+  ✓ SDRAM SPI survives cache holds passed 1 test.
+  ✓ FIFO is a bounded queue passed 100 tests.
+  ✓ A program reaches the I/O complex passed 1 test.
+  ✓ SPI DMA moves blocks passed 100 tests.
+  ✓ Core matches the reference model on random programs passed 300 tests.
+    ends in ECALL                  84% ████████████████▊···
+    ends in an illegal instruction  6% █▎··················
+    ends in a misaligned access     4% ▋···················
+    ends in an access fault         1% ▏···················
+    ends in a misaligned jump       3% ▌···················
+    jumps into the ROM              0% ····················
+    retires 30 or more             25% █████···············
+    takes a software interrupt     20% ████················
+    runs a loop                    37% ███████▎············
+  ✓ Pipeline matches the reference model on random programs passed 300 tests.
+    ends in ECALL                  84% ████████████████▊···
+    ends in an illegal instruction  6% █▎··················
+    ends in a misaligned access     4% ▋···················
+    ends in an access fault         1% ▏···················
+    ends in a misaligned jump       3% ▌···················
+    jumps into the ROM              0% ····················
+    retires 30 or more             25% █████···············
+    takes a software interrupt     20% ████················
+    runs a loop                    37% ███████▎············
+  ✓ The pipeline's multiplier is exact passed 2000 tests.
+  ✓ Interrupts are transparent to the phases passed 100 tests.
+    interrupted 100% ████████████████████
+  ✓ Interrupts are transparent to the pipeline passed 100 tests.
+    interrupted 100% ████████████████████
+  ✓ MRET takes a pending interrupt at once passed 100 tests.
+  ✓ Boot ROM quietens interrupt sources before R passed 1 test.
+  ✓ Precise staged exception entry passed 100 tests.
+  ✓ Unhandled traps return to the boot ROM; Ctrl-C resets passed 1 test.
+  ✓ Faulting store never writes RAM passed 1 test.
+  ✓ Every register bank and x0 survives decode/writeback passed 100 tests.
+  ✓ RV32I arithmetic result reaches BRAM passed 100 tests.
+  ✓ Boot ROM loads programs with a guard word passed 20 tests.
+  ✓ Boot ROM implements Base T/Q/V/H commands passed 1 test.
+  ✓ Boot ROM implements SRID1 I and SRU1 U/C/G commands passed 1 test.
+  ✓ Boot ROM clears RAM passed 1 test.
+  ✓ RV32M matches the reference semantics passed 400 tests.
+  ✓ Test encoders match known instructions passed 1 test.
+  ✓ Backward branch in final word loops passed 100 tests.
+  ✓ SDRAM holds full word addresses across waits passed 100 tests.
+  ✓ SDRAM map and boot ROM reads passed 1 test.
+  ✓ SDRAM reset drains pending memory passed 1 test.
+  ✓ Registered CSR selection matches reference passed 100 tests.
+  ✓ Registered execution matches compute passed 100 tests.
+  ✓ Split comparisons match signed/unsigned references passed 100 tests.
+  ✓ Simple instructions overlap unless dependent passed 100 tests.
+  ✓ Two-stage shifts cover every distance passed 1 test.
+  ✓ Store into next instruction is fetched fresh passed 1 test.
+  ✓ MISC-MEM decoding passed 1 test.
+  ✓ RAM accesses take the fast path passed 100 tests.
+  ✓ A taken jump fetches its target early passed 1 test.
+  ✓ UART TX store waits for ready passed 100 tests.
+  ✓ Circuit programs and runs over UART passed 1 test.
+  ✓ UART TX timing and byte latch passed 100 tests.
+  ✓ UART RX 8-N-1 sampling passed 100 tests.
+  ✓ UART RX holding register passed 100 tests.
+  ✓ 68 succeeded.
+━━━ PsramRegs ━━━
+  ✓ boot passed 1 test.
+  ✓ matches the psram_regs.ino model passed 40 tests.
+  ✓ write-through and flush passed 1 test.
+  ✓ verify failure sets ERR passed 1 test.
+  ✓ stale partial frame dropped passed 1 test.
+  ✓ lost messages reported passed 1 test.
+  ✓ UART end to end passed 1 test.
+  ✓ UART burst keeps snapshots whole passed 1 test.
+  ✓ 8 succeeded.
+Test suite simple-risc-test: PASS
+Test suite logged to:
+/Users/jasonqin/Documents/GitHub/simple-risc/./dist-newstyle/build/aarch64-osx/ghc-9.8.2/simple-risc-0.1.0.0/t/simple-risc-test/test/simple-risc-0.1.0.0-simple-risc-test.log
+1 of 1 test suites (1 of 1 test cases) passed.

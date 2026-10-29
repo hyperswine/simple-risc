@@ -35,6 +35,7 @@ class MatrixControls(unittest.TestCase):
     def test_accepts_only_controlled_matrix(self):
         check_controls(self.cases())
         for key, value in [('cpu_mhz', 48), ('line_bits', 10), ('image_sha256', 'another image'),
+                           ('profile_abi', 'different counter definitions'),
                            ('generated', {'off': 'changed CPU'}),
                            ('inputs', {'/experiment/bridge-old.v': 'old', '/source/pipeline_cache.v': 'changed cache'})]:
             cases = deepcopy(self.cases())

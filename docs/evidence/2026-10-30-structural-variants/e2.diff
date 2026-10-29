@@ -1,0 +1,52 @@
+--- control/src/SimpleRisc.hs
++++ e2/src/SimpleRisc.hs
+@@ -909,7 +909,7 @@
+ 
+ emptyExecuteTwo :: ExecuteTwo
+ emptyExecuteTwo =
+-  ExecuteTwo 0 0 initialExecuteControl (Computed Nothing 0 0 Nothing 0) (repeat 0) initialCompareResults initialCompareResults
++  ExecuteTwo 0 0 initialExecuteControl (Computed Nothing 0 0 Nothing 0) Nothing initialCompareResults
+     0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
+ 
+ emptyMemoryStage :: MemoryStage
+@@ -1155,7 +1155,7 @@
+               | execMulDiv control = Just 0
+               | execLui control = Just (e2Imm x)
+               | execAuipc control = Just (cTarget comp)
+-              | execAluOp control = selectedAlu control (e2Candidates x) (e2AluCompare x)
++              | execAluOp control = e2AluResult x
+               | otherwise = Nothing
+             taken = case kind of
+               KindJump -> True
+@@ -1306,8 +1306,7 @@
+                 e2Predicted = e1Predicted x,
+                 e2Control = control,
+                 e2Computed = computed,
+-                e2Candidates = aluCandidates control a op2,
+-                e2AluCompare = compareOperands a op2,
++                e2AluResult = selectedAlu control (aluCandidates control a op2) (compareOperands a op2),
+                 e2BranchCompare = compareOperands a b,
+                 e2B = b,
+                 e2Op2 = op2,
+--- control/src/SimpleRisc/Types.hs
++++ e2/src/SimpleRisc/Types.hs
+@@ -748,15 +748,15 @@
+   }
+   deriving (Generic, NFDataX)
+ 
+--- | The first execute stage's registered adders, comparisons and ALU
+--- candidates (as in Execute), for the second to select from.
++-- | The first execute stage's registered adders, comparisons and selected ALU
++-- result. Selecting before this register removes the eight-candidate payload;
++-- forwarding still waits for M, so no earlier consumer observes the result.
+ data ExecuteTwo = ExecuteTwo
+   { e2Pc :: Word32,
+     e2Predicted :: Word32,
+     e2Control :: ExecuteControl,
+     e2Computed :: Computed,
+-    e2Candidates :: Vec 8 Word32,
+-    e2AluCompare :: CompareResults,
++    e2AluResult :: Maybe Word32,
+     e2BranchCompare :: CompareResults,
+     e2B :: Word32,
+     e2Op2 :: Word32,

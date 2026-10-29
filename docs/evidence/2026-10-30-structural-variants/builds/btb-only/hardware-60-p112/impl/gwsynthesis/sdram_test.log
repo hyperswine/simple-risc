@@ -1,0 +1,82 @@
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/pipeline_top.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/memory.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/cache.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/pll.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/dual_pll.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v'
+Compiling module 'top'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/pipeline_top.v":1)
+Compiling module 'sdram_pll'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/pll.v":1)
+Compiling module 'sdram_pipeline_risc'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v":6)
+Extracting RAM for identifier 'RAM'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v":25942)
+Extracting RAM for identifier 'RAM_0'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v":25955)
+Compiling module 'sdram_pipeline_cache(LINE_BITS=11,WAYS=2,ROM_FILE="/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/bootrom-sdram.hex")'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":7)
+Extracting RAM for identifier 'tags'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":34)
+Extracting RAM for identifier 'tags_way1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":35)
+Extracting RAM for identifier 'mru'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":45)
+Extracting RAM for identifier 'rom'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":50)
+Extracting RAM for identifier 'write_address'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":58)
+Extracting RAM for identifier 'write_data'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":59)
+Extracting RAM for identifier 'write_mask'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":59)
+Extracting RAM for identifier 'fill_data'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":63)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":158)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Extracting RAM for identifier 'mem1'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v":170)
+Compiling module 'sdram_burst_memory(FREQ=60000000)'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v":3)
+Compiling module 'sdram(FREQ=60000000,BURST_WORDS=4)'("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v":32)
+WARN  (EX3791) : Expression size 4 truncated to fit in target size 2("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v":265)
+WARN  (EX3791) : Expression size 16 truncated to fit in target size 15("/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v":293)
+NOTE  (EX0101) : Current top module is "top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/impl/gwsynthesis/sdram_test.vg" completed
+[100%] Generate report file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/structural-next-20261030/btb-only/hardware-60-p112/impl/gwsynthesis/sdram_test_syn.rpt.html" completed
+GowinSynthesis finish

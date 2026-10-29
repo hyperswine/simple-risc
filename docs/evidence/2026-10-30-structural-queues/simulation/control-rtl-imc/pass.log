@@ -1,0 +1,5 @@
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 98 fills 36 writes 56287 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no cancelled store, 125 owned-effect hold clocks
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:459: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 737us; walltime 0.147 s; speed 5.021 ms/s
+- Verilator: cpu 0.147 s on 1 threads; allocated 12 MB

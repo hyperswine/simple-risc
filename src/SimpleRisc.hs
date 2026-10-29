@@ -1077,6 +1077,16 @@ pipeStepDecodedWith decodeTarget machine memoryWord =
 
 pipeStepStagesWith :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
 pipeStepStagesWith decodeTarget machine memoryWord =
+  let (next, write, output, stages, loads, _) = pipeStepTracedWith decodeTarget machine memoryWord
+   in (next, write, output, stages, loads)
+
+pipeTraceWith :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> PipelineTrace
+pipeTraceWith decodeTarget machine memoryWord =
+  let (_, _, _, _, _, trace) = pipeStepTracedWith decodeTarget machine memoryWord
+   in trace
+
+pipeStepTracedWith :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad, PipelineTrace)
+pipeStepTracedWith decodeTarget machine memoryWord =
   let pipe = cpuPipe machine
       -- Every stall and port decision below reads registers (stage valid
       -- bits, kinds, wait counts, queue pointers), never another stage's
@@ -1602,14 +1612,22 @@ pipeStepStagesWith decodeTarget machine memoryWord =
       -- because the stage after it is stalled, so those cycles must load too.
       -- Where the two agree the register reloads its own value.
       loads = StageLoad (dFree && pFCount pipe /= 0) (e1Advance || dAdvance) (e2Advance || e1Advance) (mHold || e2Advance)
+      trace = PipelineTrace
+        mCommits (maybe 0 mWord (pM pipe)) (maybe 0 mPc (pM pipe)) (maybe 0 mNext (pM pipe))
+        issue fetchPc
+        (pOutstanding pipe == 0 && isNothing (pA pipe) && pFCount pipe == 0 &&
+          not (slotValid (pDSlot pipe)) && not (slotValid (pE1Slot pipe)) &&
+          not (slotValid (pE2Slot pipe)) && not (slotValid (pMSlot pipe)))
+        (isJust redirect)
    in if handover
-        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing), stages, loads)
+        then (withPayloads handed {cpuReadIndices = enteringReads}, Nothing, (0, Nothing, Nothing), stages, loads, trace)
         else
           ( withPayloads (portState committed {cpuPipe = pipe', cpuReadIndices = enteringReads}),
             registerWriteNow,
             (readAddress, memoryWrite, Nothing),
             stages,
-            loads
+            loads,
+            trace
           )
 
 -- | Leave the pipeline for the phases at the commit stage: an interrupt

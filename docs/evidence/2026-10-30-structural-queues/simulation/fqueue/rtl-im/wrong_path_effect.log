@@ -1,0 +1,3 @@
+[5061250000] %Fatal: pipeline_cpu_tb.v:107: Assertion failed in pipeline_cpu_tb: cancelled store reached memory
+%Error: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cpu_tb.v:107: Verilog $stop
+Aborting...

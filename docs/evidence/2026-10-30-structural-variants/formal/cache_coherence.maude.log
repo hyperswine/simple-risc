@@ -1,0 +1,32 @@
+==========================================
+search in CACHE-COHERENCE : initialUpdate =>* S such that bad(S) = true .
+
+No solution.
+states: 432  rewrites: 72577 in 8ms cpu (8ms real) (8927060 rewrites/second)
+==========================================
+search in CACHE-COHERENCE : initialInvalidate =>* S such that bad(S) = true .
+
+No solution.
+states: 702  rewrites: 116317 in 12ms cpu (12ms real) (9341980 rewrites/second)
+==========================================
+search [1] in CACHE-COHERENCE : initialBroken =>* S such that bad(S) = true .
+
+Solution 1 (state 50)
+states: 51  rewrites: 1936 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(cache(line(t0, v0), line(t1, v0)), mem(v0, v1, v0), w1, update,
+    badWay1)
+==========================================
+search [1, 1] in CACHE-COHERENCE : initialEviction0 =>* S such that
+    evictedWay1(S) = true .
+
+Solution 1 (state 2)
+states: 3  rewrites: 30 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(cache(line(t0, v0), line(t2, v2)), mem(v0, v1, v2), w1, update, good)
+==========================================
+search [1, 1] in CACHE-COHERENCE : initialEviction1 =>* S such that
+    evictedWay0(S) = true .
+
+Solution 1 (state 2)
+states: 3  rewrites: 30 in 0ms cpu (0ms real) (~ rewrites/second)
+S --> st(cache(line(t2, v2), line(t1, v1)), mem(v0, v1, v2), w0, update, good)
+Bye.
