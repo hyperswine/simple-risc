@@ -77,3 +77,4 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-10-30 | [STALL-BREAKDOWN](2026-10-30-STALL-BREAKDOWN.md) | every classifier cycle attributed to one cause: IPC 0.272, mispredicts 33.5% and operand hazards 24.4% of cycles |
 | 2026-10-30 | [STALL-SPLIT](2026-10-30-STALL-SPLIT.md) | hazards by producer and redirects by kind; a replayed predictor model that matches the core per instruction; ranked structural fixes |
 | 2026-10-30 | [RETURN-STACK-AND-STRADDLE](2026-10-30-RETURN-STACK-AND-STRADDLE.md) | return stack, straddling-branch install and an assembly-stage correction: 1.18x fewer cycles; a 4-entry stack with pointer restore passes 60 MHz at all placements (Fmax x IPC 1.21x) |
+| 2026-10-30 | [BTB-64](2026-10-30-BTB-64.md) | 64-entry BTB, mapped by Gowin to block RAM: 1.069x fewer cycles (1.26x over the pre-predictor core); 60 MHz passes at all placements; the BTB loop is now the critical path |

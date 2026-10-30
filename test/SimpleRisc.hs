@@ -2272,37 +2272,39 @@ prop_compressed_btb_prediction_and_aliases = withTests 1 . property $ do
   annotateShow sharedCycles
   assert (sharedCycles < 135)
 
-  -- 3. BTB tag alias (0x2000 bytes = 2048 words apart) where a Slot-1 BTB
-  -- entry trained at ramBase+6 aliases with ramBase+0x2004, whose upper
-  -- halfword at ramBase+0x2006 starts a straddling 32-bit ADDI x10, x10, 123.
+  -- 3. A BTB tag alias: a foreign Slot-1 entry whose index and tag match the
+  -- word at ramBase+0x2004, whose upper halfword at ramBase+0x2006 starts a
+  -- straddling 32-bit ADDI x10, x10, 123. Real aliases are 64 KiB apart,
+  -- beyond the simulated RAM, so the entry is planted rather than trained.
   let straddleAddi = addi 10 10 123
       straddleLo = resize (straddleAddi .&. 0xffff) :: Unsigned 16
       straddleHi = resize (straddleAddi `shiftR` 16) :: Unsigned 16
+      aliasPc = ramBase + 0x2004
       -- At 0x8000_0000:
       --   +0: c.nop (0x0001)
-      --   +2: c.nop (0x0001)
-      --   +4: c.nop (0x0001)
-      --   +6: c.jr x11 (0x8582) -> trains btbIndex 1, btbTag 0, bSlot True, target = ramBase+0x2004
-      -- At 0x8000_2004 (word index 2049, same btbIndex 1 and btbTag 0):
+      --   +2: c.jr x11 (0x8582) -> ramBase+0x2004 (trains index 0, not 1)
+      -- At 0x8000_2004 (word index 2049, BTB index 1):
       --   +0: c.addi x10, 1 (0x0505)
       --   +2..+4: straddling 32-bit addi x10, x10, 123
       --   +6: c.ebreak (0x9002)
       aliasRam =
-        ramWrite 0 0x0001_0001
-          $ ramWrite 1 0x8582_0001
+        ramWrite 0 0x8582_0001
           $ ramWrite 2049 (resize (0x0505 :: Unsigned 16) .|. (resize straddleLo `shiftL` 16))
           $ ramWrite 2050 (resize straddleHi .|. (0x9002 `shiftL` 16))
           $ blankRam 0
+      aliasStart = (runningMachine [(10, 10), (11, aliasPc)]) {cpuCompressed = True, cpuPipelined = True}
+      planted = (cpuPipe aliasStart) {pBtb = replace (btbIndex aliasPc) (BtbEntry True True (btbTag aliasPc) aliasPc) (pBtb (cpuPipe aliasStart))}
       (_, aliasAfter) =
-        runUntilHalt 4000 (startSim ((runningMachine [(10, 10), (11, ramBase + 0x2004)]) {cpuCompressed = True, cpuPipelined = True}) aliasRam)
+        runUntilHalt 4000 (startSim (aliasStart {cpuPipe = planted}) aliasRam)
       aliasM = simMachine aliasAfter
+  btbIndex aliasPc === 1
   cpuRegs aliasM !! (10 :: Index 32) === 134
   trapCause (cpuTrapRegisters aliasM) === 3
   trapEpc (cpuTrapRegisters aliasM) === ramBase + 0x200a
-  -- Exactly 6 architectural instructions retired prior to EBREAK (the refetch
+  -- Exactly 4 architectural instructions retired prior to EBREAK (the refetch
   -- bubble must not increment minstret), and the aliased BTB entry was cleared.
-  counterLo (cpuInstret aliasM) === 6
-  bValid (pBtb (cpuPipe aliasM) !! (1 :: Index 8)) === False
+  counterLo (cpuInstret aliasM) === 4
+  bValid (pBtb (cpuPipe aliasM) !! btbIndex aliasPc) === False
 
 -- A pending resolution may be installed on every physical clock, including
 -- repeated holds. Compare the actual separately enabled bank registers with a
@@ -2316,24 +2318,34 @@ prop_btb_storage_preserves_effective_table_during_holds = withTests 200 . proper
     resetNow <- Gen.frequency [(1, pure True), (9, pure False)]
     advance <- Gen.bool
     validWrite <- Gen.bool
-    index <- Gen.integral (Range.linear 0 7)
+    index <- Gen.integral (Range.linear 0 3)
+    readIndex <- Gen.integral (Range.linear 0 3)
     valid <- Gen.bool
     slotBit <- Gen.bool
     tag <- Gen.integral (Range.linear 0 255)
     target <- Gen.integral Range.constantBounded
-    pure (resetNow, advance, if validWrite then Just (index, BtbEntry valid slotBit tag target) else Nothing)
+    pure (resetNow, advance, readIndex, if validWrite then Just (index, BtbEntry valid slotBit tag target) else Nothing)
   let initialTable = repeat (BtbEntry False False 0 0)
       effective table pending = applyBtbWrite (emptyPipe {pBtb=table,pBtbWrite=pending})
-      reference (table,pending) (resetNow,advance,proposed)
+      -- what the core reads: the stored entry, unless the pending one is for it
+      seen stored pending index = case pending of
+        Just (i, e) | i == index -> e
+        _ -> stored
+      -- an invalid entry's other fields are never read
+      visible e = if bValid e then Just e else Nothing
+      reference (table,pending) (resetNow,advance,_,proposed)
         | resetNow = (initialTable,Nothing)
         | advance = (effective table pending,proposed)
         | otherwise = (table,pending)
       states = P.scanl reference (initialTable,Nothing) operations
-      resetStream = P.map (\(resetNow,_,_) -> resetNow) operations P.++ P.repeat False
+      resetStream = P.map (\(resetNow,_,_,_) -> resetNow) operations P.++ P.repeat False
+      readStream = P.map (\(_,_,r,_) -> r) operations P.++ P.repeat 0
       pendingStream = P.map P.snd states P.++ P.repeat Nothing
       actual = sampleN @XilinxSystem (P.length states) $
-        withClockResetEnable clockGen (unsafeFromActiveHigh (fromList resetStream)) enableGen (SP.btbStorage (fromList pendingStream))
-  P.mapM_ (\((table,pending),stored) -> effective stored pending === effective table pending) (P.zip states actual)
+        withClockResetEnable clockGen (unsafeFromActiveHigh (fromList resetStream)) enableGen (SP.btbStorage (fromList pendingStream) (fromList readStream))
+  P.mapM_
+    (\(((table,pending),stored),index) -> visible (seen stored pending index) === visible (seen (table !! index) pending index))
+    (P.zip (P.zip states actual) readStream)
 
 -- Compare only owned FIFO slots: a write to a free bank is allowed to happen
 -- early, and may change repeatedly during holds. Tokens advance atomically

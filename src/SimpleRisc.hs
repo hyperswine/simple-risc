@@ -866,11 +866,11 @@ fetchedWord (pc, predicted) word =
   let opcode = word .&. 0x7f
    in Fetched pc word (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f) (opcode == 0x33 || opcode == 0x23 || opcode == 0x63) predicted word 4
 
-btbIndex :: Word32 -> Index 8
-btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 3)
+btbIndex :: Word32 -> BtbIndex
+btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 6)
 
 btbTag :: Word32 -> Unsigned 8
-btbTag pc = resize (pc `shiftR` 5)
+btbTag pc = resize (pc `shiftR` 8)
 
 -- | Link registers for the return address stack (the RISC-V hint
 -- convention): x1 and x5.
@@ -931,7 +931,7 @@ rawControl size raw
 -- | The effective table: the registered one, with last cycle's resolution
 -- overriding its entry. The update is deferred by one cycle for timing (see
 -- 'pBtbWrite'), which the override hides from every reader.
-applyBtbWrite :: Pipe -> Vec 8 BtbEntry
+applyBtbWrite :: Pipe -> Vec BtbEntries BtbEntry
 applyBtbWrite pipe = case pBtbWrite pipe of
   Just (index, resolved) -> replace index resolved (pBtb pipe)
   Nothing -> pBtb pipe
@@ -1613,7 +1613,12 @@ pipeStepTracedWith decodeTarget machine memoryWord =
       issue = not portBusy && pOutstanding pipe < 4
       -- The lookup reads the fetch pc register only: a redirect's target
       -- is followed by target + 4.
-      entry = btb !! btbIndex (pFetchPc pipe)
+      -- The stored entry, or last cycle's resolution if it is for this index
+      -- (the board's table supplies only the entry at the fetch index).
+      fetchIndex = btbIndex (pFetchPc pipe)
+      entry = case pBtbWrite pipe of
+        Just (index, resolved) | index == fetchIndex -> resolved
+        _ -> pBtb pipe !! fetchIndex
       hit =
         isNothing steering
           && bValid entry

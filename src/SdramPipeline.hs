@@ -150,21 +150,29 @@ type BoardOutput dom = (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal
 -- A separate write port for the predictor table. Its index and entry come
 -- directly from the registered pending resolution, never the fetch arithmetic
 -- or Machine's fast/slow selector. Installation may repeat during a hold: it
--- is idempotent, and applyBtbWrite still bypasses that same pending entry.
+-- is idempotent, and the core still bypasses that same pending entry.
 -- Before the pending register changes, its old value has reached the table.
 -- Thus the effective predictor is identical even while logical CPU time stops.
-btbStorage :: HiddenClockResetEnable dom => Signal dom (Maybe (Index 8, R.BtbEntry)) -> Signal dom (Vec 8 R.BtbEntry)
-btbStorage pending = bundle (imap bank (repeat ()))
+--
+-- The slot, tag and target sit in an asynchronously read RAM (distributed
+-- RAM on the GW2A), read at the registered fetch pc's index exactly as the
+-- old register banks were. Valid bits stay in flip-flops so reset clears
+-- them; an invalid entry's other fields are never inspected.
+btbStorage :: HiddenClockResetEnable dom => Signal dom (Maybe (R.BtbIndex, R.BtbEntry)) -> Signal dom R.BtbIndex -> Signal dom R.BtbEntry
+btbStorage pending readIndex = entry <$> validRead <*> fields
  where
- bank index _ = regEn (R.BtbEntry False False 0 0)
-   ((\write -> maybe False ((==index) . fst) write) <$> pending)
-   ((\write -> maybe (R.BtbEntry False False 0 0) snd write) <$> pending)
+ valids = register (repeat False :: Vec R.BtbEntries Bool) (install <$> pending <*> valids)
+ install write current = maybe current (\(index, e) -> replace index (R.bValid e) current) write
+ validRead = (!!) <$> valids <*> readIndex
+ fields = asyncRam (SNat @R.BtbEntries) readIndex (fmap (\(index, e) -> (index, (R.bSlot e, R.bTag e, R.bTarget e))) <$> pending)
+ entry valid ~(slotBit, tag, target) = R.BtbEntry valid slotBit tag target
 
 withoutBtb :: R.Pipe -> R.Pipe
 withoutBtb pipe = pipe {R.pBtb=repeat (R.BtbEntry False False 0 0)}
 
-withBtb :: Vec 8 R.BtbEntry -> R.Pipe -> R.Pipe
-withBtb table pipe = pipe {R.pBtb=table}
+-- The core reads only the fetch index's entry, so every slot carries it.
+withBtb :: R.BtbEntry -> R.Pipe -> R.Pipe
+withBtb stored pipe = pipe {R.pBtb=repeat stored}
 
 -- The production top selects only the first component, so synthesis removes
 -- the observation cone. The observed top is a functional simulation target;
@@ -202,7 +210,7 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  -- register: the hold enable is the widest net in the design either way, and
  -- one 5,000-load enable was the critical path before the split.
  pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
- btb=btbStorage (R.pBtbWrite <$> pipeState)
+ btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
  effectivePipe=withBtb <$> btb <*> pipeState
  running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
  -- Both the Ctrl-C reset and the hold clock-enable start at a register, not at

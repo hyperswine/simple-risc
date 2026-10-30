@@ -1,0 +1,61 @@
+DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2
+DTREE DATA READY
+DTREE nodes=23 depth=5
+DTREE train hits=124/128 digest=21562
+DTREE test hits=61/64 digest=909572
+root split: col 1 @ 0.750635343138128
+DTREE elapsed_us=1603237
+FPR EXIT 0
+PERF cycles=115789815 held=8819490 held_read_miss=2801085 held_write_full=6016357 held_clear=2048
+PERF miss_draining=302273 miss_filling=2349212 fills=259059 code_fills=24877 writes=5807436 stores=5807439
+PERF store_updates=4037593 store_hit_invalidations=0 store_invalidated_fills=0
+PERF window_cycles=115446617 window_held=8768232 window_fills=258695 window_writes=5778016
+PERF window_pipeline_commits=39517109 window_redirects=1496193
+PERF slot_issue=41562700 slot_slow=546494 slot_restart=1505192 slot_load_wait=8524749 slot_mul_wait=123717 slot_other_wait=0
+PERF slot_port_conflict=513887 slot_hazard=34456623 slot_frontend_refill=9547527 slot_frontend_other=9897496 slot_other=0 fetch_port_blocked=15727253
+PERF hazard_0=511169 hazard_1=3391282 hazard_2=2905 hazard_3=7176580 hazard_4=859578 hazard_5=3852291 hazard_6=82053 hazard_7=11396969 hazard_8=3411560 hazard_9=3523787 hazard_10=248449 hazard_11=0 hazard_12=0 hazard_13=0 hazard_14=0 hazard_15=0
+PERF redirect_kind_0=0 redirect_kind_1=302204 redirect_kind_2=1185887 redirect_kind_3=0 redirect_kind_4=0 redirect_kind_5=4684 redirect_kind_6=3418 redirect_kind_7=0
+PERF restart_length_0=0 restart_length_1=0 restart_length_2=0 restart_length_3=0 restart_length_4=0 restart_length_5=0 restart_length_6=0 restart_length_7=1086421 restart_length_8=312199 restart_length_9=97572 restart_length_10=0 restart_length_11=3 restart_length_12=0 restart_length_13=976 restart_length_14=188 restart_length_15=0 restart_length_16=7833
+PERF ctl_load=5326804 ctl_store=5778019 ctl_shift=4798577 ctl_mul=326909
+PERF ctl_branch=4636464 ctl_branch_taken=2813439 ctl_jal=2346943 ctl_jal_link=974530 ctl_return=974533 ctl_jalr=5856 ctl_jalr_link=0 refill_port_blocked=0 front_redirects=1932168
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v:294: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 2s; walltime 720.986 s; speed 3.346 ms/s
+- Verilator: cpu 633.532 s on 1 threads; allocated 13 MB
+STALL BREAKDOWN (share of measured cycles)
+  cache holds the core                           8,768,232   7.60%
+  issued into E1                                41,562,700  36.00%
+  behind a load in M                             8,524,749   7.38%
+  behind a multiply in M                           123,717   0.11%
+  behind another M wait                                  0   0.00%
+  E2 load blocked by an M store                    513,887   0.45%
+  operand hazard in decode                      34,456,623  29.85%
+  restart cycle (redirect/handover/fence)        1,505,192   1.30%
+  front end refilling after restart              9,547,527   8.27%
+  front end empty, other                         9,897,496   8.57%
+  outside the pipeline (ROM/trap phases)           546,494   0.47%
+  unclassified                                           0   0.00%
+  commits 39,517,109  IPC 0.342  wrong-path issues 2,045,591  fetch port blocked 15,727,253 cycles
+HAZARD PRODUCERS (share of measured cycles)
+  E1 load                                          511,169   0.44%
+  E1 shift                                       3,391,282   2.94%
+  E1 multiply                                        2,905   0.00%
+  E1 plain                                       7,176,580   6.22%
+  E2 load                                          859,578   0.74%
+  E2 shift                                       3,852,291   3.34%
+  E2 multiply                                       82,053   0.07%
+  E2 plain                                      11,396,969   9.87%
+  M load                                         3,411,560   2.96%
+  M shift                                        3,523,787   3.05%
+  M multiply                                       248,449   0.22%
+REDIRECT KINDS (share of redirects)
+  straddle refetch (BTB alias)                           0   0.00%
+  branch predicted taken, not taken                302,204  20.20%
+  branch taken, not predicted                    1,185,887  79.26%
+  branch taken, wrong predicted target                   0   0.00%
+  jal                                                    0   0.00%
+  return (jalr x0, ra/t0)                            4,684   0.31%
+  other jalr                                         3,418   0.23%
+  non-control BTB alias                                  0   0.00%
+RESTART TO FIRST ISSUE: 1,505,192 restarts, mean 7.39 cycles; 7:1086421 8:312199 9:97572 11:3 13:976 14:188 16+:7833
+logs: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/btb64-20261030/sim

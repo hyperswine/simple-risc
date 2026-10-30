@@ -855,6 +855,11 @@ data Action
 data BtbEntry = BtbEntry {bValid :: Bool, bSlot :: Bool, bTag :: Unsigned 8, bTarget :: Word32}
   deriving (Generic, NFDataX, Show, Eq)
 
+-- | Branch target buffer entries and their index.
+type BtbEntries = 64
+
+type BtbIndex = Index BtbEntries
+
 -- | Return stack entries (calls deep) and its wrapping pointer.
 type RasDepth = 4
 
@@ -925,9 +930,11 @@ data Pipe = Pipe
     -- restored: a discarded return followed by a call overwrites a live
     -- entry, and the next return through it is caught by E2.
     pRasResolvedTop :: RasPointer,
-    -- | Eight entries, indexed by pc bits 4..2: fetch follows a hit's
-    -- target; the second execute stage corrects a wrong guess.
-    pBtb :: Vec 8 BtbEntry,
+    -- | 'BtbEntries' entries, indexed by pc bits 7..2 and tagged with bits
+    -- 15..8: fetch follows a hit's target; the second execute stage corrects
+    -- a wrong guess. The board keeps it outside this register (see
+    -- 'SdramPipeline.btbStorage') and supplies only the entry fetch reads.
+    pBtb :: Vec BtbEntries BtbEntry,
     -- | A resolution registered for one cycle before it reaches 'pBtb'. The
     -- branch target is a thirteen-bit carry chain behind a wide select over
     -- the second execute stage's fields, so writing the table combinationally
@@ -937,7 +944,7 @@ data Pipe = Pipe
     -- register instead. A predictor may be a cycle stale: entries are
     -- validated against the fetch pc, so a late update only costs one more
     -- mispredicted branch.
-    pBtbWrite :: Maybe (Index 8, BtbEntry)
+    pBtbWrite :: Maybe (BtbIndex, BtbEntry)
   }
   deriving (Generic, NFDataX)
 

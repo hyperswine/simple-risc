@@ -1,0 +1,3 @@
+60MHz btb64 place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 64.244 MHz Fmax, 1.101 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz btb64 place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 63.045 MHz Fmax, 0.805 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz btb64 place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 61.571 MHz Fmax, 0.425 ns worst setup slack; 0 setup / 0 hold violating endpoints

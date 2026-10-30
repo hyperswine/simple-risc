@@ -1,0 +1,195 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 48.0,
+    "mem_mhz": 48.0,
+    "cdc": false,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "profile_abi": "named-v3",
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/observed-btb64/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "dc69c24d8c17e3befab568b8d63534b2d0c654fd5e1e5345b8eb5c40b6fdb809"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "85ad8ea3cd74df8de717a744943a2f735d15e673cf7a52fa6300830a05b8cbdd",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "5f2243bd0c9f547d450a0692f02a1507cff6d1393981b7ad42a9c155fdd48676"
+    }
+  },
+  "build_manifest_sha256": "1caeb40417d225c08d40a9d36e8ed82563b649ba2ff2536475b5efe535bd4f60",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 115789815,
+    "held": 8819490,
+    "held_read_miss": 2801085,
+    "held_write_full": 6016357,
+    "held_clear": 2048,
+    "miss_draining": 302273,
+    "miss_filling": 2349212,
+    "fills": 259059,
+    "code_fills": 24877,
+    "writes": 5807436,
+    "stores": 5807439,
+    "store_updates": 4037593,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 115446617,
+    "window_held": 8768232,
+    "window_fills": 258695,
+    "window_writes": 5778016,
+    "window_pipeline_commits": 39517109,
+    "window_redirects": 1496193,
+    "slot_issue": 41562700,
+    "slot_slow": 546494,
+    "slot_restart": 1505192,
+    "slot_load_wait": 8524749,
+    "slot_mul_wait": 123717,
+    "slot_other_wait": 0,
+    "slot_port_conflict": 513887,
+    "slot_hazard": 34456623,
+    "slot_frontend_refill": 9547527,
+    "slot_frontend_other": 9897496,
+    "slot_other": 0,
+    "fetch_port_blocked": 15727253,
+    "hazard_0": 511169,
+    "hazard_1": 3391282,
+    "hazard_2": 2905,
+    "hazard_3": 7176580,
+    "hazard_4": 859578,
+    "hazard_5": 3852291,
+    "hazard_6": 82053,
+    "hazard_7": 11396969,
+    "hazard_8": 3411560,
+    "hazard_9": 3523787,
+    "hazard_10": 248449,
+    "hazard_11": 0,
+    "hazard_12": 0,
+    "hazard_13": 0,
+    "hazard_14": 0,
+    "hazard_15": 0,
+    "redirect_kind_0": 0,
+    "redirect_kind_1": 302204,
+    "redirect_kind_2": 1185887,
+    "redirect_kind_3": 0,
+    "redirect_kind_4": 0,
+    "redirect_kind_5": 4684,
+    "redirect_kind_6": 3418,
+    "redirect_kind_7": 0,
+    "restart_length_0": 0,
+    "restart_length_1": 0,
+    "restart_length_2": 0,
+    "restart_length_3": 0,
+    "restart_length_4": 0,
+    "restart_length_5": 0,
+    "restart_length_6": 0,
+    "restart_length_7": 1086421,
+    "restart_length_8": 312199,
+    "restart_length_9": 97572,
+    "restart_length_10": 0,
+    "restart_length_11": 3,
+    "restart_length_12": 0,
+    "restart_length_13": 976,
+    "restart_length_14": 188,
+    "restart_length_15": 0,
+    "restart_length_16": 7833,
+    "ctl_load": 5326804,
+    "ctl_store": 5778019,
+    "ctl_shift": 4798577,
+    "ctl_mul": 326909,
+    "ctl_branch": 4636464,
+    "ctl_branch_taken": 2813439,
+    "ctl_jal": 2346943,
+    "ctl_jal_link": 974530,
+    "ctl_return": 974533,
+    "ctl_jalr": 5856,
+    "ctl_jalr_link": 0,
+    "refill_port_blocked": 0,
+    "front_redirects": 1932168
+  },
+  "measured_us": 2405137.8541666665,
+  "held_percent": 7.595053218406565,
+  "output_sha256": "36d1005ba6fe8a221e2251cde250f0120ea87b522c94557bb860aa4aab0fdcac",
+  "stall_breakdown": {
+    "window_held": {
+      "cycles": 8768232,
+      "percent": 7.5951
+    },
+    "slot_issue": {
+      "cycles": 41562700,
+      "percent": 36.0017
+    },
+    "slot_load_wait": {
+      "cycles": 8524749,
+      "percent": 7.3841
+    },
+    "slot_mul_wait": {
+      "cycles": 123717,
+      "percent": 0.1072
+    },
+    "slot_other_wait": {
+      "cycles": 0,
+      "percent": 0.0
+    },
+    "slot_port_conflict": {
+      "cycles": 513887,
+      "percent": 0.4451
+    },
+    "slot_hazard": {
+      "cycles": 34456623,
+      "percent": 29.8464
+    },
+    "slot_restart": {
+      "cycles": 1505192,
+      "percent": 1.3038
+    },
+    "slot_frontend_refill": {
+      "cycles": 9547527,
+      "percent": 8.2701
+    },
+    "slot_frontend_other": {
+      "cycles": 9897496,
+      "percent": 8.5732
+    },
+    "slot_slow": {
+      "cycles": 546494,
+      "percent": 0.4734
+    },
+    "slot_other": {
+      "cycles": 0,
+      "percent": 0.0
+    }
+  },
+  "hazard_producers": {
+    "E1 load": 511169,
+    "E1 shift": 3391282,
+    "E1 multiply": 2905,
+    "E1 plain": 7176580,
+    "E2 load": 859578,
+    "E2 shift": 3852291,
+    "E2 multiply": 82053,
+    "E2 plain": 11396969,
+    "M load": 3411560,
+    "M shift": 3523787,
+    "M multiply": 248449,
+    "M plain": 0
+  },
+  "redirect_kinds": {
+    "straddle refetch (BTB alias)": 0,
+    "branch predicted taken, not taken": 302204,
+    "branch taken, not predicted": 1185887,
+    "branch taken, wrong predicted target": 0,
+    "jal": 0,
+    "return (jalr x0, ra/t0)": 4684,
+    "other jalr": 3418,
+    "non-control BTB alias": 0
+  }
+}
