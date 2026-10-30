@@ -867,10 +867,10 @@ fetchedWord (pc, predicted) word =
    in Fetched pc word (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f) (opcode == 0x33 || opcode == 0x23 || opcode == 0x63) predicted word 4
 
 btbIndex :: Word32 -> BtbIndex
-btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 6)
+btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 7)
 
 btbTag :: Word32 -> Unsigned 8
-btbTag pc = resize (pc `shiftR` 8)
+btbTag pc = resize (pc `shiftR` 9)
 
 -- | Link registers for the return address stack (the RISC-V hint
 -- convention): x1 and x5.

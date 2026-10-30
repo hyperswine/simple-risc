@@ -154,10 +154,11 @@ type BoardOutput dom = (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal
 -- Before the pending register changes, its old value has reached the table.
 -- Thus the effective predictor is identical even while logical CPU time stops.
 --
--- The slot, tag and target sit in an asynchronously read RAM (distributed
--- RAM on the GW2A), read at the registered fetch pc's index exactly as the
--- old register banks were. Valid bits stay in flip-flops so reset clears
--- them; an invalid entry's other fields are never inspected.
+-- The slot, tag and target sit in an asynchronously read RAM, read at the
+-- registered fetch pc's index exactly as the old register banks were (Gowin
+-- maps it to block RAM, folding the next fetch pc into its read address).
+-- Valid bits stay in flip-flops so reset clears them; an invalid entry's
+-- other fields are never inspected.
 btbStorage :: HiddenClockResetEnable dom => Signal dom (Maybe (R.BtbIndex, R.BtbEntry)) -> Signal dom R.BtbIndex -> Signal dom R.BtbEntry
 btbStorage pending readIndex = entry <$> validRead <*> fields
  where

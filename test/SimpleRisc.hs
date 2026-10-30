@@ -2274,7 +2274,7 @@ prop_compressed_btb_prediction_and_aliases = withTests 1 . property $ do
 
   -- 3. A BTB tag alias: a foreign Slot-1 entry whose index and tag match the
   -- word at ramBase+0x2004, whose upper halfword at ramBase+0x2006 starts a
-  -- straddling 32-bit ADDI x10, x10, 123. Real aliases are 64 KiB apart,
+  -- straddling 32-bit ADDI x10, x10, 123. Real aliases are 128 KiB apart,
   -- beyond the simulated RAM, so the entry is planted rather than trained.
   let straddleAddi = addi 10 10 123
       straddleLo = resize (straddleAddi .&. 0xffff) :: Unsigned 16

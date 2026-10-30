@@ -856,7 +856,7 @@ data BtbEntry = BtbEntry {bValid :: Bool, bSlot :: Bool, bTag :: Unsigned 8, bTa
   deriving (Generic, NFDataX, Show, Eq)
 
 -- | Branch target buffer entries and their index.
-type BtbEntries = 64
+type BtbEntries = 128
 
 type BtbIndex = Index BtbEntries
 
@@ -930,8 +930,8 @@ data Pipe = Pipe
     -- restored: a discarded return followed by a call overwrites a live
     -- entry, and the next return through it is caught by E2.
     pRasResolvedTop :: RasPointer,
-    -- | 'BtbEntries' entries, indexed by pc bits 7..2 and tagged with bits
-    -- 15..8: fetch follows a hit's target; the second execute stage corrects
+    -- | 'BtbEntries' entries, indexed by pc bits 8..2 and tagged with bits
+    -- 16..9: fetch follows a hit's target; the second execute stage corrects
     -- a wrong guess. The board keeps it outside this register (see
     -- 'SdramPipeline.btbStorage') and supplies only the entry fetch reads.
     pBtb :: Vec BtbEntries BtbEntry,

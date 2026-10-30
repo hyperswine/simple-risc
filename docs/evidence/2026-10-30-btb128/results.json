@@ -1,0 +1,195 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 48.0,
+    "mem_mhz": 48.0,
+    "cdc": false,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "profile_abi": "named-v3",
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/observed-btb128/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "1de22dbb96915796ae810d61ff1463aaa2a6740c1f12ed47bbe58b2e0152d696"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "85ad8ea3cd74df8de717a744943a2f735d15e673cf7a52fa6300830a05b8cbdd",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "5f2243bd0c9f547d450a0692f02a1507cff6d1393981b7ad42a9c155fdd48676"
+    }
+  },
+  "build_manifest_sha256": "23c98c61d3751a00572a827063132f1eee9b4019436cba2357fb7edc34d28d1b",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 111760813,
+    "held": 8999134,
+    "held_read_miss": 2829456,
+    "held_write_full": 6167630,
+    "held_clear": 2048,
+    "miss_draining": 332490,
+    "miss_filling": 2347813,
+    "fills": 258959,
+    "code_fills": 24798,
+    "writes": 5807435,
+    "stores": 5807438,
+    "store_updates": 4037593,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 111417922,
+    "window_held": 8947818,
+    "window_fills": 258594,
+    "window_writes": 5778011,
+    "window_pipeline_commits": 39517096,
+    "window_redirects": 1117098,
+    "slot_issue": 41144331,
+    "slot_slow": 546494,
+    "slot_restart": 1126097,
+    "slot_load_wait": 8807656,
+    "slot_mul_wait": 123717,
+    "slot_other_wait": 0,
+    "slot_port_conflict": 514056,
+    "slot_hazard": 34326973,
+    "slot_frontend_refill": 7116023,
+    "slot_frontend_other": 8764757,
+    "slot_other": 0,
+    "fetch_port_blocked": 15654007,
+    "hazard_0": 511169,
+    "hazard_1": 3340606,
+    "hazard_2": 2905,
+    "hazard_3": 6964578,
+    "hazard_4": 859064,
+    "hazard_5": 3853857,
+    "hazard_6": 82053,
+    "hazard_7": 11527304,
+    "hazard_8": 3411821,
+    "hazard_9": 3525167,
+    "hazard_10": 248449,
+    "hazard_11": 0,
+    "hazard_12": 0,
+    "hazard_13": 0,
+    "hazard_14": 0,
+    "hazard_15": 0,
+    "redirect_kind_0": 0,
+    "redirect_kind_1": 313643,
+    "redirect_kind_2": 795921,
+    "redirect_kind_3": 0,
+    "redirect_kind_4": 0,
+    "redirect_kind_5": 4684,
+    "redirect_kind_6": 2850,
+    "redirect_kind_7": 0,
+    "restart_length_0": 0,
+    "restart_length_1": 0,
+    "restart_length_2": 0,
+    "restart_length_3": 0,
+    "restart_length_4": 0,
+    "restart_length_5": 0,
+    "restart_length_6": 0,
+    "restart_length_7": 835431,
+    "restart_length_8": 212923,
+    "restart_length_9": 68743,
+    "restart_length_10": 0,
+    "restart_length_11": 3,
+    "restart_length_12": 0,
+    "restart_length_13": 976,
+    "restart_length_14": 188,
+    "restart_length_15": 0,
+    "restart_length_16": 7833,
+    "ctl_load": 5326804,
+    "ctl_store": 5778009,
+    "ctl_shift": 4798577,
+    "ctl_mul": 326909,
+    "ctl_branch": 4636463,
+    "ctl_branch_taken": 2813439,
+    "ctl_jal": 2346942,
+    "ctl_jal_link": 974530,
+    "ctl_return": 974533,
+    "ctl_jalr": 5856,
+    "ctl_jalr_link": 0,
+    "refill_port_blocked": 0,
+    "front_redirects": 1537453
+  },
+  "measured_us": 2321206.7083333335,
+  "held_percent": 8.030860600685049,
+  "output_sha256": "6756d4ea8632294c44d724bd839359d48a3758cb68c889eba196c48486077f2d",
+  "stall_breakdown": {
+    "window_held": {
+      "cycles": 8947818,
+      "percent": 8.0309
+    },
+    "slot_issue": {
+      "cycles": 41144331,
+      "percent": 36.9279
+    },
+    "slot_load_wait": {
+      "cycles": 8807656,
+      "percent": 7.9051
+    },
+    "slot_mul_wait": {
+      "cycles": 123717,
+      "percent": 0.111
+    },
+    "slot_other_wait": {
+      "cycles": 0,
+      "percent": 0.0
+    },
+    "slot_port_conflict": {
+      "cycles": 514056,
+      "percent": 0.4614
+    },
+    "slot_hazard": {
+      "cycles": 34326973,
+      "percent": 30.8092
+    },
+    "slot_restart": {
+      "cycles": 1126097,
+      "percent": 1.0107
+    },
+    "slot_frontend_refill": {
+      "cycles": 7116023,
+      "percent": 6.3868
+    },
+    "slot_frontend_other": {
+      "cycles": 8764757,
+      "percent": 7.8666
+    },
+    "slot_slow": {
+      "cycles": 546494,
+      "percent": 0.4905
+    },
+    "slot_other": {
+      "cycles": 0,
+      "percent": 0.0
+    }
+  },
+  "hazard_producers": {
+    "E1 load": 511169,
+    "E1 shift": 3340606,
+    "E1 multiply": 2905,
+    "E1 plain": 6964578,
+    "E2 load": 859064,
+    "E2 shift": 3853857,
+    "E2 multiply": 82053,
+    "E2 plain": 11527304,
+    "M load": 3411821,
+    "M shift": 3525167,
+    "M multiply": 248449,
+    "M plain": 0
+  },
+  "redirect_kinds": {
+    "straddle refetch (BTB alias)": 0,
+    "branch predicted taken, not taken": 313643,
+    "branch taken, not predicted": 795921,
+    "branch taken, wrong predicted target": 0,
+    "jal": 0,
+    "return (jalr x0, ra/t0)": 4684,
+    "other jalr": 2850,
+    "non-control BTB alias": 0
+  }
+}
