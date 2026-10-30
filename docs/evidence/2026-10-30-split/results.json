@@ -1,0 +1,194 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 48.0,
+    "mem_mhz": 48.0,
+    "cdc": false,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "profile_abi": "named-v3",
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/observed-split/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "51d1a09a1e4e9b205e866ba28c4913a374b79ee705b34032afc63e39fcce1800"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "dc9581208cbddeaf20f4afb1eecf808557f3fc33241d280c4f3a4a509e9335fe",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "0648d5ecedb016403eef7f9a988a54bb0616be95c71554f0577c9378e203d021"
+    }
+  },
+  "build_manifest_sha256": "e861cb70f20ce057e8c4e02bed13df71a6473651790cd536f61d3f44625f0386",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 145955655,
+    "held": 8501834,
+    "held_read_miss": 2962346,
+    "held_write_full": 5537440,
+    "held_clear": 2048,
+    "miss_draining": 448285,
+    "miss_filling": 2360949,
+    "fills": 260457,
+    "code_fills": 26117,
+    "writes": 5807436,
+    "stores": 5807439,
+    "store_updates": 4037595,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 145460221,
+    "window_held": 8450881,
+    "window_fills": 260094,
+    "window_writes": 5778058,
+    "window_pipeline_commits": 39517185,
+    "window_redirects": 5364322,
+    "slot_issue": 47903247,
+    "slot_slow": 546149,
+    "slot_restart": 5373238,
+    "slot_load_wait": 9921271,
+    "slot_mul_wait": 124869,
+    "slot_other_wait": 0,
+    "slot_port_conflict": 512998,
+    "slot_hazard": 35526046,
+    "slot_frontend_refill": 34909932,
+    "slot_frontend_other": 2191590,
+    "slot_other": 0,
+    "fetch_port_blocked": 16564763,
+    "hazard_0": 575794,
+    "hazard_1": 3388488,
+    "hazard_2": 2905,
+    "hazard_3": 7651750,
+    "hazard_4": 994858,
+    "hazard_5": 3820314,
+    "hazard_6": 82054,
+    "hazard_7": 11647399,
+    "hazard_8": 3618951,
+    "hazard_9": 3495082,
+    "hazard_10": 248451,
+    "hazard_11": 0,
+    "hazard_12": 0,
+    "hazard_13": 0,
+    "hazard_14": 0,
+    "hazard_15": 0,
+    "redirect_kind_0": 3632,
+    "redirect_kind_1": 88820,
+    "redirect_kind_2": 2762324,
+    "redirect_kind_3": 466,
+    "redirect_kind_4": 1517250,
+    "redirect_kind_5": 970068,
+    "redirect_kind_6": 5856,
+    "redirect_kind_7": 15906,
+    "restart_length_0": 0,
+    "restart_length_1": 0,
+    "restart_length_2": 0,
+    "restart_length_3": 0,
+    "restart_length_4": 0,
+    "restart_length_5": 0,
+    "restart_length_6": 0,
+    "restart_length_7": 3160799,
+    "restart_length_8": 1745479,
+    "restart_length_9": 458030,
+    "restart_length_10": 0,
+    "restart_length_11": 3,
+    "restart_length_12": 0,
+    "restart_length_13": 907,
+    "restart_length_14": 188,
+    "restart_length_15": 0,
+    "restart_length_16": 7833,
+    "ctl_load": 5326833,
+    "ctl_store": 5778062,
+    "ctl_shift": 4798605,
+    "ctl_mul": 326909,
+    "ctl_branch": 4636415,
+    "ctl_branch_taken": 2813385,
+    "ctl_jal": 2346959,
+    "ctl_jal_link": 974533,
+    "ctl_return": 974539,
+    "ctl_jalr": 5856,
+    "ctl_jalr_link": 0,
+    "refill_port_blocked": 0
+  },
+  "measured_us": 3030421.2708333335,
+  "held_percent": 5.8097539945302294,
+  "output_sha256": "3086297d9a5e7619613e991c3bc06e03bfaecd510ec796e07426d16fc4c32647",
+  "stall_breakdown": {
+    "window_held": {
+      "cycles": 8450881,
+      "percent": 5.8098
+    },
+    "slot_issue": {
+      "cycles": 47903247,
+      "percent": 32.9322
+    },
+    "slot_load_wait": {
+      "cycles": 9921271,
+      "percent": 6.8206
+    },
+    "slot_mul_wait": {
+      "cycles": 124869,
+      "percent": 0.0858
+    },
+    "slot_other_wait": {
+      "cycles": 0,
+      "percent": 0.0
+    },
+    "slot_port_conflict": {
+      "cycles": 512998,
+      "percent": 0.3527
+    },
+    "slot_hazard": {
+      "cycles": 35526046,
+      "percent": 24.4232
+    },
+    "slot_restart": {
+      "cycles": 5373238,
+      "percent": 3.694
+    },
+    "slot_frontend_refill": {
+      "cycles": 34909932,
+      "percent": 23.9996
+    },
+    "slot_frontend_other": {
+      "cycles": 2191590,
+      "percent": 1.5067
+    },
+    "slot_slow": {
+      "cycles": 546149,
+      "percent": 0.3755
+    },
+    "slot_other": {
+      "cycles": 0,
+      "percent": 0.0
+    }
+  },
+  "hazard_producers": {
+    "E1 load": 575794,
+    "E1 shift": 3388488,
+    "E1 multiply": 2905,
+    "E1 plain": 7651750,
+    "E2 load": 994858,
+    "E2 shift": 3820314,
+    "E2 multiply": 82054,
+    "E2 plain": 11647399,
+    "M load": 3618951,
+    "M shift": 3495082,
+    "M multiply": 248451,
+    "M plain": 0
+  },
+  "redirect_kinds": {
+    "straddle refetch (BTB alias)": 3632,
+    "branch predicted taken, not taken": 88820,
+    "branch taken, not predicted": 2762324,
+    "branch taken, wrong predicted target": 466,
+    "jal": 1517250,
+    "return (jalr x0, ra/t0)": 970068,
+    "other jalr": 5856,
+    "non-control BTB alias": 15906
+  }
+}

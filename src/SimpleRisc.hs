@@ -1622,6 +1622,53 @@ pipeStepTracedWith decodeTarget machine memoryWord =
 #ifdef PIPELINE_SLOT_OBSERVATIONS
         slotCause
         (portBusy && pOutstanding pipe < 4)
+        hazardCause
+        redirectKind
+      -- Observation only: the nearest producer a held decode waits on.
+      hazardCause = case d of
+        Nothing -> 15
+        Just f ->
+          let rs1 = instructionRs1 (fWord f)
+              rs2 = instructionRs2 (fWord f)
+              hits r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
+              kindOf control
+                | KindLoad <- execKind control = hazardLoad
+                | execMulDiv control = hazardMultiply
+                | execShift control = hazardShift
+                | otherwise = hazardPlain
+              inE1 = case pE1 pipe of
+                Just x | hits (e1Rd x) (e1Writes x) -> Just (kindOf (e1Control x))
+                _ -> Nothing
+              inE2 = case pE2 pipe of
+                Just x | hits (e2Rd x) (e2Writes x) -> Just (4 + kindOf (e2Control x))
+                _ -> Nothing
+              inM = case pM pipe of
+                Just m
+                  | not (mFinal m) && hits (mRd m) (mWrites m) ->
+                      Just (8 + (if mLoad m then hazardLoad else if mMultiply m then hazardMultiply else if mShift m then hazardShift else hazardPlain))
+                _ -> Nothing
+           in fromMaybe 15 (P.foldr (\a b -> maybe b Just a) Nothing [inE1, inE2, inM])
+      -- Observation only: what kind of instruction E2 redirected on.
+      redirectKind = case pE2 pipe of
+        Nothing -> redirectOther
+        Just x ->
+          let control = e2Control x
+              word = e2Word x
+              opcode = word .&. 0x7f
+              rs1 = instructionRs1 word
+              taken = branchTakenPrepared (execFunct3 control) (e2BranchCompare x) == Just True
+           in if e2Refetch x
+                then redirectRefetch
+                else case execKind control of
+                  KindBranch
+                    | not taken -> redirectBranchNotTaken
+                    | e2PredictedTaken x -> redirectBranchTarget
+                    | otherwise -> redirectBranchTaken
+                  KindJump
+                    | opcode == 0x6f -> redirectJal
+                    | e2Rd x == 0 && (rs1 == 1 || rs1 == 5) -> redirectReturn
+                    | otherwise -> redirectJalr
+                  _ -> redirectOther
       -- Observation only: which reason the issue slot is lost to this cycle.
       slotCause
         | not (cpuFast machine) = slotSlow

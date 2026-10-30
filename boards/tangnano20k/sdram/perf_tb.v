@@ -193,6 +193,71 @@ module perf_tb #(
  end
 `endif
 
+ // Finer splits (named-v3): the producer behind each hazard cycle, the kind
+ // of each redirect, committed control instructions by kind, and how long
+ // each restart takes to issue its first instruction.
+ reg [63:0] hazard_cause[0:15];
+ reg [63:0] redirect_kind[0:7];
+ reg [63:0] ctl_load=0,ctl_store=0,ctl_shift=0,ctl_mul=0;
+ reg [63:0] ctl_branch=0,ctl_branch_taken=0,ctl_jal=0,ctl_jal_link=0,ctl_return=0,ctl_jalr=0,ctl_jalr_link=0;
+ reg [63:0] restart_length[0:16];
+ reg [63:0] refill_port_blocked=0;
+ integer restart_run=0;
+ initial begin
+   for(k=0;k<16;k=k+1)hazard_cause[k]=0;
+   for(k=0;k<8;k=k+1)redirect_kind[k]=0;
+   for(k=0;k<17;k=k+1)restart_length[k]=0;
+ end
+`ifdef NAMED_SPLIT_OBSERVATIONS
+ wire [6:0] commit_opcode=cpu.observe_word[6:0];
+ wire [4:0] commit_rd=cpu.observe_word[11:7];
+ wire [4:0] commit_rs1=cpu.observe_word[19:15];
+ integer control_trace=0;
+ reg redirect_pending=0;
+ reg [4095:0] control_trace_file;
+ initial if($value$plusargs("CONTROL_TRACE=%s",control_trace_file))control_trace=$fopen(control_trace_file,"w");
+ always @(posedge clk)if(!core_reset && !hold_cpu)begin
+   // restart_run counts the restart cycle and every cycle until an issue.
+   if(cpu.observe_slot==2)restart_run<=1;
+   else if(restart_run!=0)begin
+     if(cpu.observe_slot==0)begin
+       if(measuring)restart_length[restart_run>16?16:restart_run]<=restart_length[restart_run>16?16:restart_run]+1;
+       restart_run<=0;
+     end else restart_run<=restart_run+1;
+   end
+   if(measuring)begin
+     if(cpu.observe_slot==7)hazard_cause[cpu.observe_hazard]<=hazard_cause[cpu.observe_hazard]+1;
+     if(cpu.observe_redirect)redirect_kind[cpu.observe_redirect_kind]<=redirect_kind[cpu.observe_redirect_kind]+1;
+     if(cpu.observe_slot==8 && refilling && cpu.observe_fetch_port_blocked)refill_port_blocked<=refill_port_blocked+1;
+     if(cpu.observe_commit)begin
+       case(commit_opcode)
+         7'h63:begin
+           ctl_branch<=ctl_branch+1;
+           if(cpu.observe_next_pc!=cpu.observe_pc+2 && cpu.observe_next_pc!=cpu.observe_pc+4)ctl_branch_taken<=ctl_branch_taken+1;
+         end
+         7'h6f:begin ctl_jal<=ctl_jal+1;if(commit_rd!=0)ctl_jal_link<=ctl_jal_link+1;end
+         7'h67:begin
+           if(commit_rd==0 && (commit_rs1==1 || commit_rs1==5))ctl_return<=ctl_return+1;
+           else begin ctl_jalr<=ctl_jalr+1;if(commit_rd!=0)ctl_jalr_link<=ctl_jalr_link+1;end
+         end
+         7'h03:ctl_load<=ctl_load+1;
+         7'h23:ctl_store<=ctl_store+1;
+         7'h13:if(cpu.observe_word[13:12]==2'b01)ctl_shift<=ctl_shift+1;
+         7'h33:if(cpu.observe_word[25])ctl_mul<=ctl_mul+1;
+               else if(cpu.observe_word[13:12]==2'b01)ctl_shift<=ctl_shift+1;
+         default:;
+       endcase
+       // The fourth field is 1 when this instruction redirected fetch: E2
+       // redirects as it moves into M, so the next commit is that instruction.
+       if(control_trace!=0 && (commit_opcode==7'h63 || commit_opcode==7'h6f || commit_opcode==7'h67))
+         $fwrite(control_trace,"%h %h %h %0d\n",cpu.observe_pc,cpu.observe_word,cpu.observe_next_pc,redirect_pending);
+       redirect_pending<=0;
+     end
+     if(cpu.observe_redirect)redirect_pending<=1;
+   end
+ end
+`endif
+
  // UART receiver for the CPU's transmitter (UART_BIT clocks per bit).
  reg [8*64-1:0] line_text=0;integer line_length=0;
  reg [8*64-1:0] end_marker,start_marker;
@@ -213,6 +278,15 @@ module perf_tb #(
      slot_issue,slot_slow,slot_restart,slot_load_wait,slot_mul_wait,slot_other_wait);
    $display("PERF slot_port_conflict=%0d slot_hazard=%0d slot_frontend_refill=%0d slot_frontend_other=%0d slot_other=%0d fetch_port_blocked=%0d",
      slot_port_conflict,slot_hazard,slot_frontend_refill,slot_frontend_other,slot_other,fetch_port_blocked);
+`endif
+`ifdef NAMED_SPLIT_OBSERVATIONS
+   $write("PERF");for(k=0;k<16;k=k+1)$write(" hazard_%0d=%0d",k,hazard_cause[k]);$write("\n");
+   $write("PERF");for(k=0;k<8;k=k+1)$write(" redirect_kind_%0d=%0d",k,redirect_kind[k]);$write("\n");
+   $write("PERF");for(k=0;k<17;k=k+1)$write(" restart_length_%0d=%0d",k,restart_length[k]);$write("\n");
+   $display("PERF ctl_load=%0d ctl_store=%0d ctl_shift=%0d ctl_mul=%0d",ctl_load,ctl_store,ctl_shift,ctl_mul);
+   $display("PERF ctl_branch=%0d ctl_branch_taken=%0d ctl_jal=%0d ctl_jal_link=%0d ctl_return=%0d ctl_jalr=%0d ctl_jalr_link=%0d refill_port_blocked=%0d",
+     ctl_branch,ctl_branch_taken,ctl_jal,ctl_jal_link,ctl_return,ctl_jalr,ctl_jalr_link,refill_port_blocked);
+   if(control_trace!=0)$fclose(control_trace);
 `endif
    $finish;
  end endtask

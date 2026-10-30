@@ -96,6 +96,66 @@ def format_breakdown(rows, metrics):
     return '\n'.join(lines)
 
 
+SPLIT_PORTS = ('hazard', 'redirect_kind')
+HAZARD_STAGES = ('E1', 'E2', 'M')
+HAZARD_KINDS = ('load', 'shift', 'multiply', 'plain')
+REDIRECT_KINDS = (
+    'straddle refetch (BTB alias)',
+    'branch predicted taken, not taken',
+    'branch taken, not predicted',
+    'branch taken, wrong predicted target',
+    'jal',
+    'return (jalr x0, ra/t0)',
+    'other jalr',
+    'non-control BTB alias',
+)
+
+
+def require_split_observations(sources):
+    text = '\n'.join(Path(source).read_text() for source in sources)
+    missing = [name for name in SPLIT_PORTS
+               if not re.search(r'\boutput\s+(?:wire\s+)?(?:\[\d+:\d+\]\s+)?observe_' + name + r'\b', text)]
+    if missing:
+        raise ValueError('regenerate SdramPipelineObserved; missing split ports: ' + ', '.join(missing))
+
+
+def split_breakdown(metrics):
+    """Check the split identities and return hazard and redirect rows.
+
+    Hazard causes partition slot_hazard (code 15, no producer found, must be
+    zero) and redirect kinds partition window_redirects.
+    """
+    keys = [f'hazard_{i}' for i in range(16)] + [f'redirect_kind_{i}' for i in range(8)]
+    if not set(keys) <= metrics.keys():
+        raise ValueError('missing split counters')
+    if sum(metrics[f'hazard_{i}'] for i in range(16)) != metrics['slot_hazard']:
+        raise ValueError('hazard causes differ from slot_hazard')
+    if metrics['hazard_15'] or any(metrics[f'hazard_{i}'] for i in range(12, 15)):
+        raise ValueError('hazard cycles with no matching producer')
+    if sum(metrics[f'redirect_kind_{i}'] for i in range(8)) != metrics['window_redirects']:
+        raise ValueError('redirect kinds differ from window_redirects')
+    cycles = metrics['window_cycles']
+    hazards = [(f'{HAZARD_STAGES[i // 4]} {HAZARD_KINDS[i % 4]}', metrics[f'hazard_{i}'],
+                100*metrics[f'hazard_{i}']/cycles) for i in range(12)]
+    redirects = [(label, metrics[f'redirect_kind_{i}'], 100*metrics[f'redirect_kind_{i}']/max(1, metrics['window_redirects']))
+                 for i, label in enumerate(REDIRECT_KINDS)]
+    return hazards, redirects
+
+
+def format_split(hazards, redirects, metrics):
+    lines = ['HAZARD PRODUCERS (share of measured cycles)']
+    lines += [f'  {label:<42} {value:>13,} {percent:6.2f}%' for label, value, percent in hazards if value]
+    lines.append('REDIRECT KINDS (share of redirects)')
+    lines += [f'  {label:<42} {value:>13,} {percent:6.2f}%' for label, value, percent in redirects]
+    lengths = [metrics.get(f'restart_length_{i}', 0) for i in range(17)]
+    total = sum(lengths)
+    if total:
+        mean = sum(i*n for i, n in enumerate(lengths))/total
+        lines.append(f'RESTART TO FIRST ISSUE: {total:,} restarts, mean {mean:.2f} cycles; '
+                     + ' '.join(f'{i}{"+" if i == 16 else ""}:{n}' for i, n in enumerate(lengths) if n))
+    return '\n'.join(lines)
+
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -148,6 +208,8 @@ def main():
     p.add_argument('--timeout', type=float, default=1800, help='wall-clock limit per simulator execution')
     p.add_argument('--profile-cpu', action='store_true', help='count pipeline commits and redirects through named observation ports')
     p.add_argument('--stall-breakdown', action='store_true', help='attribute every cycle to one issue-slot cause (implies --profile-cpu)')
+    p.add_argument('--split', action='store_true', help='also split hazards by producer and redirects by kind (implies --stall-breakdown)')
+    p.add_argument('--control-trace', type=Path, help='with --split: write committed branches and jumps (pc word next) to this file')
     p.add_argument('--legacy-profile-20261028', action='store_true', help='explicit historical replay of the frozen 2026-10-28 profiling layout')
     a = p.parse_args()
     if (not all(math.isfinite(v) and v > 0 for v in [a.cpu_mhz, a.mem_mhz, a.timeout])
@@ -163,6 +225,10 @@ def main():
     sources = sorted(a.generated.glob('*.v'))
     if not sources:
         raise SystemExit(f'no generated Verilog in {a.generated}')
+    if a.control_trace and not a.split:
+        p.error('--control-trace requires --split')
+    if a.split:
+        a.stall_breakdown = True
     if a.stall_breakdown:
         if a.legacy_profile_20261028:
             p.error('--stall-breakdown needs the named observation ABI')
@@ -178,6 +244,8 @@ def main():
             require_observations(sources)
             if a.stall_breakdown:
                 require_slot_observations(sources)
+            if a.split:
+                require_split_observations(sources)
     copied = []
     for source in sources:
         text = source.read_text()
@@ -209,11 +277,12 @@ def main():
              *(['-DLEGACY_PROFILE_20261028'] if a.legacy_profile_20261028 else []),
              *(['-DNAMED_PIPELINE_OBSERVATIONS'] if a.profile_cpu and not a.legacy_profile_20261028 else []),
              *(['-DNAMED_SLOT_OBSERVATIONS'] if a.stall_breakdown else []),
+             *(['-DNAMED_SPLIT_OBSERVATIONS'] if a.split else []),
              *copied, a.cache_rtl.resolve(), a.bridge_rtl.resolve(), HERE/'sdram.v', HERE/'burst_memory.v',
              HERE/'perf_tb.v']
     config = dict(cpu_mhz=a.cpu_mhz, mem_mhz=a.mem_mhz, cdc=bool(cdc),
                   line_bits=a.line_bits, ways=a.ways, write_update=a.write_update,
-                  profile_cpu=a.profile_cpu, profile_abi=('legacy-20261028' if a.legacy_profile_20261028 else 'named-v2' if a.stall_breakdown else 'named-v1') if a.profile_cpu else None, image_sha256=sha(a.image),
+                  profile_cpu=a.profile_cpu, profile_abi=('legacy-20261028' if a.legacy_profile_20261028 else 'named-v3' if a.split else 'named-v2' if a.stall_breakdown else 'named-v1') if a.profile_cpu else None, image_sha256=sha(a.image),
                   elf_sha256=sha(a.elf) if a.elf else None,
                   generated={str(p.resolve()): sha(p) for p in sources},
                   inputs={str(p.resolve()): sha(p) for p in [a.cache_rtl, a.bridge_rtl,
@@ -245,7 +314,8 @@ def main():
     result_path = out/'results.json'
     result_path.write_text(json.dumps(report, indent=2)+'\n')
     command = [str(binary), f'+IMAGE={out}/image.hex', f'+WORDS={len(image)//4}',
-               f'+TEXT_END={text_end}', f'+START={a.start}', f'+END={a.end}', f'+LIMIT={a.limit}']
+               f'+TEXT_END={text_end}', f'+START={a.start}', f'+END={a.end}', f'+LIMIT={a.limit}',
+               *([f'+CONTROL_TRACE={a.control_trace.resolve()}'] if a.control_trace else [])]
     try:
         with (out/'run.log').open('w') as f:
             process = subprocess.run(command, cwd=out, stdout=f, stderr=subprocess.STDOUT, timeout=a.timeout)
@@ -260,9 +330,15 @@ def main():
             rows = stall_breakdown(metrics)
             report['stall_breakdown'] = {key: dict(cycles=value, percent=round(percent, 4))
                                          for key, _, value, percent in rows}
+        if a.split:
+            hazards, redirects = split_breakdown(metrics)
+            report['hazard_producers'] = {label: value for label, value, _ in hazards}
+            report['redirect_kinds'] = {label: value for label, value, _ in redirects}
         print(output, end='', flush=True)
         if a.stall_breakdown:
             print(format_breakdown(rows, metrics), flush=True)
+        if a.split:
+            print(format_split(hazards, redirects, metrics), flush=True)
     except BaseException as error:
         report['error'] = str(error)
         raise

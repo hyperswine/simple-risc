@@ -1,0 +1,24 @@
+DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2
+DTREE DATA READY
+DTREE nodes=23 depth=5
+DTREE train hits=124/128 digest=21562
+DTREE test hits=61/64 digest=909572
+root split: col 1 @ 0.750635343138128
+DTREE elapsed_us=2020072
+FPR EXIT 0
+PERF cycles=145955655 held=8501834 held_read_miss=2962346 held_write_full=5537440 held_clear=2048
+PERF miss_draining=448285 miss_filling=2360949 fills=260457 code_fills=26117 writes=5807436 stores=5807439
+PERF store_updates=4037595 store_hit_invalidations=0 store_invalidated_fills=0
+PERF window_cycles=145460221 window_held=8450881 window_fills=260094 window_writes=5778058
+PERF window_pipeline_commits=39517185 window_redirects=5364322
+PERF slot_issue=47903247 slot_slow=546149 slot_restart=5373238 slot_load_wait=9921271 slot_mul_wait=124869 slot_other_wait=0
+PERF slot_port_conflict=512998 slot_hazard=35526046 slot_frontend_refill=34909932 slot_frontend_other=2191590 slot_other=0 fetch_port_blocked=16564763
+PERF hazard_0=575794 hazard_1=3388488 hazard_2=2905 hazard_3=7651750 hazard_4=994858 hazard_5=3820314 hazard_6=82054 hazard_7=11647399 hazard_8=3618951 hazard_9=3495082 hazard_10=248451 hazard_11=0 hazard_12=0 hazard_13=0 hazard_14=0 hazard_15=0
+PERF redirect_kind_0=3632 redirect_kind_1=88820 redirect_kind_2=2762324 redirect_kind_3=466 redirect_kind_4=1517250 redirect_kind_5=970068 redirect_kind_6=5856 redirect_kind_7=15906
+PERF restart_length_0=0 restart_length_1=0 restart_length_2=0 restart_length_3=0 restart_length_4=0 restart_length_5=0 restart_length_6=0 restart_length_7=3160799 restart_length_8=1745479 restart_length_9=458030 restart_length_10=0 restart_length_11=3 restart_length_12=0 restart_length_13=907 restart_length_14=188 restart_length_15=0 restart_length_16=7833
+PERF ctl_load=5326833 ctl_store=5778062 ctl_shift=4798605 ctl_mul=326909
+PERF ctl_branch=4636415 ctl_branch_taken=2813385 ctl_jal=2346959 ctl_jal_link=974533 ctl_return=974539 ctl_jalr=5856 ctl_jalr_link=0 refill_port_blocked=0
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v:291: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.052 2026-09-05
+- Verilator: $finish at 3s; walltime 388.082 s; speed 7.835 ms/s
+- Verilator: cpu 387.646 s on 1 threads; allocated 13 MB

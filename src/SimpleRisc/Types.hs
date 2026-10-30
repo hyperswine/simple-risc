@@ -973,7 +973,13 @@ data PipelineTrace = PipelineTrace
     ptSlot :: Unsigned 4,
     -- | Fetch had room to issue but a load or store owned the memory port.
     -- Not exclusive with 'ptSlot': it explains front-end bubbles that follow.
-    ptFetchPortBlocked :: Bool
+    ptFetchPortBlocked :: Bool,
+    -- | When 'ptSlot' is 'slotHazard': the nearest producer decode waits on,
+    -- as stage * 4 + kind (stage 0 E1, 1 E2, 2 M; kind 'hazardLoad' ..
+    -- 'hazardPlain'); 15 if no producer matches (should stay zero).
+    ptHazard :: Unsigned 4,
+    -- | When 'ptRedirect': why E2 redirected ('redirectRefetch' ..).
+    ptRedirectKind :: Unsigned 3
 #endif
   }
   deriving (Generic, NFDataX)
@@ -1000,3 +1006,33 @@ slotHazard = 7
 slotFrontEnd = 8
 -- | Anything else (should stay zero).
 slotOther = 9
+
+-- | Producer kinds for 'ptHazard' (added to stage * 4).
+hazardLoad, hazardShift, hazardMultiply, hazardPlain :: Unsigned 4
+-- | A load: its word arrives at commit.
+hazardLoad = 0
+-- | A shift: its high levels finish in M.
+hazardShift = 1
+-- | A multiply or divide.
+hazardMultiply = 2
+-- | Anything selected by E2 (ALU, LUI, AUIPC, a jump's link, CSR).
+hazardPlain = 3
+
+-- | Redirect kinds for 'ptRedirectKind'.
+redirectRefetch, redirectBranchNotTaken, redirectBranchTaken, redirectBranchTarget, redirectJal, redirectReturn, redirectJalr, redirectOther :: Unsigned 3
+-- | Zero-size refetch bubble: a BTB hit aliased onto a straddling word.
+redirectRefetch = 0
+-- | Conditional branch predicted taken (BTB hit) but not taken.
+redirectBranchNotTaken = 1
+-- | Conditional branch taken without a BTB hit.
+redirectBranchTaken = 2
+-- | Conditional branch taken, BTB hit with a different target (alias).
+redirectBranchTarget = 3
+-- | JAL without a correct BTB hit.
+redirectJal = 4
+-- | JALR x0, 0(ra or t0): a return.
+redirectReturn = 5
+-- | Any other JALR (indirect call or jump).
+redirectJalr = 6
+-- | A non-control instruction that hit an aliased BTB entry.
+redirectOther = 7

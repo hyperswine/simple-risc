@@ -1,7 +1,7 @@
 import unittest
 from copy import deepcopy
 from itertools import product
-from run_perf import parse_metrics, stall_breakdown, SLOT_CAUSES
+from run_perf import parse_metrics, stall_breakdown, split_breakdown, SLOT_CAUSES
 from benchmark_matrix import check_controls
 
 
@@ -43,6 +43,30 @@ class StallBreakdown(unittest.TestCase):
         del missing['slot_other']
         with self.assertRaises(ValueError):
             stall_breakdown(missing)
+
+
+class SplitBreakdown(unittest.TestCase):
+    def metrics(self):
+        values = {f'hazard_{i}': 0 for i in range(16)}
+        values.update({f'redirect_kind_{i}': 0 for i in range(8)})
+        values.update(hazard_3=6, hazard_7=4, redirect_kind_1=2, redirect_kind_5=3)
+        values.update(slot_hazard=10, window_redirects=5, window_cycles=100)
+        return values
+
+    def test_split_partitions_hazards_and_redirects(self):
+        hazards, redirects = split_breakdown(self.metrics())
+        self.assertEqual(dict((label, value) for label, value, _ in hazards)['E1 plain'], 6)
+        self.assertEqual(sum(value for _, value, _ in redirects), 5)
+
+    def test_rejects_mismatches_and_unmatched_producers(self):
+        for change in [dict(hazard_3=5), dict(redirect_kind_5=4), dict(hazard_3=5, hazard_15=1),
+                       dict(hazard_3=5, hazard_12=1)]:
+            with self.assertRaises(ValueError):
+                split_breakdown({**self.metrics(), **change})
+        missing = self.metrics()
+        del missing['redirect_kind_7']
+        with self.assertRaises(ValueError):
+            split_breakdown(missing)
 
 
 class MatrixControls(unittest.TestCase):

@@ -47,6 +47,10 @@ profiling-ABI field explicitly select the archived 2026-10-28 layout.
 `--stall-breakdown` attributes every measured cycle to one issue-slot cause
 (named-v2 ABI); generate the observed top with `-DPIPELINE_SLOT_OBSERVATIONS`
 for it. See [STALL-BREAKDOWN](../../../docs/2026-10-30-STALL-BREAKDOWN.md).
+`--split` (named-v3, same Clash flag) also splits hazards by producer and
+redirects by kind; `--control-trace FILE` writes every committed branch and
+jump for `predictor_replay.py`, which replays them through BTB, return-stack
+and counter variants. See [STALL-SPLIT](../../../docs/2026-10-30-STALL-SPLIT.md).
 
 The [structural experiment plan](../../../docs/2026-10-30-STRUCTURAL-EXPERIMENTS.md)
 records the baseline, acceptance criteria and pending experiments. For example:

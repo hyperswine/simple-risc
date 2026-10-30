@@ -15,7 +15,7 @@ type Observations dom =
    Signal dom Bool, Signal dom R.Word32, Signal dom Bool, Signal dom Bool
 #ifdef PIPELINE_SLOT_OBSERVATIONS
    -- Stall breakdown (named-v2): generate with -DPIPELINE_SLOT_OBSERVATIONS.
-   , Signal dom (Unsigned 4), Signal dom Bool
+   , Signal dom (Unsigned 4), Signal dom Bool, Signal dom (Unsigned 4), Signal dom (Unsigned 3)
 #endif
    )
 
@@ -24,7 +24,7 @@ type Observations dom =
  t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso"],
  t_output=PortProduct "" [
    PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs"],
-   PortProduct "" [PortName "observe_commit",PortName "observe_word",PortName "observe_pc",PortName "observe_next_pc",PortName "observe_issue",PortName "observe_fetch_pc",PortName "observe_empty",PortName "observe_redirect",PortName "observe_slot",PortName "observe_fetch_port_blocked"]]}) #-}
+   PortProduct "" [PortName "observe_commit",PortName "observe_word",PortName "observe_pc",PortName "observe_next_pc",PortName "observe_issue",PortName "observe_fetch_pc",PortName "observe_empty",PortName "observe_redirect",PortName "observe_slot",PortName "observe_fetch_port_blocked",PortName "observe_hazard",PortName "observe_redirect_kind"]]}) #-}
 #else
 {-# ANN topEntity (Synthesize {t_name="sdram_pipeline_risc",
  t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso"],
@@ -40,6 +40,6 @@ topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en $
    in (output, (R.ptCommit <$> trace, R.ptWord <$> trace, R.ptPc <$> trace, R.ptNextPc <$> trace,
                 R.ptIssue <$> trace, R.ptFetchPc <$> trace, R.ptEmpty <$> trace, R.ptRedirect <$> trace
 #ifdef PIPELINE_SLOT_OBSERVATIONS
-               , R.ptSlot <$> trace, R.ptFetchPortBlocked <$> trace
+               , R.ptSlot <$> trace, R.ptFetchPortBlocked <$> trace, R.ptHazard <$> trace, R.ptRedirectKind <$> trace
 #endif
                ))

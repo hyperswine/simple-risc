@@ -1,0 +1,214 @@
+{
+  "counts": {
+    "branch": 4636415,
+    "branch_taken": 2932866,
+    "jal": 2346959,
+    "call": 974533,
+    "return_": 974539,
+    "jalr": 5856
+  },
+  "variants": [
+    {
+      "variant": "A current: 8 entries",
+      "options": {},
+      "mispredicts": 5343078,
+      "branch_not_taken": 89384,
+      "branch_taken": 2761948,
+      "branch_target": 463,
+      "jal": 1516840,
+      "return": 968587,
+      "jalr": 5856,
+      "jal_decode": 0
+    },
+    {
+      "variant": "B A + 8-deep return stack (returns not in the BTB)",
+      "options": {
+        "ras": 8,
+        "return_by_ras_only": true
+      },
+      "mispredicts": 4230886,
+      "branch_not_taken": 90640,
+      "branch_taken": 2630644,
+      "branch_target": 463,
+      "jal": 1503245,
+      "return": 38,
+      "jalr": 5856,
+      "jal_decode": 0
+    },
+    {
+      "variant": "C B + straddling instructions installed",
+      "options": {
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true
+      },
+      "mispredicts": 3456256,
+      "branch_not_taken": 205423,
+      "branch_taken": 1727715,
+      "branch_target": 145,
+      "jal": 1517079,
+      "return": 38,
+      "jalr": 5856,
+      "jal_decode": 0
+    },
+    {
+      "variant": "D C at 16 entries",
+      "options": {
+        "entries": 16,
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true
+      },
+      "mispredicts": 3287447,
+      "branch_not_taken": 216495,
+      "branch_taken": 1682268,
+      "branch_target": 232,
+      "jal": 1384040,
+      "return": 38,
+      "jalr": 4374,
+      "jal_decode": 0
+    },
+    {
+      "variant": "E C at 32 entries",
+      "options": {
+        "entries": 32,
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true
+      },
+      "mispredicts": 2977491,
+      "branch_not_taken": 266569,
+      "branch_taken": 1441116,
+      "branch_target": 461,
+      "jal": 1265116,
+      "return": 38,
+      "jalr": 4191,
+      "jal_decode": 0
+    },
+    {
+      "variant": "F C at 64 entries",
+      "options": {
+        "entries": 64,
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true
+      },
+      "mispredicts": 2221318,
+      "branch_not_taken": 313213,
+      "branch_taken": 1172657,
+      "branch_target": 0,
+      "jal": 732178,
+      "return": 38,
+      "jalr": 3232,
+      "jal_decode": 0
+    },
+    {
+      "variant": "G F + 2-bit counters",
+      "options": {
+        "entries": 64,
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true,
+        "counters": true
+      },
+      "mispredicts": 2119627,
+      "branch_not_taken": 313126,
+      "branch_taken": 1071053,
+      "branch_target": 0,
+      "jal": 732178,
+      "return": 38,
+      "jalr": 3232,
+      "jal_decode": 0
+    },
+    {
+      "variant": "H G at 256 entries",
+      "options": {
+        "entries": 256,
+        "ras": 8,
+        "return_by_ras_only": true,
+        "train_straddle": true,
+        "counters": true
+      },
+      "mispredicts": 1127155,
+      "branch_not_taken": 302015,
+      "branch_taken": 585033,
+      "branch_target": 0,
+      "jal": 237224,
+      "return": 38,
+      "jalr": 2845,
+      "jal_decode": 0
+    },
+    {
+      "variant": "A at 16 entries",
+      "options": {
+        "entries": 16
+      },
+      "mispredicts": 5052807,
+      "branch_not_taken": 95075,
+      "branch_taken": 2622359,
+      "branch_target": 469,
+      "jal": 1380121,
+      "return": 950409,
+      "jalr": 4374,
+      "jal_decode": 0
+    },
+    {
+      "variant": "A at 64 entries",
+      "options": {
+        "entries": 64
+      },
+      "mispredicts": 3932918,
+      "branch_not_taken": 185250,
+      "branch_taken": 2174468,
+      "branch_target": 0,
+      "jal": 743418,
+      "return": 826548,
+      "jalr": 3234,
+      "jal_decode": 0
+    },
+    {
+      "variant": "A, 8 entries 2-way",
+      "options": {
+        "entries": 8,
+        "ways": 2
+      },
+      "mispredicts": 5350409,
+      "branch_not_taken": 111217,
+      "branch_taken": 2742004,
+      "branch_target": 1515,
+      "jal": 1518008,
+      "return": 971809,
+      "jalr": 5856,
+      "jal_decode": 0
+    },
+    {
+      "variant": "A + straddling instructions installed",
+      "options": {
+        "train_straddle": true
+      },
+      "mispredicts": 4544058,
+      "branch_not_taken": 205371,
+      "branch_taken": 1845463,
+      "branch_target": 145,
+      "jal": 1517468,
+      "return": 969755,
+      "jalr": 5856,
+      "jal_decode": 0
+    },
+    {
+      "variant": "A + 4-deep return stack",
+      "options": {
+        "ras": 4,
+        "return_by_ras_only": true
+      },
+      "mispredicts": 4235535,
+      "branch_not_taken": 90640,
+      "branch_taken": 2630644,
+      "branch_target": 463,
+      "jal": 1503245,
+      "return": 4687,
+      "jalr": 5856,
+      "jal_decode": 0
+    }
+  ]
+}

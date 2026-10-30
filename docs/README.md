@@ -75,3 +75,4 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-10-30 | [STRUCTURAL-VARIANTS](2026-10-30-STRUCTURAL-VARIANTS.md) | separate BTB banks retained, narrow E2 rejected, the 60 MHz failure isolated to read capture (112.5 degree phase passes) |
 | 2026-10-30 | [QUEUE-AND-EFFECT-CONTRACTS](2026-10-30-QUEUE-AND-EFFECT-CONTRACTS.md) | queue ownership contracts, the rejected expanded-queue bank, owned-store effect checks |
 | 2026-10-30 | [STALL-BREAKDOWN](2026-10-30-STALL-BREAKDOWN.md) | every classifier cycle attributed to one cause: IPC 0.272, mispredicts 33.5% and operand hazards 24.4% of cycles |
+| 2026-10-30 | [STALL-SPLIT](2026-10-30-STALL-SPLIT.md) | hazards by producer and redirects by kind; a replayed predictor model that matches the core per instruction; ranked structural fixes |
