@@ -872,6 +872,59 @@ btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 3)
 btbTag :: Word32 -> Unsigned 8
 btbTag pc = resize (pc `shiftR` 5)
 
+-- | Link registers for the return address stack (the RISC-V hint
+-- convention): x1 and x5.
+isLinkRegister :: Index 32 -> Bool
+isLinkRegister r = r == 1 || r == 5
+
+-- | JALR x0 through a link register: a return.
+isReturnWord :: Word32 -> Bool
+isReturnWord word = word .&. 0x7f == 0x67 && instructionRd word == 0 && isLinkRegister (instructionRs1 word)
+
+-- | JAL or JALR writing a link register: a call.
+isCallWord :: Word32 -> Bool
+isCallWord word = (word .&. 0x7f == 0x6f || word .&. 0x7f == 0x67) && isLinkRegister (instructionRd word)
+
+-- | A return pops, then a call pushes its link (both for a coroutine swap).
+rasUpdateWith :: Bool -> Bool -> Word32 -> (Vec 8 Word32, Unsigned 3) -> (Vec 8 Word32, Unsigned 3)
+rasUpdateWith call ret link (stack, top) =
+  let popped = if ret then top - 1 else top
+   in if call then (replace (popped + 1) link stack, popped + 1) else (stack, popped)
+
+rasUpdate :: Word32 -> Word32 -> (Vec 8 Word32, Unsigned 3) -> (Vec 8 Word32, Unsigned 3)
+rasUpdate word = rasUpdateWith (isCallWord word) (isReturnWord word)
+
+-- | Control-flow class of a raw (unexpanded) instruction, for the assembly
+-- stage: it classifies exactly as 'isCallWord' and 'isReturnWord' do on the
+-- expanded word.
+data RawControl = RawControl {rcCall :: Bool, rcReturn :: Bool, rcJal :: Bool, rcJalOffset :: Word32}
+
+rawControl :: Unsigned 3 -> Word32 -> RawControl
+rawControl size raw
+  | size == 2 =
+      let h = raw .&. 0xffff
+          rs1 = instructionRd raw -- bits 11..7
+          cj = h .&. 0xe003 == 0xa001
+          cjal = h .&. 0xe003 == 0x2001
+          -- c.jr / c.jalr: funct4 1000 / 1001, rs2 = 0, rs1 /= 0
+          cjr = h .&. 0xf07f == 0x8002 && rs1 /= 0
+          cjalr = h .&. 0xf07f == 0x9002 && rs1 /= 0
+          b n = (h `shiftR` n) .&. 1
+          offset =
+            (b 12 `shiftL` 11) .|. (b 11 `shiftL` 4) .|. (((h `shiftR` 9) .&. 3) `shiftL` 8) .|. (b 8 `shiftL` 10)
+              .|. (b 7 `shiftL` 6) .|. (b 6 `shiftL` 7) .|. (((h `shiftR` 3) .&. 7) `shiftL` 1) .|. (b 2 `shiftL` 5)
+          signed = if testBit offset 11 then offset .|. 0xfffff000 else offset
+       in RawControl (cjal || cjalr) (cjr && isLinkRegister rs1) (cj || cjal) signed
+  | size == 4 =
+      let opcode = raw .&. 0x7f
+          rd = instructionRd raw
+       in RawControl
+            ((opcode == 0x6f || opcode == 0x67) && isLinkRegister rd)
+            (opcode == 0x67 && rd == 0 && isLinkRegister (instructionRs1 raw))
+            (opcode == 0x6f)
+            (immJ raw)
+  | otherwise = RawControl False False False 0
+
 -- | The effective table: the registered one, with last cycle's resolution
 -- overriding its entry. The update is deferred by one cycle for timing (see
 -- 'pBtbWrite'), which the override hides from every reader.
@@ -973,6 +1026,12 @@ emptyPipe =
     (Slot False emptyExecuteTwo)
     (Slot False emptyMemoryStage)
     Nothing
+    False
+    0
+    (repeat 0)
+    0
+    (repeat 0)
+    0
     (repeat (BtbEntry False False 0 0))
     Nothing
 
@@ -1002,7 +1061,11 @@ restartPipe pc pipe =
       pE1Slot = slotCancel (pE1Slot pipe),
       pE2Slot = slotCancel (pE2Slot pipe),
       pMSlot = slotCancel (pMSlot pipe),
-      pRedirect = Nothing
+      pRedirect = Nothing,
+      pRedirectFront = False,
+      -- the speculative return stack resumes from the in-order one
+      pRas = pRasResolved pipe,
+      pRasTop = pRasResolvedTop pipe
     }
 
 -- | A multiply's operands as 33-bit signed values (sign- or zero-extended
@@ -1204,16 +1267,25 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             actual = if e2Refetch x then e2Pc x else if taken then target else cLink comp
             control' = case kind of KindBranch -> True; KindJump -> True; _ -> False
             mispredicted = e2Refetch x || actual /= e2Predicted x
-            trainTaken = control' && not (e2Refetch x) && not (e2Straddle x) && taken && target /= cLink comp
-            -- A taken non-straddling branch or jump teaches the buffer; any
-            -- mispredicted BTB hit clears its entry, while a correctly
-            -- predicted not-taken branch leaves the other halfword's entry
-            -- intact.
-            trainBtb = trainTaken || (e2PredictedTaken x && mispredicted)
-            training = if trainBtb then Just (e2Pc x, trainTaken, e2Slot x, target) else Nothing
+            trainTaken = control' && not (e2Refetch x) && taken && target /= cLink comp
+            -- A taken branch or jump teaches the buffer; any mispredicted BTB
+            -- hit clears its entry, while a correctly predicted not-taken
+            -- branch leaves the other halfword's entry intact. Entries are
+            -- keyed on the word holding the instruction's last halfword: for
+            -- a 32-bit instruction straddling two words that is the second,
+            -- whose fetch then predicts the target (see the assembly below).
+            -- Returns are left out: the return stack predicts them.
+            trainBtb = not (cpuCompressed machine && isReturnWord (e2Word x)) && (trainTaken || (e2PredictedTaken x && mispredicted))
+            keyPc = if e2Straddle x then e2Pc x + 2 else e2Pc x
+            training = if trainBtb then Just (keyPc, trainTaken, e2Slot x, target) else Nothing
          in (stage, if mispredicted then Just actual else Nothing, training, e2Refetch x)
       -- (in a redirect cycle the stage holds a wrong-path instruction)
+      -- A front-end correction only steers fetch; nothing past A is flushed.
       flushing = pRedirect pipe
+      frontSteer = pRedirectFront pipe && isNothing flushing
+      steering = case flushing of
+        Just target -> Just target
+        Nothing -> if pRedirectFront pipe then Just (pFrontTarget pipe) else Nothing
       e2Moved = case pE2 pipe of
         Just x | e2Advance && isNothing flushing -> Just (e2Out x)
         _ -> Nothing
@@ -1327,7 +1399,9 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 e2ShiftFast = shifting1,
                 e2MultFast = multiplying1,
                 e2WaitFast = wait1,
-                e2Slot = testBit (e1Pc x) 1 || e1Size x == 4,
+                -- the halfword the instruction ends in (a straddling one
+                -- ends in the next word's low halfword)
+                e2Slot = if e1Size x == 4 then not (testBit (e1Pc x) 1) else testBit (e1Pc x) 1,
                 e2Straddle = testBit (e1Pc x) 1 && e1Size x == 4,
                 e2Refetch = refetch1,
                 e2PredictedTaken = refetch1 || e1Predicted x /= link1
@@ -1396,7 +1470,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
       -- raw fetch pointers, the decompressor or ready/stall decisions.
       fFree = pFCount pipe < 2
       aFree = isNothing (pA pipe) || fFree
-      fPush = fFree && isJust (pA pipe)
+      fPush = fFree && isJust (pA pipe) && not frontSteer
       fPop = dFree && pFCount pipe /= 0
       expand f =
         let word = if fSize f == 2 then fromMaybe 0 (C.decompress32 (resize (fRaw f))) else fRaw f
@@ -1425,8 +1499,8 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         | writePointer - readPointer >= 2 = Just (pQueue pipe !! slot (readPointer + 1))
         | waiting = arrival
         | otherwise = Nothing
-      (assembled, headDone) = case headWord of
-        Nothing -> (Nothing, False)
+      (assembled, headDone, secondDone) = case headWord of
+        Nothing -> (Nothing, False, False)
         Just h ->
           let slot0Hit = testBit (fPc h) 0
               slot1Hit = testBit (fPc h) 1
@@ -1438,6 +1512,13 @@ pipeStepTracedWith decodeTarget machine memoryWord =
               -- of a straddling 32-bit instruction; emit a zero-size refetch
               -- bubble so E2 clears the aliased BTB entry and refetches.
               refetch = straddle && (slot0Hit || slot1Hit)
+              -- A straddling instruction's BTB entry is keyed on its second
+              -- word (it ends in that word's low halfword). A slot-0 hit
+              -- there means fetch already followed it to the target: the
+              -- instruction carries that prediction, and both words are
+              -- consumed together because the rest of the second word is
+              -- on the wrong path.
+              straddleTaken = straddle && not refetch && maybe False (\w -> testBit (fPc w) 0) secondWord
               wordDone = atHalf1 || not short || slot0Hit
               nextPc = if wordDone then fPredicted h else instructionPc + 2
               raw
@@ -1450,6 +1531,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 | short = 2
                 | otherwise = 4
               predictedPc
+                | straddleTaken = maybe 0 fPredicted secondWord
                 | straddle && not refetch = instructionPc + 4
                 | otherwise = nextPc
            in -- Fetch always supplies a word, including a harmless dummy
@@ -1457,14 +1539,15 @@ pipeStepTracedWith decodeTarget machine memoryWord =
               -- raises the precise second-half access fault. This keeps a
               -- full address-map decode out of FIFO consumption/accounting.
               if straddle && not refetch && isNothing secondWord
-                then (Nothing, False)
-                else (Just (Fetched instructionPc raw False False predictedPc raw size), wordDone)
+                then (Nothing, False, False)
+                else (Just (Fetched instructionPc raw False False predictedPc raw size), wordDone, straddleTaken)
       cConsume = aFree && headDone
+      consumed = if secondDone then 2 else 1 :: Unsigned 3
       writePointer'
         | cpuCompressed machine = if isJust arrival then writePointer + 1 else writePointer
         | otherwise = if isJust arrival && not bypass then writePointer + 1 else writePointer
       readPointer'
-        | cpuCompressed machine = if cConsume then readPointer + 1 else readPointer
+        | cpuCompressed machine = if cConsume then readPointer + consumed else readPointer
         | otherwise = if aFree && waiting then readPointer + 1 else readPointer
       nextA
         | not aFree = pA pipe
@@ -1472,8 +1555,41 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         | waiting = Just (pQueue pipe !! slot readPointer)
         | otherwise = arrival
       fQueue' = case pA pipe of
-        Just f | fFree -> replace (pFWrite pipe) (expand f) (pFQueue pipe)
+        Just f | fPush -> replace (pFWrite pipe) ((expand f) {fPredicted = aPredicted}) (pFQueue pipe)
         _ -> pFQueue pipe
+      -- Assembly-stage correction and the return address stack ----------
+      -- An instruction leaving A for F is on the predicted path: calls push
+      -- their link and returns pop. A return whose prediction differs from
+      -- the stack's top takes the top instead, and a JAL whose prediction
+      -- differs from its target takes the target; fetch is steered there
+      -- next cycle (only fetch, the word queue and A are discarded). E2
+      -- still checks every prediction.
+      -- The decision reads A's raw bits only (no RV32C expansion, adder or
+      -- 32-bit compare): it ends at pRedirectFront. The target adder and
+      -- the stack read are data, ending at pFrontTarget and F's payload.
+      aFetched = fromMaybe (Fetched 0 0 False False 0 0 4) (pA pipe)
+      aLink = fPc aFetched + resize (fSize aFetched)
+      aClass = rawControl (fSize aFetched) (fRaw aFetched)
+      rasTop = pRas pipe !! pRasTop pipe
+      -- Fetch followed a BTB hit for this instruction when its prediction
+      -- is not the next pc. Low bits suffice: a JAL whose target matches
+      -- its link there is steered needlessly, which costs only time.
+      followed = slice d8 d1 (fPredicted aFetched) /= slice d8 d1 aLink
+      -- (C-mode front ends only; an RV32I core keeps no stack. A also
+      -- holds wrong-path words fetched past a program's end, so the check
+      -- must not run where it is not used.)
+      aReturn = cpuCompressed machine && rcReturn aClass
+      aJal = cpuCompressed machine && rcJal aClass && not followed
+      aTarget = if rcReturn aClass then rasTop else fPc aFetched + rcJalOffset aClass
+      aPredicted = if aReturn || aJal then aTarget else fPredicted aFetched
+      aSteer = if fPush && (aReturn || aJal) then Just aTarget else Nothing
+      (ras', rasTop')
+        | cpuCompressed machine && fPush = rasUpdateWith (rcCall aClass) (rcReturn aClass) aLink (pRas pipe, pRasTop pipe)
+        | otherwise = (pRas pipe, pRasTop pipe)
+      -- In order, from E2: restored to the speculative stack on a restart.
+      (rasResolved', rasResolvedTop') = case e2Moved of
+        Just (stage, _, _, _) | cpuCompressed machine -> rasUpdate (mWord stage) (mValue stage) (pRasResolved pipe, pRasResolvedTop pipe)
+        _ -> (pRasResolved pipe, pRasResolvedTop pipe)
       nextD = if dFree then pF pipe else d
       -- Compare each registered consumer before selecting the next D.
       -- Selecting the wide instruction first puts dFree's backpressure
@@ -1487,18 +1603,18 @@ pipeStepTracedWith decodeTarget machine memoryWord =
       -- not it does: no stall decision reaches the read address.
       entering = maybe 0 fWord (pF pipe)
       enteringReads = (instructionRs1 entering, instructionRs2 entering)
-      leaving = if cpuCompressed machine then (if cConsume then 1 else 0) else (if aFree && waiting then 1 else 0) + (if bypass && isJust arrival then 1 else 0) :: Unsigned 3
+      leaving = if cpuCompressed machine then (if cConsume then consumed else 0) else (if aFree && waiting then 1 else 0) + (if bypass && isJust arrival then 1 else 0) :: Unsigned 3
       -- Words queued or in flight never exceed the queue (decided from
       -- registers); the port is free unless a store writes or a read waits.
       -- A redirect fetches its target from the next cycle.
       portBusy = mWriting || e2Reading
-      fetchPc = fromMaybe (pFetchPc pipe) flushing
+      fetchPc = fromMaybe (pFetchPc pipe) steering
       issue = not portBusy && pOutstanding pipe < 4
       -- The lookup reads the fetch pc register only: a redirect's target
       -- is followed by target + 4.
       entry = btb !! btbIndex (pFetchPc pipe)
       hit =
-        isNothing flushing
+        isNothing steering
           && bValid entry
           && bTag entry == btbTag (pFetchPc pipe)
           && (not (cpuCompressed machine) || not (testBit (pFetchPc pipe) 1) || bSlot entry)
@@ -1532,13 +1648,19 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         | otherwise =
             Pipe
               { pFetchPc = if issue then predicted else fetchPc,
-                pInstructionPc = if cpuCompressed machine && aFree && isJust assembled then maybe (pInstructionPc pipe) fPredicted assembled else pInstructionPc pipe,
-                pInflight = issued :> init inflight,
+                pInstructionPc =
+                  if frontSteer
+                    then fetchPc
+                    else
+                      if cpuCompressed machine && aFree && isJust assembled
+                        then maybe (pInstructionPc pipe) fPredicted assembled
+                        else pInstructionPc pipe,
+                pInflight = if frontSteer then issued :> Nothing :> Nothing :> Nothing :> Nil else issued :> init inflight,
                 pQueue = queue',
-                pQueueRead = readPointer',
-                pQueueWrite = writePointer',
-                pOutstanding = pOutstanding pipe + (if issue then 1 else 0) - leaving,
-                pA = nextA,
+                pQueueRead = if frontSteer then 0 else readPointer',
+                pQueueWrite = if frontSteer then 0 else writePointer',
+                pOutstanding = if frontSteer then (if issue then 1 else 0) else pOutstanding pipe + (if issue then 1 else 0) - leaving,
+                pA = if frontSteer then Nothing else nextA,
                 pFQueue = fQueue',
                 pFRead = if fPop then (if pFRead pipe == 0 then 1 else 0) else pFRead pipe,
                 pFWrite = if fPush then (if pFWrite pipe == 0 then 1 else 0) else pFWrite pipe,
@@ -1553,6 +1675,12 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 pE2Slot = slotToken (pE2Slot pipe) nextE2,
                 pMSlot = slotToken (pMSlot pipe) nextM,
                 pRedirect = redirect,
+                pRedirectFront = isJust aSteer,
+                pFrontTarget = aTarget,
+                pRas = ras',
+                pRasTop = rasTop',
+                pRasResolved = rasResolved',
+                pRasResolvedTop = rasResolvedTop',
                 pBtb = btb',
                 pBtbWrite = btbWrite'
               }
@@ -1624,6 +1752,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         (portBusy && pOutstanding pipe < 4)
         hazardCause
         redirectKind
+        (isNothing redirect && isJust aSteer && not handover && not fencing && isNothing flushing)
       -- Observation only: the nearest producer a held decode waits on.
       hazardCause = case d of
         Nothing -> 15

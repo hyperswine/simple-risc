@@ -1886,6 +1886,216 @@ ramFromHalfwords halves = ramFromList (pairs halves)
   pairs [a] = [resize a]
   pairs (a:b:rest) = (resize a .|. (resize b `shiftL` 16)):pairs rest
 
+-- Random compressed control flow ---------------------------------------------
+
+-- | A program item: a fixed instruction, a label, or an instruction whose
+-- offset is resolved once every item's size is known.
+data CItem
+  = CHalf Word32 -- ^ a 16-bit instruction
+  | CWord Word32 -- ^ a 32-bit instruction
+  | CLabel Int
+  | CBranch16 Word32 Word32 Int -- ^ c.beqz/c.bnez (funct3, rs1 - 8, label)
+  | CBranch32 Word32 Word32 Word32 Int -- ^ funct3, rs1, rs2, label
+  | CJal32 Word32 Int -- ^ jal rd, label
+  | CJump16 Bool Int -- ^ c.jal (True) or c.j (False)
+  | CAddrOf Word32 Int Int -- ^ addi reg, reg, target - anchor (after auipc reg at anchor)
+
+data CStmt
+  = SPlain [CItem]
+  | SSkip CItem [CStmt] -- ^ a forward branch (label filled in) over a body
+  | SGoto Bool [CStmt] -- ^ an unconditional forward jump (c.j or jal x0) over dead code
+  | SLoop Word32 Bool [CStmt] -- ^ count, compressed back branch, body
+  | SCall Int Int -- ^ callee, style: 0 jal, 1 c.jal (ra only), 2 indirect jalr
+
+cflowData :: [Word32]
+cflowData = [6, 7, 10, 11, 12, 13]
+
+cflowCounter :: Int -> Word32
+cflowCounter i = [8, 9, 14, 15, 18, 19] P.!! i
+
+-- | Function i links through ra or t0; it saves the link in x(21 + i).
+cflowLink :: Int -> Word32
+cflowLink i = if P.even i then 1 else 5
+
+cAddi, cLi, cSlli, cMv, cAdd :: Word32 -> Word32 -> Word32
+cAddi rd imm = (((imm `shiftR` 5) .&. 1) `shiftL` 12) .|. (rd `shiftL` 7) .|. ((imm .&. 0x1f) `shiftL` 2) .|. 0b01
+cLi rd imm = (0b010 `shiftL` 13) .|. cAddi rd imm
+cSlli rd sh = (rd `shiftL` 7) .|. ((sh .&. 0x1f) `shiftL` 2) .|. 0b10
+cMv rd rs2 = 0x8002 .|. (rd `shiftL` 7) .|. (rs2 `shiftL` 2)
+cAdd rd rs2 = 0x9002 .|. (rd `shiftL` 7) .|. (rs2 `shiftL` 2)
+
+cJr :: Word32 -> Word32
+cJr rs1 = 0x8002 .|. (rs1 `shiftL` 7)
+
+cJumpEncode :: Bool -> Word32 -> Word32
+cJumpEncode link imm =
+  let b n = (imm `shiftR` n) .&. 1
+   in ((if link then 0b001 else 0b101) `shiftL` 13) .|. (b 11 `shiftL` 12) .|. (b 4 `shiftL` 11)
+        .|. (((imm `shiftR` 8) .&. 3) `shiftL` 9) .|. (b 10 `shiftL` 8) .|. (b 6 `shiftL` 7)
+        .|. (b 7 `shiftL` 6) .|. (((imm `shiftR` 1) .&. 7) `shiftL` 3) .|. (b 5 `shiftL` 2) .|. 0b01
+
+cBranchEncode :: Word32 -> Word32 -> Word32 -> Word32
+cBranchEncode f3 rs imm =
+  let b n = (imm `shiftR` n) .&. 1
+   in (f3 `shiftL` 13) .|. (b 8 `shiftL` 12) .|. (((imm `shiftR` 3) .&. 3) `shiftL` 10) .|. (rs `shiftL` 7)
+        .|. (((imm `shiftR` 6) .&. 3) `shiftL` 5) .|. (((imm `shiftR` 1) .&. 3) `shiftL` 3) .|. (b 5 `shiftL` 2) .|. 0b01
+
+cItemSize :: CItem -> Word32
+cItemSize item = case item of
+  CHalf _ -> 2
+  CBranch16 {} -> 2
+  CJump16 {} -> 2
+  CLabel _ -> 0
+  _ -> 4
+
+-- | Flatten statements, numbering labels from @next@.
+cflowFlatten :: Int -> Int -> [CStmt] -> (Int, [CItem])
+cflowFlatten self next = P.foldl step (next, [])
+  where
+    step (n, acc) stmt = let (n', items) = one n stmt in (n', acc P.++ items)
+    one n stmt = case stmt of
+      SPlain items -> (n, items)
+      SSkip branch body ->
+        let (n', inner) = cflowFlatten self (n + 1) body
+         in (n', retarget n branch : inner P.++ [CLabel n])
+      SGoto compressed body ->
+        let (n', inner) = cflowFlatten self (n + 1) body
+         in (n', (if compressed then CJump16 False n else CJal32 0 n) : inner P.++ [CLabel n])
+      SLoop count compressed body ->
+        let counter = cflowCounter self
+            (n', inner) = cflowFlatten self (n + 1) body
+            back = if compressed && counter <= 15 then CBranch16 0b111 (counter - 8) n else CBranch32 1 counter 0 n
+         in (n', [CHalf (cLi counter count), CLabel n] P.++ inner P.++ [CHalf (cAddi counter 0x3f), back])
+      SCall callee style -> case style of
+        1 | cflowLink callee == 1 -> (n, [CJump16 True (-1 - callee)])
+        2 -> (n + 1, [CLabel n, CWord ((28 `shiftL` 7) .|. 0x17), CAddrOf 28 n (-1 - callee),
+                      CWord (iType 0 28 0 (cflowLink callee) 0x67)])
+        _ -> (n, [CJal32 (cflowLink callee) (-1 - callee)])
+    retarget n branch = case branch of
+      CBranch16 f3 rs _ -> CBranch16 f3 rs n
+      CBranch32 f3 a b _ -> CBranch32 f3 a b n
+      other -> other
+
+-- | Lay out the items (function labels are negative: -1 - index) and encode
+-- them as halfwords; Nothing if an offset does not fit its encoding.
+cflowAssemble :: [CItem] -> Maybe [Unsigned 16]
+cflowAssemble items =
+  let addresses = P.scanl (\a i -> a + cItemSize i) 0 items
+      labels = IntMap.fromList [(l, a) | (CLabel l, a) <- P.zip items addresses]
+      at l = IntMap.findWithDefault 0 l labels
+      halves w = [resize w, resize (w `shiftR` 16)]
+      encode (item, a) = case item of
+        CHalf h -> [resize h]
+        CWord w -> halves w
+        CLabel _ -> []
+        CBranch16 f3 rs l -> [resize (cBranchEncode f3 rs (at l - a))]
+        CBranch32 f3 r1 r2 l -> halves (bType (at l - a) r2 r1 f3 0)
+        CJal32 rd l -> halves (jType (at l - a) rd)
+        CJump16 link l -> [resize (cJumpEncode link (at l - a))]
+        CAddrOf reg anchor l -> halves (iType (at l - at anchor) reg 0 reg 0x13)
+      offset l a = fromIntegral (at l) - fromIntegral a :: Int
+      fits (item, a) = case item of
+        CBranch16 _ _ l -> P.abs (offset l a) < 256
+        CJump16 _ l -> P.abs (offset l a) < 2048
+        CBranch32 _ _ _ l -> P.abs (offset l a) < 4096
+        CAddrOf _ anchor l -> P.abs (offset l (at anchor)) < 2048
+        _ -> True
+      placed = P.zip items addresses
+   in if P.all fits placed then Just (P.concatMap encode placed) else Nothing
+
+genCflowAlu :: Gen CItem
+genCflowAlu = do
+  d <- Gen.element cflowData
+  s <- Gen.element cflowData
+  imm <- Gen.integral (Range.linear 1 31)
+  Gen.element
+    [ CHalf (cAddi d imm), CHalf (cLi d imm), CHalf (cSlli d (imm .&. 7 + 1)), CHalf (cMv d s), CHalf (cAdd d s),
+      CWord (addi d s (imm * 37)), CWord (rType 0 s d 0 d), CWord (rType 0 s d 4 d), CWord (rType 0x20 s d 0 d),
+      CWord (iType (imm .&. 7) s 5 d 0x13) ]
+
+genCflowStmts :: Int -> Int -> Bool -> Int -> Gen [CStmt]
+genCflowStmts self functions loops depth = Gen.list (Range.linear 1 (if depth == 0 then 8 else 4)) stmt
+  where
+    callees = [self + 1 .. functions]
+    stmt = Gen.frequency $
+      [ (6, SPlain <$> Gen.list (Range.linear 1 4) genCflowAlu) ]
+        P.++ [ (2, SSkip <$> branch <*> genCflowStmts self functions False (depth + 1)) | depth < 2 ]
+        P.++ [ (1, SGoto <$> Gen.bool <*> genCflowStmts self functions False (depth + 1)) | depth < 2 ]
+        P.++ [ (2, SLoop <$> Gen.integral (Range.linear 1 3) <*> Gen.bool <*> genCflowStmts self functions False (depth + 1)) | loops ]
+        P.++ [ (3, SCall <$> Gen.element callees <*> Gen.integral (Range.linear 0 2)) | not (P.null callees) ]
+    branch = Gen.choice
+      [ CBranch16 <$> Gen.element [0b110, 0b111] <*> Gen.element [2 .. 5] <*> P.pure 0,
+        CBranch32 <$> Gen.element [0, 1, 4, 5, 6, 7] <*> Gen.element cflowData <*> Gen.element cflowData <*> P.pure 0 ]
+
+genCflowProgram :: Gen [Unsigned 16]
+genCflowProgram = do
+  functions <- Gen.integral (Range.linear 0 4)
+  lead <- Gen.list (Range.linear 0 1) (P.pure (CHalf 0x0001))
+  bodies <- P.mapM (\i -> genCflowStmts i functions True 0) [0 .. functions]
+  let flatten (n, acc) (i, body) =
+        let (n', items) = cflowFlatten i n body
+            link = cflowLink i
+            save = 21 + fromIntegral i
+            wrapped
+              | i == 0 = items P.++ [CHalf 0x9002]
+              | otherwise =
+                  [CLabel (-1 - i), CHalf (cMv save link)] P.++ items
+                    P.++ [CHalf (cMv link save)]
+                    P.++ [if odd (P.length items) then CHalf (cJr link) else CWord (iType 0 link 0 0 0x67)]
+         in (n', acc P.++ wrapped)
+      (_, items) = P.foldl flatten (0, lead) (P.zip [0 ..] bodies)
+  maybe Gen.discard P.pure (cflowAssemble items)
+
+-- | Random compressed programs with forward branches, counted loops, and
+-- calls and returns (direct, c.jal and indirect, through ra and t0), with
+-- 32-bit instructions at either halfword so branches and jumps straddle
+-- words. The pipeline (with its branch prediction) must match the
+-- multi-cycle core, which predicts nothing.
+prop_compressed_control_flow_matches_multicycle :: Property
+prop_compressed_control_flow_matches_multicycle = withTests 300 . property $ do
+  halves <- forAll genCflowProgram
+  values <- forAll (Gen.list (Range.singleton 6) genValue)
+  let regs = P.zip [6, 7, 10, 11, 12, 13] values
+      run pipelined = runUntilHalt 120000 (startSim ((runningMachine regs) {cpuCompressed = True, cpuPipelined = pipelined}) (ramFromHalfwords halves))
+      (_, slow) = run False
+      (_, fast) = run True
+      -- (start halfword, 16-bit instruction or Nothing for a 32-bit one)
+      walk _ [] = []
+      walk i (h : rest)
+        | h .&. 3 == 3 = (i, Nothing) : walk (i + 2) (P.drop 1 rest)
+        | otherwise = (i, Just h) : walk (i + 1) rest
+      instructions = walk (0 :: Int) halves
+      straddles = P.length [() | (i, Nothing) <- instructions, odd i]
+  P.mapM_ (\(_, h) -> assert (maybe True (isJust . C.decompress32) h)) instructions
+  -- (programs too long for the reference core within the fuel are skipped)
+  when (not (romAddress (cpuPc (simMachine slow)))) discard
+  classify "a straddling 32-bit instruction" (straddles > 0)
+  classify "five or more straddling instructions" (straddles >= 5)
+  trapCause (cpuTrapRegisters (simMachine slow)) === 3
+  toList (cpuRegs (simMachine fast)) === toList (cpuRegs (simMachine slow))
+  trapCause (cpuTrapRegisters (simMachine fast)) === 3
+  trapEpc (cpuTrapRegisters (simMachine fast)) === trapEpc (cpuTrapRegisters (simMachine slow))
+  counterLo (cpuInstret (simMachine fast)) === counterLo (cpuInstret (simMachine slow))
+
+-- The assembly stage classifies raw instructions without expanding them.
+-- It must agree with the expanded-word rules E2 uses for the resolved
+-- return stack, and its JAL offset must be the expanded JAL's immediate.
+prop_raw_control_matches_expanded :: Property
+prop_raw_control_matches_expanded = withTests 1 . property $ do
+  let check (size, raw, word) =
+        let c = rawControl size raw
+            jal = word .&. 0x7f == 0x6f
+         in (rcCall c, rcReturn c, rcJal c, if jal then rcJalOffset c else 0)
+              == (isCallWord word, isReturnWord word, jal, if jal then immJ word else 0)
+      halves = [(2, resize h, w) | h <- [0 .. 0xffff :: Unsigned 16], h .&. 3 /= 3, Just w <- [C.decompress32 h]]
+      bad = P.filter (not . check) halves
+  annotateShow (P.take 5 [(showHex r "", showHex w "") | (_, r, w) <- bad])
+  P.length bad === 0
+  -- 32-bit encodings: every opcode, link and non-link registers
+  let words = [ (imm `shiftL` 20) .|. (rs1 `shiftL` 15) .|. (rd `shiftL` 7) .|. op
+              | op <- [0x6f, 0x67, 0x63, 0x13], rd <- [0, 1, 2, 5, 31], rs1 <- [0, 1, 5, 6], imm <- [0, 1, 0x800, 0xfff]]
+  P.filter (\w -> not (check (4, w, w))) words === []
+
 prop_compressed_mixed_fetch_and_links :: Property
 prop_compressed_mixed_fetch_and_links = withTests 1 . property $ do
   let program = [0x4419,0x449d,0x0533,0x0294,0x0505,0xc188,0x4190,0x0693,0x0016,
@@ -2009,7 +2219,13 @@ prop_frontend_register_boundaries = withTests 300 . property $ do
       before = (runningMachine []) {cpuCompressed=True,cpuPipe=pipe}
       (after,_,_) = pipeStep before memoryWord
       expectedWord = fromMaybe 0 (C.decompress32 raw)
-      expected = (fetchedWord (ramBase,ramBase+2) expectedWord) {fRaw=resize raw,fSize=2}
+      -- A corrects a JAL's prediction to its target and a return's to the
+      -- (here empty, zero) return stack top before F receives it.
+      expectedPredicted
+        | expectedWord .&. 0x7f == 0x6f = ramBase + immJ expectedWord
+        | isReturnWord expectedWord = 0
+        | otherwise = ramBase + 2
+      expected = (fetchedWord (ramBase,expectedPredicted) expectedWord) {fRaw=resize raw,fSize=2}
   cpuReadIndices after === (fromIntegral rs1,fromIntegral rs2)
   pD (cpuPipe after) === Just decoded
   pF (cpuPipe after) === Just expected
@@ -2173,6 +2389,8 @@ simpleRiscGroup =
       ("Separate BTB storage preserves effective reads through repeated holds", prop_btb_storage_preserves_effective_table_during_holds),
       ("Frontend assembly, expansion and register reads have separate boundaries", prop_frontend_register_boundaries),
       ("Compressed BTB predicts halfword branches and recovers from straddle aliases", prop_compressed_btb_prediction_and_aliases),
+      ("Compressed control flow matches the multi-cycle core", prop_compressed_control_flow_matches_multicycle),
+      ("Raw assembly-stage control classes match the expanded words", prop_raw_control_matches_expanded),
       ("Registered decode hazards match arriving producer stages", prop_registered_decode_hazard),
       ("Compressed mret and FENCE.I discard stale halfwords", prop_compressed_handler_and_fence_i),
       ("Compressed ALU stream matches independent RV32 interpreter", prop_compressed_alu_matches_reference),

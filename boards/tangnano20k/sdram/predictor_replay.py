@@ -50,7 +50,8 @@ def sizes_for(pcs, image):
 
 
 def replay(pcs, words, nexts, sizes, entries=8, ways=1, ras=0, counters=False,
-           jal_in_decode=False, return_by_ras_only=False, train_straddle=False):
+           jal_in_decode=False, return_by_ras_only=False, train_straddle=False,
+           ras_needs_btb=False):
     """Return mispredicts by kind, plus 'jal_decode' redirects resolved early."""
     sets = entries // ways
     index_mask = sets - 1
@@ -66,10 +67,14 @@ def replay(pcs, words, nexts, sizes, entries=8, ways=1, ras=0, counters=False,
         rs1 = (word >> 15) & 0x1f
         link = pc + size
         taken = nxt != link
-        word_pc = pc >> 2
+        # Entries are keyed on the instruction's last halfword, as the core's
+        # slot bit is; for a straddling instruction that is in the next word.
+        straddle = (pc >> 1) & 1 == 1 and size == 4
+        end = pc + size - 2
+        word_pc = end >> 2
         index = word_pc & index_mask
         tag = (word_pc >> (sets.bit_length() - 1)) & 0xff
-        slot = (pc >> 1) & 1
+        slot = (end >> 1) & 1
         entries_here = table[index]
         found = None
         for entry in entries_here:
@@ -79,7 +84,7 @@ def replay(pcs, words, nexts, sizes, entries=8, ways=1, ras=0, counters=False,
         is_return = opcode == 0x67 and rd == 0 and rs1 in (1, 5)
         is_call = opcode in (0x6f, 0x67) and rd in (1, 5)
         # Prediction.
-        if ras and is_return:
+        if ras and is_return and (not ras_needs_btb or found is not None):
             predicted = stack[-1] if stack else link
         elif found is not None and (not counters or found[4] >= 2):
             predicted = found[3]
@@ -108,9 +113,9 @@ def replay(pcs, words, nexts, sizes, entries=8, ways=1, ras=0, counters=False,
                     stack.pop(0)
         # Table update. The core never installs a 32-bit instruction that
         # starts in a word's upper half (its fetch word holds only half of it).
-        if ras and is_return and return_by_ras_only:
+        if ras and is_return and return_by_ras_only and not ras_needs_btb:
             continue
-        if slot and size == 4 and not train_straddle:
+        if straddle and not train_straddle:
             if found is not None and predicted != nxt:
                 entries_here.remove(found)
             continue
@@ -172,6 +177,12 @@ VARIANTS = [
     ('A, 8 entries 2-way', dict(entries=8, ways=2)),
     ('A + straddling instructions installed', dict(train_straddle=True)),
     ('A + 4-deep return stack', dict(ras=4, return_by_ras_only=True)),
+    # Buildable: a return is recognised only through its own BTB entry.
+    ('R1 A + 8-deep return stack, returns found through the BTB', dict(ras=8, ras_needs_btb=True)),
+    ('R2 R1 + straddling instructions keyed on their last word', dict(ras=8, ras_needs_btb=True, train_straddle=True)),
+    ('R3 R2 at 16 entries', dict(entries=16, ras=8, ras_needs_btb=True, train_straddle=True)),
+    ('R4 R2 at 32 entries', dict(entries=32, ras=8, ras_needs_btb=True, train_straddle=True)),
+    ('R5 R2 at 64 entries', dict(entries=64, ras=8, ras_needs_btb=True, train_straddle=True)),
 ]
 
 

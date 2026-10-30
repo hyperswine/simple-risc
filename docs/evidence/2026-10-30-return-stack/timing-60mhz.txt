@@ -1,0 +1,9 @@
+60MHz head place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 75.168 MHz Fmax, 3.363 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz fast place=0: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 55.722 MHz Fmax, -1.280 ns worst setup slack; 37 setup / 0 hold violating endpoints
+60MHz head place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 71.620 MHz Fmax, 2.704 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz fast place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 64.801 MHz Fmax, 1.235 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz head place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 61.449 MHz Fmax, 0.393 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz fast place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 62.987 MHz Fmax, 0.790 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz split place=0: NO RESULT:     (file "build.tcl" line 26)
+60MHz split place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 61.541 MHz Fmax, 0.417 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz split place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 70.466 MHz Fmax, 2.476 ns worst setup slack; 0 setup / 0 hold violating endpoints

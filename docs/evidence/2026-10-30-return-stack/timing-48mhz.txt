@@ -1,0 +1,13 @@
+head place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 66.125 MHz Fmax, 5.710 ns worst setup slack; 0 setup / 0 hold violating endpoints
+ras place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 66.478 MHz Fmax, 5.791 ns worst setup slack; 0 setup / 0 hold violating endpoints
+head place=1: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 80.779 MHz Fmax, 8.454 ns worst setup slack; 0 setup / 0 hold violating endpoints
+ras place=1: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 70.086 MHz Fmax, 6.565 ns worst setup slack; 0 setup / 0 hold violating endpoints
+head place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 80.779 MHz Fmax, 8.454 ns worst setup slack; 0 setup / 0 hold violating endpoints
+ras place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 70.086 MHz Fmax, 6.565 ns worst setup slack; 0 setup / 0 hold violating endpoints
+head place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 73.494 MHz Fmax, 7.227 ns worst setup slack; 0 setup / 0 hold violating endpoints
+ras place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 50.084 MHz Fmax, 0.867 ns worst setup slack; 0 setup / 0 hold violating endpoints
+head place=4: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 73.701 MHz Fmax, 7.265 ns worst setup slack; 0 setup / 0 hold violating endpoints
+ras place=4: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 64.683 MHz Fmax, 5.373 ns worst setup slack; 0 setup / 0 hold violating endpoints
+jal place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 49.914 MHz Fmax, 0.799 ns worst setup slack; 0 setup / 0 hold violating endpoints
+jal place=1: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 49.284 MHz Fmax, 0.543 ns worst setup slack; 0 setup / 0 hold violating endpoints
+jal place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 49.284 MHz Fmax, 0.543 ns worst setup slack; 0 setup / 0 hold violating endpoints

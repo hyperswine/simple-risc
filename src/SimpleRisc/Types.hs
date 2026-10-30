@@ -903,6 +903,22 @@ data Pipe = Pipe
     -- | A taken branch or jump left the second execute stage last cycle:
     -- this cycle the younger stages are flushed and its target fetched.
     pRedirect :: Maybe Word32,
+    -- | The assembly stage corrected a prediction last cycle: fetch steers
+    -- to 'pFrontTarget' and only fetch, the word queue and A are discarded.
+    -- A 'pRedirect' in the same cycle wins. Kept apart from 'pRedirect' so
+    -- the late execute-stage decision never selects between the two.
+    pRedirectFront :: Bool,
+    pFrontTarget :: Word32,
+    -- | Return address stack, speculative: calls push and returns pop as
+    -- they leave the assembly stage, in predicted program order. Entry
+    -- 'pRasTop' is the top; overflow wraps and overwrites the oldest.
+    pRas :: Vec 8 Word32,
+    pRasTop :: Unsigned 3,
+    -- | The same stack updated in order as instructions leave the second
+    -- execute stage. Every restart copies it to the speculative one, which
+    -- undoes pushes and pops from the discarded path.
+    pRasResolved :: Vec 8 Word32,
+    pRasResolvedTop :: Unsigned 3,
     -- | Eight entries, indexed by pc bits 4..2: fetch follows a hit's
     -- target; the second execute stage corrects a wrong guess.
     pBtb :: Vec 8 BtbEntry,
@@ -979,7 +995,10 @@ data PipelineTrace = PipelineTrace
     -- 'hazardPlain'); 15 if no producer matches (should stay zero).
     ptHazard :: Unsigned 4,
     -- | When 'ptRedirect': why E2 redirected ('redirectRefetch' ..).
-    ptRedirectKind :: Unsigned 3
+    ptRedirectKind :: Unsigned 3,
+    -- | The assembly stage corrected a prediction (a return took the
+    -- return stack's top, or a JAL its target) and steers fetch next cycle.
+    ptFrontRedirect :: Bool
 #endif
   }
   deriving (Generic, NFDataX)

@@ -201,7 +201,7 @@ module perf_tb #(
  reg [63:0] ctl_load=0,ctl_store=0,ctl_shift=0,ctl_mul=0;
  reg [63:0] ctl_branch=0,ctl_branch_taken=0,ctl_jal=0,ctl_jal_link=0,ctl_return=0,ctl_jalr=0,ctl_jalr_link=0;
  reg [63:0] restart_length[0:16];
- reg [63:0] refill_port_blocked=0;
+ reg [63:0] refill_port_blocked=0,front_redirects=0;
  integer restart_run=0;
  initial begin
    for(k=0;k<16;k=k+1)hazard_cause[k]=0;
@@ -228,6 +228,9 @@ module perf_tb #(
    if(measuring)begin
      if(cpu.observe_slot==7)hazard_cause[cpu.observe_hazard]<=hazard_cause[cpu.observe_hazard]+1;
      if(cpu.observe_redirect)redirect_kind[cpu.observe_redirect_kind]<=redirect_kind[cpu.observe_redirect_kind]+1;
+`ifdef NAMED_FRONT_OBSERVATIONS
+     if(cpu.observe_front_redirect)front_redirects<=front_redirects+1;
+`endif
      if(cpu.observe_slot==8 && refilling && cpu.observe_fetch_port_blocked)refill_port_blocked<=refill_port_blocked+1;
      if(cpu.observe_commit)begin
        case(commit_opcode)
@@ -284,8 +287,8 @@ module perf_tb #(
    $write("PERF");for(k=0;k<8;k=k+1)$write(" redirect_kind_%0d=%0d",k,redirect_kind[k]);$write("\n");
    $write("PERF");for(k=0;k<17;k=k+1)$write(" restart_length_%0d=%0d",k,restart_length[k]);$write("\n");
    $display("PERF ctl_load=%0d ctl_store=%0d ctl_shift=%0d ctl_mul=%0d",ctl_load,ctl_store,ctl_shift,ctl_mul);
-   $display("PERF ctl_branch=%0d ctl_branch_taken=%0d ctl_jal=%0d ctl_jal_link=%0d ctl_return=%0d ctl_jalr=%0d ctl_jalr_link=%0d refill_port_blocked=%0d",
-     ctl_branch,ctl_branch_taken,ctl_jal,ctl_jal_link,ctl_return,ctl_jalr,ctl_jalr_link,refill_port_blocked);
+   $display("PERF ctl_branch=%0d ctl_branch_taken=%0d ctl_jal=%0d ctl_jal_link=%0d ctl_return=%0d ctl_jalr=%0d ctl_jalr_link=%0d refill_port_blocked=%0d front_redirects=%0d",
+     ctl_branch,ctl_branch_taken,ctl_jal,ctl_jal_link,ctl_return,ctl_jalr,ctl_jalr_link,refill_port_blocked,front_redirects);
    if(control_trace!=0)$fclose(control_trace);
 `endif
    $finish;

@@ -246,6 +246,8 @@ def main():
                 require_slot_observations(sources)
             if a.split:
                 require_split_observations(sources)
+    # Cores with an assembly-stage correction export it; older ones do not.
+    front_port = a.split and any(re.search(r'\boutput\s+(?:wire\s+)?observe_front_redirect\b', s.read_text()) for s in sources)
     copied = []
     for source in sources:
         text = source.read_text()
@@ -278,6 +280,7 @@ def main():
              *(['-DNAMED_PIPELINE_OBSERVATIONS'] if a.profile_cpu and not a.legacy_profile_20261028 else []),
              *(['-DNAMED_SLOT_OBSERVATIONS'] if a.stall_breakdown else []),
              *(['-DNAMED_SPLIT_OBSERVATIONS'] if a.split else []),
+             *(['-DNAMED_FRONT_OBSERVATIONS'] if a.split and front_port else []),
              *copied, a.cache_rtl.resolve(), a.bridge_rtl.resolve(), HERE/'sdram.v', HERE/'burst_memory.v',
              HERE/'perf_tb.v']
     config = dict(cpu_mhz=a.cpu_mhz, mem_mhz=a.mem_mhz, cdc=bool(cdc),
