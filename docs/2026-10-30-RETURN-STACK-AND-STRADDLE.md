@@ -6,22 +6,23 @@ structural fixes. No board run.
 
 ## Result
 
-On the frozen classifier at 48/48 MHz the core takes **1.179x fewer cycles**
+On the frozen classifier at 48/48 MHz the core takes **1.178x fewer cycles**
 (IPC 0.272 to 0.320). The classifier output is correct (train 124/128 digest
 21562, test 61/64 digest 909572).
 
-At the next clock step (60 MHz, placer over-constrained to 66 MHz) the new
-design passes timing at two of three placements; HEAD passes all three. The
-third placement did not route (86 unrouted nets). The design now uses 86% of
-the slices, against 82% for HEAD, so routing congestion is the new risk, not
-logic depth.
+With a 4-entry return stack restored by its pointer only (the final version,
+see [Smaller stack](#smaller-stack)), the design passes timing at 60 MHz
+(placer over-constrained to 66 MHz) at all three placements, as HEAD does. The
+first version, with two 8-entry stacks, passed at two and did not route at the
+third.
 
 Judged as speed = Fmax x IPC, at each design's worst passing placement:
 
 | Design | Worst passing Fmax | IPC | Fmax x IPC |
 |---|---:|---:|---:|
 | HEAD | 61.4 MHz | 0.272 | 16.7 |
-| This change | 61.5 MHz | 0.320 | 19.7 (1.18x) |
+| Two 8-entry stacks | 61.5 MHz (2 of 3 pass) | 0.320 | 19.7 (1.18x) |
+| One 4-entry stack | 63.0 MHz (3 of 3 pass) | 0.320 | 20.2 (1.21x) |
 
 ## What changed
 
@@ -29,11 +30,12 @@ Judged as speed = Fmax x IPC, at each design's worst passing placement:
   word's upper half was never trained into the BTB. Its entry is now keyed on
   its second word, at slot 0, which is where fetch looks it up. Assembly takes
   the prediction from the second word.
-- **Return address stack, 8 deep, compressed mode only.** Calls (jal/jalr with
-  rd in {x1, x5}) push their link and returns (jalr x0 with rs1 in {x1, x5})
-  pop, as they leave A for F. That speculative stack is restored from a
-  second, in-order stack on every restart. Returns are no longer trained into
-  the BTB.
+- **Return address stack, compressed mode only.** Calls (jal/jalr with rd in
+  {x1, x5}) push their link and returns (jalr x0 with rs1 in {x1, x5}) pop, as
+  they leave A for F. The first version was 8 deep and restored from a second,
+  in-order stack on every restart; the final one is 4 deep and restores only
+  its pointer (see [Smaller stack](#smaller-stack)). Returns are no longer
+  trained into the BTB.
 - **Assembly-stage correction.** When A holds a return whose prediction is not
   the stack's top, or a JAL whose prediction is not its target, fetch is
   steered there next cycle. Only fetch, the word queue and A are discarded; F
@@ -80,19 +82,50 @@ the fetch pc.
 
 Most of the 553 new registers are the two 8 x 32 return stacks.
 
+## Smaller stack
+
+The first version's 86% slice use made routing the risk. Most of its new
+registers were the second, in-order stack, kept only to restore the first.
+
+The replay model priced depth first (returns that still redirect, classifier):
+
+| Depth | Return redirects |
+|---:|---:|
+| 8 | 38 |
+| 4 | 4,687 |
+| 3 | 61,251 |
+
+The final version keeps one 4-entry stack. Execute keeps only the pointer
+(`pRasResolvedTop`, moved by calls and returns as they leave E2), and a restart
+resets the top to it. Entries are not restored, so a discarded return followed
+by a discarded call overwrites a live entry; E2 then catches the wrong return.
+On the classifier this never cost anything: the simulation shows 4,687 return
+redirects, exactly the model's committed-order figure.
+
+| Version | Cycles | Speedup | Logic | Registers | CLS (placement 0) |
+|---|---:|---:|---:|---:|---:|
+| HEAD | 145,460,221 | 1.000 | 14,304 | 5,308 | 82% |
+| Two 8-entry stacks | 123,405,043 | 1.179 | 16,056 | 5,861 | 86% |
+| One 4-entry stack | 123,432,187 | 1.178 | 14,835 | 5,475 | 85% |
+
+| 60 MHz build | Placement 0 | Placement 2 | Placement 3 |
+|---|---|---|---|
+| One 4-entry stack | pass, 63.0 | pass, 75.5 | pass, 67.4 |
+
+The new features now cost 531 LUTs and 167 registers over HEAD, against 1,752
+and 553 for the first version.
+
 ## Open
 
-- **Size.** The second (in-order) stack exists only to restore the first. A
-  single stack with a saved pointer, or 4 entries, would cut most of the new
-  registers. The predictor replay model can price a smaller stack before a
-  build.
 - **Not run on the board.**
-- The larger BTB (64 entries) from STALL-SPLIT is the next predictor step, but
-  it would add area while area is the constraint.
+- A program with deeper recursion than 4 calls, or more wrong-path
+  return-then-call sequences, would lose more than the classifier does.
+- The larger BTB (64 entries) from STALL-SPLIT is the next predictor step; the
+  area freed here leaves some room for it.
 
 ## Evidence
 
 [evidence/2026-10-30-return-stack/](evidence/2026-10-30-return-stack/):
-`results.json` and `run.log` (simulation), `timing-48mhz.txt`,
+`results.json` and `run.log` (simulation, two 8-entry stacks), `ras4/` (simulation, one 4-entry stack), `timing-48mhz.txt`,
 `timing-60mhz.txt`, the build scripts, `resources.txt`, and `rtl.sha256` for
 the netlists built.

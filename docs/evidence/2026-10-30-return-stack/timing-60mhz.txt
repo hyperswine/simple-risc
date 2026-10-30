@@ -7,3 +7,6 @@
 60MHz split place=0: NO RESULT:     (file "build.tcl" line 26)
 60MHz split place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 61.541 MHz Fmax, 0.417 ns worst setup slack; 0 setup / 0 hold violating endpoints
 60MHz split place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 70.466 MHz Fmax, 2.476 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz ras4 place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 63.015 MHz Fmax, 0.797 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz ras4 place=2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 75.519 MHz Fmax, 3.425 ns worst setup slack; 0 setup / 0 hold violating endpoints
+60MHz ras4 place=3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 67.378 MHz Fmax, 1.825 ns worst setup slack; 0 setup / 0 hold violating endpoints

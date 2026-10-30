@@ -855,6 +855,11 @@ data Action
 data BtbEntry = BtbEntry {bValid :: Bool, bSlot :: Bool, bTag :: Unsigned 8, bTarget :: Word32}
   deriving (Generic, NFDataX, Show, Eq)
 
+-- | Return stack entries (calls deep) and its wrapping pointer.
+type RasDepth = 4
+
+type RasPointer = Unsigned 2
+
 data Pipe = Pipe
   { -- | The next pc to fetch.
     pFetchPc :: Word32,
@@ -909,16 +914,17 @@ data Pipe = Pipe
     -- the late execute-stage decision never selects between the two.
     pRedirectFront :: Bool,
     pFrontTarget :: Word32,
-    -- | Return address stack, speculative: calls push and returns pop as
-    -- they leave the assembly stage, in predicted program order. Entry
-    -- 'pRasTop' is the top; overflow wraps and overwrites the oldest.
-    pRas :: Vec 8 Word32,
-    pRasTop :: Unsigned 3,
-    -- | The same stack updated in order as instructions leave the second
-    -- execute stage. Every restart copies it to the speculative one, which
-    -- undoes pushes and pops from the discarded path.
-    pRasResolved :: Vec 8 Word32,
-    pRasResolvedTop :: Unsigned 3,
+    -- | Return address stack: calls push and returns pop as they leave the
+    -- assembly stage, in predicted program order. Entry 'pRasTop' is the
+    -- top; overflow wraps and overwrites the oldest.
+    pRas :: Vec RasDepth Word32,
+    pRasTop :: RasPointer,
+    -- | Where the top would be if only instructions that left the second
+    -- execute stage had moved it. A restart resets 'pRasTop' to it, which
+    -- undoes the discarded path's pushes and pops. Entries are not
+    -- restored: a discarded return followed by a call overwrites a live
+    -- entry, and the next return through it is caught by E2.
+    pRasResolvedTop :: RasPointer,
     -- | Eight entries, indexed by pc bits 4..2: fetch follows a hit's
     -- target; the second execute stage corrects a wrong guess.
     pBtb :: Vec 8 BtbEntry,

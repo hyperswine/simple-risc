@@ -886,13 +886,16 @@ isCallWord :: Word32 -> Bool
 isCallWord word = (word .&. 0x7f == 0x6f || word .&. 0x7f == 0x67) && isLinkRegister (instructionRd word)
 
 -- | A return pops, then a call pushes its link (both for a coroutine swap).
-rasUpdateWith :: Bool -> Bool -> Word32 -> (Vec 8 Word32, Unsigned 3) -> (Vec 8 Word32, Unsigned 3)
+rasUpdateWith :: Bool -> Bool -> Word32 -> (Vec RasDepth Word32, RasPointer) -> (Vec RasDepth Word32, RasPointer)
 rasUpdateWith call ret link (stack, top) =
   let popped = if ret then top - 1 else top
    in if call then (replace (popped + 1) link stack, popped + 1) else (stack, popped)
 
-rasUpdate :: Word32 -> Word32 -> (Vec 8 Word32, Unsigned 3) -> (Vec 8 Word32, Unsigned 3)
-rasUpdate word = rasUpdateWith (isCallWord word) (isReturnWord word)
+-- | The same pop-then-push, pointer only.
+rasMoveTop :: Word32 -> RasPointer -> RasPointer
+rasMoveTop word top =
+  let popped = if isReturnWord word then top - 1 else top
+   in if isCallWord word then popped + 1 else popped
 
 -- | Control-flow class of a raw (unexpanded) instruction, for the assembly
 -- stage: it classifies exactly as 'isCallWord' and 'isReturnWord' do on the
@@ -1030,7 +1033,6 @@ emptyPipe =
     0
     (repeat 0)
     0
-    (repeat 0)
     0
     (repeat (BtbEntry False False 0 0))
     Nothing
@@ -1063,8 +1065,7 @@ restartPipe pc pipe =
       pMSlot = slotCancel (pMSlot pipe),
       pRedirect = Nothing,
       pRedirectFront = False,
-      -- the speculative return stack resumes from the in-order one
-      pRas = pRasResolved pipe,
+      -- the return stack's top resumes from the in-order pointer
       pRasTop = pRasResolvedTop pipe
     }
 
@@ -1586,10 +1587,10 @@ pipeStepTracedWith decodeTarget machine memoryWord =
       (ras', rasTop')
         | cpuCompressed machine && fPush = rasUpdateWith (rcCall aClass) (rcReturn aClass) aLink (pRas pipe, pRasTop pipe)
         | otherwise = (pRas pipe, pRasTop pipe)
-      -- In order, from E2: restored to the speculative stack on a restart.
-      (rasResolved', rasResolvedTop') = case e2Moved of
-        Just (stage, _, _, _) | cpuCompressed machine -> rasUpdate (mWord stage) (mValue stage) (pRasResolved pipe, pRasResolvedTop pipe)
-        _ -> (pRasResolved pipe, pRasResolvedTop pipe)
+      -- In order, from E2: a restart resets the top to it.
+      rasResolvedTop' = case e2Moved of
+        Just (stage, _, _, _) | cpuCompressed machine -> rasMoveTop (mWord stage) (pRasResolvedTop pipe)
+        _ -> pRasResolvedTop pipe
       nextD = if dFree then pF pipe else d
       -- Compare each registered consumer before selecting the next D.
       -- Selecting the wide instruction first puts dFree's backpressure
@@ -1679,7 +1680,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 pFrontTarget = aTarget,
                 pRas = ras',
                 pRasTop = rasTop',
-                pRasResolved = rasResolved',
                 pRasResolvedTop = rasResolvedTop',
                 pBtb = btb',
                 pBtbWrite = btbWrite'
