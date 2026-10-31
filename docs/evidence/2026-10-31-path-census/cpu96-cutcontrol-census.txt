@@ -1,0 +1,170 @@
+3000 paths reported, 220 with slack below 0.0 ns; worst -2.123 ns
+
+BY STRUCTURE (from stage -> to stage)
+  group                                                     paths  ends    worst  levels  route%
+  E2 -> btb                                                     1     1   -2.123      10    71.3
+  machine -> machine                                           10    10   -2.110       6    76.2
+  E2 -> E2                                                      1     1   -2.059      10    72.8
+  E1 -> E2                                                     14    14   -1.907      10    68.5
+  core-other -> M                                              11    11   -1.894       4    90.4
+  fetch -> fetch                                               30    30   -1.743       9    67.0
+  cache -> cache                                               26    26   -1.627       9    63.9
+  D -> E1                                                       2     2   -1.547      10    60.0
+  fetch -> A                                                   23    23   -1.462       9    66.0
+  cache -> machine (CE)                                        55    55   -1.434       4    84.4
+  D -> D                                                        1     1   -1.415      10    60.5
+  E2 -> M                                                       1     1   -0.984       5    80.2
+  btb -> btb                                                    3     2   -0.802      11    58.7
+  btb -> fetch                                                 18    18   -0.770      12    54.8
+  core-other -> cache                                           2     2   -0.697       9    66.0
+  A -> F                                                       20    20   -0.680       8    68.4
+  M -> btb                                                      1     1   -0.519       7    73.1
+  cache -> fetch (CE)                                           1     1   -0.132       4    84.1
+
+BY END FIELD
+  group                                                     paths  ends    worst  levels  route%
+  pBtbWrite                                                     1     1   -2.123      10    71.3
+  machine                                                      10    10   -2.110       6    76.2
+  pRedirect                                                     1     1   -2.059      10    72.8
+  E2.e2Action                                                  14    14   -1.907      10    68.5
+  M.mValue                                                     12    12   -1.894       5    89.6
+  pInstructionPc                                               28    28   -1.743       9    67.1
+  cache                                                        28    28   -1.627       9    64.0
+  E1.e1FetchFault                                               1     1   -1.547      10    60.2
+  pA                                                           23    23   -1.462       9    66.0
+  machine (CE)                                                 55    55   -1.434       4    84.4
+  pDBlocked                                                     1     1   -1.415      10    60.5
+  E1.e1Writes                                                   1     1   -1.185      10    59.7
+  pOutstanding                                                  2     2   -1.160       9    65.7
+  btb table RAM                                                 4     2   -0.802      11    62.3
+  pFetchPc                                                     16    16   -0.770      12    54.9
+  pFQueue                                                      20    20   -0.680       8    68.4
+  pInstructionPc (CE)                                           1     1   -0.132       4    84.1
+  pInflight                                                     2     2   -0.112      12    54.1
+
+BY START FIELD
+  group                                                     paths  ends    worst  levels  route%
+  E2.e2Control                                                  3     3   -2.123      10    74.7
+  machine                                                      10    10   -2.110       6    76.2
+  E1.e1B                                                       11    11   -1.907      10    69.6
+  n972197_s2                                                   11    11   -1.894       4    90.4
+  pQueueRead                                                   53    53   -1.743       9    66.6
+  cache                                                        82    82   -1.627       9    77.9
+  D.fPc                                                         3     3   -1.547      10    60.2
+  E1.e1A                                                        3     3   -1.343      10    64.3
+  pBtbWrite                                                    21    20   -0.802      12    55.3
+  request                                                       2     2   -0.697       9    66.0
+  pA                                                           20    20   -0.680       8    68.4
+  pMSlot                                                        1     1   -0.519       7    73.1
+
+BY CLOCK
+  group                                                     paths  ends    worst  levels  route%
+  clk_core:[R] -> clk_core:[R]                                220   217   -2.123      12    71.7
+
+HIGH FANOUT NETS REPORT
+  FANOUT                  NET NAME                  WORST SLACK   MAX DELAY  
+ ======== ======================================== ============= =========== 
+  5357     clk                                      -2.123        2.274      
+  4217     reset_sync[1]                            -0.943        1.704      
+  581      core/pipeState_8640_6                    -0.132        1.801      
+  549      core/ds5_797_9                           1.014         3.222      
+  379      clk_memory                               8.513         2.274      
+  343      advance                                  0.453         1.478      
+  314      core/result_231_12767_6                  1.554         3.318      
+  310      core/ds4_173_8                           1.485         2.544      
+  287      core/result_231_2780_5                   1.014         1.786      
+  277      core/c$case_alt_341_47_5                 1.056         3.666      
+  249      core/ds6_319_17                          1.596         2.994      
+  235      memory_reset_sync[1]                     12.103        1.616      
+  209      core/pipeState[7782]                     -1.743        2.284      
+  199      core/c$ds_case_alt_1098_14               0.187         3.337      
+  179      core/result_231_12774_25                 1.451         2.415      
+  173      core/machine_0_0[944]                    0.369         3.478      
+  172      core/machine_0_0[11154]                  -2.110        3.737      
+  162      core/machine_0_1458_8                    2.524         3.502      
+  151      core/machine_0_0[11184]                  0.310         2.743      
+  145      core/pipeState[7375]                     0.698         2.620      
+  137      core/pipeState[7775]                     -0.680        1.964      
+  132      core/pipeState_7641_9                    1.712         2.825      
+  132      core/pipeState_7508_9                    1.740         2.742      
+  130      core/c$ds3_app_arg[11]                   4.674         1.529      
+  129      core/pipeState[41]                       3.625         2.897      
+  122      core/ds3_0_132_9                         1.899         2.030      
+  120      core/result_231_11337_5                  0.784         2.253      
+  112      core/ds5[731]                            -0.468        1.835      
+  108      core/machine_0_2011_12                   1.533         2.821      
+  101      core/result_231_3121_13                  2.083         2.689      
+  100      core/machine_0_0[942]                    0.447         1.973      
+  97       dual_clock.bridge/replay_words[1]_31_6   7.066         1.520      
+  96       core/ds4[39]                             3.760         2.911      
+  95       core/result_231_3123_8                   0.630         4.309      
+  92       core/waiting_0                           -1.743        2.615      
+  88       core/machine_0_0[448]                    1.595         2.007      
+  86       core/pipeState[7783]                     -1.505        2.472      
+  86       core/machine_0_0[943]                    -0.569        2.433      
+  86       core/machine_0_359_10                    1.711         3.090      
+  85       core/ds5[732]                            -2.123        1.695      
+  84       core/ds6[200]                            1.004         2.269      
+  82       core/pipeState_5589_77                   2.521         2.258      
+  80       core/machine_0_0[0]                      7.437         0.972      
+  78       core/machine_0_0[295]                    4.011         3.099      
+  77       core/pipeState[7657]                     0.674         1.668      
+  77       core/pipeState[7660]                     0.470         2.069      
+  76       core/pipeState[7658]                     0.539         2.283      
+  74       core/pipeState[7659]                     0.039         2.798      
+  74       core/ds6[201]                            2.368         1.804      
+  70       core/pipeState[5428]                     3.530         0.891      
+
+ROUTE CONGESTIONS REPORT
+  GRID LOC   ROUTE CONGESTIONS  
+ ========== =================== 
+  R27C28     0.972              
+  R14C19     0.931              
+  R29C22     0.917              
+  R23C32     0.903              
+  R28C20     0.903              
+  R18C23     0.903              
+  R23C22     0.889              
+  R23C25     0.889              
+  R23C36     0.889              
+  R25C25     0.889              
+  R24C21     0.889              
+  R26C24     0.889              
+  R18C18     0.889              
+  R8C20      0.875              
+  R19C30     0.875              
+  R23C20     0.875              
+  R23C42     0.875              
+  R13C31     0.875              
+  R25C26     0.875              
+  R25C30     0.875              
+  R27C19     0.875              
+  R15C27     0.875              
+  R30C25     0.875              
+  R30C29     0.875              
+  R32C26     0.875              
+  R8C31      0.875              
+  R21C22     0.861              
+  R21C29     0.861              
+  R23C23     0.861              
+  R22C17     0.861              
+  R12C34     0.861              
+  R24C22     0.861              
+  R13C30     0.861              
+  R12C33     0.861              
+  R14C18     0.861              
+  R27C30     0.861              
+  R8C30      0.861              
+  R30C12     0.861              
+  R15C21     0.861              
+  R30C19     0.861              
+  R30C21     0.861              
+  R16C18     0.861              
+  R20C26     0.847              
+  R20C17     0.847              
+  R20C30     0.847              
+  R21C45     0.847              
+  R22C23     0.847              
+  R22C32     0.847              
+  R22C45     0.847              
+  R22C46     0.847              

@@ -1,0 +1,21 @@
+cause                                            fail@96 fail@84 fail@72   worst   Fmax
+front end (fetch, BTB, A, F)                         124      27       0  -2.849   75.4
+decode/execute                                        18       5       0  -2.818   75.6
+cpuFast fast/slow select                             267     186       0  -2.791   75.7
+hold enable via cpuInRom (Ctrl-C break)              638      94       0  -2.695   76.3
+into M                                                23       2       0  -2.487   77.5
+cache                                                 40       7       0  -2.433   77.8
+other machine state (phase, interrupt, muldiv)        59       4       0  -1.536   83.7
+other: M -> machine                                    3       1       0  -1.510   83.8
+other: M -> core-other                                 0       0       0   1.201  108.5
+
+removing causes in order (estimate, no re-placement):
+  without front end (fetch, BTB, A, F)                   -> worst  -2.818  Fmax   75.6
+  without decode/execute                                 -> worst  -2.791  Fmax   75.7
+  without cpuFast fast/slow select                       -> worst  -2.695  Fmax   76.3
+  without hold enable via cpuInRom (Ctrl-C break)        -> worst  -2.487  Fmax   77.5
+  without into M                                         -> worst  -2.433  Fmax   77.8
+  without cache                                          -> worst  -1.536  Fmax   83.7
+  without other machine state (phase, interrupt, muldiv) -> worst  -1.510  Fmax   83.8
+  without other: M -> machine                            -> worst   1.201  Fmax  108.5
+  without other: M -> core-other                         -> no reported path left

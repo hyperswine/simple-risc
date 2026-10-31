@@ -1,0 +1,21 @@
+cause                                            fail@96 fail@84 fail@72   worst   Fmax
+front end (fetch, BTB, A, F)                          94       4       0  -2.123   79.7
+other machine state (phase, interrupt, muldiv)        10       1       0  -2.110   79.8
+decode/execute                                        18       3       0  -2.059   80.2
+into M                                                12       1       0  -1.894   81.2
+cache                                                 84       1       0  -1.627   83.0
+other: M -> machine                                    0       0       0   1.048  106.7
+other: machine -> machine                              0       0       0   1.953  118.2
+other: core-other -> machine                           0       0       0   2.518  126.6
+other: core-other -> machine (CE)                      0       0       0   2.524  126.7
+
+removing causes in order (estimate, no re-placement):
+  without front end (fetch, BTB, A, F)                   -> worst  -2.110  Fmax   79.8
+  without other machine state (phase, interrupt, muldiv) -> worst  -2.059  Fmax   80.2
+  without decode/execute                                 -> worst  -1.894  Fmax   81.2
+  without into M                                         -> worst  -1.627  Fmax   83.0
+  without cache                                          -> worst   1.048  Fmax  106.7
+  without other: M -> machine                            -> worst   1.953  Fmax  118.2
+  without other: machine -> machine                      -> worst   2.518  Fmax  126.6
+  without other: core-other -> machine                   -> worst   2.524  Fmax  126.7
+  without other: core-other -> machine (CE)              -> no reported path left

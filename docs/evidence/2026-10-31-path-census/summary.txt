@@ -1,0 +1,4 @@
+cpu 72 head place=0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 72 MHz constraint, 72.250 MHz Fmax, 0.048 ns worst setup slack; 0 setup / 0 hold violating endpoints
+cpu 96 head place=0: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 96 MHz constraint, 75.384 MHz Fmax, -2.849 ns worst setup slack; 1176 setup / 0 hold violating endpoints
+cpu 96 head place=0: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 96 MHz constraint, 75.384 MHz Fmax, -2.849 ns worst setup slack; 1176 setup / 0 hold violating endpoints
+cpu 96 head place=0: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 96 MHz constraint, 79.748 MHz Fmax, -2.123 ns worst setup slack; 220 setup / 0 hold violating endpoints

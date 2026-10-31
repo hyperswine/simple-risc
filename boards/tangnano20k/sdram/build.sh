@@ -188,7 +188,7 @@ set_option -opt_goal timing
 set_option -place_option $placement
 set_option -frequency $target
 set_option -global_freq $target
-set_option -num_critical_paths 20
+set_option -num_critical_paths ${SDRAM_CRITICAL_PATHS:-20}
 set_option -gen_verilog_sim_netlist 1
 TCL
 for knob in map_option route_option replicate max_fanout route_maxfan; do
@@ -242,6 +242,23 @@ set_false_path -to [get_regs {dual_clock.bridge/put_meta_0_s0 dual_clock.bridge/
 set_false_path -to [get_regs {dual_clock.bridge/take_meta_0_s0 dual_clock.bridge/take_meta_1_s0 dual_clock.bridge/take_meta_2_s0}]
 set_false_path -to [get_regs {dual_clock.bridge/response_meta_s0}]
 SDC
+fi
+# A larger timing report for path censuses (path_census.py): every setup path
+# within the clock, plus more of the fan-out and congestion tables.
+if [[ -n "${SDRAM_REPORT_PATHS:-}" ]];then
+  cat >> "$out/clocks.sdc" <<SDC
+report_timing -setup -from_clock [get_clocks {clk_core}] -to_clock [get_clocks {clk_core}] -max_paths ${SDRAM_REPORT_PATHS} -max_common_paths 1
+report_high_fanout_nets -max_nets 50
+report_route_congestion -max_grids 50
+SDC
+fi
+# What-if timing experiments: extra SDC lines (for example set_false_path on
+# one structure) appended as given. Never for a board image.
+if [[ -n "${SDRAM_EXTRA_SDC:-}" ]];then
+  [[ "$SDRAM_EXTRA_SDC" == /* ]] || SDRAM_EXTRA_SDC="$root/$SDRAM_EXTRA_SDC"
+  [[ -f "$SDRAM_EXTRA_SDC" ]] || { echo "SDRAM_EXTRA_SDC does not exist: $SDRAM_EXTRA_SDC" >&2; exit 1; }
+  cat "$SDRAM_EXTRA_SDC" >> "$out/clocks.sdc"
+  echo "WHAT-IF BUILD: extra SDC from $SDRAM_EXTRA_SDC; not a board image."
 fi
 if [[ -f "$out/sdram-io.sdc" ]];then
   cat "$out/sdram-io.sdc" >> "$out/clocks.sdc"
