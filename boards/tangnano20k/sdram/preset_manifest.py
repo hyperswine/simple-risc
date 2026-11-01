@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Record a fresh fprisc-48 build; incomplete builds never become loadable."""
+"""Record a fresh preset build; incomplete builds never become loadable.
+
+The preset is SDRAM_PRESET (fprisc-48 when unset, for the older callers)."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -11,6 +14,21 @@ CONFIG = dict(xlen=32, compressed=True, cpu_mhz=48, memory_mhz=48,
               ram_bytes=8388608, cache_bytes=65536, cache_ways=1,
               cache_line_bits=12, phase_degrees=135,
               placement=2, write_update=True)
+# The faster image: the CPU on its own clock behind the bridge, and the build
+# options that place it with margin at 72 MHz (see preset.sh).
+CONFIG_72 = dict(xlen=32, compressed=True, cpu_mhz=72, memory_mhz=48,
+                 ram_bytes=8388608, cache_bytes=65536, cache_ways=2,
+                 cache_line_bits=11, phase_degrees=135,
+                 placement=0, write_update=True, placer_target_mhz=79,
+                 map_option=3, route_option=1, route_maxfan=8)
+PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72}
+
+
+def preset():
+    name = os.environ.get('SDRAM_PRESET') or 'fprisc-48'
+    if name not in PRESETS:
+        raise SystemExit(f'unknown SDRAM_PRESET: {name}')
+    return name
 
 
 def sha(path):
@@ -52,16 +70,18 @@ def rom_identity(input_hashes, config=CONFIG):
 
 def main():
     action, directory = sys.argv[1:3]
+    name = preset()
+    config = PRESETS[name]
     out = Path(directory).resolve()
     out.mkdir(parents=True, exist_ok=True)
     manifest = out / 'build-manifest.json'
     if action == 'begin':
         # Even missing tools or unreadable source inputs must invalidate an
         # earlier success before the new build's provenance is collected.
-        manifest.write_text(json.dumps(dict(preset='fprisc-48', ready=False)) + '\n')
+        manifest.write_text(json.dumps(dict(preset=name, ready=False)) + '\n')
         inp = inputs()
-        report = dict(preset='fprisc-48', configuration=CONFIG,
-                      rom_identity=rom_identity(inp), ready=False,
+        report = dict(preset=name, configuration=config,
+                      rom_identity=rom_identity(inp, config), ready=False,
                       qualification='internal STA only; SDRAM I/O/PVT unqualified',
                       source_root=str(ROOT), inputs=inp,
                       revision=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
@@ -71,15 +91,20 @@ def main():
                                                    'cabal': ['cabal', '--numeric-version']}.items()})
     elif action == 'finish':
         report = json.loads(manifest.read_text())
+        if report.get('preset', name) != name:
+            raise SystemExit(f"manifest records {report.get('preset')}, not {name}")
         if report['inputs'] != inputs():
             raise SystemExit('preset inputs changed during build; rebuild before loading')
         if 'rom_identity' not in report:
-            report['rom_identity'] = rom_identity(report['inputs'])
+            report['rom_identity'] = rom_identity(report['inputs'], config)
         # Repeat the gate here so invoking this helper alone cannot mark a
         # failed placement ready. Hash the checked report and final bitstream.
         timing = out / 'impl/pnr/sdram_test.tr'
+        clocks = ['--freq-mhz', str(config['cpu_mhz'])]
+        if config['memory_mhz'] != config['cpu_mhz']:
+            clocks += ['--memory-freq-mhz', str(config['memory_mhz'])]
         subprocess.run([sys.executable, str(ROOT / 'boards/tangnano20k/check_gowin_timing.py'),
-                        str(timing), '--freq-mhz', '48'], check=True)
+                        str(timing), *clocks], check=True)
         artifacts = {}
         for name in ('impl/pnr/sdram_test.fs', 'impl/pnr/sdram_test.tr',
                      'pipeline_top.v', 'pll.v', 'clocks.sdc', 'build.tcl'):

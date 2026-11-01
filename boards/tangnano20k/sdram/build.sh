@@ -6,7 +6,7 @@ source "$here/preset.sh"
 mode="${1:-test}"
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
   mode="${1:-pipeline}"
-  [[ "$mode" == pipeline ]] || { echo 'fprisc-48 requires pipeline mode' >&2; exit 1; }
+  [[ "$mode" == pipeline ]] || { echo "$SDRAM_PRESET requires pipeline mode" >&2; exit 1; }
 fi
 freq="${SDRAM_FREQ_MHZ:-54}"
 cpu_freq="${SDRAM_CPU_FREQ_MHZ:-$freq}"
@@ -80,7 +80,7 @@ print(format(value.normalize(), 'f'))
 PYTHON
 )"
 out="${SDRAM_OUT:-$root/output/tangnano20k/sdram-$mode}"
-if [[ -n "${SDRAM_PRESET:-}" ]]; then out="${SDRAM_OUT:-$root/output/tangnano20k/fprisc-48}"; fi
+if [[ -n "${SDRAM_PRESET:-}" ]]; then out="${SDRAM_OUT:-$root/output/tangnano20k/$SDRAM_PRESET}"; fi
 if [[ "$out" != /* ]];then out="$PWD/$out";fi
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
   python3 "$here/preset_manifest.py" begin "$out"

@@ -1,0 +1,60 @@
+{
+  "reference": {
+    "train_rows": 128,
+    "test_rows": 64,
+    "bins": 8,
+    "max_depth": 5,
+    "min_leaf": 2,
+    "nodes": 23,
+    "depth": 5,
+    "train": {
+      "hits": 124,
+      "rows": 128,
+      "digest": 21562,
+      "predictions_sha256": "888ded6dbd04c33e23d17c8ca7f8899a5ee30b08afa5e7bafb17e3fe3f672877"
+    },
+    "test": {
+      "hits": 61,
+      "rows": 64,
+      "digest": 909572,
+      "predictions_sha256": "f8bad44ad21890cd6a00359c8fee71a036eeb5cb10f3eeef5beafed31bd3c958"
+    },
+    "root": {
+      "column": 1,
+      "threshold": 0.7506353431381285
+    },
+    "entropy": "Independent Python math.log2; classifier uses its existing 48-step log2"
+  },
+  "source_sha256": "245f3621751534c962c8aa1f7c92b607be112d37fa99856cc8d90d92e943f7ff",
+  "classifier_sha256": "486a4abbd0876014555862a5bb70db6d4c0402e6e3f7f6193fbacb576750c791",
+  "compiler_sha256": "19c4a4f2f3504745d532d0629e1ce3e800a9dbc63f311fbe346efdcce3cfac77",
+  "repeats": 3,
+  "executions": {
+    "board": {
+      "image_sha256": "dd949ea745452340c4076e6da03bc5580bc8d9e08946f47555ab84723a17b37b",
+      "image_bytes": 73316,
+      "heap_arena_bytes": 8244288,
+      "heap_bitmap_bytes": 64416,
+      "usable_heap_block_bytes": 8179872,
+      "stack_bytes": 65536,
+      "frequency_mhz": 72,
+      "isa": "RV32IMC",
+      "passed": true,
+      "heap_samples": [],
+      "elapsed_us": 2174012,
+      "elapsed_us_runs": [
+        2170407,
+        2173994,
+        2174012
+      ],
+      "wall_seconds_with_upload": 17.74793570768088
+    }
+  },
+  "build_options": {
+    "FPR_XLEN": "32",
+    "FPR_RVC": "1",
+    "FPR_QEMU": "0",
+    "FPR_CPU_MHZ": "72",
+    "FPR_HEAP_REPORT": "0"
+  }
+}

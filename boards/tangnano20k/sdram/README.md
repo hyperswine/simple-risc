@@ -30,6 +30,11 @@ default is two-way with `SDRAM_CACHE_WAYS=2` and `SDRAM_CACHE_LINE_BITS=11`
 `WAYS=1`, `LINE_BITS=12` geometry. Two-way timing and physical qualification
 are separate from the historical results.
 
+`SDRAM_PRESET=fprisc-72` is the faster FP-RISC image: CPU 72 MHz behind the
+clock bridge, SDRAM 48 MHz, two-way 64 KiB cache, placement 0 aimed at 79 MHz.
+FP-RISC's whole Tang Nano suite passes on it (`run_tangnano20k_examples.py
+--preset fprisc-72`); see the [fprisc-72 record](../../../docs/2026-11-01-FPRISC-72-PRESET.md).
+
 The [controlled benchmark matrix](../../../docs/2026-10-28-CONTROLLED-BENCHMARK.md)
 holds the guest binary, 72/54 MHz clocks, 64 KiB capacity and write policy fixed
 while varying compressed branch prediction, associativity and bridge response
