@@ -66,11 +66,13 @@ extern const volatile uint32_t rom_meta[4];
 #define EXTENDED_WORDS (LOAD_WORDS - 64u)
 #endif
 
+#define ALWAYS_INLINE __attribute__((always_inline)) static inline
+
 enum { CAUSE_NONE = 0, CAUSE_POWER_ON = 1, CAUSE_BREAK = 2, CAUSE_EXIT = 3 };
 
 void rom_run(void) __attribute__((noreturn));
 
-static NOINLINE void putc_raw(uint32_t c) {
+ALWAYS_INLINE void putc_raw(uint32_t c) {
 #ifdef ROM_HOST_TEST
   host_putc(c);
 #else
@@ -92,7 +94,12 @@ static NOINLINE void put_hex32(uint32_t value) {
   }
 }
 
-static NOINLINE int get_bytes(uint32_t bits, uint32_t *out) {
+/* Return ((uint64_t)word << 32) | 1u in (a0, a1) on success, or 0 on timeout.
+ * Returning in registers rather than writing through a stack pointer keeps
+ * 'I' and 'U' completely free of SDRAM stack loads (0 'lw ..., (sp)' in ROM),
+ * preventing cold-refill stack corruption from clobbering callee-saved command
+ * constants or header fields. */
+static NOINLINE uint64_t get_bytes(uint32_t bits) {
   uint32_t w = 0;
   for (uint32_t shift = 0; shift < bits; shift += 8u) {
     uint32_t c;
@@ -107,13 +114,11 @@ static NOINLINE int get_bytes(uint32_t bits, uint32_t *out) {
 #endif
     w |= (c & 0xffu) << shift;
   }
-  *out = w;
-  return 1;
+  return ((uint64_t)w << 32) | 1u;
 }
 
-static NOINLINE void drain_err(const char *msg) {
-  uint32_t discard;
-  while (get_bytes(8u, &discard)) {
+ALWAYS_INLINE void drain_err(const char *msg) {
+  while ((uint32_t)get_bytes(8u)) {
   }
   put_str(msg);
 }
@@ -158,18 +163,22 @@ void rom_main(void) {
       loaded = 0;
       ready = 0;
       failed = 1;
-      uint32_t count = 0, w = 0;
+      uint32_t count = 0;
       if (cmd == 'U') {
-        uint32_t hdr[3], hc = 0xffffffffu;
+        uint32_t magic = 0, hcrc = 0, hc = 0xffffffffu;
         for (uint32_t i = 0; i < 3u; i++) {
-          if (!get_bytes(32u, &hdr[i])) {
+          uint64_t r = get_bytes(32u);
+          if (!(uint32_t)r) {
             put_str("ERR TMO\n");
             goto next_cmd;
           }
-          if (i < 2u) hc = crc32_word(hc, hdr[i]);
+          uint32_t hw = (uint32_t)(r >> 32);
+          if (i == 0u) magic = hw;
+          else if (i == 1u) count = hw;
+          else hcrc = hw;
+          if (i < 2u) hc = crc32_word(hc, hw);
         }
-        count = hdr[1];
-        if (hdr[0] != SRU1_MAGIC || hdr[2] != ~hc) {
+        if (magic != SRU1_MAGIC || hcrc != ~hc) {
           drain_err("ERR HDR\n");
           continue;
         }
@@ -178,15 +187,17 @@ void rom_main(void) {
           continue;
         }
       } else {
-        if (!get_bytes(cmd == 'P' ? 16u : 32u, &count)) {
+        uint64_t r = get_bytes(cmd == 'P' ? 16u : 32u);
+        if (!(uint32_t)r) {
           put_str("ERR\n");
           continue;
         }
+        count = (uint32_t)(r >> 32);
         if (cmd == 'P') {
           if (count > LOAD_WORDS) count = LOAD_WORDS;
         } else if (count > EXTENDED_WORDS) {
           for (uint32_t i = 0; i < count; i++) {
-            if (!get_bytes(32u, &w)) break;
+            if (!(uint32_t)get_bytes(32u)) break;
           }
           put_str("ERR\n");
           continue;
@@ -196,10 +207,12 @@ void rom_main(void) {
       uint32_t word0 = 0;
       if (count != 0) RAM[0] = 0;
       for (uint32_t i = 0; i < count; i++) {
-        if (!get_bytes(32u, &w)) {
+        uint64_t r = get_bytes(32u);
+        if (!(uint32_t)r) {
           put_str(cmd == 'U' ? "ERR TMO\n" : "ERR\n");
           goto next_cmd;
         }
+        uint32_t w = (uint32_t)(r >> 32);
         if (i == 0) {
           word0 = w;
         } else {
@@ -208,12 +221,13 @@ void rom_main(void) {
         if (cmd == 'U') crc = crc32_word(crc, w);
       }
       if (cmd == 'U') {
-        if (!get_bytes(32u, &w)) {
+        uint64_t r = get_bytes(32u);
+        if (!(uint32_t)r) {
           put_str("ERR TMO\n");
           continue;
         }
         crc = ~crc;
-        if (crc != w) {
+        if (crc != (uint32_t)(r >> 32)) {
           drain_err("ERR CRC\n");
           continue;
         }

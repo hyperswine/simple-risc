@@ -1,0 +1,18 @@
+{
+  "status": "inconclusive",
+  "receive_crc_verified": false,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICG id=44535dec1979d39c",
+  "guest_sha256": "e6bf9f31ce3ec2543380039321fcec34b9d1c1bcfa69e9b998548f706efd2385",
+  "error": "UploadError: unexpected ROM upload reply: b'DONEERR HDR\\n'",
+  "elapsed_seconds": 0.6458504998590797,
+  "label": "integrated-60-p135",
+  "kind": "integrated",
+  "frequency_mhz": 60,
+  "phase_degrees": 135,
+  "run": 3,
+  "image_sha256": "33289e305c24c136936b916138ab7d63cd6d13990b31aec92729c2d3db445b1d",
+  "receipt_sha256": "d7892cf9a4687ea286ab807eded6604349f4fa650e10bb07dd4cc87c73144a0c",
+  "runner_sha256": "f340238e683a2d46d64c3265c6455af7661c0f1da6f0e4c6ab885b606dbf39d5",
+  "started_utc": "2026-10-31T08:47:42.420965+00:00",
+  "total_seconds": 4.212744917022064
+}

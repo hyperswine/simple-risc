@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-31T08:54:54.036266+00:00",
+  "reason": "Reduced from seven to four concurrent integrated routes after observed slowdown; no board run affected.",
+  "interrupted_cases": [
+    "aux54/integrated-54-p135",
+    "aux54/integrated-54-p112.5",
+    "integrated-48-p157.5"
+  ],
+  "preserved": "Partial build logs remain in their original directories; completed receipts and hardware logs unchanged.",
+  "final_duplicate_cleanup": {
+    "utc": "2026-10-31T09:54:10.251079+00:00",
+    "reason": "Stopped auxiliary copies of 54 MHz 45/180 degree routes after both primary directories were active; primary builds and hardware runner continue.",
+    "interrupted_cases": [
+      "aux54/integrated-54-p45",
+      "aux54/integrated-54-p180"
+    ],
+    "pids": [
+      92292,
+      18323,
+      18720,
+      18447,
+      18736
+    ]
+  }
+}

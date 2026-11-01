@@ -1,0 +1,41 @@
+{
+  "kind": "standalone",
+  "frequency_mhz": 54,
+  "phase_degrees": 270,
+  "label": "standalone-54-p270",
+  "status": "built",
+  "electrical_signoff": false,
+  "environment": {
+    "SDRAM_FREQ_MHZ": "54",
+    "SDRAM_CPU_FREQ_MHZ": "54",
+    "SDRAM_PHASE_DEGREES": "270",
+    "SDRAM_OUT": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270",
+    "SDRAM_RVC": "1",
+    "SDRAM_TARGET_MHZ": "60",
+    "SDRAM_PLACE_OPTION": "0",
+    "SDRAM_ROUTE_OPTION": "1",
+    "SDRAM_MAP_OPTION": "3",
+    "SDRAM_ROUTE_MAXFAN": "8",
+    "SDRAM_RTL_FILE": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v"
+  },
+  "returncode": 0,
+  "timing": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 54 MHz constraint, 101.875 MHz Fmax, 8.703 ns worst setup slack; 0 setup / 0 hold violating endpoints",
+  "sha256": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/burst-test_top.v": "3d3d96436610157b754a7b86a49b1fcb44614ddbb7f87c4df5923bdd5fc790cb",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/memory.v": "e6edfffd12ed1c89ca7b67e21c8d592602cf4a4214ce1bf363988982c2b513e3",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/cache.v": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/pll.v": "c0756f2853464f824a3ceff54060c1f4bc665d319142a85796738061e0711e9e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/dual_pll.v": "077a205d27bd8beec5237884c972e8640db2438aee770006e3306b04727c20dc",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/pins.cst": "e085f2727a37eaf9e2e9310dbbd926256518680cc034b382cab4a9641391af85",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/clocks.sdc": "8c67666496d9a9fe18671cdf0d86d864ee2371a969af55da655578841cf41a71",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/build.tcl": "519430f65885aaa3d3abadd995d7b6a25d10f171324c7b719551436d79698bd4",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/sdram-io-model.json": "d07b232d0fd29a4689ef46bc0be1d2e49929d64f63c1ced74217a61fa68c9f1e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/impl/pnr/sdram_test.fs": "a873c0032fd463d5a1b12d635d3989727460b3593862e108a2a6be9c525c4aef",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/standalone-54-p270/impl/pnr/sdram_test.tr": "4aa2e03ba0c1b2f33966eae272867b0f90f819416b99352d3a1218a5714d6ff6"
+  },
+  "elapsed_seconds": 6.013711583102122
+}

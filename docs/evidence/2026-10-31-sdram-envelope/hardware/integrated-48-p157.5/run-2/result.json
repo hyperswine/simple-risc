@@ -1,0 +1,75 @@
+{
+  "status": "pass",
+  "receive_crc_verified": true,
+  "identity": "SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=fe28365ea09c4e00",
+  "guest_sha256": "6201ca0d19c5f56214cf72248dae6f286cc35a79057aaa15f267fdb596a4d0d0",
+  "readback_crc": "d05bb4ab",
+  "expected_crc": "d05bb4ab",
+  "reports": [
+    {
+      "pattern": 0,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "00000000"
+    },
+    {
+      "pattern": 1,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "00000000"
+    },
+    {
+      "pattern": 2,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "314aa865"
+    },
+    {
+      "pattern": 3,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "314aa865"
+    },
+    {
+      "pattern": 4,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "314aa865"
+    },
+    {
+      "pattern": 5,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "63be2ac0"
+    }
+  ],
+  "elapsed_seconds": 16.517019958002493,
+  "label": "integrated-48-p157.5",
+  "kind": "integrated",
+  "frequency_mhz": 48,
+  "phase_degrees": 157.5,
+  "run": 2,
+  "image_sha256": "8fa6a3de561dd9a964e70b24dc7945143e428c662edc37735c152cf3796d7235",
+  "receipt_sha256": "27673a7536b0f9e8258ec2befd12e664c62b40c9fb642ccb9ee6a6539c0bb6e9",
+  "runner_sha256": "b0a4b21c9ca16b8a09851c75c2e93a66a893fbbc96e181a1247d5686c6eada24",
+  "started_utc": "2026-10-31T09:30:04.225079+00:00",
+  "total_seconds": 19.93522029183805
+}

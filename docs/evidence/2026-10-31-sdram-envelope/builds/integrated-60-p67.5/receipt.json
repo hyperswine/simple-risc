@@ -1,0 +1,43 @@
+{
+  "kind": "integrated",
+  "frequency_mhz": 60,
+  "phase_degrees": 67.5,
+  "label": "integrated-60-p67.5",
+  "status": "built",
+  "electrical_signoff": false,
+  "environment": {
+    "SDRAM_FREQ_MHZ": "60",
+    "SDRAM_CPU_FREQ_MHZ": "60",
+    "SDRAM_PHASE_DEGREES": "67.5",
+    "SDRAM_OUT": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5",
+    "SDRAM_RVC": "1",
+    "SDRAM_TARGET_MHZ": "66",
+    "SDRAM_PLACE_OPTION": "0",
+    "SDRAM_ROUTE_OPTION": "1",
+    "SDRAM_MAP_OPTION": "3",
+    "SDRAM_ROUTE_MAXFAN": "8",
+    "SDRAM_RTL_FILE": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v"
+  },
+  "returncode": 0,
+  "timing": "PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 60 MHz constraint, 62.854 MHz Fmax, 0.757 ns worst setup slack; 0 setup / 0 hold violating endpoints",
+  "sha256": {
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/pipeline_top.v": "9fd79dc5ab7898a1ca2be3d7f7a1b6e9a74381c3883d8292586c68079fc1d1de",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/memory.v": "3c9d069b2f5cc5ae8b903a19cb990c418e75202e98c047e8f0da5df51fc67cf1",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/cache.v": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/pipeline_cache.v": "4bf19aec80fcb87c7b603ffe427af8386472e64425106ef7f1a38ffe478eaf0e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/pll.v": "35cbadb96ad426675a12633835e0286ba82bc1cb88792bd42a6e1f4c097448c9",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/source/boards/tangnano20k/sdram/dual_pll.v": "077a205d27bd8beec5237884c972e8640db2438aee770006e3306b04727c20dc",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/pins.cst": "8f96e85f2b2fb2dadbc919e0a97b4fb583c058ba3a6b96883bf311b827649101",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/clocks.sdc": "b65ab8f164efead98f460b5f8e0a034c966603e2bcffca2c7df012618d03ec4e",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "f026208c873d7b66f93d548924bc720d0d86cd105df75b6d0d3da483c27469d1",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/build.tcl": "7fb2ae1eefc622f7e8daa66db4ab51f7be8701a698bb6575ced986f8cfea7c73",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/sdram-io-model.json": "329920fd4d0b3b15186e26a1ad3477b63a1add6513a449819ec3ecb100c6f11c",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/impl/pnr/sdram_test.fs": "76b9908819deefa90a52f69da93a30ce0425cd98da8dc5734c319f97874c963f",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/impl/pnr/sdram_test.tr": "270c8564cb76d60526736ae53859ec590a373ef260396344e636ae3e8d34976f",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-60-p67.5/bootrom-sdram.hex": "cc5755721933c97d779bd87f6db30e71d937778f43fd21d1e20a54f85cfa3ee8"
+  },
+  "elapsed_seconds": 539.1987355840392
+}

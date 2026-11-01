@@ -1,0 +1,15 @@
+{
+  "status": "inconclusive",
+  "reports": [],
+  "error": "ValueError: invalid pattern order/coverage",
+  "elapsed_seconds": 0.011750999838113785,
+  "label": "standalone-54-p135",
+  "kind": "standalone",
+  "frequency_mhz": 54,
+  "phase_degrees": 135,
+  "run": 1,
+  "image_sha256": "741978236ba81ad47a12e36e15ed072d5373d1f6cef2efa967296e1f15255165",
+  "receipt_sha256": "ff1ec022da5363a7bc7e7dbafd056b6ca2533a5b8874cb89063162cc88a51c05",
+  "started_utc": "2026-10-31T08:34:18.781841+00:00",
+  "total_seconds": 3.7173145830165595
+}

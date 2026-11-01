@@ -1,0 +1,31 @@
+{
+  "status": "memory_fail",
+  "reports": [
+    {
+      "pattern": 255,
+      "errors": 0,
+      "comparisons": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 0,
+      "errors": 19419,
+      "comparisons": 2097152,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 4294967295
+    }
+  ],
+  "elapsed_seconds": 0.7186735840514302,
+  "label": "standalone-54-p225",
+  "kind": "standalone",
+  "frequency_mhz": 54,
+  "phase_degrees": 225,
+  "run": 1,
+  "image_sha256": "07162d9c888873d660137eb34c788236800d2c7d8a529c8fc4c8ef7ca007d331",
+  "receipt_sha256": "71a626c6bda6bbeee10daa5482287af0fed0b286ee6d02a163dcbc9032c96a73",
+  "started_utc": "2026-10-31T08:38:23.153449+00:00",
+  "total_seconds": 3.157651166897267
+}

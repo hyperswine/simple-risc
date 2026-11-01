@@ -1230,7 +1230,13 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             -- The outcome was decided at the E1->E2 edge and registered in
             -- E2: read the flip-flops here instead of recomputing the
             -- exception/action priority encoder on the hazard path.
-            action = e2Action x
+            -- Taken-branch target alignment is checked here from the
+            -- registered e2BranchCompare and cTarget rather than chaining
+            -- E1 operand forwarding + branch comparison into e2Action.
+            misalignedBranch = taken && (target .&. instructionAlignmentMask machine /= 0)
+            action = case e2Action x of
+              Plain | misalignedBranch -> Raise 0 target
+              other -> other
             slow = case action of Plain -> False; FenceI -> False; _ -> True
             load = e2LoadFast x
             store = e2StoreFast x
@@ -1267,7 +1273,10 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 }
             actual = if e2Refetch x then e2Pc x else if taken then target else cLink comp
             control' = case kind of KindBranch -> True; KindJump -> True; _ -> False
-            mispredicted = e2Refetch x || actual /= e2Predicted x
+            -- Hoist the 32-bit target /= e2Predicted comparator in parallel
+            -- with taken so taken selects only a 1-bit mux against the
+            -- E1-precomputed e2PredictedTaken register.
+            mispredicted = if taken then (e2Refetch x || target /= e2Predicted x) else e2PredictedTaken x
             trainTaken = control' && not (e2Refetch x) && taken && target /= cLink comp
             -- A taken branch or jump teaches the buffer; any mispredicted BTB
             -- hit clears its entry, while a correctly predicted not-taken
@@ -1303,6 +1312,12 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         Just x -> e2Reads x && isNothing flushing
         Nothing -> False
       e2Index = maybe 0 (ramWordIndex . cAddress . e2Computed) (pE2 pipe)
+      ramAddr addr
+        | cpuExternalMemory machine = addr .&. 0xff80_0000 == 0x8000_0000
+        | otherwise = isRamTarget (decodeTarget addr)
+      fetchableAddr addr
+        | cpuExternalMemory machine = (addr .&. 0xff80_0000 == 0x8000_0000) || romAddress addr
+        | otherwise = fetchable (decodeTarget addr)
       -- Execute one ------------------------------------------------------------
       e1Out x =
         let a = e1A x
@@ -1320,9 +1335,8 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             funct31 = execFunct3 control
             target1 = cTarget computed
             address1 = cAddress computed
-            taken1 = case kind1 of
+            jump1 = case kind1 of
               KindJump -> True
-              KindBranch -> branchTakenPrepared funct31 (compareOperands a b) == Just True
               _ -> False
             memory1 = case kind1 of KindLoad -> True; KindStore -> True; _ -> False
             storing1 = case kind1 of KindStore -> True; _ -> False
@@ -1355,9 +1369,9 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                   KindCsr -> CsrAccess
                   KindFenceI -> FenceI
                   _
-                    | taken1 && target1 .&. instructionAlignmentMask machine /= 0 -> Raise 0 target1
+                    | jump1 && target1 .&. instructionAlignmentMask machine /= 0 -> Raise 0 target1
                     | memory1 && misaligned1 -> Raise (if storing1 then 6 else 4) address1
-                    | memory1 && not (isRamTarget (decodeTarget address1)) -> Bus
+                    | memory1 && not (ramAddr address1) -> Bus
                     | otherwise -> Plain
             plainMemory1 =
               e1Pc x
@@ -1365,7 +1379,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 == 0
                 && not (e1FetchFault x)
                 && not misaligned1
-                && isRamTarget (decodeTarget address1)
+                && ramAddr address1
             load1 = plainMemory1 && case kind1 of KindLoad -> True; _ -> False
             store1 = plainMemory1 && storing1
             storeWord1 = store1 && funct31 == 2
@@ -1417,8 +1431,8 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             opcode = word .&. 0x7f
             control = decodeExecuteControl word
             kind = execKind control
-            firstFault = fSize f /= 0 && not (fetchable (decodeTarget pc))
-            crossFault = cpuCompressed machine && fSize f == 4 && testBit pc 1 && not (fetchable (decodeTarget (pc + 2)))
+            firstFault = fSize f /= 0 && not (fetchableAddr pc)
+            crossFault = cpuCompressed machine && fSize f == 4 && testBit pc 1 && not (fetchableAddr (pc + 2))
             fetchFault = firstFault || crossFault
             faultValue = if firstFault then pc else pc + 2
             -- (division and the system instructions write rd in the phases)
@@ -1617,7 +1631,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
       -- (the board's table supplies only the entry at the fetch index).
       fetchIndex = btbIndex (pFetchPc pipe)
       entry = case pBtbWrite pipe of
-        Just (index, resolved) | index == fetchIndex -> resolved
+        Just (index, resolved) | not (cpuExternalMemory machine) && index == fetchIndex -> resolved
         _ -> pBtb pipe !! fetchIndex
       hit =
         isNothing steering
@@ -1641,11 +1655,22 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         _ -> case e2Moved of
           Just (stage, _, _, False) -> Just stage
           _ -> Nothing
+      dOperands' = case d of
+        Just f -> let (_, _, operands) = decodeOut f in operands
+        Nothing -> pDOperands pipe
+      restarted targetPc =
+        (restartPipe targetPc pipe)
+          { pQueue = queue',
+            pFQueue = fQueue',
+            pDOperands = dOperands',
+            pFrontTarget = aTarget,
+            pBtb = btb'
+          }
       pipe'
-        | handover = restartPipe 0 pipe
-        | fencing = restartPipe (maybe 0 mNext (pM pipe)) pipe
+        | handover = restarted 0
+        | fencing = restarted (maybe 0 mNext (pM pipe))
         | isJust flushing =
-            (restartPipe (if issue then predicted else fetchPc) pipe)
+            (restarted (if issue then predicted else fetchPc))
               { pInstructionPc = fetchPc,
                 pInflight = issued :> Nothing :> Nothing :> Nothing :> Nil,
                 pOutstanding = if issue then 1 else 0,
@@ -1672,9 +1697,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 pFWrite = if fPush then (if pFWrite pipe == 0 then 1 else 0) else pFWrite pipe,
                 pFCount = pFCount pipe + (if fPush then 1 else 0) - (if fPop then 1 else 0),
                 pDSlot = slotToken (pDSlot pipe) nextD,
-                pDOperands = case d of
-                  Just f -> let (_, _, operands) = decodeOut f in operands
-                  Nothing -> pDOperands pipe,
+                pDOperands = dOperands',
                 pDFresh = dFree,
                 pDBlocked = nextBlocked,
                 pE1Slot = slotToken (pE1Slot pipe) nextE1,
@@ -1907,15 +1930,16 @@ pipelinedCpuStep decodeTarget machine memoryWord received txReady emergencyReset
    in (next, write, output)
 
 pipelinedCpuStepStages :: (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
-pipelinedCpuStepStages decodeTarget machine memoryWord _received _txReady emergencyReset
-  | cpuFast machine =
-      let (machine', write, (address, memoryWrite, tx), stages, loads) = pipeStepStagesWith decodeTarget machine memoryWord
-       in if emergencyReset
+pipelinedCpuStepStages decodeTarget machine memoryWord _received _txReady emergencyReset =
+  let (machine', write, (address, memoryWrite, tx), stages, loads) = pipeStepStagesWith decodeTarget machine memoryWord
+   in if cpuFast machine
+        then
+          if emergencyReset
             then ((resetCpu machine) {cpuReadIndices = cpuReadIndices machine'}, Nothing, (address, Nothing, Nothing), stages, loads)
             else (machine', write, (address, memoryWrite, tx), stages, loads)
-  | otherwise =
-      let (next, write, output) = phases
-       in (next, write, output, stagePayloadsOf next, noStageLoad)
+        else
+          let (next, write', output) = phases
+           in (next, write', output, stages, noStageLoad)
   where
     phases
       | emergencyReset = (resetCpu machine, Nothing, idle)

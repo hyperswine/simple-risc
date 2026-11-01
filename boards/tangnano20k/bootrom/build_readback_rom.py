@@ -38,7 +38,11 @@ def main():
     digest = hashlib.sha256(code + b':diagnostic-readback').digest()
     words = struct.unpack('<508I', code) + (48, 48, *struct.unpack('>II', digest[:8]))
     (out/'readback.hex').write_text(''.join(f'{word:08x}\n' for word in words))
-    (out/'readback.lst').write_bytes(subprocess.check_output(['riscv64-unknown-elf-objdump', '-d', str(elf)]))
+    lst_bytes = subprocess.check_output(['riscv64-unknown-elf-objdump', '-d', str(elf)])
+    (out/'readback.lst').write_bytes(lst_bytes)
+    import re
+    if re.search(r'\bl[wbu]\w*\s+\w+,\s*-?\d+\(sp\)', lst_bytes.decode()):
+        raise SystemExit('diagnostic ROM contains stack loads')
     report = dict(ready=True, diagnostic=not args.production_control, code_bytes=len(image), command=command,
                   sources={name: hashlib.sha256((out/name).read_bytes()).hexdigest() for name in
                            ['bootrom.c', 'crt0.S', 'link.ld', 'build_readback_rom.py']},

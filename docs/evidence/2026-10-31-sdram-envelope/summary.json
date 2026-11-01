@@ -1,0 +1,1242 @@
+{
+  "electrical_signoff": false,
+  "groups": [
+    {
+      "kind": "standalone",
+      "frequency_mhz": 48,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            67.5,
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "sampled_span_degrees": 90.0,
+          "sampled_span_ns": 5.208333333333333,
+          "lower_neighbor_degrees": 45.0,
+          "upper_neighbor_degrees": 180.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 45.0,
+          "distance_to_passing_endpoint_ns": 2.6041666666666665,
+          "phase_resolution_ns": 1.3020833333333333,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            67.5,
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "sampled_span_degrees": 90.0,
+          "sampled_span_ns": 5.208333333333333,
+          "lower_neighbor_degrees": 45.0,
+          "upper_neighbor_degrees": 180.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 45.0,
+          "distance_to_passing_endpoint_ns": 2.6041666666666665,
+          "phase_resolution_ns": 1.3020833333333333,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ]
+    },
+    {
+      "kind": "integrated",
+      "frequency_mhz": 48,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "sampled_span_degrees": 67.5,
+          "sampled_span_ns": 3.90625,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 180.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 22.5,
+          "distance_to_passing_endpoint_ns": 1.3020833333333333,
+          "phase_resolution_ns": 1.3020833333333333,
+          "lower_neighbor_status": "inconclusive",
+          "upper_neighbor_status": "inconclusive"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "sampled_span_degrees": 67.5,
+          "sampled_span_ns": 3.90625,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 180.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 22.5,
+          "distance_to_passing_endpoint_ns": 1.3020833333333333,
+          "phase_resolution_ns": 1.3020833333333333,
+          "lower_neighbor_status": "inconclusive",
+          "upper_neighbor_status": "inconclusive"
+        }
+      ]
+    },
+    {
+      "kind": "standalone",
+      "frequency_mhz": 54,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "repeated_pass",
+          "runs": 3,
+          "passes": 2,
+          "inconclusive": 1
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 1
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5,
+            135.0
+          ],
+          "sampled_span_degrees": 45.0,
+          "sampled_span_ns": 2.314814814814815,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 157.5,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 22.5,
+          "distance_to_passing_endpoint_ns": 1.1574074074074074,
+          "phase_resolution_ns": 1.1574074074074074,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5,
+            135.0
+          ],
+          "sampled_span_degrees": 45.0,
+          "sampled_span_ns": 2.314814814814815,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 157.5,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 22.5,
+          "distance_to_passing_endpoint_ns": 1.1574074074074074,
+          "phase_resolution_ns": 1.1574074074074074,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ]
+    },
+    {
+      "kind": "integrated",
+      "frequency_mhz": 54,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5
+          ],
+          "sampled_span_degrees": 22.5,
+          "sampled_span_ns": 1.1574074074074074,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.1574074074074074,
+          "lower_neighbor_status": "inconclusive",
+          "upper_neighbor_status": "fail"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5
+          ],
+          "sampled_span_degrees": 22.5,
+          "sampled_span_ns": 1.1574074074074074,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.1574074074074074,
+          "lower_neighbor_status": "inconclusive",
+          "upper_neighbor_status": "fail"
+        }
+      ]
+    },
+    {
+      "kind": "standalone",
+      "frequency_mhz": 60,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5
+          ],
+          "sampled_span_degrees": 22.5,
+          "sampled_span_ns": 1.0416666666666667,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.0416666666666667,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5
+          ],
+          "sampled_span_degrees": 22.5,
+          "sampled_span_ns": 1.0416666666666667,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.0416666666666667,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "fail"
+        }
+      ]
+    },
+    {
+      "kind": "integrated",
+      "frequency_mhz": 60,
+      "points": [
+        {
+          "phase_degrees": 0.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 22.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 45.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 67.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 90.0,
+          "status": "fail",
+          "runs": 2,
+          "passes": 0,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 112.5,
+          "status": "repeated_pass",
+          "runs": 2,
+          "passes": 2,
+          "inconclusive": 0
+        },
+        {
+          "phase_degrees": 135.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 157.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 180.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 202.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 225.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 247.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 270.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 292.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 315.0,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        },
+        {
+          "phase_degrees": 337.5,
+          "status": "inconclusive",
+          "runs": 4,
+          "passes": 0,
+          "inconclusive": 4
+        }
+      ],
+      "observed_windows": [
+        {
+          "passing_samples_degrees": [
+            112.5
+          ],
+          "sampled_span_degrees": 0.0,
+          "sampled_span_ns": 0.0,
+          "lower_neighbor_degrees": 90.0,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.0416666666666667,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "inconclusive"
+        }
+      ],
+      "repeated_windows": [
+        {
+          "passing_samples_degrees": [
+            112.5
+          ],
+          "sampled_span_degrees": 0.0,
+          "sampled_span_ns": 0.0,
+          "lower_neighbor_degrees": 90.0,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.0416666666666667,
+          "lower_neighbor_status": "fail",
+          "upper_neighbor_status": "inconclusive"
+        }
+      ]
+    }
+  ],
+  "common_repeated_windows": [
+    {
+      "frequency_mhz": 48,
+      "windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "sampled_span_degrees": 67.5,
+          "sampled_span_ns": 3.90625,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 180.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 22.5,
+          "distance_to_passing_endpoint_ns": 1.3020833333333333,
+          "phase_resolution_ns": 1.3020833333333333
+        }
+      ]
+    },
+    {
+      "frequency_mhz": 54,
+      "windows": [
+        {
+          "passing_samples_degrees": [
+            90.0,
+            112.5
+          ],
+          "sampled_span_degrees": 22.5,
+          "sampled_span_ns": 1.1574074074074074,
+          "lower_neighbor_degrees": 67.5,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.1574074074074074
+        }
+      ]
+    },
+    {
+      "frequency_mhz": 60,
+      "windows": [
+        {
+          "passing_samples_degrees": [
+            112.5
+          ],
+          "sampled_span_degrees": 0.0,
+          "sampled_span_ns": 0.0,
+          "lower_neighbor_degrees": 90.0,
+          "upper_neighbor_degrees": 135.0,
+          "central_sample_degrees": 112.5,
+          "distance_to_passing_endpoint_degrees": 0.0,
+          "distance_to_passing_endpoint_ns": 0.0,
+          "phase_resolution_ns": 1.0416666666666667
+        }
+      ]
+    }
+  ],
+  "runs": 271,
+  "conclusive": 113,
+  "assumptions": [
+    "No interpolation of unsampled phases.",
+    "Distances to passing endpoints describe measured samples, not guaranteed setup/hold slack.",
+    "A single memory/data failure excludes a phase even if another run passes.",
+    "Repeated FPGA SRAM loads are controller resets, not board power cycles.",
+    "Temperature and supply voltage were not instrumented."
+  ],
+  "distinct_cases": 96,
+  "passing_comparisons": 425066496,
+  "phase_only_netlist_check": {
+    "integrated-48": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "integrated-48-p0": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p112.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p135": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p157.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p180": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p202.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p22.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p225": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p247.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p270": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p292.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p315": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p337.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p45": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p67.5": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c",
+        "integrated-48-p90": "f87afb80db0e9e4d0248421fc2e5d7a09a11ae3fdda1ad923adcae62b9be628c"
+      }
+    },
+    "integrated-54": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "integrated-54-p0": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p112.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p135": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p157.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p180": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p202.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p22.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p225": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p247.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p270": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p292.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p315": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p337.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p45": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p67.5": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c",
+        "integrated-54-p90": "053a6fc054e83069ccd1e282ebfe2aeef091502a75903e13b3514d6f5ed0034c"
+      }
+    },
+    "integrated-60": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "integrated-60-p0": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p112.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p135": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p157.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p180": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p202.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p22.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p225": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p247.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p270": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p292.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p315": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p337.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p45": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p67.5": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545",
+        "integrated-60-p90": "0e840a2018aef119b8d5a25bc3e42358522104ac455d122540934d4cc96d8545"
+      }
+    },
+    "standalone-48": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "standalone-48-p0": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p112.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p135": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p157.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p180": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p202.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p22.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p225": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p247.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p270": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p292.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p315": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p337.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p45": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p67.5": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662",
+        "standalone-48-p90": "84bb6e80fdf013dd8c8d9c824334ba486673947d358beb4d632abdd37a694662"
+      }
+    },
+    "standalone-54": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "standalone-54-p0": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p112.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p135": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p157.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p180": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p202.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p22.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p225": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p247.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p270": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p292.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p315": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p337.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p45": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p67.5": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71",
+        "standalone-54-p90": "bcc3e477bfb1c6187395aaa720f7d45f48b82939112ef2eb101f95e10d335f71"
+      }
+    },
+    "standalone-60": {
+      "cases": 16,
+      "identical": true,
+      "normalized_sha256": {
+        "standalone-60-p0": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p112.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p135": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p157.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p180": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p202.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p22.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p225": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p247.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p270": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p292.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p315": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p337.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p45": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p67.5": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859",
+        "standalone-60-p90": "db7a2c5c352ab8ab173e3eb2fb5b39bcaf5865c3f9e01b1dc8ac510e1f785859"
+      }
+    }
+  },
+  "post_pnr_netlist_sha256": {
+    "integrated-48-p0": "b6f04859ff1869aed53f3baa986537886d92263a230bd585e7f46dba77534bf9",
+    "integrated-48-p112.5": "c83919e5291729d73502be9fcd9a0f7f383239e96b52e3f039732e86cc50e7e8",
+    "integrated-48-p135": "caaa55a4302c0707fb612474d52db40054e78eb40e6557eebd42aa048f996fee",
+    "integrated-48-p157.5": "0f599528376b9fdbf11f558a6beb425ed428fb07a9da5aaa468a5bcf5eafb070",
+    "integrated-48-p180": "86a1817d9fbfbf85e741f538dced7a16f99bab39dae2bcc47958d2cdb428304c",
+    "integrated-48-p202.5": "2c807824d04a436d5349632f5f834d363f15efbf4415b5097f9b070c2b6e96fa",
+    "integrated-48-p22.5": "eadff4779c59b94b5762ccd61301a397ece155a73cc1ad8859fa317e92b06bba",
+    "integrated-48-p225": "e8a26b4c9b1ebc5e3c12982fc827abded14afecdf7941f8d6344c72dd340b10b",
+    "integrated-48-p247.5": "06f60f61e5628a6206f56f1c7efcd7a048f0c054327ac38d8b1f3fff5ae48b02",
+    "integrated-48-p270": "62553352f44812ec15ae65a83750f539b3dbefb06c4b4825acfd79afd49715cb",
+    "integrated-48-p292.5": "a8d21abb2d73f1ff7c6bfdb7de7c6c7e8c168fa992da26e5521bdc1bcaf6bef8",
+    "integrated-48-p315": "1cda69bb25be8c66a99a882b827cfac4d08686c2480ea3a181428cebfd37662d",
+    "integrated-48-p337.5": "420095f04edeb4067d6dda024d8f4d4873832ebe1f8f8748b4b5aa1fe11a5110",
+    "integrated-48-p45": "3c3cffa0670abf2d9fe670d662d321539d3081ed93e4ce5d8c411c849ed6a9f3",
+    "integrated-48-p67.5": "1c7372c5934e3d1dc54216551fa357e90099a4ba217470c9b7782de73b318f53",
+    "integrated-48-p90": "8705a09f4ae91d8f51a90e119c996edaf32e99660c449b8e364b0e6f9c4ec2e7",
+    "integrated-54-p0": "c87bcfbf281b450318dc9d4cac01707827075d826a4aa20f648ffe3442683ec7",
+    "integrated-54-p112.5": "44de452f7d68df024667215e2316498444ecf180e55662f8be0c2ab70fc30c5e",
+    "integrated-54-p135": "6cff4ff782a9c07a352ebf06d7d8ab12db1da639e40e224c27e7b2a45362e943",
+    "integrated-54-p157.5": "568cdd71851e779ff35965c1230b943136b7acbf3c104b50088efaaff31154f9",
+    "integrated-54-p180": "15381a5d383603c9b7b86a748019b957164667b4e6023ff4ada8a76f12934243",
+    "integrated-54-p202.5": "4211df5896293af860b9910f4573629cbb4cc6249d40bcc2964809f55632dbe0",
+    "integrated-54-p22.5": "2176a592acd318cca13ab8b8f0822fac8c121df6e23a8c0c31cd93045abaaf40",
+    "integrated-54-p225": "8b980952227409128c4e217333c9e8cc7390c63a488fcee3252d18a9e03e9f85",
+    "integrated-54-p247.5": "0d30b8e2e89a8ed32153e5e90cfebd8cef1309ae88a2df5a8e4276f6fa3120a5",
+    "integrated-54-p270": "32c7d3e7382a676f69c720a35cd03c4ac207696950d3c6aca13641bcbb10e162",
+    "integrated-54-p292.5": "3398f3c6e660442585427ab5a3e64666f01c17a32ecabf2d37fd467c1f28bd96",
+    "integrated-54-p315": "4b729e44a1c3434ed64e413d36304349370090af77ed215f053477e49e8c6da8",
+    "integrated-54-p337.5": "c7fbe548c5ec682c22f277c0898cd3c62319afc5be38757c4a1c627cf9066729",
+    "integrated-54-p45": "192d0a57e6959e90fa1f9ecc26a274bc33f380d6b4ee1bee94c633e78ae94d23",
+    "integrated-54-p67.5": "59607b0545c264deb0f55230af0226c2cb760841e0acc0126ef7afa1789a88ef",
+    "integrated-54-p90": "19de00a36f4e1c47c18a358ad054fb9a7dd84475f6f8885be2f54aeedb606603",
+    "integrated-60-p0": "7b1628ecf1ddac38defae844828a794c23385d4416e534f864a25cdcf813afd4",
+    "integrated-60-p112.5": "82264149a2ceda2adb142a2eb07b64c93536b5a7646df5ae82dcdff7f0c8feee",
+    "integrated-60-p135": "b215afd483beb15ee6f0aa832920c9862149acf499982eb34f49f63411b8c3f0",
+    "integrated-60-p157.5": "cc5ebca36972c267fb5f6104411ec7931fbd5f94789d92f78b0f89aac07aa40b",
+    "integrated-60-p180": "a2b79cf81953f1f405f3f98637daac60477eed7ac0d94fa13fef09474f2f655b",
+    "integrated-60-p202.5": "48bcac6feb2642b63da6a37f29e6e65486b366a8d73bb34df3aa3ef46194e961",
+    "integrated-60-p22.5": "39c1fba693a72fbc8c650e5a61e0d8e6969c515553652852c676a86dc9b93081",
+    "integrated-60-p225": "258ed3764dc9f7ed4aacf319198d2f39d9a0ada15beede3626340d4a1fd1e29a",
+    "integrated-60-p247.5": "71c7707619a8febbbb3112c77b9beb12afedf0c859d5e09ad473a6fd8d9931e1",
+    "integrated-60-p270": "df1d4f37b2405c8f3d50a7534ec83218d4c577839336dd33ea087ea0a5e573a1",
+    "integrated-60-p292.5": "67a910b11584db3d4b7a4add093aa44bee541deaee3f0cc8a92332a1997399e1",
+    "integrated-60-p315": "cde4521bf897fccb3b0c2fda382668e25484e63c356d929a3bf6c711ebecdb74",
+    "integrated-60-p337.5": "f4bcb1bfcc5c25a61500dc9777cd4b81487168c8df931a29cc62823e2ff3610c",
+    "integrated-60-p45": "1ec6d0dc6b201952f372d0a6f3e8fd1322f4b1e07a81e9be2505919dad0b6e05",
+    "integrated-60-p67.5": "ee64e1fa6ea4885c88d2adc7d1ff9964c6846960606565bbadd324d9ea46691a",
+    "integrated-60-p90": "52d339b73973fcee80d205719b9df065e67a59dd612706054469dc0bb7385397",
+    "standalone-48-p0": "08d3bfb48fc347e07728fd9d804bce1eb41d43662af2f4fecedda7312e7c7460",
+    "standalone-48-p112.5": "89aa722634474cbff9225a9b11faef7acafe8256fb13c16bb18670a6ee4cd67e",
+    "standalone-48-p135": "42737b9aac6b3d1531708603b3e62af769ce04247623343c79c0ce902c84084f",
+    "standalone-48-p157.5": "15ecbfcaafa0d299922fa323bbb9b4e4c244af5b1f351a1ddd9208210b06b8df",
+    "standalone-48-p180": "c0b4a752fb6f6d356f8edf7e37e8139b568600615530353786d340dc4241f404",
+    "standalone-48-p202.5": "07fa28c4f8d5f9ab862d36778c6529992af4445e95343ebaa99b4526102cadd9",
+    "standalone-48-p22.5": "1f8a1439f864791db0634ecfa11beadd42bd927da6f1762c83b85144f41da2d3",
+    "standalone-48-p225": "91a4d1497a117bb2d9b3fce685f5b15c7131107d6a3822b2716f63f4214fe664",
+    "standalone-48-p247.5": "0e48e541b37354b68113e5e5c0e5b081d3723edcfbe2d72666fe2fd86f43c844",
+    "standalone-48-p270": "d971a611320f188da0115628100b5aa77178295400450a25a567a2a848a2efe3",
+    "standalone-48-p292.5": "8009892b7f1fb8bb7ea6d48b1adb55e58df4a6e68b9eb589ee916c9e157addeb",
+    "standalone-48-p315": "c3804f88b071b912dea45977f4b4fd720a5dc4e310da51690807e4db5b2661a1",
+    "standalone-48-p337.5": "6506c9c6d2100f4599c808d5f9c6a4ed1ed8a4afe67662ec20caa9648f5f74d5",
+    "standalone-48-p45": "f095e746f292fa892322b6032e239ad795c8f37a9748860edd20745570afaf01",
+    "standalone-48-p67.5": "b43dc435a07832702affc58f958cf048db58be8ed549bd945a60c9671749d8d4",
+    "standalone-48-p90": "98000563f19111bfd3c31e506d9534fe5ee23d232afd0f8ec691a56b0f9e4a99",
+    "standalone-54-p0": "ff0ab189683b220b92b9f0a23c01ac2eace3a8d0b638fe6c6a20c06b44f6e81b",
+    "standalone-54-p112.5": "f03d9ae135fc764b2438c4f7c9514700fdb129b23f8a251773dfde2cf3ac8370",
+    "standalone-54-p135": "9e5edcc503b33ec4184e79d64e07d544d08cca1c7d18c8747433912636a426d0",
+    "standalone-54-p157.5": "33129547e90502453afbd3a0258b7e37a1e6cf93902946b44383516e40d2be40",
+    "standalone-54-p180": "6ead77c13ff87bc7314ae88b15b78e7e83ce66b604e2d13fafa317669ac1af40",
+    "standalone-54-p202.5": "53fd79cf44a773cc91a75acbcf4748cc89b0b98c396da28b2b98d04c87842b10",
+    "standalone-54-p22.5": "130698ba2d06d92ccddbab4dac7077529758ffc33015afd8df30f66730babbd6",
+    "standalone-54-p225": "0ddca1a3916321a048689b790ca888ca419a4144a18966e633a87552edeab375",
+    "standalone-54-p247.5": "b2e3317ac9bb2bf6210e221a4284be208635645ee044bec6dc0961fceea87128",
+    "standalone-54-p270": "ab9cf6ef4fa92f44bb5a203f7da102f810230621ed0f4972678e84a54984cc53",
+    "standalone-54-p292.5": "237c82a0b4b21fbf925a71fc69d8b8017b97f09095009a44aaa70dd3955ac27d",
+    "standalone-54-p315": "c77dc6756a31ba2e8eeba42655350050b9c0501619b591e18c53c5e0d11655a9",
+    "standalone-54-p337.5": "f656d2ba22929747b4f3f32d83893ededa3f006ed04f567412d732fe6f32e299",
+    "standalone-54-p45": "437bcb05d73caf40766a76b022e63cf987dc8037a4030ec900267044d8d19edb",
+    "standalone-54-p67.5": "068d15f0f0be3f320075eaf287311bdeffa4fc4b68cfbcabcfeacec0e5fb7466",
+    "standalone-54-p90": "a9afc43e2dc08ae901bf63c521114a2370ca8f3dfc5c23178ebf94f60282f7d9",
+    "standalone-60-p0": "4d9e49aff105b0797cf5ce1ec98a89d5e1839472dcae5378527adeceff1f67c5",
+    "standalone-60-p112.5": "d56051e2b61756c794d312722533b1f7da0b9c44e099758efb95072b8a875aa0",
+    "standalone-60-p135": "8de57edb2ceba97eaa8762a3bb2ee38f4b2d01171b3bc33dc08cccfcb1d8d3cc",
+    "standalone-60-p157.5": "98f2ad44d402a9e5a0c328a46417139941f07241951598ba88b8860f307def91",
+    "standalone-60-p180": "0ec919df930a44463ba68f4b38d3d3d98788dad269485a60a7de30b8516c75cc",
+    "standalone-60-p202.5": "3a8234d12e98e3dfe4b11b7c6e105f14dc421bc76f1ce50fa97ce7ff8948dd4f",
+    "standalone-60-p22.5": "db9b045d49baaadc9ac618ca436da867aced8c3f64b61f1078268afa5ff76363",
+    "standalone-60-p225": "c340b03f2c9a991fcbdd3de5c11364858e170e7c31813676034f17117d9d7525",
+    "standalone-60-p247.5": "9b82c00204fcc9a3ba3f8ef6854acee100d7ec8c1ffa89ff8ccb3f8b62312fdc",
+    "standalone-60-p270": "838245399f42053e0cfe7b96bb55b6f27cf3655f540f6e5ad8241facc2281103",
+    "standalone-60-p292.5": "3ad15041323cda6f4181b2ccfe01d5b1427a268c9e03bea5dc700950c27db53a",
+    "standalone-60-p315": "4ca0747f476653bdf0b73afba6f8b64cc38b754d1e33d9c8f14efe8edea39306",
+    "standalone-60-p337.5": "1bd85a83ccfd23874f0f0163e69f02c916fe0a06af5d013e55878efe30c86079",
+    "standalone-60-p45": "6c1c0b0254d486292199cdf13b742efeea0d5a70b4f27e3656b0d8232144d257",
+    "standalone-60-p67.5": "0c1ba3fc08d2b8008af3218b36ebd3c317185a470948b80a40054de4cad45405",
+    "standalone-60-p90": "6baa0d7d06ddc6a83257c1db65867738efcd4e124b1ae07290660c34608ec0d6"
+  }
+}

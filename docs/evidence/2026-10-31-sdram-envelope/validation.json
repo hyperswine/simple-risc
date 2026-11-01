@@ -1,0 +1,19 @@
+{
+  "distinct_cases": 96,
+  "runs": 271,
+  "statuses": {
+    "pass": 34,
+    "inconclusive": 158,
+    "memory_fail": 79
+  },
+  "conclusive_uart_reports_reparsed": 113,
+  "recoveries_verified": 88,
+  "recovery_crc_probes": 1056,
+  "checks": [
+    "All 96 requested cases have board observations.",
+    "Each journal row matches its saved result and hashed build receipt.",
+    "Every programmed receipt passes internal setup and hold checks.",
+    "All conclusive UART reports reparse and match the saved observations.",
+    "Every recovery matches the pinned identity/image and passes twelve CRC probes."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "python": "3.15.2",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+  "cabal": "cabal-install version 3.16.1.0 ",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "gowin": "Gowin EDA V1.9.12.04 (installation used by frozen build.sh)"
+}

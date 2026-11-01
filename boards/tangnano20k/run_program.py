@@ -107,7 +107,7 @@ def main() -> None:
                 ident,
                 expected_cpu_mhz=round(args.freq_mhz),
                 image_bytes=len(raw_image) if args.image else None,
-                required_caps="UICG" if args.protocol == "u" else "PR",
+                required_caps="UICG" if args.protocol == "u" else "PH",
                 manifest=args.manifest,
             )
             if args.identify and not args.image:

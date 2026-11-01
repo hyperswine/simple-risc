@@ -4,6 +4,14 @@ Status: sent to support@gowinsemi.com on 2026-10-18 at 06:10:59 UTC.
 Gmail message/thread ID: `1a14da287d5db635`; Sent label verified after sending.
 [Open sent request](https://mail.google.com/mail/u/0/#sent/1a14da287d5db635).
 
+Update checked 2026-10-31: Gowin replied on 2026-10-20 Australia/Sydney
+(2026-10-19 16:55 UTC). Support said its team lacked resources to fulfil the
+request and recommended the Gowin controller, which it described as internally
+verified. The reply supplies none of the requested numerical bounds or SDC
+reference-plane details. The profile remains unqualified; its historical
+`pending_vendor` label must not be read as evidence that no reply arrived.
+[Reply thread](https://mail.google.com/mail/u/0/#all/1a14da287d5db635).
+
 Subject: GW2AR-LV18QN88C8/I7 embedded SDR SDRAM AC timing and STA reference plane
 
 We are using a Sipeed Tang Nano 20K with GW2AR-LV18QN88C8/I7 and Gowin

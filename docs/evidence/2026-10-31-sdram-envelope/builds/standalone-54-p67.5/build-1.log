@@ -1,0 +1,3 @@
+SDRAM I/O model incomplete: t_ac_max, t_oh_min, t_cmd_setup, t_cmd_hold, t_data_setup, t_data_hold, t_dqm_setup, t_dqm_hold, clock_flight_min, clock_flight_max, read_flight_min, read_flight_max, command_flight_min, command_flight_max, write_flight_min, write_flight_max, dqm_flight_min, dqm_flight_max, setup_uncertainty, hold_uncertainty, qualification.source, qualification.operating_conditions, qualification.boundary_accounting, qualification.status, qualification.frequency_range
+SDRAM I/O remains unqualified: this build checks internal FPGA timing only.
+License verification failed  Server not responding.

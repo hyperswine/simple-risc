@@ -1,0 +1,16 @@
+{
+  "status": "inconclusive",
+  "receive_crc_verified": false,
+  "error": "ProtocolError: non-ASCII bytes in ROM identity reply: b'SRID1 isa=rv32imc cpu=00000030>\\x87\\xd0\\x19b\\xab\\xf4=\\x86\\xcf\\x18a\\xaa\\xf3<\\x85\\xce\\x17`\\xa9\\xf2;\\x84\\xcd\\x16_\\xa8\\xf1:\\x83\\xcc\\x15^\\xa7\\xf09\\x82\\xcb\\x14]\\xa6\\xef8\\x81\\xca\\x13\\\\\\xa5\\xee7\\x80\\xc9\\x12[\\xa4\\xed6\\x7f\\xc8\\x11Z\\xa3\\xec5~\\xc7\\x10Y\\xa2\\xeb4}\\xc6\\x0fX\\xa1\\xea3|\\xc5\\x0eW\\xa0\\xe92{\\xc4\\rV\\x9f\\xe81z\\xc3\\x0cU\\x9e\\xe70y\\xc2\\x0bT\\x9d\\xe6/x\\xc1\\nS\\x9c\\xe5.w'",
+  "elapsed_seconds": 0.3741484589409083,
+  "label": "integrated-48-p67.5",
+  "kind": "integrated",
+  "frequency_mhz": 48,
+  "phase_degrees": 67.5,
+  "run": 3,
+  "image_sha256": "a0b1a0295311ab48b2eb0029ccee78eef43de0a61d05ac74a25b46936272f0f9",
+  "receipt_sha256": "253d84cb444b6e580169bf3033039bf43c40f3b4dedd5a6cc8be9863f37c28df",
+  "runner_sha256": "f340238e683a2d46d64c3265c6455af7661c0f1da6f0e4c6ab885b606dbf39d5",
+  "started_utc": "2026-10-31T08:47:38.401498+00:00",
+  "total_seconds": 3.9938551250379533
+}

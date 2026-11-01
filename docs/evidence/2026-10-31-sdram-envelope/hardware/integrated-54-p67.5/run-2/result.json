@@ -1,0 +1,16 @@
+{
+  "status": "inconclusive",
+  "receive_crc_verified": false,
+  "error": "ProtocolError: malformed ROM identity reply: 'SRID1 isa=rv32imc cpu=00000036DONE'",
+  "elapsed_seconds": 0.48164070793427527,
+  "label": "integrated-54-p67.5",
+  "kind": "integrated",
+  "frequency_mhz": 54,
+  "phase_degrees": 67.5,
+  "run": 2,
+  "image_sha256": "b1aeb58b10df0abe7f6e7fedad8135aabcc977a514dc745acd411b9fb844ddf3",
+  "receipt_sha256": "aead3591df749e385bded3105963c7138b6210a85ef5673baca282740f16bc4f",
+  "runner_sha256": "b0a4b21c9ca16b8a09851c75c2e93a66a893fbbc96e181a1247d5686c6eada24",
+  "started_utc": "2026-10-31T09:52:25.560136+00:00",
+  "total_seconds": 4.714427749859169
+}

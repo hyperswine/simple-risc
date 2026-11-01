@@ -1,0 +1,48 @@
+{
+  "status": "memory_fail",
+  "receive_crc_verified": true,
+  "identity": "SRID1 isa=rv32imc cpu=0000003c mem=0000003c ram=00800000 max=00200000 cap=PMXQVHTUICG id=44535dec1979d39c",
+  "guest_sha256": "e6bf9f31ce3ec2543380039321fcec34b9d1c1bcfa69e9b998548f706efd2385",
+  "readback_crc": "7bac75ff",
+  "expected_crc": "7bac75ff",
+  "reports": [
+    {
+      "pattern": 0,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "00000000"
+    },
+    {
+      "pattern": 1,
+      "comparisons": 2064384,
+      "errors": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0,
+      "digest": "00000000"
+    },
+    {
+      "pattern": 2,
+      "comparisons": 2064384,
+      "errors": 2001,
+      "first_address": 2147553064,
+      "expected": 3646685891,
+      "actual": 1499202243,
+      "digest": "064810c1"
+    }
+  ],
+  "elapsed_seconds": 5.553412292152643,
+  "label": "integrated-60-p90",
+  "kind": "integrated",
+  "frequency_mhz": 60,
+  "phase_degrees": 90,
+  "run": 1,
+  "image_sha256": "b1665cb081f0b1a5f6fc720cb014c2fef2592b86ed98fbcc4f52cb5774dae855",
+  "receipt_sha256": "d18604abe50b619406975bd226a8257a19e0ce94ffd2beaacdc3fd4331a885c2",
+  "runner_sha256": "b0a4b21c9ca16b8a09851c75c2e93a66a893fbbc96e181a1247d5686c6eada24",
+  "started_utc": "2026-10-31T08:47:46.672293+00:00",
+  "total_seconds": 8.958285999950022
+}

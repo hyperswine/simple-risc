@@ -276,6 +276,29 @@ class UploadAndProtocolTests(unittest.TestCase):
         t5.guarded_response = b'hello from guest\n'
         self.assertEqual(start_guarded(t5), b'hello from guest\n')
 
+    def test_run_program_identify_and_stackless_rom_invariant(self):
+        from pathlib import Path
+        import re
+        ident = parse_identity(
+            'SRID1 isa=rv32imc cpu=00000030 mem=00000030 ram=00800000 '
+            'max=00200000 cap=PMXQVHTUICG id=0123456789abcdef\n'
+        )
+        # Both legacy ('p' -> 'PH') and framed ('u' -> 'UICG') capability sets
+        # must pass against the ROM's advertised cap=PMXQVHTUICG string.
+        check_compatibility(ident, expected_cpu_mhz=48, required_caps='PH')
+        check_compatibility(ident, expected_cpu_mhz=48, required_caps='UICG')
+        # Verify committed boot ROMs contain zero stack-pointer loads (lw ..., N(sp)).
+        here = Path(__file__).resolve().parent
+        for hex_name in ('bootrom.hex', 'bootrom-sdram.hex'):
+            words = [int(w, 16) for w in (here / 'bootrom' / hex_name).read_text().splitlines()[:508]]
+            for idx, insn in enumerate(words):
+                opcode = insn & 0x7f
+                rs1 = (insn >> 15) & 0x1f
+                self.assertFalse(
+                    opcode == 0x03 and rs1 == 2,
+                    f'{hex_name} word {idx} ({insn:08x}) loads from sp (x2)',
+                )
+
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UploadAndProtocolTests)

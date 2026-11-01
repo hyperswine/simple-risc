@@ -17,8 +17,12 @@ if [[ "$variant" == bootrom-sdram ]]; then defines=(-DROM_SDRAM); cpu_mhz=48; me
   "$here/crt0.S" "$here/bootrom.c" -o "$out/$variant.elf"
 "${cross}objcopy" -O binary "$out/$variant.elf" "$out/$variant.bin"
 "${cross}objdump" -d "$out/$variant.elf" > "$out/$variant.lst"
-python3 - "$out/$variant.bin" "$here/$variant.hex" "$variant" "$cpu_mhz" "$mem_mhz" <<'PY'
-import hashlib, struct, sys
+python3 - "$out/$variant.bin" "$here/$variant.hex" "$variant" "$cpu_mhz" "$mem_mhz" "$out/$variant.lst" <<'PY'
+import hashlib, re, struct, sys
+lst = open(sys.argv[6]).read()
+sp_loads = [l.strip() for l in lst.splitlines() if re.search(r'\bl[wbu]\w*\s+\w+,\s*-?\d+\(sp\)', l)]
+if sp_loads:
+    sys.exit(f"boot ROM {sys.argv[3]} contains stack loads ({len(sp_loads)}), risking cold-SDRAM stack corruption: {sp_loads[0]}")
 image = open(sys.argv[1], "rb").read()
 image += b"\0" * (-len(image) % 4)
 words = list(struct.unpack(f"<{len(image) // 4}I", image))
@@ -31,6 +35,6 @@ id_hi, id_lo = struct.unpack(">II", digest[:8])
 full_words = code_words + [cpu_mhz, mem_mhz, id_hi, id_lo]
 with open(sys.argv[2], "w") as f:
     f.writelines(f"{w:08x}\n" for w in full_words)
-print(f"{sys.argv[2]}: {len(image)} code bytes of 2032 (id={id_hi:08x}{id_lo:08x})")
+print(f"{sys.argv[2]}: {len(image)} code bytes of 2032, 0 stack loads (id={id_hi:08x}{id_lo:08x})")
 PY
 done

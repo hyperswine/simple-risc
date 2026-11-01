@@ -126,7 +126,7 @@ if [[ "$rom_file" != /* ]];then rom_file="$root/$rom_file";fi
 [[ -f "$rom_file" ]] || { echo "missing ROM override: $rom_file" >&2;exit 1; }
 for f in "$cache_rtl" "$bridge_rtl";do [[ -f "$f" ]] || { echo "missing RTL override: $f" >&2;exit 1; };done
 mkdir -p "$out"
-python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" "$cache_ways" "$rom_file" <<'PYTHON'
+python3 - "$here" "$out" "$freq" "$mode" "$cache" "$phase" "$cpu_freq" "$cache_line_bits" "$cache_ways" "$rom_file" "$placement" "$rtl" "$cache_rtl" "$bridge_rtl" <<'PYTHON'
 from pathlib import Path
 import hashlib, json, sys
 src,out=map(Path,sys.argv[1:3]);freq=int(sys.argv[3])
@@ -146,7 +146,8 @@ if sys.argv[4] in ('core','pipeline','serial'):
         try: build_id=(json.loads(manifest_path.read_text()).get('rom_identity') or {}).get('build_id')
         except Exception: build_id=None
     if not build_id or len(build_id)!=16:
-        build_id=hashlib.sha256(('\n'.join(rom_words)+f':{sys.argv[4]}:{cpu_freq}:{freq}:{sys.argv[8]}:{sys.argv[9]}').encode()).hexdigest()[:16]
+        rtl_hashes=':'.join(hashlib.sha256(Path(p).read_bytes()).hexdigest() if p and Path(p).is_file() else '' for p in sys.argv[12:15])
+        build_id=hashlib.sha256(('\n'.join(rom_words)+f':{sys.argv[4]}:{cpu_freq}:{freq}:{sys.argv[6]}:{sys.argv[8]}:{sys.argv[9]}:{sys.argv[11]}:{rtl_hashes}').encode()).hexdigest()[:16]
     stamped_rom=out/'bootrom-sdram.hex'
     stamped_rom.write_text('\n'.join([*rom_words,f'{cpu_freq:08x}',f'{freq:08x}',build_id[:8],build_id[8:16]])+'\n')
     top=(src/('pipeline_top.v' if pipelined else 'core_top.v')).read_text()

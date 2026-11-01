@@ -1,0 +1,12 @@
+empty
+Jtag frequency : requested 6.00MHz    -> real 6.00MHz   
+Parse file Parse /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/envelope-20261031/builds/integrated-48-p180/impl/pnr/sdram_test.fs: 
+Done
+DONE
+Erase SRAM Load SRAM Load SRAM: [===============                                   ] 28.89%
+Load SRAM: [==========================                        ] 50.56%
+Load SRAM: [=====================================             ] 72.22%
+Load SRAM: [==================================================] 100.00%
+
+Done
+DONE

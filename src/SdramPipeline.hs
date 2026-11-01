@@ -184,7 +184,10 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  where
  trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
  receivedNow=R.uartRx (register high (register high serialRx))
- emergency=register False ((==Just 3) <$> receivedNow)
+ -- Fold not (cpuInRom machine) into the emergency flip-flop D input so
+ -- breaking and emergencyReset are driven directly from the flip-flop Q pin
+ -- rather than routing cpuInRom into the 5,000-flop holding clock-enable tree.
+ emergency=register False ((\rx m -> rx == Just 3 && not (R.cpuInRom m)) <$> receivedNow <*> machine)
  -- A hold is a clock enable on the machine register, not a next-state select:
  -- the counters and the received-byte holding register load every cycle, and
  -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
@@ -214,12 +217,7 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
  effectivePipe=withBtb <$> btb <*> pipeState
  running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
- -- Both the Ctrl-C reset and the hold clock-enable start at a register, not at
- -- the assembled pipeline: 'cpuInRom' only ever comes from the machine
- -- register, so reading it through 'running' put the enable that every
- -- pipeline flop shares behind record-select logic. 'heldRx' is the one field
- -- the held-state register supplies while the machine register is frozen.
- breaking=R.breakRequested <$> machine <*> emergency
+ breaking=emergency
  rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
  received=register Nothing (mux rxPop rxHead (pure Nothing))

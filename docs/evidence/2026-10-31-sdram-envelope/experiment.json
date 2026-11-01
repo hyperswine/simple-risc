@@ -1,0 +1,18 @@
+{
+  "revision": "b089c9238d1c7e561fbeabf5419e1d3316a2e7b4",
+  "source_archive_sha256": "627551232d4827deb06ab93064c14d9f8df3ec78d68e30225f6afb573a46918b",
+  "restore_source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/btbdef-54/impl/pnr/sdram_test.fs",
+  "restore_sha256": "f01fdf0bb48c3f5842cf8f8ad0d7d24bc1a746c9959993089e26a4661e207038",
+  "starting_identity": "SRID1 isa=rv32imc cpu=00000036 mem=00000036 ram=00800000 max=00200000 cap=PMXQVHTUICG id=9819062505a27795",
+  "temperature": "not instrumented",
+  "voltage": "not instrumented; existing board supply",
+  "programming": "FPGA SRAM only",
+  "electrical_signoff": false,
+  "integrated_rtl_sha256": "f026208c873d7b66f93d548924bc720d0d86cd105df75b6d0d3da483c27469d1",
+  "guest_source_sha256": "ebb1537f74e52040204fbbd6c20fd08e7fb2d6ee6e86771a7abfe40a584b1a99",
+  "guest_sha256": {
+    "envelope-48.bin": "6201ca0d19c5f56214cf72248dae6f286cc35a79057aaa15f267fdb596a4d0d0",
+    "envelope-60.bin": "e6bf9f31ce3ec2543380039321fcec34b9d1c1bcfa69e9b998548f706efd2385",
+    "envelope-54.bin": "e2e66b1c97b6196aa785ac0979344c70329ea6300033fbcfad18fc75af4714cd"
+  }
+}

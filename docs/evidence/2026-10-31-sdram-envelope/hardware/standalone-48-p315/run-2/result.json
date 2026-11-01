@@ -1,0 +1,32 @@
+{
+  "status": "memory_fail",
+  "reports": [
+    {
+      "pattern": 255,
+      "errors": 0,
+      "comparisons": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 0,
+      "errors": 524288,
+      "comparisons": 2097152,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 4294967295
+    }
+  ],
+  "elapsed_seconds": 0.805303166154772,
+  "label": "standalone-48-p315",
+  "kind": "standalone",
+  "frequency_mhz": 48,
+  "phase_degrees": 315,
+  "run": 2,
+  "image_sha256": "072d7737dc1e3605702fc98c9327511cce7d6f5006a234e094dd5e8431ddfc7d",
+  "receipt_sha256": "9b43326f55979e8abee1b8b5a262597d26871515534fef9db975e6414bea8376",
+  "runner_sha256": "9666afe855fdb67477679075683c6cd7fd8962e07a9c8a874d85d3cc23b76c87",
+  "started_utc": "2026-10-31T08:42:36.502178+00:00",
+  "total_seconds": 3.2086030410137028
+}

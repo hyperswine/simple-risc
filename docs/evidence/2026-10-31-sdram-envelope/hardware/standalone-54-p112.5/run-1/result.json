@@ -1,0 +1,71 @@
+{
+  "status": "pass",
+  "reports": [
+    {
+      "pattern": 255,
+      "errors": 0,
+      "comparisons": 0,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 0,
+      "errors": 0,
+      "comparisons": 2097152,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 1,
+      "errors": 0,
+      "comparisons": 4194304,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 2,
+      "errors": 0,
+      "comparisons": 6291456,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 3,
+      "errors": 0,
+      "comparisons": 8388608,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 4,
+      "errors": 0,
+      "comparisons": 10485760,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "pattern": 5,
+      "errors": 0,
+      "comparisons": 12582912,
+      "first_address": 0,
+      "expected": 0,
+      "actual": 0
+    }
+  ],
+  "elapsed_seconds": 5.450409833109006,
+  "label": "standalone-54-p112.5",
+  "kind": "standalone",
+  "frequency_mhz": 54,
+  "phase_degrees": 112.5,
+  "run": 1,
+  "image_sha256": "4cad870a1c77ec57e879e5926fae276805bb93865cef1d14f6ce239677b9eab5",
+  "receipt_sha256": "518f1d4102eb2640ffab6757a965ff6df33ffe15de9086f7354a75766f6be8cb",
+  "started_utc": "2026-10-31T08:37:46.217123+00:00",
+  "total_seconds": 8.192279207985848
+}
