@@ -102,7 +102,9 @@ module sdram_pipeline_cache #(
  wire way0_match=entry_tag[19-LINE_BITS] && entry_tag[18-LINE_BITS:0]==a1[20:LINE_BITS+2];
  wire way1_match=(WAYS>1) && entry_tag_way1[19-LINE_BITS] && entry_tag_way1[18-LINE_BITS:0]==a1[20:LINE_BITS+2];
  wire hit1=a1[21] || filled || (!tag_conflict && (way0_match || way1_match));
- wire hit_way1=filled ? fill_way:(way1_match && !way0_match);
+ // Way 0 and Way 1 never hold duplicate valid tags (asserted below), so
+ // hit_way1 needs only way1_match, avoiding an extra LUT level after BSRAM DO.
+ wire hit_way1=filled ? fill_way:way1_match;
  wire same_fill_set=fill_forward && !a1[21] && a1[LINE_BITS+1:2]==fill_line[LINE_BITS-1:0];
  // Cold sets allocate Way 0 first, then Way 1, and thereafter replace !mru.
  wire victim_way1=(WAYS<=1) ? 1'b0:
@@ -201,14 +203,23 @@ module sdram_pipeline_cache #(
    read_rom<=cpu_address[21];
    read_bank_hot<=1'b1<<(cpu_address[LINE_BITS+1:0]>>9);rom_word<=rom[cpu_address[8:0]];
  end
+ // Evaluate non-BSRAM overrides (a2 store, last store, refill, held, ROM) in
+ // parallel from flip-flops so the late BSRAM tag/data outputs (hit_way1,
+ // way0_word, way1_word) pass through only one final byte-lane 2:1 mux.
+ wire hit_last=last_write && a1==last_address;
+ wire hit_a2=v2 && w2 && a1==a2;
+ wire base_ovr=!advanced || read_rom || filled;
+ wire [3:0] last_lanes={4{hit_last}} & (last_update ? 4'b1111:last_mask);
+ wire [3:0] a2_lanes={4{hit_a2}} & m2;
+ wire [3:0] ovr_lanes=a2_lanes | last_lanes | {4{base_ovr}};
  reg [31:0] forwarded;
+ integer fl;
  always @* begin
-   forwarded=filled ? fill_data[a1[1:0]]:entry_word;
-   // A synchronous lookup can predate either of the preceding stores. An
-   // updating store wrote this word on the lookup's own edge, so the BSRAM
-   // read may be undefined there: take the whole written word instead.
-   if(last_write && a1==last_address)forwarded=last_update ? last_word:merged(forwarded,last_data,last_mask);
-   if(v2 && w2 && a1==a2)forwarded=merged(forwarded,d2,m2);
+   forwarded=filled ? fill_data[a1[1:0]]:(!advanced ? held_word:(read_rom ? rom_word:32'bx));
+   if(hit_last)forwarded=last_update ? last_word:merged(forwarded,last_data,last_mask);
+   if(hit_a2)forwarded=merged(forwarded,d2,m2);
+   for(fl=0;fl<4;fl=fl+1)
+     if(!ovr_lanes[fl])forwarded[fl*8+:8]=selected_bank_word[fl*8+:8];
  end
  always @(posedge clk) begin
    if(reset)begin

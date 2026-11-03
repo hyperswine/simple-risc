@@ -58,8 +58,11 @@ except ValueError:
     raise SystemExit('SDRAM_TARGET_MHZ must be an integer frequency >= SDRAM_CPU_FREQ_MHZ')
 PYTHON
 if [[ "$cpu_freq" != "$freq" ]];then
-  if [[ ( "$cpu_freq" != 108 && "$cpu_freq" != 96 && "$cpu_freq" != 72 ) || ( "$freq" != 54 && "$freq" != 48 ) || ( "$mode" != core && "$mode" != pipeline ) ]];then
-    echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ=72, 96 or 108 and SDRAM_FREQ_MHZ=48 or 54" >&2;exit 1
+  case "$cpu_freq" in 72|75|78|81|84|87|90|93|96|108) ;; *)
+    echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ in {72,75,78,81,84,87,90,93,96,108} and SDRAM_FREQ_MHZ=48 or 54" >&2;exit 1;;
+  esac
+  if [[ ( "$freq" != 54 && "$freq" != 48 ) || ( "$mode" != core && "$mode" != pipeline ) ]];then
+    echo "separate clocks require pipeline/core, SDRAM_CPU_FREQ_MHZ in {72,75,78,81,84,87,90,93,96,108} and SDRAM_FREQ_MHZ=48 or 54" >&2;exit 1
   fi
 fi
 # Audit the memory specification before expensive CPU generation. Ordinary
@@ -236,12 +239,24 @@ create_generated_clock -name clk_core -source [get_ports {clk_27m}] -multiply_by
 create_generated_clock -name clk_memory -source [get_ports {clk_27m}] -multiply_by $((freq/3)) -divide_by 9 [get_pins {pll/memory/pll/CLKOUT}]
 create_generated_clock -name clk_sdram -source [get_ports {clk_27m}] -multiply_by $((freq/3)) -divide_by 9 -phase $phase [get_pins {pll/memory/pll/CLKOUTP}]
 # Only the first metastability stages (the FIFO's Gray pointers and the read
-# response toggle) are asynchronous endpoints. Payload slots retain normal
-# setup/hold analysis; no clock groups or blanket
-# cross-domain false paths conceal their physical routing delays.
+# response toggle) are asynchronous endpoints. Payload between the domains
+# retains max-delay analysis under its proven two-cycle relation instead of
+# the default closest-edge check: a request slot is written a full round trip
+# before it can be reused (take advances only at mem_done, then crosses a
+# two-flop synchronizer), and response words are stable from the mem edge
+# that writes them until the next read completes while the CPU side waits two
+# flops behind the response toggle (clock_bridge.v). The exception is scoped
+# by clock pair because Gowin maps the slot and replay arrays to RAM, which
+# cannot take pin-scoped constraints; the two domains touch only inside the
+# bridge, and the synchronizer inputs above keep their false paths. No clock
+# groups or blanket cross-domain false paths conceal routing delays.
 set_false_path -to [get_regs {dual_clock.bridge/put_meta_0_s0 dual_clock.bridge/put_meta_1_s0 dual_clock.bridge/put_meta_2_s0}]
 set_false_path -to [get_regs {dual_clock.bridge/take_meta_0_s0 dual_clock.bridge/take_meta_1_s0 dual_clock.bridge/take_meta_2_s0}]
 set_false_path -to [get_regs {dual_clock.bridge/response_meta_s0}]
+set_multicycle_path -setup 2 -from [get_clocks {clk_memory}] -to [get_clocks {clk_core}]
+set_multicycle_path -hold 1 -from [get_clocks {clk_memory}] -to [get_clocks {clk_core}]
+set_multicycle_path -setup 2 -from [get_clocks {clk_core}] -to [get_clocks {clk_memory}]
+set_multicycle_path -hold 1 -from [get_clocks {clk_core}] -to [get_clocks {clk_memory}]
 SDC
 fi
 # A larger timing report for path censuses (path_census.py): every setup path

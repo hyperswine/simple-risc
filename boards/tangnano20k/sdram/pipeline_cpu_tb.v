@@ -18,6 +18,10 @@ module pipeline_cpu_tb #(
  parameter real PIN_TAC_NS=0.0
 );
  localparam STATUS=21'h180000,BOOT_COUNT=21'h1ffc00;
+ // The wait_for_break spin lines (guest 0x80300000/0x80301000), touched
+ // nowhere else in the guest: their first refill proves the guest is
+ // spinning, independent of when the STATUS store lands in tb RAM.
+ localparam LONG_LINE2=21'h0c0400;
  localparam COUNTER_LINE=21'h140000,LONG_LINE=21'h0c0000;
  localparam EFFECT_WORD=21'h180040;
  localparam real CLOCK_NS=PIN_MODEL ? 1000.0/PIN_FREQ_MHZ/(CDC_BRIDGE ? 2.0:1.0):10.0;
@@ -142,7 +146,12 @@ module pipeline_cpu_tb #(
        if(address>=21'h144000 && address<21'h164000)begin
          delay<=5000;timer_misses<=timer_misses+1;
        end
-       if(address==LONG_LINE && ram[STATUS]==32'h600d0001 && !long_seen)begin
+       // First touch of either spin line, not STATUS-gated: the STATUS
+       // store retires before the loop but lands in tb RAM through the
+       // write queue, so a faster CPU (e.g. E2->D forwarding) refills the
+       // first spin line before STATUS is visible, and gating on STATUS
+       // misses the break window entirely.
+       if((address==LONG_LINE || address==LONG_LINE2) && !long_seen)begin
          delay<=12000;long_seen<=1;
        end
      end

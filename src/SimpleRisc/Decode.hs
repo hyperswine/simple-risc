@@ -106,8 +106,11 @@ selectedAlu control candidates parts = if execLegal control then Just value else
       3 -> boolWord (unsignedComparison parts)
       _ -> candidates !! (fromIntegral (unpack (execFunct3 control) :: Unsigned 3) :: Index 8)
 
--- | The decode-stage dependency contract. E2 results wait until registered
--- in M, keeping its ALU result mux out of decode's operand forwarding path.
+-- | The decode-stage dependency contract. E2 results whose value is ready
+-- ('e2Forwards': an ALU result, LUI, AUIPC or jump link past every fault)
+-- forward straight to decode's operand mux; anything else writing in E2
+-- (loads, multiplies, shifts, CSRs and other handovers) still stalls until
+-- its value is registered in M.
 {-# INLINE decodeHazard #-}
 decodeHazard :: Maybe Fetched -> Maybe ExecuteOne -> Maybe ExecuteTwo -> Maybe MemoryStage -> Bool
 decodeHazard fetched one two memory = case fetched of
@@ -117,7 +120,7 @@ decodeHazard fetched one two memory = case fetched of
         rs2 = instructionRs2 (fWord f)
         conflicts r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
      in maybe False (\x -> conflicts (e1Rd x) (e1Writes x)) one
-          || maybe False (\x -> conflicts (e2Rd x) (e2Writes x)) two
+          || maybe False (\x -> conflicts (e2Rd x) (e2Writes x) && not (e2Forwards x)) two
           || maybe False (\m -> not (mFinal m) && conflicts (mRd m) (mWrites m)) memory
 
 -- | Execute stage: every adder and the ALU, in parallel, for whichever

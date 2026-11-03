@@ -1,0 +1,76 @@
+{
+  "reference": {
+    "train_rows": 512,
+    "test_rows": 128,
+    "bins": 16,
+    "max_depth": 6,
+    "min_leaf": 5,
+    "nodes": 55,
+    "depth": 6,
+    "train": {
+      "hits": 481,
+      "rows": 512,
+      "digest": 354774,
+      "predictions_sha256": "dbc85e3a7188d43555e0876fc50dd901b15fa11c6da8ebda539e8580266f37a1"
+    },
+    "test": {
+      "hits": 116,
+      "rows": 128,
+      "digest": 434626,
+      "predictions_sha256": "9bc880f50defb44919cec07bff13fdfb9442287d88fa9e8b09300cc8100ef5c8"
+    },
+    "root": {
+      "column": 0,
+      "threshold": -0.12101956852711737
+    },
+    "entropy": "Independent Python math.log2; classifier uses its existing 48-step log2"
+  },
+  "source_sha256": "feeb00123abbe9254ac5b8e759a8fa3f144b778c83e07e5a0e6bf6bfca82d2a9",
+  "classifier_sha256": "486a4abbd0876014555862a5bb70db6d4c0402e6e3f7f6193fbacb576750c791",
+  "compiler_sha256": "836e28475aed5e5bac5f707066a2514bfe00b53e5b216c99441469a594275eb7",
+  "repeats": 10,
+  "executions": {
+    "board": {
+      "image_sha256": "93e027cc347b96a6e3dd6a73e01786c245c909aaf06564fa4a493acba0c5c617",
+      "image_bytes": 72884,
+      "heap_arena_bytes": 8244688,
+      "heap_bitmap_bytes": 64416,
+      "usable_heap_block_bytes": 8180272,
+      "stack_bytes": 65536,
+      "frequency_mhz": 81,
+      "isa": "RV32IMC",
+      "passed": true,
+      "heap_samples": [
+        {
+          "live": 1237392,
+          "peak": 2502656,
+          "requests": 2330551,
+          "requested": 56674520,
+          "regions": 7661,
+          "reclaimed": 182474080
+        }
+      ],
+      "elapsed_us": 7679892,
+      "elapsed_us_runs": [
+        7689118,
+        7680694,
+        7679890,
+        7679877,
+        7679934,
+        7679952,
+        7679895,
+        7679933,
+        7679928,
+        7679892
+      ],
+      "wall_seconds_with_upload": 87.72129812499043
+    }
+  },
+  "build_options": {
+    "FPR_XLEN": "32",
+    "FPR_RVC": "1",
+    "FPR_QEMU": "0",
+    "FPR_CPU_MHZ": "81",
+    "FPR_HEAP_REPORT": "1"
+  }
+}

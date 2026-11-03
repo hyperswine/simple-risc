@@ -1555,6 +1555,40 @@ prop_pipeline_multiplier_is_exact = withTests 2000 . property $ do
   regs !! (4 :: Index 32) === fromInteger expected + 1
   trapCause (cpuTrapRegisters (simMachine halted)) === 3
 
+-- | Chained ALU/LUI/AUIPC dependencies forward from E2 with no E2-plain
+-- stall: results are exact and the cycle count pins the forwarding (a
+-- load producer still costs its use stall; see the second program).
+prop_pipelined_e2_forwards_chained_alu :: Property
+prop_pipelined_e2_forwards_chained_alu = withTests 1 . property $ do
+  let auipc9 = (0x1 `shiftL` 12) .|. (9 `shiftL` 7) .|. 0x17
+      program = [ addi 1 0 10, addi 2 1 5, rType 0 1 2 0 3, rType 0x20 2 3 0 4,
+                  rType 0 4 3 4 5, rType 0 5 4 2 6, lui 7 0x12345, addi 8 7 0x678,
+                  auipc9, addi 10 9 7, 0x00100073 ]
+      (cycles, halted) = runUntilHalt 1000 (startSim (pipelined (runningMachine [])) (ramFromList program))
+      regs = cpuRegs (simMachine halted)
+  regs !! (1 :: Index 32) === 10
+  regs !! (2 :: Index 32) === 15
+  regs !! (3 :: Index 32) === 25
+  regs !! (4 :: Index 32) === 10
+  regs !! (5 :: Index 32) === 19
+  regs !! (6 :: Index 32) === 1
+  regs !! (7 :: Index 32) === 0x12345000
+  regs !! (8 :: Index 32) === 0x12345678
+  regs !! (9 :: Index 32) === ramBase + 32 + 0x1000
+  regs !! (10 :: Index 32) === ramBase + 32 + 0x1000 + 7
+  -- Seven chained dependents, each formerly paying one E2-plain stall.
+  cycles === 29
+  let loaded = [iType 0 31 0 6 0x03, addi 1 6 1, 0x00100073]
+      (loadCycles, loadHalted) = runUntilHalt 200 (startSim
+        (pipelined (runningMachine [(31, ramBase + 0x100)]))
+        (Ram 0 (IntMap.fromList (P.zip [0 ..] loaded P.++ [(0x40, 41)]))))
+      loadRegs = cpuRegs (simMachine loadHalted)
+  loadRegs !! (6 :: Index 32) === 41
+  loadRegs !! (1 :: Index 32) === 42
+  -- Unchanged by E2 forwarding: the load's use still pays its stall.
+  loadCycles === 19
+
+
 -- The lookahead hazard register must describe the producer stages that
 -- actually arrived on the same edge, including holds, redirects and slow
 -- handovers. Final-state differential properties separately check values.
@@ -2434,6 +2468,7 @@ simpleRiscGroup =
       ("Core matches the reference model on random programs", prop_core_matches_reference_model),
       ("Pipeline matches the reference model on random programs", prop_pipeline_matches_reference_model),
       ("The pipeline's multiplier is exact", prop_pipeline_multiplier_is_exact),
+      ("Chained ALU/LUI/AUIPC dependencies forward from E2", prop_pipelined_e2_forwards_chained_alu),
       ("Interrupts are transparent to the phases", prop_phases_interrupts_are_transparent),
       ("Interrupts are transparent to the pipeline", prop_pipeline_interrupts_are_transparent),
       ("MRET takes a pending interrupt at once", prop_mret_takes_pending_interrupt_at_once),

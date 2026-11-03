@@ -1,0 +1,5 @@
+cpu72-wt-20261103.log:PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 72 MHz constraint, 73.085 MHz Fmax, 0.206 ns worst setup slack; 0 setup / 0 hold violating endpoints
+cpu81-wt-p1-20261103.log:PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 81.238 MHz Fmax, 0.036 ns worst setup slack; 0 setup / 0 hold violating endpoints
+cpu81-wt-p2-20261103.log:PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 81.238 MHz Fmax, 0.036 ns worst setup slack; 0 setup / 0 hold violating endpoints
+fprisc-81-wt-20261103.log:FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 70.927 MHz Fmax, -1.753 ns worst setup slack; 33 setup / 0 hold violating endpoints
+fprisc-81.log:PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 81.238 MHz Fmax, 0.036 ns worst setup slack; 0 setup / 0 hold violating endpoints

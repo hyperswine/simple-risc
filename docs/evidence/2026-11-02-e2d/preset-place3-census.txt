@@ -1,0 +1,68 @@
+25 paths reported, 25 with slack below 0.7 ns; worst -0.381 ns
+
+BY STRUCTURE (from stage -> to stage)
+  group                                                     paths  ends    worst  levels  route%
+  D -> D                                                        1     1   -0.381       8    71.5
+  E2 -> E1                                                      4     4   -0.359       7    75.5
+  E2 -> D                                                       1     1   -0.060       6    74.4
+  fetch -> A                                                    1     1   -0.050       9    67.1
+  cache -> cache                                               13    13    0.163       8    52.5
+  fetch -> fetch                                                2     2    0.227       9    66.4
+  A -> F                                                        2     2    0.290       6    73.4
+  core-other -> cache                                           1     1    0.540       9    67.1
+
+BY END FIELD
+  group                                                     paths  ends    worst  levels  route%
+  pDBlocked                                                     1     1   -0.381       8    71.5
+  E1.e1Op2                                                      2     2   -0.359       7    76.5
+  pDOperands                                                    1     1   -0.060       6    74.4
+  pA                                                            1     1   -0.050       9    67.1
+  cache                                                        14    14    0.163       9    53.6
+  pInstructionPc                                                1     1    0.227       9    69.2
+  pFQueue                                                       2     2    0.290       6    73.4
+  E1.e1A                                                        1     1    0.388       6    75.0
+  E1.e1B                                                        1     1    0.498       6    73.8
+  pOutstanding                                                  1     1    0.597       9    63.5
+
+BY START FIELD
+  group                                                     paths  ends    worst  levels  route%
+  D.fPc                                                         1     1   -0.381       8    71.5
+  E2.e2Candidates                                               2     2   -0.359       7    72.4
+  E2.e2Control                                                  2     2   -0.060       6    74.7
+  pQueueRead                                                    3     3   -0.050       9    66.6
+  cache                                                        13    13    0.163       8    52.5
+  pA                                                            2     2    0.290       6    73.4
+  E2.e2Computed                                                 1     1    0.441       6    82.0
+  request                                                       1     1    0.540       9    67.1
+
+BY CLOCK
+  group                                                     paths  ends    worst  levels  route%
+  clk_core:[R] -> clk_core:[R]                                 25    25   -0.381       9    61.8
+
+HIGH FANOUT NETS REPORT
+  FANOUT          NET NAME           WORST SLACK   MAX DELAY  
+ ======== ========================= ============= =========== 
+  5410     clk                       -0.381        2.274      
+  4276     reset_sync[1]             1.041         1.333      
+  855      core/machine_0_0[11083]   2.537         2.925      
+  706      core/pipeState_8708_6     1.041         2.008      
+  548      core/ds5_798_10           2.589         2.438      
+  379      clk_memory                11.227        2.274      
+  335      advance                   6.036         2.379      
+  315      core/result_274_11473_4   3.172         2.110      
+  310      core/ds4_324_8            1.989         3.151      
+  275      core/ds6_488_6            2.615         2.339      
+
+ROUTE CONGESTIONS REPORT
+  GRID LOC   ROUTE CONGESTIONS  
+ ========== =================== 
+  R32C8      0.944              
+  R34C19     0.931              
+  R29C17     0.917              
+  R34C20     0.917              
+  R35C11     0.917              
+  R35C12     0.917              
+  R27C40     0.903              
+  R23C32     0.903              
+  R35C36     0.903              
+  R42C30     0.889              

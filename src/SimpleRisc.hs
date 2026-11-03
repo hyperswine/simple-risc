@@ -969,7 +969,7 @@ emptyExecuteTwo =
     0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
 
 emptyMemoryStage :: MemoryStage
-emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 Plain 0 0 0 0
+emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 0 Plain 0 0 0 0
 
 initialStagePayloads :: StagePayloads
 initialStagePayloads =
@@ -1085,15 +1085,46 @@ partialProducts funct3 a b =
    in (upper a33 `mul` upper b33) :> (upper a33 `mul` lower b33) :> (lower a33 `mul` upper b33) :> (lower a33 `mul` lower b33) :> Nil
 
 -- | The partial products summed: MUL's low word, else the high word.
-productHalf :: BitVector 3 -> Vec 4 (Signed 34) -> Word32
-productHalf funct3 products =
+-- The 66-bit tree is two carry chains across two M cycles: 'productMid'
+-- latches ((p1 + p2) << 16) + p3, then 'productFinal' adds (p0 << 32).
+-- 'productHalf' is their composition, kept for the exactness property.
+productMid :: Vec 4 (Signed 34) -> Signed 66
+productMid products =
   let wide v = resize v :: Signed 66
-      total =
-        (wide (products !! (0 :: Index 4)) `shiftL` 32)
-          + ((wide (products !! (1 :: Index 4)) + wide (products !! (2 :: Index 4))) `shiftL` 16)
-          + wide (products !! (3 :: Index 4))
+   in ((wide (products !! (1 :: Index 4)) + wide (products !! (2 :: Index 4))) `shiftL` 16)
+        + wide (products !! (3 :: Index 4))
+
+productFinal :: BitVector 3 -> Vec 4 (Signed 34) -> Signed 66 -> Word32
+productFinal funct3 products mid =
+  let wide v = resize v :: Signed 66
+      total = (wide (products !! (0 :: Index 4)) `shiftL` 32) + mid
       bits = bitCoerce total :: BitVector 66
    in if funct3 == 0 then unpack (slice d31 d0 bits) else unpack (slice d63 d32 bits)
+
+productHalf :: BitVector 3 -> Vec 4 (Signed 34) -> Word32
+productHalf funct3 products = productFinal funct3 products (productMid products)
+
+-- | E2's result: a jump's link, LUI, AUIPC or the selected ALU output, from
+-- E2's registered payload. Both the E2->M edge and decode's operand mux
+-- take it from here; decode only when 'e2Forwards' holds.
+-- All non-carry candidates (XOR, OR, AND, shifts, LUI, AUIPC and the jump
+-- link) are pre-selected into e2Candidates !! 1 in E1 while the 32-bit
+-- adder/subtractor goes directly into e2Candidates !! 0, reducing E2's
+-- result selection to a single 2:1 mux plus the 1-bit SLT/SLTU comparison.
+e2Value :: ExecuteTwo -> Word32
+e2Value x =
+  let control = e2Control x
+      funct3 = execFunct3 control
+      parts = e2AluCompare x
+      addSub = e2Candidates x !! (0 :: Index 8)
+      other = e2Candidates x !! (1 :: Index 8)
+   in if execAluOp control && not (execMulDiv control)
+        then case funct3 of
+          0b000 -> if execLegal control then addSub else 0
+          0b010 -> boolWord (execLegal control && signedComparison parts)
+          0b011 -> boolWord (execLegal control && unsignedComparison parts)
+          _ -> if execLegal control then other else 0
+        else other
 
 -- | One cycle of the pipeline: fetch (up to four words outstanding), raw
 -- instruction assembly, compressed expansion/source predecode, decode and
@@ -1183,13 +1214,15 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         | mLoad m = loadValue (mFunct3 m) (mOffset m) memoryWord
         | mShift m = shiftResult (mFunct3 m) (if mArith m then 0x20 else 0) (mValue m) (fromIntegral (mAmount m .&. 0x1c))
         | otherwise = mValue m
-      -- Multiplication's wide carry chains end at a dedicated register,
+      -- Multiplication's wide carry chains end at dedicated registers,
       -- before the common load/shift/ordinary writeback mux. A multiply
-      -- spends one extra M cycle here; its result then forwards as mValue.
-      -- mWait counts 3, 2, 1: the operand register reloads from mA/mB by the
-      -- first edge, the product register by the second, and the third sums.
+      -- spends two extra M cycles here; its result then forwards as mValue.
+      -- mWait counts 4, 3, 2, 1: the operand register reloads from mA/mB by
+      -- the first edge, the product register by the second, the third
+      -- latches the middle sum and the fourth adds the high product.
       heldMemory m
-        | mMultiply m && mWait m == 1 = m {mWait = 0, mValue = productHalf (mFunct3 m) (cpuMulProducts machine), mMultiply = False, mFinal = True}
+        | mMultiply m && mWait m == 2 = m {mWait = 1, mSum = productMid (cpuMulProducts machine)}
+        | mMultiply m && mWait m == 1 = m {mWait = 0, mValue = productFinal (mFunct3 m) (cpuMulProducts machine) (mSum m), mMultiply = False, mFinal = True}
         | otherwise = m {mWait = mWait m - 1}
       registerWriteNow = case pM pipe of
         Just m | mCommits && mWrites m -> Just (mRd m, committedValue m)
@@ -1214,13 +1247,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             comp = e2Computed x
             kind = execKind control
             funct3 = execFunct3 control
-            aluResult
-              -- (a multiply's product is summed at commit)
-              | execMulDiv control = Just 0
-              | execLui control = Just (e2Imm x)
-              | execAuipc control = Just (cTarget comp)
-              | execAluOp control = selectedAlu control (e2Candidates x) (e2AluCompare x)
-              | otherwise = Nothing
             taken = case kind of
               KindJump -> True
               KindBranch -> branchTakenPrepared funct3 (e2BranchCompare x) == Just True
@@ -1241,7 +1267,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             load = e2LoadFast x
             store = e2StoreFast x
             storeWord = e2StoreWordFast x
-            value = case kind of KindJump -> cLink comp; _ -> fromMaybe 0 aluResult
+            value = e2Value x
             shifting = e2ShiftFast x
             multiplying = e2MultFast x
             stage =
@@ -1264,6 +1290,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                   mArith = execArithmeticShift control,
                   mAmount = e2Op2 x,
                   mMultiply = multiplying,
+                  mSum = 0,
                   mWait = e2WaitFast x,
                   mAction = action,
                   mWord = e2Word x,
@@ -1386,14 +1413,30 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             shifting1 = execShift control && not (execMulDiv control)
             multiplying1 = execMulDiv control && not (testBit funct31 2)
             -- An external cache answers one edge later (see 'inflightArrival')
-            wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 3 else 0
+            wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
             refetch1 = e1Size x == 0
+            addSub1 = if execSubtract control then a - op2 else a + op2
+            other1 = case kind1 of
+              KindJump -> link1
+              _
+                | execMulDiv control -> 0
+                | execLui control -> imm
+                | execAuipc control -> target1
+                | execAluOp control -> case funct31 of
+                    0b001 -> a `shiftL` fromIntegral (op2 .&. 3)
+                    0b100 -> a `xor` op2
+                    0b101 -> if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (op2 .&. 3)) else a `shiftR` fromIntegral (op2 .&. 3)
+                    0b110 -> a .|. op2
+                    0b111 -> a .&. op2
+                    _ -> 0
+                | otherwise -> 0
+            writes2 = e1Writes x && not (e1FetchFault x)
          in ExecuteTwo
               { e2Pc = e1Pc x,
                 e2Predicted = e1Predicted x,
                 e2Control = control,
                 e2Computed = computed,
-                e2Candidates = aluCandidates control a op2,
+                e2Candidates = addSub1 :> other1 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> Nil,
                 e2AluCompare = compareOperands a op2,
                 e2BranchCompare = compareOperands a b,
                 e2B = b,
@@ -1403,10 +1446,10 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 e2Word = e1Word x,
                 e2Raw = e1Raw x,
                 e2Rd = e1Rd x,
-                e2Writes = e1Writes x,
+                e2Writes = writes2,
                 e2FetchFault = e1FetchFault x,
                 e2FaultValue = e1FaultValue x,
-                e2Forwards = False,
+                e2Forwards = writes2 && action1 == Plain && not load1 && not shifting1 && not multiplying1,
                 e2Action = action1,
                 e2LoadFast = load1,
                 e2StoreFast = store1,
@@ -1435,9 +1478,11 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             crossFault = cpuCompressed machine && fSize f == 4 && testBit pc 1 && not (fetchableAddr (pc + 2))
             fetchFault = firstFault || crossFault
             faultValue = if firstFault then pc else pc + 2
-            -- (division and the system instructions write rd in the phases)
+            -- (division and the system instructions write rd in the phases;
+            -- fetchFault is gated at the E1->E2 edge from the registered
+            -- e1FetchFault flop so D.fPc does not feed decodeHazard/pDBlocked)
             phasesWrite =
-              fetchFault || (execMulDiv control && testBit (execFunct3 control) 2) || case kind of
+              (execMulDiv control && testBit (execFunct3 control) 2) || case kind of
                 KindAlu -> False
                 KindJump -> False
                 KindLoad -> False
@@ -1446,11 +1491,13 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             rs2 = instructionRs2 word
             rd = instructionRd word
             hazard = pDBlocked pipe
-            operand r current = case pM pipe of
-              Just m | mWrites m && mRd m == r -> mValue m
-              _ -> case cpuPendingWrite machine of
-                Just (w, v) | w /= 0 && w == r -> v
-                _ -> current
+            operand r current = case pE2 pipe of
+              Just x | e2Writes x && e2Forwards x && e2Rd x == r -> e2Value x
+              _ -> case pM pipe of
+                Just m | mWrites m && mRd m == r -> mValue m
+                _ -> case cpuPendingWrite machine of
+                  Just (w, v) | w /= 0 && w == r -> v
+                  _ -> current
             (heldA, heldB) = pDOperands pipe
             a = operand rs1 (if pDFresh pipe then registerValue (cpuRegValid machine) rs1 (cpuRfA machine) else heldA)
             b = operand rs2 (if pDFresh pipe then registerValue (cpuRegValid machine) rs2 (cpuRfB machine) else heldB)

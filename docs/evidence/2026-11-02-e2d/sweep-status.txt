@@ -1,0 +1,5 @@
+place0: FAIL 78.307MHz -0.425ns 71setup/0hold
+place1: PASS 81.133MHz +0.020ns 0/0
+place2: PASS 81.133MHz +0.020ns 0/0 (rerun after license flake)
+place3/place4: pending (license server unreachable)
+preset-place3-E2D: FAIL 78.572MHz -0.381ns 4/0

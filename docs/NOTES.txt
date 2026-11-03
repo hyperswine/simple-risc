@@ -7,3 +7,17 @@ Root-cause ERR HDR — same-ROM check first, then RX-vs-memory_hold in RTL sim. 
 Add check_compressed.py to CI; add .qwen/ to .gitignore.
 Then payload/token separation in Pipe (item #2 of your own list), and only after that re-attempt a higher clock.
 Chase Gowin for the AC timings, or plan a measured pin characterization — nothing above 48 MHz is signoff-grade until one exists.
+
+------------
+
+We are not at the ceiling yet — we are at roughly 55–60% of the realistic performance ceiling of this single-issue in-order RV32IMC architecture on the GW2AR-18. Even after the 128-entry BTB and 4-entry RAS (1.31x over the pre-predictor core), there is another ~1.45x–1.60x in pure microarchitectural + clock-rate throughput still on the table, plus 2x–4x+ more if you allow small ISA/hardware-assist extensions for FP-RISC's hot loops.
+Where Every Cycle Goes Right Now (IPC = 0.352 window / 0.383 unheld)
+From the exact post-128-BTB counters in docs/evidence/2026-11-01-loop-pricing/loop_pricing_summary.json (27,717,269 window cycles, 9,766,922 pipeline commits):
+• Useful commits (35.2%): 9.77M cycles retiring instructions in M.
+• Data-hazard stalls in Decode (30.6% / 8.48M cycles): Now the #1 bottleneck (surpassing branch redirects after the 128-entry BTB and RAS landed).
+◦ 2.84M cycles (10.2% of all cycles) are waiting on a plain ALU/LUI/AUIPC/Jump result sitting in E2.
+◦ ~2.6M cycles (~9.5%) are waiting on 2-stage shifts (slli/srli/srai), which currently do their coarse shift in M (committedValue) and cannot even forward from M!
+◦ ~2.4M cycles (~8.7%) are waiting on loads in E1/E2/M (4-cycle cache port latency + 1-cycle BSRAM output register).
+• Front-end refill & bubbles (14.6% / 4.04M cycles): 1.87M cycles refilling after 291k backend E2 redirects (~6.4 refill cycles each) plus 2.18M cycles from 384k front-end (A-stage JAL/RAS) steers and RV32C halfword assembly bubbles.
+• Cache-miss SDRAM holds (8.1% / 2.24M cycles): Already compressed down from 71% to 8.1% by the 2-way 64 KiB write-update cache and posted-write FIFO bridge.
+• Load-wait / port-conflict / slow-path phases (11.5% / 3.19M cycles): Waiting in M on cache hit latency (mWait) and division/CSR/trap handovers.

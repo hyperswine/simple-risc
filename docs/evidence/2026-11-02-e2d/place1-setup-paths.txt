@@ -1,0 +1,12 @@
+		3.1.1 Setup Paths Table
+		3.1.2 Hold Paths Table
+3.1.1 Setup Paths Table
+<Report Command>:report_timing -setup -max_paths 25 -max_common_paths 1
+  Path Number   Path Slack                 From Node                            To Node                From Clock      To Clock     Relation   Clock Skew   Data Delay  
+ ============= ============ ======================================= ================================ ============== ============== ========== ============ ============ 
+  1             0.020        cache/tags_way1_tags_way1_0_0_s/DO[0]   cache/cpu_word_22_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        12.290      
+  2             0.033        core/machine_0_11248_s0/Q               core/pipeState_5603_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        12.278      
+  3             0.036        cache/tags_way1_tags_way1_0_0_s/DO[0]   cache/cpu_word_28_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        12.275      
+  4             0.040        cache/tags_way1_tags_way1_0_0_s/DO[0]   cache/cpu_word_6_s1/D            clk_core:[R]   clk_core:[R]   12.346     0.000        12.271      
+  5             0.040        core/machine_0_11145_s0/Q               cache/tag_conflict_s0/D          clk_core:[R]   clk_core:[R]   12.346     0.000        12.270      
+  6             0.047        cache/tags_way1_tags_way1_0_0_s/DO[0]   cache/cpu_word_2_s1/D            clk_core:[R]   clk_core:[R]   12.346     0.000        12.264      

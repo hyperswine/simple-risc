@@ -1,0 +1,47 @@
+{
+  "base_freq_mhz": 81.0,
+  "cases": [
+    {
+      "constraint_mhz": 81.0,
+      "fmax_mhz": 80.895,
+      "hold_violations": 0,
+      "line_bits": 11,
+      "out": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cpu81-sweep/place1-l11",
+      "placement": 1,
+      "setup_violations": 1,
+      "worst_setup_slack_ns": -0.016
+    },
+    {
+      "constraint_mhz": 81.0,
+      "fmax_mhz": 80.895,
+      "hold_violations": 0,
+      "line_bits": 11,
+      "out": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cpu81-sweep/place2-l11",
+      "placement": 2,
+      "setup_violations": 1,
+      "worst_setup_slack_ns": -0.016
+    },
+    {
+      "constraint_mhz": 81.0,
+      "fmax_mhz": 83.405,
+      "hold_violations": 0,
+      "line_bits": 11,
+      "out": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cpu81-sweep/place3-l11",
+      "placement": 3,
+      "setup_violations": 0,
+      "worst_setup_slack_ns": 0.356
+    },
+    {
+      "constraint_mhz": 81.0,
+      "fmax_mhz": 78.181,
+      "hold_violations": 0,
+      "line_bits": 11,
+      "out": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/cpu81-sweep/place4-l11",
+      "placement": 4,
+      "setup_violations": 24,
+      "worst_setup_slack_ns": -0.445
+    }
+  ],
+  "memory_freq_mhz": 48.0,
+  "target_freq_mhz": 89
+}

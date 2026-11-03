@@ -1,0 +1,73 @@
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7722973
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716377
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716145
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716172
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716151
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716172
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716144
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716157
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716184
+DTREE BEGIN train=512 test=128 bins=16 depth=6 minLeaf=5
+DTREE DATA READY
+DTREE nodes=55 depth=6
+DTREE train hits=481/512 digest=354774
+DTREE test hits=116/128 digest=434626
+root split: col 0 @ -0.121019568527117
+DTREE elapsed_us=7716141
+HEAP live=1237392 peak=2502656 requests=2330551 requested=56674520 regions=7661 reclaimed=182474080
+FPR EXIT 0
+DONE

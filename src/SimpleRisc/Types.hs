@@ -782,7 +782,7 @@ data ExecuteTwo = ExecuteTwo
     e2StoreWordFast :: Bool,
     e2ShiftFast :: Bool,
     e2MultFast :: Bool,
-    e2WaitFast :: Unsigned 2,
+    e2WaitFast :: Unsigned 3,
     e2Slot :: Bool,
     e2Straddle :: Bool,
     e2Refetch :: Bool,
@@ -817,9 +817,13 @@ data MemoryStage = MemoryStage
     -- | A multiply: mA x mB, formed by the free-running DSP registers
     -- (see 'cpuMulProducts') and summed at commit.
     mMultiply :: Bool,
+    -- | A multiply's registered middle sum: ((p1 + p2) << 16) + p3 of the
+    -- DSP partial products, latched one cycle before the final add so the
+    -- 66-bit tree is two carry chains, not one (see 'productHalf').
+    mSum :: Signed 66,
     -- | Cycles until the word read for a load or a sub-word store is on
     -- the memory bus.
-    mWait :: Unsigned 2,
+    mWait :: Unsigned 3,
     -- | What the commit stage does besides committing a result.
     mAction :: Action,
     -- (for the actions: the instruction, its operands and its address)

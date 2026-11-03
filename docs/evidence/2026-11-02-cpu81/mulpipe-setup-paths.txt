@@ -1,0 +1,30 @@
+		3.1.1 Setup Paths Table
+		3.1.2 Hold Paths Table
+3.1.1 Setup Paths Table
+<Report Command>:report_timing -setup -max_paths 25 -max_common_paths 1
+  Path Number   Path Slack                 From Node                            To Node                From Clock      To Clock     Relation   Clock Skew   Data Delay  
+ ============= ============ ======================================= ================================ ============== ============== ========== ============ ============ 
+  1             0.308        core/pipeState_8681_s0/Q                core/RAM_1_RAM_1_0_0_s/ADB[6]    clk_core:[R]   clk_core:[R]   12.346     0.000        12.003      
+  2             0.397        core/ds3_0_108_s0/Q                     core/pipeState_7240_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        11.914      
+  3             0.511        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_29_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.800      
+  4             0.737        core/pipeState_7850_s0/Q                core/pipeState_8646_s0/CE        clk_core:[R]   clk_core:[R]   12.346     0.000        11.574      
+  5             0.915        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_31_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.396      
+  6             0.971        core/pipeState_8681_s0/Q                core/RAM_1_RAM_1_0_1_s/ADB[6]    clk_core:[R]   clk_core:[R]   12.346     0.000        11.340      
+  7             1.039        reset_sync_1_s0/Q                       core/RAM_1_RAM_1_0_1_s/ADB[11]   clk_core:[R]   clk_core:[R]   12.346     0.000        11.272      
+  8             1.067        reset_sync_1_s0/Q                       core/RAM_1_RAM_1_0_0_s/ADB[11]   clk_core:[R]   clk_core:[R]   12.346     0.000        11.244      
+  9             1.104        core/pipeState_7850_s0/Q                core/pipeState_8665_s0/CE        clk_core:[R]   clk_core:[R]   12.346     0.000        11.206      
+  10            1.117        core/pipeState_7719_s0/Q                core/pipeState_7539_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        11.194      
+  11            1.117        core/pipeState_7719_s0/Q                core/pipeState_7672_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        11.194      
+  12            1.164        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_19_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.146      
+  13            1.169        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_6_s1/D            clk_core:[R]   clk_core:[R]   12.346     0.000        11.142      
+  14            1.207        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_7_s1/D            clk_core:[R]   clk_core:[R]   12.346     0.000        11.104      
+  15            1.263        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_30_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.048      
+  16            1.271        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_10_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.039      
+  17            1.293        core/pipeState_7719_s0/Q                core/pipeState_7540_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        11.017      
+  18            1.293        core/pipeState_7719_s0/Q                core/pipeState_7673_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        11.017      
+  19            1.305        cache/tags_way1_tags_way1_0_0_s/DO[1]   cache/cpu_word_26_s1/D           clk_core:[R]   clk_core:[R]   12.346     0.000        11.006      
+  20            1.363        core/pipeState_7719_s0/Q                core/pipeState_7520_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        10.947      
+  21            1.363        core/pipeState_7719_s0/Q                core/pipeState_7653_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        10.947      
+  22            1.422        core/pipeState_7719_s0/Q                core/pipeState_7512_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        10.889      
+  23            1.422        core/pipeState_7719_s0/Q                core/pipeState_7645_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        10.889      
+  24            1.444        core/pipeState_7850_s0/Q                core/pipeState_8651_s0/D         clk_core:[R]   clk_core:[R]   12.346     0.000        10.867      

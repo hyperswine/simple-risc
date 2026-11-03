@@ -5,8 +5,10 @@
 #   fprisc-72  CPU 72 / SDRAM 48 MHz behind the clock bridge, two-way 64 KiB
 #              cache, placement 0 aimed at 79 MHz with the timing-driven map
 #              and route options (docs/2026-11-01-FPRISC-72-PRESET.md).
+#   fprisc-81  CPU 81 / SDRAM 48 MHz, otherwise the fprisc-72 shape with
+#              placement 1 aimed at 89 MHz (docs/2026-11-02-E2D-FORWARDING.md).
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
-  case "$SDRAM_PRESET" in fprisc-48|fprisc-72) ;; *) echo "unknown SDRAM_PRESET: $SDRAM_PRESET" >&2; exit 1;; esac
+  case "$SDRAM_PRESET" in fprisc-48|fprisc-72|fprisc-81) ;; *) echo "unknown SDRAM_PRESET: $SDRAM_PRESET" >&2; exit 1;; esac
   sdram_preset_setting() {
     if [[ -n "${!1+x}" && "${!1}" != "$2" ]]; then
       echo "SDRAM_PRESET=$SDRAM_PRESET requires $1=$2 (got ${!1})" >&2; exit 1
@@ -27,12 +29,21 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
     sdram_preset_setting SDRAM_PLACE_OPTION 2
     sdram_preset_setting SDRAM_TARGET_MHZ 48
     forbidden+=(SDRAM_MAP_OPTION SDRAM_ROUTE_OPTION SDRAM_ROUTE_MAXFAN)
-  else
+  elif [[ "$SDRAM_PRESET" == fprisc-72 ]]; then
     sdram_preset_setting SDRAM_CPU_FREQ_MHZ 72
     sdram_preset_setting SDRAM_CACHE_WAYS 2
     sdram_preset_setting SDRAM_CACHE_LINE_BITS 11
     sdram_preset_setting SDRAM_PLACE_OPTION 0
     sdram_preset_setting SDRAM_TARGET_MHZ 79
+    sdram_preset_setting SDRAM_MAP_OPTION 3
+    sdram_preset_setting SDRAM_ROUTE_OPTION 1
+    sdram_preset_setting SDRAM_ROUTE_MAXFAN 8
+  else
+    sdram_preset_setting SDRAM_CPU_FREQ_MHZ 81
+    sdram_preset_setting SDRAM_CACHE_WAYS 2
+    sdram_preset_setting SDRAM_CACHE_LINE_BITS 11
+    sdram_preset_setting SDRAM_PLACE_OPTION 1
+    sdram_preset_setting SDRAM_TARGET_MHZ 89
     sdram_preset_setting SDRAM_MAP_OPTION 3
     sdram_preset_setting SDRAM_ROUTE_OPTION 1
     sdram_preset_setting SDRAM_ROUTE_MAXFAN 8

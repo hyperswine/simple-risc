@@ -21,7 +21,16 @@ CONFIG_72 = dict(xlen=32, compressed=True, cpu_mhz=72, memory_mhz=48,
                  cache_line_bits=11, phase_degrees=135,
                  placement=0, write_update=True, placer_target_mhz=79,
                  map_option=3, route_option=1, route_maxfan=8)
-PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72}
+# The 81 MHz image. Placement 3 closed the gate with the pipelined DSP
+# multiply (docs/2026-11-02-CPU81-TIMING.md); with E2->D forwarding it
+# falls to 70.9 MHz, while placements 1 and 2 close at 81.24 MHz
+# (docs/2026-11-02-E2D-FORWARDING.md), so the preset uses placement 1.
+CONFIG_81 = dict(xlen=32, compressed=True, cpu_mhz=81, memory_mhz=48,
+                 ram_bytes=8388608, cache_bytes=65536, cache_ways=2,
+                 cache_line_bits=11, phase_degrees=135,
+                 placement=1, write_update=True, placer_target_mhz=89,
+                 map_option=3, route_option=1, route_maxfan=8)
+PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72, 'fprisc-81': CONFIG_81}
 
 
 def preset():

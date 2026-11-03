@@ -67,8 +67,8 @@ def main():
         p.error('--memory-freq-mhz must be positive')
     if not math.isfinite(a.target_pct) or a.target_pct < 0:
         p.error('--target-pct must be nonnegative')
-    if a.base_freq_mhz != a.memory_freq_mhz and a.base_freq_mhz not in (72.0, 96.0, 108.0):
-        p.error('separate clocks require --base-freq-mhz 72, 96 or 108')
+    if a.base_freq_mhz != a.memory_freq_mhz and a.base_freq_mhz not in (72.0, 75.0, 78.0, 81.0, 84.0, 87.0, 90.0, 93.0, 96.0, 108.0):
+        p.error('separate clocks require --base-freq-mhz in {72, 75, 78, 81, 84, 87, 90, 93, 96, 108}')
     if not 0 < a.jobs <= 4:
         p.error('--jobs must be 1..4')
     for bits in a.cache_line_bits:
