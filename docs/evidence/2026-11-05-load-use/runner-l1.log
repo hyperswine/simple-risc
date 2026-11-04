@@ -1,0 +1,60 @@
+DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2
+DTREE DATA READY
+DTREE nodes=23 depth=5
+DTREE train hits=124/128 digest=21562
+DTREE test hits=61/64 digest=909572
+root split: col 1 @ 0.750635343138128
+DTREE elapsed_us=1367579
+FPR EXIT 0
+PERF cycles=98802687 held=9236738 held_read_miss=2867230 held_write_full=6367460 held_clear=2048
+PERF miss_draining=369957 miss_filling=2349438 fills=258944 code_fills=24785 writes=5807437 stores=5807440
+PERF store_updates=4037593 store_hit_invalidations=0 store_invalidated_fills=0
+PERF window_cycles=98478670 window_held=9173468 window_fills=258568 window_writes=5777996
+PERF window_pipeline_commits=39517148 window_redirects=1117090
+PERF slot_issue=41176255 slot_slow=546844 slot_restart=1126159 slot_load_wait=10121747 slot_mul_wait=676404 slot_other_wait=0
+PERF slot_port_conflict=513451 slot_hazard=13708455 slot_frontend_refill=7315349 slot_frontend_other=14120538 slot_other=0 fetch_port_blocked=16427237
+PERF hazard_0=492829 hazard_1=3264410 hazard_2=2905 hazard_3=5873457 hazard_4=835455 hazard_5=5247 hazard_6=82443 hazard_7=582646 hazard_8=2237796 hazard_9=0 hazard_10=331267 hazard_11=0 hazard_12=0 hazard_13=0 hazard_14=0 hazard_15=0
+PERF redirect_kind_0=0 redirect_kind_1=313642 redirect_kind_2=795914 redirect_kind_3=0 redirect_kind_4=0 redirect_kind_5=4684 redirect_kind_6=2850 redirect_kind_7=0
+PERF restart_length_0=0 restart_length_1=0 restart_length_2=0 restart_length_3=0 restart_length_4=0 restart_length_5=0 restart_length_6=0 restart_length_7=631659 restart_length_8=421567 restart_length_9=63863 restart_length_10=0 restart_length_11=3 restart_length_12=0 restart_length_13=1046 restart_length_14=188 restart_length_15=0 restart_length_16=7833
+PERF ctl_load=5326797 ctl_store=5778000 ctl_shift=4798562 ctl_mul=326909
+PERF ctl_branch=4636516 ctl_branch_taken=2813494 ctl_jal=2346940 ctl_jal_link=974526 ctl_return=974532 ctl_jalr=5856 ctl_jalr_link=0 refill_port_blocked=0 front_redirects=1537090
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v:294: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 2s; walltime 1207.516 s; speed 1.705 ms/s
+- Verilator: cpu 1193.963 s on 1 threads; allocated 12 MB
+STALL BREAKDOWN (share of measured cycles)
+  cache holds the core                           9,173,468   9.32%
+  issued into E1                                41,176,255  41.81%
+  behind a load in M                            10,121,747  10.28%
+  behind a multiply in M                           676,404   0.69%
+  behind another M wait                                  0   0.00%
+  E2 load blocked by an M store                    513,451   0.52%
+  operand hazard in decode                      13,708,455  13.92%
+  restart cycle (redirect/handover/fence)        1,126,159   1.14%
+  front end refilling after restart              7,315,349   7.43%
+  front end empty, other                        14,120,538  14.34%
+  outside the pipeline (ROM/trap phases)           546,844   0.56%
+  unclassified                                           0   0.00%
+  commits 39,517,148  IPC 0.401  wrong-path issues 1,659,107  fetch port blocked 16,427,237 cycles
+HAZARD PRODUCERS (share of measured cycles)
+  E1 load                                          492,829   0.50%
+  E1 shift                                       3,264,410   3.31%
+  E1 multiply                                        2,905   0.00%
+  E1 plain                                       5,873,457   5.96%
+  E2 load                                          835,455   0.85%
+  E2 shift                                           5,247   0.01%
+  E2 multiply                                       82,443   0.08%
+  E2 plain                                         582,646   0.59%
+  M load                                         2,237,796   2.27%
+  M multiply                                       331,267   0.34%
+REDIRECT KINDS (share of redirects)
+  straddle refetch (BTB alias)                           0   0.00%
+  branch predicted taken, not taken                313,642  28.08%
+  branch taken, not predicted                      795,914  71.25%
+  branch taken, wrong predicted target                   0   0.00%
+  jal                                                    0   0.00%
+  return (jalr x0, ra/t0)                            4,684   0.42%
+  other jalr                                         2,850   0.26%
+  non-control BTB alias                                  0   0.00%
+RESTART TO FIRST ISSUE: 1,126,159 restarts, mean 7.56 cycles; 7:631659 8:421567 9:63863 11:3 13:1046 14:188 16+:7833
+logs: /Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/load-pricing-20261105/sim-l1

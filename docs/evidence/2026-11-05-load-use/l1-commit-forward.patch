@@ -1,0 +1,42 @@
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 9a95177..8fd2378 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1489,7 +1489,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+             operand r current = case pE2 pipe of
+               Just x | e2Writes x && e2Forwards x && e2Rd x == r -> e2Value x
+               _ -> case pM pipe of
+-                Just m | mWrites m && mRd m == r -> mValue m
++                Just m | mWrites m && mRd m == r -> committedValue m
+                 _ -> case cpuPendingWrite machine of
+                   Just (w, v) | w /= 0 && w == r -> v
+                   _ -> current
+diff --git a/src/SimpleRisc/Decode.hs b/src/SimpleRisc/Decode.hs
+index b7435a9..d4b08d3 100644
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -121,7 +121,8 @@ decodeHazard fetched one two memory = case fetched of
+         conflicts r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
+      in maybe False (\x -> conflicts (e1Rd x) (e1Writes x)) one
+           || maybe False (\x -> conflicts (e2Rd x) (e2Writes x) && not (e2Forwards x)) two
+-          || maybe False (\m -> not (mFinal m) && conflicts (mRd m) (mWrites m)) memory
++          -- a load in its commit cycle forwards its word (see the operand mux)
++          || maybe False (\m -> not (mFinal m || (mLoad m && mWait m == 0)) && conflicts (mRd m) (mWrites m)) memory
+ 
+ -- | Execute stage: every adder and the ALU, in parallel, for whichever
+ -- instruction this turns out to be. Shifts compute their low two levels here
+diff --git a/test/SimpleRisc.hs b/test/SimpleRisc.hs
+index ab14850..b0b54f5 100644
+--- a/test/SimpleRisc.hs
++++ b/test/SimpleRisc.hs
+@@ -1585,8 +1585,8 @@ prop_pipelined_e2_forwards_chained_alu = withTests 1 . property $ do
+       loadRegs = cpuRegs (simMachine loadHalted)
+   loadRegs !! (6 :: Index 32) === 41
+   loadRegs !! (1 :: Index 32) === 42
+-  -- Unchanged by E2 forwarding: the load's use still pays its stall.
+-  loadCycles === 19
++  -- The load's value forwards to decode in its commit cycle (19 before).
++  loadCycles === 18
+ 
+ -- Shifts complete in E1 and forward from E2 like any ALU result, so a chain
+ -- of dependent shifts pays one E1 stall each, not three (E1, E2 and the

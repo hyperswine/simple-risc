@@ -1,0 +1,45 @@
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 9a95177..d3c4e7e 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1145,7 +1145,7 @@ e2Value x =
+ -- cache registers its own BSRAM read return, so it answers one edge later and
+ -- the word on the bus is the older of the two.
+ inflightArrival :: Machine -> Index 4
+-inflightArrival machine = if cpuExternalMemory machine then 3 else 2
++inflightArrival machine = if cpuExternalMemory machine then 2 else 2
+ 
+ -- | The commit stage's multiply operands, read every cycle by the
+ -- free-running DSP operand register (a don't-care unless M multiplies).
+@@ -1407,7 +1407,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+             storeWord1 = store1 && funct31 == 2
+             multiplying1 = execMulDiv control && not (testBit funct31 2)
+             -- An external cache answers one edge later (see 'inflightArrival')
+-            wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
++            wait1 = if load1 then (if cpuExternalMemory machine then 2 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
+             refetch1 = e1Size x == 0
+             addSub1 = if execSubtract control then a - op2 else a + op2
+             other1 = case kind1 of
+@@ -1489,7 +1489,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+             operand r current = case pE2 pipe of
+               Just x | e2Writes x && e2Forwards x && e2Rd x == r -> e2Value x
+               _ -> case pM pipe of
+-                Just m | mWrites m && mRd m == r -> mValue m
++                Just m | mWrites m && mRd m == r -> committedValue m
+                 _ -> case cpuPendingWrite machine of
+                   Just (w, v) | w /= 0 && w == r -> v
+                   _ -> current
+diff --git a/src/SimpleRisc/Decode.hs b/src/SimpleRisc/Decode.hs
+index b7435a9..d4b08d3 100644
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -121,7 +121,8 @@ decodeHazard fetched one two memory = case fetched of
+         conflicts r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
+      in maybe False (\x -> conflicts (e1Rd x) (e1Writes x)) one
+           || maybe False (\x -> conflicts (e2Rd x) (e2Writes x) && not (e2Forwards x)) two
+-          || maybe False (\m -> not (mFinal m) && conflicts (mRd m) (mWrites m)) memory
++          -- a load in its commit cycle forwards its word (see the operand mux)
++          || maybe False (\m -> not (mFinal m || (mLoad m && mWait m == 0)) && conflicts (mRd m) (mWrites m)) memory
+ 
+ -- | Execute stage: every adder and the ALU, in parallel, for whichever
+ -- instruction this turns out to be. Shifts compute their low two levels here

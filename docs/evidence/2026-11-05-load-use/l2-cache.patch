@@ -1,0 +1,13 @@
+diff --git a/boards/tangnano20k/sdram/pipeline_cache.v b/boards/tangnano20k/sdram/pipeline_cache.v
+index 9f095e1..aa3f00d 100644
+--- a/boards/tangnano20k/sdram/pipeline_cache.v
++++ b/boards/tangnano20k/sdram/pipeline_cache.v
+@@ -144,7 +144,7 @@ module sdram_pipeline_cache #(
+  // port is four logical clocks. Both are held while the CPU is frozen, so the
+  // CPU reads a stable word on the edge that releases it.
+  reg [31:0] cpu_word,cpu_rdata_return;
+- assign cpu_rdata=cpu_rdata_return;
++ assign cpu_rdata=cpu_word;
+  // cpu_word holds the store's own lookup (with older stores merged), so
+  // the updated word is complete even for a partial store.
+  wire [31:0] store_word=merged(cpu_word,d2,m2);

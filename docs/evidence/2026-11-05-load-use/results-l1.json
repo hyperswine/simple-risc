@@ -1,0 +1,195 @@
+{
+  "passed": true,
+  "configuration": {
+    "cpu_mhz": 48.0,
+    "mem_mhz": 48.0,
+    "cdc": false,
+    "line_bits": 11,
+    "ways": 2,
+    "write_update": 1,
+    "profile_cpu": true,
+    "profile_abi": "named-v3",
+    "image_sha256": "f8abaa0ed11ef3e2576f4ccceccf33948982557c05c17927b15e9e62e4c9a9af",
+    "elf_sha256": "a6d6495928e90d4ce43b6e46cd1e029c2146099a83c0173c8dad011035cb1a56",
+    "generated": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/load-pricing-20261105/observed-l1/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "d0a50104e1777592ae1cc8ff20fb8d4ff9b7216a03ba8debdc5106f2cc1f0ecf"
+    },
+    "inputs": {
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v": "ec3f1e7b27e19850298f8711e8795b0b5e2cf1221efe5d889b71c3b7a216299b",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/perf_tb.v": "85ad8ea3cd74df8de717a744943a2f735d15e673cf7a52fa6300830a05b8cbdd",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/run_perf.py": "5f2243bd0c9f547d450a0692f02a1507cff6d1393981b7ad42a9c155fdd48676"
+    }
+  },
+  "build_manifest_sha256": "df95fd5969abde19aa10fe861469cd3bc22576bea9af99ef2adef18fdac3f5b7",
+  "start": "DTREE BEGIN train=128 test=64 bins=8 depth=5 minLeaf=2",
+  "end": "FPR EXIT 0",
+  "cycle_limit": 800000000,
+  "metrics": {
+    "cycles": 98802687,
+    "held": 9236738,
+    "held_read_miss": 2867230,
+    "held_write_full": 6367460,
+    "held_clear": 2048,
+    "miss_draining": 369957,
+    "miss_filling": 2349438,
+    "fills": 258944,
+    "code_fills": 24785,
+    "writes": 5807437,
+    "stores": 5807440,
+    "store_updates": 4037593,
+    "store_hit_invalidations": 0,
+    "store_invalidated_fills": 0,
+    "window_cycles": 98478670,
+    "window_held": 9173468,
+    "window_fills": 258568,
+    "window_writes": 5777996,
+    "window_pipeline_commits": 39517148,
+    "window_redirects": 1117090,
+    "slot_issue": 41176255,
+    "slot_slow": 546844,
+    "slot_restart": 1126159,
+    "slot_load_wait": 10121747,
+    "slot_mul_wait": 676404,
+    "slot_other_wait": 0,
+    "slot_port_conflict": 513451,
+    "slot_hazard": 13708455,
+    "slot_frontend_refill": 7315349,
+    "slot_frontend_other": 14120538,
+    "slot_other": 0,
+    "fetch_port_blocked": 16427237,
+    "hazard_0": 492829,
+    "hazard_1": 3264410,
+    "hazard_2": 2905,
+    "hazard_3": 5873457,
+    "hazard_4": 835455,
+    "hazard_5": 5247,
+    "hazard_6": 82443,
+    "hazard_7": 582646,
+    "hazard_8": 2237796,
+    "hazard_9": 0,
+    "hazard_10": 331267,
+    "hazard_11": 0,
+    "hazard_12": 0,
+    "hazard_13": 0,
+    "hazard_14": 0,
+    "hazard_15": 0,
+    "redirect_kind_0": 0,
+    "redirect_kind_1": 313642,
+    "redirect_kind_2": 795914,
+    "redirect_kind_3": 0,
+    "redirect_kind_4": 0,
+    "redirect_kind_5": 4684,
+    "redirect_kind_6": 2850,
+    "redirect_kind_7": 0,
+    "restart_length_0": 0,
+    "restart_length_1": 0,
+    "restart_length_2": 0,
+    "restart_length_3": 0,
+    "restart_length_4": 0,
+    "restart_length_5": 0,
+    "restart_length_6": 0,
+    "restart_length_7": 631659,
+    "restart_length_8": 421567,
+    "restart_length_9": 63863,
+    "restart_length_10": 0,
+    "restart_length_11": 3,
+    "restart_length_12": 0,
+    "restart_length_13": 1046,
+    "restart_length_14": 188,
+    "restart_length_15": 0,
+    "restart_length_16": 7833,
+    "ctl_load": 5326797,
+    "ctl_store": 5778000,
+    "ctl_shift": 4798562,
+    "ctl_mul": 326909,
+    "ctl_branch": 4636516,
+    "ctl_branch_taken": 2813494,
+    "ctl_jal": 2346940,
+    "ctl_jal_link": 974526,
+    "ctl_return": 974532,
+    "ctl_jalr": 5856,
+    "ctl_jalr_link": 0,
+    "refill_port_blocked": 0,
+    "front_redirects": 1537090
+  },
+  "measured_us": 2051638.9583333333,
+  "held_percent": 9.315182668490547,
+  "output_sha256": "049ec6979b814276b5534d39b17242ab92918ffe3a21744f62f9b476b4f38618",
+  "stall_breakdown": {
+    "window_held": {
+      "cycles": 9173468,
+      "percent": 9.3152
+    },
+    "slot_issue": {
+      "cycles": 41176255,
+      "percent": 41.8124
+    },
+    "slot_load_wait": {
+      "cycles": 10121747,
+      "percent": 10.2781
+    },
+    "slot_mul_wait": {
+      "cycles": 676404,
+      "percent": 0.6869
+    },
+    "slot_other_wait": {
+      "cycles": 0,
+      "percent": 0.0
+    },
+    "slot_port_conflict": {
+      "cycles": 513451,
+      "percent": 0.5214
+    },
+    "slot_hazard": {
+      "cycles": 13708455,
+      "percent": 13.9202
+    },
+    "slot_restart": {
+      "cycles": 1126159,
+      "percent": 1.1436
+    },
+    "slot_frontend_refill": {
+      "cycles": 7315349,
+      "percent": 7.4284
+    },
+    "slot_frontend_other": {
+      "cycles": 14120538,
+      "percent": 14.3387
+    },
+    "slot_slow": {
+      "cycles": 546844,
+      "percent": 0.5553
+    },
+    "slot_other": {
+      "cycles": 0,
+      "percent": 0.0
+    }
+  },
+  "hazard_producers": {
+    "E1 load": 492829,
+    "E1 shift": 3264410,
+    "E1 multiply": 2905,
+    "E1 plain": 5873457,
+    "E2 load": 835455,
+    "E2 shift": 5247,
+    "E2 multiply": 82443,
+    "E2 plain": 582646,
+    "M load": 2237796,
+    "M shift": 0,
+    "M multiply": 331267,
+    "M plain": 0
+  },
+  "redirect_kinds": {
+    "straddle refetch (BTB alias)": 0,
+    "branch predicted taken, not taken": 313642,
+    "branch taken, not predicted": 795914,
+    "branch taken, wrong predicted target": 0,
+    "jal": 0,
+    "return (jalr x0, ra/t0)": 4684,
+    "other jalr": 2850,
+    "non-control BTB alias": 0
+  }
+}

@@ -30,6 +30,11 @@ from its gate. Ranked by payoff / cost:
    short CRC probes do not prove correctness. Either accept
    CPU-fast/SDRAM-48 behind the bridge as the supported shape, or fund
    temp/supply/multi-board sweeps plus the missing Gowin AC timing.
+   Decided 2026-11-05: Gowin replied that they cannot help with the
+   SDRAM data, and the canonical profile is the CPU/SDRAM clock split
+   with the SDRAM at 48 MHz; higher CPU clocks are the goal, and the
+   canon is now 81 MHz, `fprisc-81` (see
+   [SDRAM-CLOCK-DECISION](2026-11-05-SDRAM-CLOCK-DECISION.md)).
 4. **Attack routing/congestion.** Routing is 67-75% of every worst path
    with slices 83-86% full; frequency-plan items 5-6 (core vs memory
    apart, fan-out/duplication, less-logic rebuilds) still bound
@@ -41,7 +46,9 @@ from its gate. Ranked by payoff / cost:
    only 1.036x, so further predictor growth waits behind DSP multiply
    and load-use work. Done 2026-11-05: shifts complete in E1 and forward
    from E2, 1.041x (see [SHIFTS-IN-E1](2026-11-05-SHIFTS-IN-E1.md));
-   load-use (~8.7% of cycles) is the next hazard producer. RV64/PSRAM stay fenced until step 5's gate is met.
+   load-use is the next hazard producer: priced 2026-11-05 at 1.118x but
+   not placeable at 81 MHz (see [LOAD-USE](2026-11-05-LOAD-USE.md)); it
+   waits on the floorplanning in item 4. RV64/PSRAM stay fenced until step 5's gate is met.
 
 Near-term milestone: 81 MHz x improved IPC (~30+ MIPS) as the next
 credible step toward the 96 MHz roadmap gate.

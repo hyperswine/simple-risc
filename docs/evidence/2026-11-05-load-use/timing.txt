@@ -1,0 +1,9 @@
+cpu81-l1l2-p3: FAIL: 81 MHz constraint, 78.896 MHz Fmax, -0.329 ns worst setup slack; 8 setup / 0 hold violating endpoints
+cpu81-l1l2-p1: FAIL: 81 MHz constraint, 73.488 MHz Fmax, -1.262 ns worst setup slack; 28 setup / 0 hold violating endpoints
+cpu81-l1l2-p2: FAIL: 81 MHz constraint, 73.488 MHz Fmax, -1.262 ns worst setup slack; 28 setup / 0 hold violating endpoints
+cpu81-l2-p3: FAIL: 81 MHz constraint, 61.904 MHz Fmax, -3.808 ns worst setup slack; 465 setup / 0 hold violating endpoints
+cpu81-l2-p1: FAIL: 81 MHz constraint, 69.635 MHz Fmax, -2.015 ns worst setup slack; 189 setup / 0 hold violating endpoints
+cpu78-l1l2-p3: PASS: 78 MHz constraint, 79.069 MHz Fmax, 0.173 ns worst setup slack; 0 setup / 0 hold violating endpoints
+cpu78-l1l2-p1: FAIL: 78 MHz constraint, 68.651 MHz Fmax, -1.746 ns worst setup slack; 92 setup / 0 hold violating endpoints
+cpu78-l1l2-p2: FAIL: 78 MHz constraint, 68.651 MHz Fmax, -1.746 ns worst setup slack; 92 setup / 0 hold violating endpoints
+cpu81-l1-p1: FAIL: 81 MHz constraint, 62.681 MHz Fmax, -3.608 ns worst setup slack; 81 setup / 0 hold violating endpoints

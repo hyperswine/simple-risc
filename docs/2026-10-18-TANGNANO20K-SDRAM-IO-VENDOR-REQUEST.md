@@ -63,3 +63,10 @@ window rather than relying only on a successful phase test.
 
 We can supply the custom controller RTL, generated SDC, routed timing
 report and exact bitstream/source hashes if useful.
+
+## Reply (recorded 2026-11-05)
+
+Gowin replied to this request but said they could not help with the
+embedded SDRAM's I/O timing data. None of the items above were supplied, so
+the external I/O timing remains unqualified and no SDC built from vendor
+bounds is possible. See [SDRAM-CLOCK-DECISION](2026-11-05-SDRAM-CLOCK-DECISION.md).

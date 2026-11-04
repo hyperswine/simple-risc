@@ -1,0 +1,22 @@
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 9a95177..e534680 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1145,7 +1145,7 @@ e2Value x =
+ -- cache registers its own BSRAM read return, so it answers one edge later and
+ -- the word on the bus is the older of the two.
+ inflightArrival :: Machine -> Index 4
+-inflightArrival machine = if cpuExternalMemory machine then 3 else 2
++inflightArrival machine = if cpuExternalMemory machine then 2 else 2
+ 
+ -- | The commit stage's multiply operands, read every cycle by the
+ -- free-running DSP operand register (a don't-care unless M multiplies).
+@@ -1407,7 +1407,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+             storeWord1 = store1 && funct31 == 2
+             multiplying1 = execMulDiv control && not (testBit funct31 2)
+             -- An external cache answers one edge later (see 'inflightArrival')
+-            wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
++            wait1 = if load1 then (if cpuExternalMemory machine then 2 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
+             refetch1 = e1Size x == 0
+             addSub1 = if execSubtract control then a - op2 else a + op2
+             other1 = case kind1 of
