@@ -39,7 +39,9 @@ from its gate. Ranked by payoff / cost:
    UART; sim-only today).
 6. **Beyond: low-priority IPC and fenced experiments.** BTB 128->64 was
    only 1.036x, so further predictor growth waits behind DSP multiply
-   and load-use work. RV64/PSRAM stay fenced until step 5's gate is met.
+   and load-use work. Done 2026-11-05: shifts complete in E1 and forward
+   from E2, 1.041x (see [SHIFTS-IN-E1](2026-11-05-SHIFTS-IN-E1.md));
+   load-use (~8.7% of cycles) is the next hazard producer. RV64/PSRAM stay fenced until step 5's gate is met.
 
 Near-term milestone: 81 MHz x improved IPC (~30+ MIPS) as the next
 credible step toward the 96 MHz roadmap gate.

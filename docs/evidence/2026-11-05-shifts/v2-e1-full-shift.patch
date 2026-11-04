@@ -1,0 +1,51 @@
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 9be600e..8914dc2 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1212,7 +1212,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+         Nothing -> False
+       committedValue m
+         | mLoad m = loadValue (mFunct3 m) (mOffset m) memoryWord
+-        | mShift m = shiftResult (mFunct3 m) (if mArith m then 0x20 else 0) (mValue m) (fromIntegral (mAmount m .&. 0x1c))
+         | otherwise = mValue m
+       -- Multiplication's wide carry chains end at dedicated registers,
+       -- before the common load/shift/ordinary writeback mux. A multiply
+@@ -1277,7 +1276,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+                   mValue = value,
+                   mRd = e2Rd x,
+                   mWrites = e2Writes x && not slow,
+-                  mFinal = not load && not shifting && not multiplying,
++                  mFinal = not load && not multiplying,
+                   mLoad = load,
+                   mStore = store,
+                   mStoreWord = storeWord,
+@@ -1286,7 +1285,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+                   mIndex = ramWordIndex address,
+                   mData = storeLanes funct3 (resize address) (e2B x),
+                   mMask = storeMask funct3 (resize address),
+-                  mShift = shifting,
++                  mShift = False, -- the whole shift was done in E1
+                   mArith = execArithmeticShift control,
+                   mAmount = e2Op2 x,
+                   mMultiply = multiplying,
+@@ -1423,9 +1422,9 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+                 | execLui control -> imm
+                 | execAuipc control -> target1
+                 | execAluOp control -> case funct31 of
+-                    0b001 -> a `shiftL` fromIntegral (op2 .&. 3)
++                    0b001 -> a `shiftL` fromIntegral (op2 .&. 31)
+                     0b100 -> a `xor` op2
+-                    0b101 -> if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (op2 .&. 3)) else a `shiftR` fromIntegral (op2 .&. 3)
++                    0b101 -> if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (op2 .&. 31)) else a `shiftR` fromIntegral (op2 .&. 31)
+                     0b110 -> a .|. op2
+                     0b111 -> a .&. op2
+                     _ -> 0
+@@ -1449,7 +1448,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+                 e2Writes = writes2,
+                 e2FetchFault = e1FetchFault x,
+                 e2FaultValue = e1FaultValue x,
+-                e2Forwards = writes2 && action1 == Plain && not load1 && not shifting1 && not multiplying1,
++                e2Forwards = writes2 && action1 == Plain && not load1 && not multiplying1,
+                 e2Action = action1,
+                 e2LoadFast = load1,
+                 e2StoreFast = store1,

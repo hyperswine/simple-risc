@@ -966,10 +966,10 @@ emptyExecuteOne = ExecuteOne 0 0 0 0 0 initialExecuteControl 0 0 0 0 0 False Fal
 emptyExecuteTwo :: ExecuteTwo
 emptyExecuteTwo =
   ExecuteTwo 0 0 initialExecuteControl (Computed Nothing 0 0 Nothing 0) (repeat 0) initialCompareResults initialCompareResults
-    0 0 0 0 0 0 0 False False 0 False Plain False False False False False 0 False False False False
+    0 0 0 0 0 0 0 False False 0 False Plain False False False False 0 False False False False
 
 emptyMemoryStage :: MemoryStage
-emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False False 0 False 0 0 Plain 0 0 0 0
+emptyMemoryStage = MemoryStage 0 0 0 0 False False False False False 0 0 0 0 0 False 0 0 Plain 0 0 0 0
 
 initialStagePayloads :: StagePayloads
 initialStagePayloads =
@@ -1212,7 +1212,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
         Nothing -> False
       committedValue m
         | mLoad m = loadValue (mFunct3 m) (mOffset m) memoryWord
-        | mShift m = shiftResult (mFunct3 m) (if mArith m then 0x20 else 0) (mValue m) (fromIntegral (mAmount m .&. 0x1c))
         | otherwise = mValue m
       -- Multiplication's wide carry chains end at dedicated registers,
       -- before the common load/shift/ordinary writeback mux. A multiply
@@ -1268,7 +1267,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             store = e2StoreFast x
             storeWord = e2StoreWordFast x
             value = e2Value x
-            shifting = e2ShiftFast x
             multiplying = e2MultFast x
             stage =
               MemoryStage
@@ -1277,7 +1275,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                   mValue = value,
                   mRd = e2Rd x,
                   mWrites = e2Writes x && not slow,
-                  mFinal = not load && not shifting && not multiplying,
+                  mFinal = not load && not multiplying,
                   mLoad = load,
                   mStore = store,
                   mStoreWord = storeWord,
@@ -1286,9 +1284,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                   mIndex = ramWordIndex address,
                   mData = storeLanes funct3 (resize address) (e2B x),
                   mMask = storeMask funct3 (resize address),
-                  mShift = shifting,
-                  mArith = execArithmeticShift control,
-                  mAmount = e2Op2 x,
                   mMultiply = multiplying,
                   mSum = 0,
                   mWait = e2WaitFast x,
@@ -1410,7 +1405,6 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             load1 = plainMemory1 && case kind1 of KindLoad -> True; _ -> False
             store1 = plainMemory1 && storing1
             storeWord1 = store1 && funct31 == 2
-            shifting1 = execShift control && not (execMulDiv control)
             multiplying1 = execMulDiv control && not (testBit funct31 2)
             -- An external cache answers one edge later (see 'inflightArrival')
             wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
@@ -1422,10 +1416,12 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 | execMulDiv control -> 0
                 | execLui control -> imm
                 | execAuipc control -> target1
+                -- (shifts complete here, from registered operands: the
+                -- result forwards from E2 like any other ALU result)
                 | execAluOp control -> case funct31 of
-                    0b001 -> a `shiftL` fromIntegral (op2 .&. 3)
+                    0b001 -> a `shiftL` fromIntegral (op2 .&. 31)
                     0b100 -> a `xor` op2
-                    0b101 -> if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (op2 .&. 3)) else a `shiftR` fromIntegral (op2 .&. 3)
+                    0b101 -> if execArithmeticShift control then unsigned32 (signed32 a `shiftR` fromIntegral (op2 .&. 31)) else a `shiftR` fromIntegral (op2 .&. 31)
                     0b110 -> a .|. op2
                     0b111 -> a .&. op2
                     _ -> 0
@@ -1449,12 +1445,11 @@ pipeStepTracedWith decodeTarget machine memoryWord =
                 e2Writes = writes2,
                 e2FetchFault = e1FetchFault x,
                 e2FaultValue = e1FaultValue x,
-                e2Forwards = writes2 && action1 == Plain && not load1 && not shifting1 && not multiplying1,
+                e2Forwards = writes2 && action1 == Plain && not load1 && not multiplying1,
                 e2Action = action1,
                 e2LoadFast = load1,
                 e2StoreFast = store1,
                 e2StoreWordFast = storeWord1,
-                e2ShiftFast = shifting1,
                 e2MultFast = multiplying1,
                 e2WaitFast = wait1,
                 -- the halfword the instruction ends in (a straddling one
@@ -1849,7 +1844,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
               inM = case pM pipe of
                 Just m
                   | not (mFinal m) && hits (mRd m) (mWrites m) ->
-                      Just (8 + (if mLoad m then hazardLoad else if mMultiply m then hazardMultiply else if mShift m then hazardShift else hazardPlain))
+                      Just (8 + (if mLoad m then hazardLoad else if mMultiply m then hazardMultiply else hazardPlain))
                 _ -> Nothing
            in fromMaybe 15 (P.foldr (\a b -> maybe b Just a) Nothing [inE1, inE2, inM])
       -- Observation only: what kind of instruction E2 redirected on.

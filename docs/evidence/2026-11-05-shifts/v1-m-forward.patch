@@ -1,0 +1,39 @@
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 9be600e..2d8d4cd 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1210,10 +1210,14 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+       mWriting = case pM pipe of
+         Just m -> mStore m && mWait m == 0
+         Nothing -> False
+-      committedValue m
+-        | mLoad m = loadValue (mFunct3 m) (mOffset m) memoryWord
++      -- A shift's high three levels complete here, in time for decode's
++      -- operand mux as well as the register write.
++      shiftedValue m
+         | mShift m = shiftResult (mFunct3 m) (if mArith m then 0x20 else 0) (mValue m) (fromIntegral (mAmount m .&. 0x1c))
+         | otherwise = mValue m
++      committedValue m
++        | mLoad m = loadValue (mFunct3 m) (mOffset m) memoryWord
++        | otherwise = shiftedValue m
+       -- Multiplication's wide carry chains end at dedicated registers,
+       -- before the common load/shift/ordinary writeback mux. A multiply
+       -- spends two extra M cycles here; its result then forwards as mValue.
+@@ -1277,7 +1281,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+                   mValue = value,
+                   mRd = e2Rd x,
+                   mWrites = e2Writes x && not slow,
+-                  mFinal = not load && not shifting && not multiplying,
++                  mFinal = not load && not multiplying,
+                   mLoad = load,
+                   mStore = store,
+                   mStoreWord = storeWord,
+@@ -1494,7 +1498,7 @@ pipeStepTracedWith decodeTarget machine memoryWord =
+             operand r current = case pE2 pipe of
+               Just x | e2Writes x && e2Forwards x && e2Rd x == r -> e2Value x
+               _ -> case pM pipe of
+-                Just m | mWrites m && mRd m == r -> mValue m
++                Just m | mWrites m && mRd m == r -> shiftedValue m
+                 _ -> case cpuPendingWrite machine of
+                   Just (w, v) | w /= 0 && w == r -> v
+                   _ -> current

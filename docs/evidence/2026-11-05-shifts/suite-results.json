@@ -1,0 +1,347 @@
+{
+  "preset": "fprisc-81",
+  "target": "board",
+  "mode": "suite",
+  "passed": true,
+  "suite_complete": true,
+  "repository": {
+    "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+    "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+  },
+  "cases": [
+    {
+      "name": "hello",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/examples/tangnano20k_hello.fpr",
+          "sha256": "1b66e4d6295c53303fc224842b8a4061c702cd7b928138cc66dfbbb3901fa9c5"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "523cff816473b6187beed31a3278df30232d7894fa9039e85b3f8cfed4df3947",
+          "base.elf": "093d59aa8ac53084a7d24a4576700447ec7828e6226d10df244f057527035980",
+          "base.bin": "a50d0c32409210bfd61ae08ad443b79e33bad74c1cb66647e1ffa700865f57be"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/hello/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c09612b07b5ec-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 5.6052522500103805
+    },
+    {
+      "name": "numeric",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/tests/tangnano20k_rv32_numeric.fpr",
+          "sha256": "41924634d9e716a42c27d4bc25ad424015ee63c1623a08dbc77008b42152cbda"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "f029c1a06b7a05a8e7d81191d1e28490847c328008705dd18b785eba799790c7",
+          "base.elf": "80a105dfa0cf9ecf986ed9e73800b65f7e7a8ba0d990a69f3cf1131b3f27d380",
+          "base.bin": "49dc8660429250a99986692899f03f9f4528820fb1f831c858c599bb2360d451"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/numeric/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c09612b07b5ec-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 7.941456833010307
+    },
+    {
+      "name": "collections",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/tests/base/vecshape.fpr",
+          "sha256": "c795fd9df0dda33339e595a03545601de184f907408970f0f42fe49d24a74c6c"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "69adf4991865eff626df06ad056c476d1a7c2cc9c80fadbbab6b4b6cd47937fc",
+          "base.elf": "c4f08984249005484caeae404e6a4255c8afd14f3cf3a72718273ade731d927b",
+          "base.bin": "fcc13afa5c4c43e7aefd660392709ee65f727891252783ce62c5218008d08dfe"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/collections/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c09612b07b5ec-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 7.244020707992604
+    },
+    {
+      "name": "host",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/tests/tangnano20k_rv32_host.fpr",
+          "sha256": "61df9f1f30ad89dd8b8fac51048b420997750fad4b2f0e2ff5c804a823f82d7d"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "50efaf686bd940ecae75c9b9e0f34dcec069510637dde2025dfbc1e1eb40bd67",
+          "base.elf": "3f86b20d5c94ca97b8841837eb0178b8d42561236f64fea6c1b00850e3c462fe",
+          "base.bin": "18341ad52092a31239419036e38ab2a77f0eb5c0e6a717d53442baad81975921"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-72f59195cb10-pd3772aea-s749c143c-ccore2-620887c4712b968a-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "688111cf19550af7b5b2e196ea258ae117f5eb6bae6aca50637226a6c18e42dd",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-56c071c5ecce-pd3772aea-s749c143c-ccore2-00fc124a5be09143-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "4155c7520393955bee58ff0aec4c57abaefba7187a935c735cf30bd0667216c2",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-c31599f57b75-pd3772aea-s749c143c-ccore2-689273d161639f72-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "75d5cee8de7baa427df85c061a539f38f61d64f30dd14aa07c2d7f0894e06568",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-713caadbf457-pd3772aea-s749c143c-ccore2-933d14d936e3ff33-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "cd1e363e7a10c6b38ae289a16011e29f4f03cabf2afe731036d8513f7abf5b3d",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-fc1c68b60a30-pd3772aea-s749c143c-ccore2-b444abba2cca7290-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "d357b71725765ed3ec8cf20bdc97248d2b7f909baad4b7511a585aa78bca1918",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-8a18072ec7f1-pd3772aea-s749c143c-ccore2-3c932b79cc754088-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "d0f84869603421f0ddd8c07f99e3b457b9098e82fd5166d5e12c8fa5aeeeb46e",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-581231fdf2ea-pd3772aea-s749c143c-ccore2-856810e2c62bdf09-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "ae1262876901e90fbe185191f58f2ea653604fc3976ef8d2f95e2048a9718052",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-3956ff10e29c-pd3772aea-s749c143c-ccore2-fd03290183e9b8e6-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "549707e7463e89793d23123cad4ce7550b3f64d207ece1df95eef6d6931976f5",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-75e7a4f4871d-pd3772aea-s749c143c-ccore2-6ffb4af78bcbb808-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "a3c2b2bb3a4cf1a965ced35f13637021f13dc29bdb8030e54a102c414036504f",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-13e53ecf1a43-pd3772aea-s749c143c-ccore2-8766d878be6a8b4e-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "b72b23661a8aadb32db6c9be48f24cf018ae036d4f36dbf18416fd77d1bbade8",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-266a46835630-pd3772aea-s749c143c-ccore2-f0a842d92c3a3cbf-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "060c6c59f278b734cd5ebde5c13501718f012936458dd47d19cf3a61247a7c71",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/host/units/u-965ae8870683-pd3772aea-s749c143c-ccore2-7913f3bb53e96f09-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "2acafd559e35353479e96efe4619ac139180cdf3477f21ff6272366c633ebdc2"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 42.92815245798556
+    },
+    {
+      "name": "args",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/tests/tangnano20k_args.fpr",
+          "sha256": "b5f75c418413ae9ac359027ba79c34c00f4bcf502c805feb5c8e4043c95f40be"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "9e7d89028e383e30f98a7d973c80cce18b24acf6f487ebee77a56d4d5ebeb013",
+          "base.elf": "4db38f2a6b76da93d55cd5520d73c4927ca5a35dcf087f7f3e0af4c65eca1d35",
+          "base.bin": "f1d1d80caca3a741fd97e1b545698992818aa8b20357e7f8e9c18d214a9ec78c"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/u-33eee8f2189a-pd3772aea-s323128cc-ccore2-62a1d50e55e0e427-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "0540acb5bf05e506e49cb63e51ec21f5f4347ee9848f6b7826c80626b82a9203",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/u-713caadbf457-pd3772aea-s323128cc-ccore2-933d14d936e3ff33-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "cd1e363e7a10c6b38ae289a16011e29f4f03cabf2afe731036d8513f7abf5b3d",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/u-fc1c68b60a30-pd3772aea-s323128cc-ccore2-b444abba2cca7290-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "d357b71725765ed3ec8cf20bdc97248d2b7f909baad4b7511a585aa78bca1918",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/u-13e53ecf1a43-pd3772aea-s323128cc-ccore2-8766d878be6a8b4e-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "b72b23661a8aadb32db6c9be48f24cf018ae036d4f36dbf18416fd77d1bbade8",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/args/units/u-965ae8870683-pd3772aea-s323128cc-ccore2-7913f3bb53e96f09-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "2acafd559e35353479e96efe4619ac139180cdf3477f21ff6272366c633ebdc2"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 31.21531962498557
+    },
+    {
+      "name": "wc",
+      "passed": true,
+      "build": {
+        "preset": "fprisc-81",
+        "repository": {
+          "revision": "22e1e5537370f48ed1c7bd8f3435aa4a0b74836c",
+          "diff_sha256": "6f3a1ba6d8c0157cc36c59e30cd2bccb1e6c139a3aed6ea72cd1859c41a74b6b"
+        },
+        "program": {
+          "path": "/Users/jasonqin/Documents/GitHub/fprisc/examples/wc.fpr",
+          "sha256": "94348eac48326274825ea12c9dbcfef2d24badd303020a6582ef4ab882fb94c8"
+        },
+        "compiler_sha256": "81b772855fb51797a91b84d21ce4ce145fc4897044bc791b8559eb0e29840cc2",
+        "gcc": "riscv64-unknown-elf-gcc (g04696df09) 14.2.0",
+        "configuration": {
+          "xlen": 32,
+          "compressed": true,
+          "cpu_mhz": 81,
+          "reclamation": "regions",
+          "qemu": false
+        },
+        "artifacts": {
+          "base.s": "794e8e921fb207b5d92df1282a588e9a32471258703cc5f5cbb5e93e9572e69b",
+          "base.elf": "66254605019ff9b4e607d12afd816c06623c78a12d7a5c85052e4e53759905cf",
+          "base.bin": "af6b5aaeaf5dc51d3d9c61f581a2f56aee7566801b6feb227276f39c283d7223"
+        },
+        "units": {
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/prelude-d3772aea6c1f-ccore2-9399cddc66f1bc83-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "9a92c56c3ce98e2b4f8282a80931f26cf138fd97a05834979ed691f2dbf7282c",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-72f59195cb10-pd3772aea-s749c143c-ccore2-620887c4712b968a-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "688111cf19550af7b5b2e196ea258ae117f5eb6bae6aca50637226a6c18e42dd",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-56c071c5ecce-pd3772aea-s749c143c-ccore2-00fc124a5be09143-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "4155c7520393955bee58ff0aec4c57abaefba7187a935c735cf30bd0667216c2",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-33eee8f2189a-pd3772aea-s749c143c-ccore2-62a1d50e55e0e427-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "0540acb5bf05e506e49cb63e51ec21f5f4347ee9848f6b7826c80626b82a9203",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-c31599f57b75-pd3772aea-s749c143c-ccore2-689273d161639f72-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "75d5cee8de7baa427df85c061a539f38f61d64f30dd14aa07c2d7f0894e06568",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-713caadbf457-pd3772aea-s749c143c-ccore2-933d14d936e3ff33-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "cd1e363e7a10c6b38ae289a16011e29f4f03cabf2afe731036d8513f7abf5b3d",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-fc1c68b60a30-pd3772aea-s749c143c-ccore2-b444abba2cca7290-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "d357b71725765ed3ec8cf20bdc97248d2b7f909baad4b7511a585aa78bca1918",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-8a18072ec7f1-pd3772aea-s749c143c-ccore2-3c932b79cc754088-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "d0f84869603421f0ddd8c07f99e3b457b9098e82fd5166d5e12c8fa5aeeeb46e",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-581231fdf2ea-pd3772aea-s749c143c-ccore2-856810e2c62bdf09-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "ae1262876901e90fbe185191f58f2ea653604fc3976ef8d2f95e2048a9718052",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-3956ff10e29c-pd3772aea-s749c143c-ccore2-fd03290183e9b8e6-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "549707e7463e89793d23123cad4ce7550b3f64d207ece1df95eef6d6931976f5",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-75e7a4f4871d-pd3772aea-s749c143c-ccore2-6ffb4af78bcbb808-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "a3c2b2bb3a4cf1a965ced35f13637021f13dc29bdb8030e54a102c414036504f",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-13e53ecf1a43-pd3772aea-s749c143c-ccore2-8766d878be6a8b4e-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "b72b23661a8aadb32db6c9be48f24cf018ae036d4f36dbf18416fd77d1bbade8",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-266a46835630-pd3772aea-s749c143c-ccore2-f0a842d92c3a3cbf-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "060c6c59f278b734cd5ebde5c13501718f012936458dd47d19cf3a61247a7c71",
+          "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/wc/units/u-965ae8870683-pd3772aea-s749c143c-ccore2-7913f3bb53e96f09-g175-tirberv32-32mixed-nof64rt3pc5-c7bb659b91f26-rv32.s": "2acafd559e35353479e96efe4619ac139180cdf3477f21ff6272366c633ebdc2"
+        },
+        "softfloat_sha256": "f69819701432f08324fc525acba5c5e6515547fe641e72d0dae7230a53204ac8"
+      },
+      "wall_seconds": 48.1575561669888
+    },
+    {
+      "name": "classifier",
+      "passed": true,
+      "classifier_report": "/Users/jasonqin/Documents/GitHub/fprisc/build/tangnano20k-examples/board-fprisc-81-shifts/classifier/results.json",
+      "wall_seconds": 85.22692245800863
+    }
+  ],
+  "fpga": {
+    "preset": "fprisc-81",
+    "configuration": {
+      "xlen": 32,
+      "compressed": true,
+      "cpu_mhz": 81,
+      "memory_mhz": 48,
+      "ram_bytes": 8388608,
+      "cache_bytes": 65536,
+      "cache_ways": 2,
+      "cache_line_bits": 11,
+      "phase_degrees": 135,
+      "placement": 1,
+      "write_update": true,
+      "placer_target_mhz": 89,
+      "map_option": 3,
+      "route_option": 1,
+      "route_maxfan": 8
+    },
+    "rom_identity": {
+      "protocol": "SRID1",
+      "isa": "rv32imc",
+      "cpu_mhz": 81,
+      "mem_mhz": 48,
+      "ram_bytes": 8388608,
+      "max_bytes": 2097152,
+      "capabilities": "PMXQVHTUICG",
+      "build_id": "951e9931f89d0e48"
+    },
+    "ready": true,
+    "qualification": "internal STA only; SDRAM I/O/PVT unqualified",
+    "source_root": "/Users/jasonqin/Documents/GitHub/simple-risc",
+    "inputs": {
+      "bin/Clash.hs": "672a02d6e16c56271b45c2626922797fd68e418cfbc0612901a6bd20db0d69a1",
+      "boards/tangnano20k/bootrom/bootrom-sdram.hex": "6f87bb4e050585853b92b7d3eacda82cf81b419354c7c3e423b2849109302740",
+      "boards/tangnano20k/bootrom/bootrom.hex": "de585e5af8dcc7d27e7ca01bb40943d0bcaf992d00e60c146fdd5be5bac8274d",
+      "boards/tangnano20k/check_gowin_timing.py": "2e315ae3b32216c3ddc54b040ff823c39eb39cc98a166b1b14a11eb9da03755a",
+      "boards/tangnano20k/sdram/build.sh": "98a1290bc3e08ff5020eca5e6bef3351d7223ff41c32098b2f62bedd918dce82",
+      "boards/tangnano20k/sdram/burst_memory.v": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "boards/tangnano20k/sdram/burst_memory_tb.v": "ca7e7fddf1856c0d0a6a6afa100a0bbea7968dc1a93a8ed09e8a3f414645eaf1",
+      "boards/tangnano20k/sdram/cache.v": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+      "boards/tangnano20k/sdram/cache_tb.v": "f674d52d0e31deb4161118b5ad4a087b4b3c914953a154d2d609f6bace21e2fd",
+      "boards/tangnano20k/sdram/clock_bridge.v": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "boards/tangnano20k/sdram/clock_bridge_tb.v": "60bb8e934772e0c9ccea307a7ef75e5a40fe708b8c38f43691de9cda3a93e005",
+      "boards/tangnano20k/sdram/core_top.v": "a65e22719c6b80ac10d988304127e8e1eb54419dc820fec5afbc5d79a458ebf0",
+      "boards/tangnano20k/sdram/dual_pll.v": "b00f4a6bfb17262bc47a8ec7fd4b781c6f12776ae2803a3274753411c2e3aa77",
+      "boards/tangnano20k/sdram/gls_tb.v": "0cde710439a1b89b7a7fff0885617648b100dfdc976d53b72d11f18ae7fd94a9",
+      "boards/tangnano20k/sdram/gowin_models.v": "9c1dc277ba899e23bdbb83e4be25025a01bef408f29e4cea4547656995115ceb",
+      "boards/tangnano20k/sdram/io_timing.py": "41bcb0dc154373536651533cc0481923d0d33f6ccc34ea109fdf5e0086a4abc5",
+      "boards/tangnano20k/sdram/io_timing_gw2ar18_qn88.json": "0d55614b70979419f46782ef77b65339a7daaae840b7ce0fb1b36c453f465a93",
+      "boards/tangnano20k/sdram/memory.v": "e6edfffd12ed1c89ca7b67e21c8d592602cf4a4214ce1bf363988982c2b513e3",
+      "boards/tangnano20k/sdram/perf_tb.v": "85ad8ea3cd74df8de717a744943a2f735d15e673cf7a52fa6300830a05b8cbdd",
+      "boards/tangnano20k/sdram/pipeline_cache.v": "ec3f1e7b27e19850298f8711e8795b0b5e2cf1221efe5d889b71c3b7a216299b",
+      "boards/tangnano20k/sdram/pipeline_cache_tb.v": "94c02f41bee7accadeaf8561f2d77dc5708a291b77e210ef07602881b4dba600",
+      "boards/tangnano20k/sdram/pipeline_cpu_tb.v": "dddf5d541d5eadaa3b024ce016d0e8595fdd50234d759e15d1447f49d458e677",
+      "boards/tangnano20k/sdram/pipeline_fence_assertions.v": "81ccd36d783d0ae947a1c511d89da7f25a2cdb972a0dcfd65a522c7975771f00",
+      "boards/tangnano20k/sdram/pipeline_fence_assertions_tb.v": "81cf86121c31859e0de409f68b422afbabefab397f7ed8acc19ff4b5c4017ee7",
+      "boards/tangnano20k/sdram/pipeline_top.v": "b985d8d3ead6951096a048188059b16f34a6b64bf304ba6681361b7cefb05f73",
+      "boards/tangnano20k/sdram/pll.v": "ee87e9d502d45b95a12e461ff5794eab89272b5f5a876b4fbe6b020b64b1c8aa",
+      "boards/tangnano20k/sdram/preset.sh": "bdd6b629992805333e17557ee3669e09ae58e1f87ebdcf462976131753b2bae5",
+      "boards/tangnano20k/sdram/preset_manifest.py": "89cb5695be7e5d2b46389a3e48cab0846954fc097aa12e9afd5aeb715715f360",
+      "boards/tangnano20k/sdram/sdram.v": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "boards/tangnano20k/sdram/test_top.v": "1729f928d4491703b7186473ae2e49d228f240d0e38564e61249f83a4e77a3a7",
+      "boards/tangnano20k/tangnano20k.cst": "8f96e85f2b2fb2dadbc919e0a97b4fb583c058ba3a6b96883bf311b827649101",
+      "cabal.project": "433b1f45ca7c4d304891264b114d1148ebdaf04a1f8e6c08471793b576006537",
+      "cabal.project.freeze": "437f0ba0423320fb8e0b6b43588c195adcf3750f0a55ff03e456094aed8674b5",
+      "simple-risc.cabal": "728987fd68dcdbdac0d3caa70b586fb9c297cfbbbff43e67ae9b1cc0be97b474",
+      "src/PsramRegs.hs": "566e97bb019da4979230f9e57c1ffc418a978b21fd8ed93afbaf38362261fe0e",
+      "src/RiscVCompressed.hs": "520c40f397db58660ff1ba9ad1a09e4c0e95aee50f5b25cc9f2ffdb0423bd327",
+      "src/SdramPipeline.hs": "4234d5f8cdcc3ce0a1670a0ca00ed80972e6ccda72f3f4b5be670174290ee67b",
+      "src/SdramPipelineObserved.hs": "7b5e0f6cf2ad815dafd6944458616532a5047614d6e4e3e82b3161bb1041db7d",
+      "src/SdramSimpleRisc.hs": "ba3bab4382f25fdd72c73b30b1aa5c9b791c3655e9958d4dee56866c70a75373",
+      "src/SimpleRisc.hs": "c948b88b7fb433d394606d43bd3f1d4d6e11da680996d0504a7f95dcabb23659"
+    },
+    "revision": "5bae919ce69b9d0973f2fe3ad39440b4647dde42",
+    "source_diff_sha256": "b10d02f2c595f18fae9fbd75b6cba4b6cdee19ef0b70e78c07d6daf6c2e1267a",
+    "tools": {
+      "ghc": "9.8.2",
+      "cabal": "3.16.1.0"
+    },
+    "artifacts": {
+      "impl/pnr/sdram_test.fs": "3a57681a480df2ce08611863db34008c9f3aefb2c2408b72f46705b9b69864ec",
+      "impl/pnr/sdram_test.tr": "4646c4f59413a30adbc2cf32d9e3dc5b9422e1ed80473a16cfc6895fd016d2cf",
+      "pipeline_top.v": "9f600b100d78437f8d1ff394d2b62e27ef8e2b5c52f000d7e67eea85a9d0465b",
+      "pll.v": "46f5edabee90100cbc39380bba2f2dd49f161aa4e2e2e8a2d11fa2e76365404c",
+      "clocks.sdc": "bbfdea90a30db1a8558f96a81b56eecccd1aa59cde8e4a4284c2a3b21072a717",
+      "build.tcl": "87f8fb44852aa079723e60844a2216ee27d79c83b21070c03842450aedbf3fd2"
+    },
+    "rtl": {
+      "path": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/sdram-generated/SdramPipeline-1/SdramPipeline.topEntity/sdram_pipeline_risc.v",
+      "sha256": "2c91d77369f042d5f001a64fa95ed7a58c660972e9fe83f1df8333164b64d366"
+    }
+  },
+  "fpga_programmed_sram": true
+}

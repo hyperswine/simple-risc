@@ -1588,6 +1588,32 @@ prop_pipelined_e2_forwards_chained_alu = withTests 1 . property $ do
   -- Unchanged by E2 forwarding: the load's use still pays its stall.
   loadCycles === 19
 
+-- Shifts complete in E1 and forward from E2 like any ALU result, so a chain
+-- of dependent shifts pays one E1 stall each, not three (E1, E2 and the
+-- M-stage high levels of the old two-stage shift).
+prop_pipelined_shifts_forward_from_e2 :: Property
+prop_pipelined_shifts_forward_from_e2 = withTests 1 . property $ do
+  let slli rd rs1 n = iType n rs1 1 rd 0x13
+      srli rd rs1 n = iType n rs1 5 rd 0x13
+      srai rd rs1 n = iType (0x400 .|. n) rs1 5 rd 0x13
+      sll rd rs1 rs2 = rType 0 rs2 rs1 1 rd
+      srl rd rs1 rs2 = rType 0 rs2 rs1 5 rd
+      program = [ addi 1 0 3, addi 2 0 0x55, sll 3 2 1, slli 4 3 7, srli 5 4 5, addi 6 5 1,
+                  addi 7 0 (-1024), srai 8 7 3, sll 9 8 1, srl 10 9 1, srai 11 10 31, 0x00100073 ]
+      (cycles, halted) = runUntilHalt 1000 (startSim (pipelined (runningMachine [])) (ramFromList program))
+      regs = cpuRegs (simMachine halted)
+  regs !! (3 :: Index 32) === 0x2a8
+  regs !! (4 :: Index 32) === 0x15400
+  regs !! (5 :: Index 32) === 0xaa0
+  regs !! (6 :: Index 32) === 0xaa1
+  regs !! (7 :: Index 32) === 0xfffffc00
+  regs !! (8 :: Index 32) === 0xffffff80
+  regs !! (9 :: Index 32) === 0xfffffc00
+  regs !! (10 :: Index 32) === 0x1fffff80
+  regs !! (11 :: Index 32) === 0
+  -- Eight dependents of a shift; 43 cycles with the two-stage shift.
+  cycles === 31
+
 
 -- The lookahead hazard register must describe the producer stages that
 -- actually arrived on the same edge, including holds, redirects and slow
@@ -2493,6 +2519,7 @@ simpleRiscGroup =
       ("Split comparisons match signed/unsigned references", prop_split_comparisons_match_reference),
       ("Simple instructions overlap unless dependent", prop_simple_instructions_overlap_unless_dependent),
       ("Two-stage shifts cover every distance", prop_shift_stages_all_distances),
+      ("Pipelined shifts forward from E2", prop_pipelined_shifts_forward_from_e2),
       ("Store into next instruction is fetched fresh", prop_store_into_next_instruction_is_fetched_fresh),
       ("MISC-MEM decoding", prop_misc_mem_decoding),
       ("RAM accesses take the fast path", prop_ram_accesses_take_the_fast_path),

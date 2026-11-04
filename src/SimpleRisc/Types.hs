@@ -780,7 +780,6 @@ data ExecuteTwo = ExecuteTwo
     e2LoadFast :: Bool,
     e2StoreFast :: Bool,
     e2StoreWordFast :: Bool,
-    e2ShiftFast :: Bool,
     e2MultFast :: Bool,
     e2WaitFast :: Unsigned 3,
     e2Slot :: Bool,
@@ -811,9 +810,6 @@ data MemoryStage = MemoryStage
     mIndex :: MemAddr,
     mData :: Word32,
     mMask :: Word32,
-    mShift :: Bool,
-    mArith :: Bool,
-    mAmount :: Word32,
     -- | A multiply: mA x mB, formed by the free-running DSP registers
     -- (see 'cpuMulProducts') and summed at commit.
     mMultiply :: Bool,

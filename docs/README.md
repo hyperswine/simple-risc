@@ -88,3 +88,4 @@ Pages written before 2026-10-21 came from HaskPlayground, where they moved into 
 | 2026-11-02 | [NEXT-STEPS](2026-11-02-NEXT-STEPS.md) | ranked plan: 81 MHz board close, E2->D forwarding, memory-envelope decision, congestion, reliability |
 | 2026-11-02 | [CPU81-TIMING](2026-11-02-CPU81-TIMING.md) | CPU81/SDRAM48 closes on the board: bridge multicycle constraints, placement sweep, pipelined DSP multiply; 30,720 M + 38,400 I checks pass |
 | 2026-11-02 | [E2D-FORWARDING](2026-11-02-E2D-FORWARDING.md) | E2->D forwarding: sim-verified (+test, +tb race fix), then board-passing at 81 MHz on placement 1 (2026-11-04: FP-RISC suite 7/7, classifier -4.5%); fprisc-81 preset moved to placement 1; margin +0.036 ns |
+| 2026-11-05 | [SHIFTS-IN-E1](2026-11-05-SHIFTS-IN-E1.md) | shifts complete in E1 and forward from E2: 1.041x fewer cycles (IPC 0.382 -> 0.397), 81 MHz closes with more margin (+0.247 ns); the M-stage shift fields removed |
