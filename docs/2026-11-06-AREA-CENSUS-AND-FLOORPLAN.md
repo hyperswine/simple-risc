@@ -251,7 +251,9 @@ be adopted together with L2 and with the area work that gives it margin.
 
 ## Adopting L2 with the floorplan
 
-Not done here. What it takes:
+Done later the same day: [THREE-CLOCK-PORT](2026-11-06-THREE-CLOCK-PORT.md)
+(84.447 MHz from source, board-passing, 1.056x on the board's classifier).
+What it was expected to take, as written before that:
 
 1. Apply `l2-src.patch` and `l2-cache.patch`
    ([evidence/2026-11-05-load-use/](evidence/2026-11-05-load-use/)), build

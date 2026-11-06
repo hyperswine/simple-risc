@@ -871,7 +871,9 @@ data Pipe = Pipe
     -- | C-mode byte PC within the fetched-word FIFO.
     pInstructionPc :: Word32,
     -- | Reads in flight, newest first; one of these words is on the memory
-    -- bus this cycle, 'inflightArrival' entries back.
+    -- bus this cycle, 'inflightArrival' entries back. Only the first three
+    -- entries are read now that every port answers in two edges; the fourth
+    -- is left from the four-clock cache port and synthesis removes it.
     -- (each with the pc predicted to follow it)
     pInflight :: Vec 4 (Maybe (Word32, Word32)),
     -- | Fetched words waiting for decode: a ring, read at pQueueRead and

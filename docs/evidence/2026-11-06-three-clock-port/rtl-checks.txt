@@ -1,0 +1,90 @@
+Verilator, check_pipeline_rtl.py on freshly generated SdramPipelineObserved RTL, 2026-11-06
+== compressed=1 --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 98 fills 36 writes 56252 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no 
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== compressed=1 --cache-ways 2 --cache-line-bits 11
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 97 fills 36 writes 58154 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no 
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== compressed=1 --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 12
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== compressed=1 --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== compressed=1 --boot-loader --loader-command U --upload-pattern zero --upload-words 16 --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+== compressed=1 --boot-loader --loader-command U --upload-pattern sequence --upload-words 16 --raw-readback --rom-file output/ci-readback-rom/readback.hex --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+== compressed=0 --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 109 fills 36 writes 56653 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== compressed=0 --cache-ways 2 --cache-line-bits 11
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 107 fills 36 writes 58514 held clocks; 2 fence.i epoch assertions; eight owned stores/retirements accepted once each, no
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== compressed=0 --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 12
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== compressed=0 --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== compressed=0 --boot-loader --loader-command U --upload-pattern zero --upload-words 16 --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+== compressed=0 --boot-loader --loader-command U --upload-pattern sequence --upload-words 16 --raw-readback --rom-file output/ci-readback-rom/readback.hex --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+
+check_pipeline_cache.py: exit 0, 18 PASS lines
+check_cache_mru.py: exit 0, 5 PASS lines
+check_clock_bridge.py: exit 0, 7 PASS lines
+check_fence_assertion.py: exit 0, 3 PASS lines
+formal/check_formal.py: exit 0
+PASS: branch_prediction.maude: 4 individually checked searches
+PASS: btb_storage.maude: 5 individually checked searches
+PASS: fqueue_storage.maude: 5 individually checked searches

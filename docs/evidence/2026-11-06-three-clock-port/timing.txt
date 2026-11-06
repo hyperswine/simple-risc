@@ -1,0 +1,9 @@
+fprisc-81 preset, built from source (three-clock port, fprisc-81.plan, placement 3):
+PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 84.447 MHz Fmax, 0.504 ns worst setup slack; 0 setup / 0 hold violating endpoints
+
+fprisc-48 preset with the three-clock port (timing only, not loaded):
+PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 48 MHz constraint, 51.875 MHz Fmax, 1.556 ns worst setup slack; 0 setup / 0 hold violating endpoints
+fprisc-72 preset with the three-clock port, no floorplan (placement 0): router failed, 309 unrouted nets (PR0004)
+fprisc-72 configuration with fprisc-81.plan, placement 0 (non-preset build, same options): PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 72 MHz constraint, 72.037 MHz Fmax, 0.007 ns worst setup slack; 0 setup / 0 hold violating endpoints
+fprisc-72 configuration with fprisc-81.plan, placement 3 (pnr_only.sh on that netlist): PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 72 MHz constraint, 74.935 MHz Fmax, 0.544 ns worst setup slack; 0 setup / 0 hold violating endpoints
+fprisc-72 preset as committed (plan, placement 3), built from source: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 72 MHz constraint, 74.935 MHz Fmax, 0.544 ns worst setup slack; 0 setup / 0 hold violating endpoints

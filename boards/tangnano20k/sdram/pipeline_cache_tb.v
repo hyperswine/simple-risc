@@ -53,10 +53,10 @@ module pipeline_cache_tb #(parameter LINE_BITS=7, BANK_SWEEP=0, WAYS=1);
  end
  always @(posedge clk)begin
    if(!reset && !hold_cpu)begin
-     // Four logical clocks: three lookup/select stages plus the registered
-     // return after the BSRAM read.
-     if(logical>=4 && check_read[logical-4])begin
-       if(rdata!==expected[logical-4])$fatal(1,"reply %0d expected %h got %h",logical-4,expected[logical-4],rdata);
+     // Three logical clocks: the request register and two lookup/select
+     // stages; the selected word is the reply.
+     if(logical>=3 && check_read[logical-3])begin
+       if(rdata!==expected[logical-3])$fatal(1,"reply %0d expected %h got %h",logical-3,expected[logical-3],rdata);
        checked=checked+1;
      end
      expected[logical]=address[21] ? rom[address[8:0]]:reference[address[20:0]];

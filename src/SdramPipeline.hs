@@ -13,9 +13,9 @@ decodeTarget address
   | otherwise = R.decodeMemoryTarget address
 
 -- A fixed-latency cache port lets the existing pipeline overlap instructions
--- on hits. The port answers four logical clocks after its request (the cache
--- registers its BSRAM read return), so this image also uses the pipeline's
--- deeper in-flight fetch queue and the one-cycle-longer load wait. On misses
+-- on hits. The port answers three logical clocks after its request, the
+-- internal block RAM's timing, so a load waits two cycles in the commit
+-- stage on either memory (docs/2026-11-06-THREE-CLOCK-PORT.md). On misses
 -- every logical CPU/memory stage freezes together; cycle counters, physical
 -- UART and refresh continue to run on physical clocks.
 initialMachine :: R.Machine
@@ -41,9 +41,8 @@ physical address
 -- Machine. They are captured on the same edge as the old cache a0 stage.
 -- Keep only the other request fields here, then look up those registers
 -- directly. In particular no reset/next-Machine mux drives the cache address.
--- The cache owns the remaining logical stages, including the register after
--- its BSRAM read, so the CPU sees a four-logical-clock port. A hold freezes
--- this slot with the cache stages.
+-- The cache owns the remaining two logical stages, so the CPU sees a
+-- three-logical-clock port. A hold freezes this slot with the cache stages.
 data RequestSlot = RequestSlot
   { slotBusActive :: Bool, slotBusAddress :: R.Word32, slotFast :: Bool,
     slotWrite :: Bool, slotData :: R.Word32 }

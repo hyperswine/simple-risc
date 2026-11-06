@@ -12,7 +12,9 @@ registers the cache's BSRAM read return, making its CPU port four logical
 clocks for the SDRAM images only; the BRAM image keeps three. It also adds the
 build knobs for an over-constrained placement target, a region constraint and a
 placement/cache sweep. The recorded RTL regressions pass; no timing result is
-claimed.
+claimed. The [three-clock port record](../../../docs/2026-11-06-THREE-CLOCK-PORT.md)
+removes that register again: `fprisc-81` now builds with a generated floorplan
+(`fprisc-81.plan`, placement 3) and closes 84.447 MHz, +0.504 ns.
 
 The [integration report](../../../docs/2026-10-19-TANGNANO20K-INTEGRATION.md) records the combined
 cache and architecture-test branches, the selected decode-hazard timing
@@ -31,7 +33,9 @@ default is two-way with `SDRAM_CACHE_WAYS=2` and `SDRAM_CACHE_LINE_BITS=11`
 are separate from the historical results.
 
 `SDRAM_PRESET=fprisc-72` is the faster FP-RISC image: CPU 72 MHz behind the
-clock bridge, SDRAM 48 MHz, two-way 64 KiB cache, placement 0 aimed at 79 MHz.
+clock bridge, SDRAM 48 MHz, two-way 64 KiB cache, aimed at 79 MHz (placement 0
+when it was validated; placement 3 with the `fprisc-81` floorplan since the
+three-clock cache port, a timing build that has not been on the board).
 FP-RISC's whole Tang Nano suite passes on it (`run_tangnano20k_examples.py
 --preset fprisc-72`); see the [fprisc-72 record](../../../docs/2026-11-01-FPRISC-72-PRESET.md).
 
@@ -117,9 +121,11 @@ passed. This is an ambient board result, with full I/O signoff still pending.
 The board's 64-Mbit, 32-bit SDR SDRAM is usable as 8 MiB of main memory.
 The [pipelined experiment](../../../docs/2026-10-16-TANGNANO20K-SDRAM-PIPELINE.md) uses a unified cache
 (64 KiB since 2026-10-19, originally 2 KiB) with 16-byte lines, four posted
-masked writes and four-word SDRAM bursts. Its CPU port is four logical clocks
-since 2026-10-29: the word after the BSRAM read is registered, and only
-external-memory images pay that extra cycle.
+masked writes and four-word SDRAM bursts. Its CPU port is three logical
+clocks, the block RAM image's timing, since 2026-11-06; from 2026-10-29 until
+then the word after the BSRAM read was registered once more. At 81 MHz the
+three-clock port places only with the `fprisc-81` floorplan
+([three-clock port record](../../../docs/2026-11-06-THREE-CLOCK-PORT.md)).
 `build.sh core` or `pipeline` selects it; `serial` retains the earlier 1 KiB
 word-cache image described in the historical results below. The BRAM image
 remains separate. RV32IM is the default. The optional C frontend passes board

@@ -1140,12 +1140,13 @@ e2Value x =
 -- encodings, misaligned targets, fetch faults) and any interrupt hands
 -- over: when it reaches the commit stage the pipeline is flushed and the
 -- phases run it from Fetch.
--- | Which 'pInflight' entry this cycle's memory word belongs to. The internal
--- block RAM's port answers two edges after its read address; an external
--- cache registers its own BSRAM read return, so it answers one edge later and
--- the word on the bus is the older of the two.
-inflightArrival :: Machine -> Index 4
-inflightArrival machine = if cpuExternalMemory machine then 3 else 2
+-- | Which 'pInflight' entry this cycle's memory word belongs to. Both memory
+-- ports answer two edges after their read address: the internal block RAM,
+-- and the external cache, whose port is three logical clocks since
+-- 2026-11-06 (it no longer registers its BSRAM read return; a floorplan keeps
+-- the route short instead, docs/2026-11-06-THREE-CLOCK-PORT.md).
+inflightArrival :: Index 4
+inflightArrival = 2
 
 -- | The commit stage's multiply operands, read every cycle by the
 -- free-running DSP operand register (a don't-care unless M multiplies).
@@ -1406,8 +1407,8 @@ pipeStepTracedWith decodeTarget machine memoryWord =
             store1 = plainMemory1 && storing1
             storeWord1 = store1 && funct31 == 2
             multiplying1 = execMulDiv control && not (testBit funct31 2)
-            -- An external cache answers one edge later (see 'inflightArrival')
-            wait1 = if load1 then (if cpuExternalMemory machine then 3 else 2) else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
+            -- A load's word arrives two edges after its read (see 'inflightArrival')
+            wait1 = if load1 then 2 else if store1 && not storeWord1 && not (cpuExternalMemory machine) then 2 else if multiplying1 then 4 else 0
             refetch1 = e1Size x == 0
             addSub1 = if execSubtract control then a - op2 else a + op2
             other1 = case kind1 of
@@ -1534,11 +1535,10 @@ pipeStepTracedWith decodeTarget machine memoryWord =
          in (fetchedWord (fPc f, fPredicted f) word) {fRaw = fRaw f, fSize = fSize f}
       -- Fetch ------------------------------------------------------------------
       inflight = pInflight pipe
-      -- The word issued 'inflightArrival' cycles ago is on the bus now. The
-      -- internal block RAM's port answers two edges after its read address;
-      -- an external cache (SdramPipeline) registers its BSRAM read return as
-      -- well, so it answers one edge later.
-      arrival = (`fetchedWord` memoryWord) <$> (inflight !! inflightArrival machine)
+      -- The word issued 'inflightArrival' cycles ago is on the bus now: both
+      -- the internal block RAM and the external cache (SdramPipeline) answer
+      -- two edges after their read address.
+      arrival = (`fetchedWord` memoryWord) <$> (inflight !! inflightArrival)
       readPointer = pQueueRead pipe
       writePointer = pQueueWrite pipe
       waiting = writePointer /= readPointer

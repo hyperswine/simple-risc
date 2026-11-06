@@ -1,0 +1,12 @@
+# The fprisc-81 floorplan, which fprisc-72 shares
+# (docs/2026-11-06-AREA-CENSUS-AND-FLOORPLAN.md and
+# docs/2026-11-06-THREE-CLOCK-PORT.md): the slow path's registers leave the
+# middle of the die, so the pipeline's memory-facing stages can sit beside
+# the cache and its three-clock port places. Each region has about 1.5 times
+# the slices its group's logic needs.
+#
+# Registers one LUT cone from the pipeline stay unplaced: moving them would
+# stretch a pipeline path (cpuInterruptDue alone feeds 1,162 registers).
+free    ^pipeline
+csr     R[2:9]C[2:55]     ^machine: csr, trap, counters
+bus     R[38:53]C[2:19]   ^machine: bus and devices

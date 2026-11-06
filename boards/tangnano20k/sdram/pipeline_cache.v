@@ -1,7 +1,7 @@
-// Fixed four-logical-clock CPU word port, with a blocking line refill.
+// Fixed three-logical-clock CPU word port, with a blocking line refill.
 // The CPU wrapper owns the request register; this cache owns its two lookup
-// stages and the return register after the BSRAM read. A miss freezes the
-// CPU and every stage together. Physical
+// stages, and the word selected after the BSRAM read goes straight to the
+// CPU. A miss freezes the CPU and every stage together. Physical
 // clocks, SDRAM refresh, and the ordered masked-write queue keep advancing.
 // Address bit21 selects boot ROM; bits20:0 are full SDRAM word addresses.
 module sdram_pipeline_cache #(
@@ -138,13 +138,15 @@ module sdram_pipeline_cache #(
    merged=before_word;
    for(k=0;k<4;k=k+1)if(lanes[k])merged[k*8+:8]=data[k*8+:8];
  end endfunction
- // The return register after the BSRAM read. cpu_word is the word selected
- // for the request in A2 (old timing, still what the write-update store path
- // merges into); cpu_rdata repeats it one advancing edge later, so the CPU's
- // port is four logical clocks. Both are held while the CPU is frozen, so the
- // CPU reads a stable word on the edge that releases it.
- reg [31:0] cpu_word,cpu_rdata_return;
- assign cpu_rdata=cpu_rdata_return;
+ // cpu_word is the word selected for the request in A2, which the
+ // write-update store path also merges into. It is the CPU's read data, so
+ // the port is three logical clocks; from 2026-10-29 to 2026-11-06 a second
+ // register repeated it to split the cache-to-core route, which the fprisc-81
+ // floorplan now keeps short (docs/2026-11-06-THREE-CLOCK-PORT.md). It is
+ // held while the CPU is frozen, so the CPU reads a stable word on the edge
+ // that releases it.
+ reg [31:0] cpu_word;
+ assign cpu_rdata=cpu_word;
  // cpu_word holds the store's own lookup (with older stores merged), so
  // the updated word is complete even for a partial store.
  wire [31:0] store_word=merged(cpu_word,d2,m2);
@@ -226,7 +228,7 @@ module sdram_pipeline_cache #(
      clearing<=1;clear_index<=0;state<=IDLE;write_count<=0;
      write_head<=0;write_tail<=0;v1<=0;v2<=0;
      hit2<=0;keep2<=0;way2<=0;conflict2<=0;fill_way<=0;
-     last_write<=0;last_update<=0;fill_forward<=0;cpu_word<=0;cpu_rdata_return<=0;tag_conflict<=0;
+     last_write<=0;last_update<=0;fill_forward<=0;cpu_word<=0;tag_conflict<=0;
    end else begin
      if(clearing)begin
        clear_index<=clear_index+1'b1;
@@ -240,7 +242,6 @@ module sdram_pipeline_cache #(
        way2<=hit1 ? hit_way1:victim_way1;
        conflict2<=tag_conflict && !a1[21] && !evicted;
        cpu_word<=forwarded;
-       cpu_rdata_return<=cpu_word;
        fill_forward<=0;
        last_write<=push;last_update<=update;last_address<=a2;last_data<=d2;last_mask<=m2;last_word<=store_word;
      end

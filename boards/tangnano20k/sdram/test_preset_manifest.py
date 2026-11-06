@@ -93,12 +93,13 @@ class PresetManifest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         settings = dict(line.split('=', 1) for line in result.stdout.split())
         self.assertEqual(settings, dict(SDRAM_CPU_FREQ_MHZ='72', SDRAM_FREQ_MHZ='48', SDRAM_CACHE_WAYS='2',
-                                        SDRAM_CACHE_LINE_BITS='11', SDRAM_PLACE_OPTION='0',
+                                        SDRAM_CACHE_LINE_BITS='11', SDRAM_PLACE_OPTION='3',
                                         SDRAM_TARGET_MHZ='79', SDRAM_MAP_OPTION='3', SDRAM_ROUTE_OPTION='1',
                                         SDRAM_ROUTE_MAXFAN='8'))
         config = preset_manifest.PRESETS['fprisc-72']
         self.assertEqual((config['cpu_mhz'], config['memory_mhz'], config['cache_ways'], config['cache_line_bits'],
-                          config['placement'], config['placer_target_mhz']), (72, 48, 2, 11, 0, 79))
+                          config['placement'], config['placer_target_mhz']), (72, 48, 2, 11, 3, 79))
+        self.assertEqual(config['floorplan'], 'fprisc-81.plan')
 
     def test_preset_72_refuses_conflicts_and_what_if_constraints(self):
         for name, value, message in [('SDRAM_CPU_FREQ_MHZ', '96', 'requires SDRAM_CPU_FREQ_MHZ=72'),
@@ -127,7 +128,7 @@ class PresetManifest(unittest.TestCase):
             out = Path(temp)
             (out / 'build-manifest.json').write_text(json.dumps(dict(preset='fprisc-72', ready=False, inputs=inp)))
             for name in ('impl/pnr/sdram_test.fs', 'impl/pnr/sdram_test.tr', 'pipeline_top.v', 'pll.v',
-                         'clocks.sdc', 'build.tcl', 'rtl.v'):
+                         'clocks.sdc', 'build.tcl', 'pins.cst', 'rtl.v'):
                 (out / name).parent.mkdir(parents=True, exist_ok=True)
                 (out / name).write_text('x')
             with patch.dict(os.environ, SDRAM_PRESET='fprisc-72'), \
@@ -140,6 +141,30 @@ class PresetManifest(unittest.TestCase):
             report = json.loads((out / 'build-manifest.json').read_text())
             self.assertTrue(report['ready'])
             self.assertEqual(report['rom_identity']['cpu_mhz'], 72)
+
+    def test_preset_81_pins_its_placement_and_floorplan(self):
+        env = {k: v for k, v in os.environ.items() if not k.startswith('SDRAM_')}
+        env['SDRAM_PRESET'] = 'fprisc-81'
+        result = subprocess.run(
+            ['bash', '-c', 'source "$1"; printf "%s %s %s\\n" "$SDRAM_CPU_FREQ_MHZ" "$SDRAM_PLACE_OPTION" "$SDRAM_FLOORPLAN"',
+             'bash', str(PRESET)], env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.split(), ['81', '3', 'boards/tangnano20k/sdram/fprisc-81.plan'])
+        config = preset_manifest.PRESETS['fprisc-81']
+        self.assertEqual((config['placement'], config['floorplan']), (3, 'fprisc-81.plan'))
+        self.assertTrue((PRESET.parent / config['floorplan']).is_file())
+        self.assertIn('boards/tangnano20k/sdram/fprisc-81.plan', preset_manifest.inputs())
+        # The core's sub-modules are inputs too, not only src/*.hs.
+        self.assertIn('src/SimpleRisc/Types.hs', preset_manifest.inputs())
+
+    def test_only_the_split_clock_presets_take_their_floorplan(self):
+        result = self.source_preset(SDRAM_PRESET='fprisc-48', SDRAM_FLOORPLAN='boards/tangnano20k/sdram/fprisc-81.plan')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('SDRAM_FLOORPLAN is incompatible', result.stderr)
+        for name in ('fprisc-72', 'fprisc-81'):
+            result = self.source_preset(SDRAM_PRESET=name, SDRAM_FLOORPLAN='other.plan')
+            self.assertNotEqual(result.returncode, 0, name)
+            self.assertIn('requires SDRAM_FLOORPLAN=', result.stderr)
 
     def test_finish_refuses_a_manifest_from_the_other_preset(self):
         with tempfile.TemporaryDirectory() as temp:

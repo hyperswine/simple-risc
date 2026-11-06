@@ -15,21 +15,26 @@ CONFIG = dict(xlen=32, compressed=True, cpu_mhz=48, memory_mhz=48,
               cache_line_bits=12, phase_degrees=135,
               placement=2, write_update=True)
 # The faster image: the CPU on its own clock behind the bridge, and the build
-# options that place it with margin at 72 MHz (see preset.sh).
+# options that place it with margin at 72 MHz (see preset.sh). With the
+# three-clock cache port it routes only with the floorplan, so it takes
+# fprisc-81's plan and placement (docs/2026-11-06-THREE-CLOCK-PORT.md).
 CONFIG_72 = dict(xlen=32, compressed=True, cpu_mhz=72, memory_mhz=48,
                  ram_bytes=8388608, cache_bytes=65536, cache_ways=2,
                  cache_line_bits=11, phase_degrees=135,
-                 placement=0, write_update=True, placer_target_mhz=79,
-                 map_option=3, route_option=1, route_maxfan=8)
-# The 81 MHz image. Placement 3 closed the gate with the pipelined DSP
-# multiply (docs/2026-11-02-CPU81-TIMING.md); with E2->D forwarding it
-# falls to 70.9 MHz, while placements 1 and 2 close at 81.24 MHz
-# (docs/2026-11-02-E2D-FORWARDING.md), so the preset uses placement 1.
+                 placement=3, write_update=True, placer_target_mhz=79,
+                 map_option=3, route_option=1, route_maxfan=8,
+                 floorplan='fprisc-81.plan')
+# The 81 MHz image. With the three-clock cache port it places only with the
+# fprisc-81.plan floorplan, best at placement 3
+# (docs/2026-11-06-THREE-CLOCK-PORT.md). Before that: placement 3 with the
+# pipelined DSP multiply (docs/2026-11-02-CPU81-TIMING.md), then placement 1
+# with E2->D forwarding (docs/2026-11-02-E2D-FORWARDING.md).
 CONFIG_81 = dict(xlen=32, compressed=True, cpu_mhz=81, memory_mhz=48,
                  ram_bytes=8388608, cache_bytes=65536, cache_ways=2,
                  cache_line_bits=11, phase_degrees=135,
-                 placement=1, write_update=True, placer_target_mhz=89,
-                 map_option=3, route_option=1, route_maxfan=8)
+                 placement=3, write_update=True, placer_target_mhz=89,
+                 map_option=3, route_option=1, route_maxfan=8,
+                 floorplan='fprisc-81.plan')
 PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72, 'fprisc-81': CONFIG_81}
 
 
@@ -45,14 +50,19 @@ def sha(path):
 
 
 def inputs():
-    paths = list((ROOT / 'src').glob('*.hs'))
+    paths = list((ROOT / 'src').rglob('*.hs'))
     paths += list((ROOT / 'boards/tangnano20k/sdram').glob('*.v'))
+    paths += list((ROOT / 'boards/tangnano20k/sdram').glob('*.plan'))
     paths += [ROOT / name for name in (
         'cabal.project', 'cabal.project.freeze', 'simple-risc.cabal', 'bin/Clash.hs',
         'boards/tangnano20k/tangnano20k.cst', 'boards/tangnano20k/bootrom/bootrom.hex',
         'boards/tangnano20k/bootrom/bootrom-sdram.hex',
         'boards/tangnano20k/sdram/build.sh', 'boards/tangnano20k/sdram/preset.sh',
         'boards/tangnano20k/sdram/preset_manifest.py',
+        'boards/tangnano20k/sdram/floorplan_cst.py',
+        'boards/tangnano20k/sdram/area_census.py',
+        'boards/tangnano20k/sdram/path_census.py',
+        'tools/PipelineLayout.hs',
         'boards/tangnano20k/sdram/io_timing.py',
         'boards/tangnano20k/sdram/io_timing_gw2ar18_qn88.json',
         'boards/tangnano20k/check_gowin_timing.py')]
@@ -116,7 +126,7 @@ def main():
                         str(timing), *clocks], check=True)
         artifacts = {}
         for name in ('impl/pnr/sdram_test.fs', 'impl/pnr/sdram_test.tr',
-                     'pipeline_top.v', 'pll.v', 'clocks.sdc', 'build.tcl'):
+                     'pipeline_top.v', 'pll.v', 'clocks.sdc', 'build.tcl', 'pins.cst'):
             path = out / name
             if not path.stat().st_size:
                 raise SystemExit(f'empty build artifact: {path}')

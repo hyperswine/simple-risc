@@ -176,6 +176,16 @@ pll=pll.replace('PSDA_SEL("1010")',f'PSDA_SEL("{phase_bits}")')
 (out/'pll.v').write_text(pll)
 (out/'memory.v').write_text((src/'memory.v').read_text().replace('FREQ=54000000',f'FREQ={freq*1000000}'))
 PYTHON
+# A floorplan: a plan for floorplan_cst.py, turned into region constraints
+# between synthesis and place and route, because the constraints name the
+# registers the synthesized netlist actually has.
+floorplan="${SDRAM_FLOORPLAN:-}"
+if [[ -n "$floorplan" ]]; then
+  [[ "$floorplan" != /* ]] && floorplan="$root/$floorplan"
+  [[ -f "$floorplan" ]] || { echo "SDRAM_FLOORPLAN does not exist: $floorplan" >&2; exit 1; }
+  [[ "$mode" == pipeline ]] || { echo "SDRAM_FLOORPLAN requires pipeline mode" >&2; exit 1; }
+  (cd "$root" && cabal run -v0 pipeline-layout) > "$out/layout.json"
+fi
 if [[ -n "${SDRAM_REGION_CST:-}" ]]; then
   region="${SDRAM_REGION_CST}"
   [[ "$region" != /* ]] && region="$root/$region"
@@ -224,6 +234,21 @@ if [[ -n "$rtl" ]]; then
 from pathlib import Path
 import sys
 p=Path(sys.argv[1]);p.write_text(p.read_text().replace('run all', 'add_file "'+sys.argv[2]+'"\nrun all'))
+PYTHON
+fi
+if [[ -n "$floorplan" ]]; then
+  python3 - "$out/build.tcl" "$here" "$out" "$floorplan" <<'PYTHON'
+from pathlib import Path
+import sys
+tcl, here, out, plan = sys.argv[1:5]
+steps = f'''run syn
+exec python3 "{here}/floorplan_cst.py" "{plan}" "{out}/impl/gwsynthesis/sdram_test.vg" --layout "{out}/layout.json" -o "{out}/floorplan.cst" 2> "{out}/floorplan.log"
+exec sh -c "printf '\\n' >> '{out}/pins.cst'; cat '{out}/floorplan.cst' >> '{out}/pins.cst'"
+run pnr'''
+p = Path(tcl)
+text = p.read_text()
+assert text.count('run all') == 1
+p.write_text(text.replace('run all', steps))
 PYTHON
 fi
 if [[ "$cpu_freq" == "$freq" ]];then
