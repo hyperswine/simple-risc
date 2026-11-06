@@ -280,6 +280,25 @@ python3 boards/tangnano20k/sdram/sweep_place.py --out output/tangnano20k/place-s
 It writes `sweep-results.json` beside the per-case build directories. Neither
 the sweep nor the region hook qualifies SDRAM I/O.
 
+Region constraints can also be generated from the pipeline's field names
+instead of drawn in FloorPlanner (see the
+[area census and floorplan record](../../../docs/2026-11-06-AREA-CENSUS-AND-FLOORPLAN.md)
+for the constraint syntax and the first results):
+
+```bash
+cabal run -v0 pipeline-layout > layout.json
+python3 boards/tangnano20k/sdram/area_census.py BUILD/impl/gwsynthesis/sdram_test.vg --layout layout.json
+python3 boards/tangnano20k/sdram/floorplan_cst.py PLAN BUILD/impl/gwsynthesis/sdram_test.vg \
+  --layout layout.json --free '^pipeline' -o region.cst
+boards/tangnano20k/sdram/pnr_only.sh BUILD OUT region.cst
+```
+
+`area_census.py` reports the core's LUTs by the register they feed,
+`floorplan_cst.py` turns a plan (`NAME R[a:b]C[c:d] SELECTOR` per line) into
+`GROUP`/`GRP_LOC` statements, and `pnr_only.sh` places and routes an existing
+build's netlist again with the fragment appended, so two runs differ only in
+their constraints.
+
 Five synthesis and routing options are reachable as well; all are unset by
 default, and `SDRAM_PRESET=fprisc-48` rejects them:
 

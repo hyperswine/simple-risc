@@ -1,0 +1,6 @@
+2.3 Max Frequency Summary
+  NO.   Clock Name    Constraint    Actual Fmax    Level   Entity  
+ ===== ============ ============== ============== ======= ======== 
+  1     clk          125.000(MHz)   203.853(MHz)   4       TOP     
+
+2.4 Total Negative Slack Summary

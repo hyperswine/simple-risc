@@ -1,0 +1,4 @@
+# Slow path out of the centre, with room: each region has about 1.5 times
+# the slices its group's logic needs at the canon's packing (1.67 LUT/slice).
+csr     R[2:9]C[2:55]     ^machine: csr, trap, counters
+bus     R[38:53]C[2:19]   ^machine: bus and devices

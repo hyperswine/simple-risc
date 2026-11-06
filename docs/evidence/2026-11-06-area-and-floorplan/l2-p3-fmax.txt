@@ -1,0 +1,14 @@
+2.3 Max Frequency Summary
+  NO.   Clock Name   Constraint    Actual Fmax    Level   Entity  
+ ===== ============ ============= ============== ======= ======== 
+  1     clk_core     81.000(MHz)   84.447(MHz)    4       TOP     
+  2     clk_memory   48.000(MHz)   141.129(MHz)   4       TOP     
+No timing paths to get frequency of clk_27m!
+No timing paths to get frequency of clk_sdram!
+No timing paths to get frequency of pll/cpu/pll/CLKOUTP.default_gen_clk!
+No timing paths to get frequency of pll/cpu/pll/CLKOUTD.default_gen_clk!
+No timing paths to get frequency of pll/cpu/pll/CLKOUTD3.default_gen_clk!
+No timing paths to get frequency of pll/memory/pll/CLKOUTD.default_gen_clk!
+No timing paths to get frequency of pll/memory/pll/CLKOUTD3.default_gen_clk!
+
+2.4 Total Negative Slack Summary

@@ -1,0 +1,15 @@
+Every run: pnr_only.sh on an existing netlist, options of the source build (target 89 MHz, map 3, route 1, route_maxfan 8), 2026-11-06.
+
+f0 canon p1, no constraint: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 82.651 MHz Fmax, 0.247 ns worst setup slack; 0 setup / 0 hold violating endpoints
+f1-slow-out canon p1: constraints accepted, placement completed, routing phase 2 not finished after 12 minutes (canon: 3 minutes); stopped. The top band holds 1,728 slices and the two groups need about 1,850.
+f2-slow-split canon p1: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 78.405 MHz Fmax, -0.409 ns worst setup slack; 126 setup / 0 hold violating endpoints
+f2-slow-split L2 p1: stopped unfinished (same flaw as the canon run: cpuInterruptDue in the csr group)
+f3-slow-free canon p1: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 64.545 MHz Fmax, -3.147 ns worst setup slack; 425 setup / 0 hold violating endpoints
+f3-slow-free L2 p0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 81.055 MHz Fmax, 0.008 ns worst setup slack; 0 setup / 0 hold violating endpoints [CPU time = 0h 8m 12s, Elapsed time = 0h 8m 27s]
+f3-slow-free L2 p1: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 78.766 MHz Fmax, -0.350 ns worst setup slack; 154 setup / 0 hold violating endpoints [CPU time = 0h 8m 13s, Elapsed time = 0h 8m 31s]
+f3-slow-free L2 p2: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 78.766 MHz Fmax, -0.350 ns worst setup slack; 154 setup / 0 hold violating endpoints [CPU time = 0h 9m 51s, Elapsed time = 0h 10m 8s]
+f3-slow-free L2 p3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 84.447 MHz Fmax, 0.504 ns worst setup slack; 0 setup / 0 hold violating endpoints [CPU time = 0h 2m 1s, Elapsed time = 0h 2m 4s]
+f4-reset-centre L2 p1: router failed, 284 unrouted nets (PR0004)
+f4-reset-centre L2 p3: FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 55.850 MHz Fmax, -5.559 ns worst setup slack; 82 setup / 0 hold violating endpoints
+
+Unconstrained L2 (docs/evidence/2026-11-05-load-use/timing.txt): p1 69.635 MHz, p3 61.904 MHz.

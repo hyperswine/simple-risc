@@ -1,0 +1,4 @@
+# Slow path out of the centre: CSR/trap/counters and the bus/devices to the
+# top band above BSRAM row 10, the divide unit to the bottom-left corner.
+slow    R[2:9]C[2:55]    ^machine: (csr, trap, counters|bus and devices)
+divide  R[40:53]C[2:18]  ^machine: multiply/divide

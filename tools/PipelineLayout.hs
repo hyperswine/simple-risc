@@ -8,12 +8,12 @@
 -- register width against this metadata before attributing a bit.
 module Main (main) where
 
-import Clash.Prelude (Vec, Unsigned, Signed, BitVector, Index)
+import Clash.Prelude (Bit, Vec, Unsigned, Signed, BitVector, Index)
 import Data.Kind (Type)
 import Data.List (intercalate, mapAccumL)
 import Data.Proxy (Proxy(..))
 import GHC.Generics
-import GHC.TypeNats (KnownNat, natVal)
+import GHC.TypeNats (KnownNat, natVal, type (+))
 import qualified SimpleRisc.Types as R
 
 class Width a where
@@ -41,6 +41,7 @@ instance GWidth U1 where
   gwidth _ = (1, 0)
 
 instance Width Bool where width _ = 1
+instance Width Bit where width _ = 1
 instance KnownNat n => Width (Unsigned n) where width _ = fromIntegral (natVal (Proxy @n))
 instance KnownNat n => Width (Signed n) where width _ = fromIntegral (natVal (Proxy @n))
 instance KnownNat n => Width (BitVector n) where width _ = fromIntegral (natVal (Proxy @n))
@@ -48,6 +49,7 @@ instance KnownNat n => Width (Index n) where width _ = ceilingLog2 (fromIntegral
 instance (KnownNat n, Width a) => Width (Vec n a) where width _ = fromIntegral (natVal (Proxy @n)) * width (Proxy @a)
 instance Width a => Width (Maybe a) where width _ = 1 + width (Proxy @a)
 instance (Width a, Width b) => Width (a, b)
+instance (Width a, Width b, Width c) => Width (a, b, c)
 instance Width R.CommitKind where width _ = fst (gwidth (Proxy @(Rep R.CommitKind)))
 instance Width R.ExecuteControl
 instance Width R.CompareResults
@@ -61,6 +63,30 @@ instance Width R.BtbEntry
 instance Width a => Width (R.Slot a)
 instance Width R.Pipe
 instance Width R.StagePayloads
+-- The machine outside the pipe, for the area census (area_census.py).
+-- CpuPhase, BusPhase and MemoryTarget are one-hot like CommitKind.
+instance Width R.CpuPhase where width _ = fst (gwidth (Proxy @(Rep R.CpuPhase)))
+instance Width R.BusPhase where width _ = fst (gwidth (Proxy @(Rep R.BusPhase)))
+instance Width R.MemoryTarget where width _ = fst (gwidth (Proxy @(Rep R.MemoryTarget)))
+instance Width R.FetchSource
+instance Width R.TrapRegisters
+instance Width R.Counter64
+instance Width R.MulDivUnit
+instance Width R.MdStep
+instance Width R.BusState
+instance Width R.BusRequest
+instance Width R.BusResponse
+instance Width R.BusEffect
+instance Width R.Devices
+instance Width R.Spi
+instance Width R.Io
+instance Width R.Dma
+instance Width R.DmaPhase
+instance Width R.RxState
+instance Width R.TxState
+instance (KnownNat n, KnownNat (n + 1)) => Width (R.Fifo n)
+instance Width R.Machine
+instance Width R.HeldState
 
 class GFields (f :: Type -> Type) where
   gfields :: Proxy f -> [(String, Int)]
@@ -84,4 +110,7 @@ main :: IO ()
 main = putStrLn $ "[" ++ intercalate ","
   [record "Pipe" (Proxy @R.Pipe), record "StagePayloads" (Proxy @R.StagePayloads),
    record "Fetched" (Proxy @R.Fetched), record "ExecuteOne" (Proxy @R.ExecuteOne),
-   record "ExecuteTwo" (Proxy @R.ExecuteTwo), record "MemoryStage" (Proxy @R.MemoryStage)] ++ "]"
+   record "ExecuteTwo" (Proxy @R.ExecuteTwo), record "MemoryStage" (Proxy @R.MemoryStage),
+   record "Machine" (Proxy @R.Machine), record "HeldState" (Proxy @R.HeldState),
+   record "Devices" (Proxy @R.Devices), record "TrapRegisters" (Proxy @R.TrapRegisters),
+   record "MulDivUnit" (Proxy @R.MulDivUnit), record "BusState" (Proxy @R.BusState)] ++ "]"

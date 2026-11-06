@@ -1,0 +1,10 @@
+//Copyright (C)2014-2026 Gowin Semiconductor Corporation.
+//All rights reserved.
+//File Title: Post-Place file
+//Tool Version: V1.9.12.04
+//Part Number: GW2AR-LV18QN88C8/I7
+//Device: GW2AR-18
+//Device Version: C
+//Created Time: Fri Nov  6 17:59:28 2026
+
+alu PLACE_DSP_R19[0][A] //R19C2[0]

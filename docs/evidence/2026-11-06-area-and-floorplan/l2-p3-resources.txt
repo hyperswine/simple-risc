@@ -1,0 +1,31 @@
+3. Resource Usage Summary
+
+  --------------------------------------------------------------------------------
+  Resources                   | Usage                               | Utilization
+  --------------------------------------------------------------------------------
+  Logic                       | 15170/20736                         |  74%
+    --LUT,ALU,ROM16           | 14978(13977 LUT, 1001 ALU, 0 ROM16) | -
+    --SSRAM(RAM16)            | 32                                  | -
+  Register                    | 5436/15915                          |  35%
+    --Logic Register as Latch | 0/15552                             |  0%
+    --Logic Register as FF    | 5383/15552                          |  35%
+    --I/O Register as Latch   | 0/363                               |  0%
+    --I/O Register as FF      | 53/363                              |  15%
+  CLS                         | 8717/10368                          |  85%
+  I/O Port                    | 10/66                               |  16%
+  I/O Buf                     | 10                                  | -
+    --Input Buf               | 4                                   | -
+    --Output Buf              | 6                                   | -
+    --Inout Buf               | 0                                   | -
+  BSRAM                       | 40/46                               | 87%
+    --SDPB                    | 37
+    --SDPX9B                  | 2
+    --pROM                    | 1
+  DSP                         | 2.5/24                              | 11%
+    --MULT18X18               | 1
+    --MULTADDALU18X18         | 2
+  ================================================================================
+
+
+
+4. I/O Bank Usage Summary
