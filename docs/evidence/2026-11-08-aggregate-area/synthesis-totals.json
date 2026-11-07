@@ -1,0 +1,23 @@
+{
+ "baseline": {
+  "logic": 15074,
+  "lut": 13981,
+  "alu": 901,
+  "register": 5436,
+  "alu54d": 0
+ },
+ "aggregate": {
+  "logic": 14620,
+  "lut": 13560,
+  "alu": 868,
+  "register": 5336,
+  "alu54d": 3
+ },
+ "aggregate-with-csr-settle": {
+  "logic": 14572,
+  "lut": 13512,
+  "alu": 868,
+  "register": 5336,
+  "alu54d": 3
+ }
+}

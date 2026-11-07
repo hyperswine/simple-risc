@@ -1,0 +1,147 @@
+diff --git a/src/SdramPipeline.hs b/src/SdramPipeline.hs
+index 993337e..84f2516 100644
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -179,8 +179,47 @@ withBtb stored pipe = pipe {R.pBtb=repeat stored}
+ -- it must never supply a board timing/resource measurement.
+ circuitWithObservations :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
+  (BoardOutput dom, Signal dom R.PipelineTrace)
+-circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace)
++circuitWithObservations serialRx memoryData memoryHeld sdMiso = (output,trace)
++ where (output,trace,_)=circuitWith Nothing serialRx memoryData memoryHeld sdMiso
++
++-- | The three 64-bit counters kept outside 'Machine', in order mcycle, mtime,
++-- minstret, and the commands that drive them (see 'CounterCommands').
++type ExternalCounters dom = (Signal dom R.Counter64, Signal dom R.Counter64, Signal dom R.Counter64)
++
++-- | What an external counter owner needs each cycle, with 'tickCounter'
++-- timing: mcycle and minstret take the registered CSR write command, minstret
++-- counts the registered retirement pulse and loads only while the machine
++-- does; mtime takes this cycle's CLINT write and always counts.
++data CounterCommands = CounterCommands
++  { ccCycleWrite :: Maybe (Bool, R.Word32), ccTimeWrite :: Maybe (Bool, R.Word32),
++    ccInstretWrite :: Maybe (Bool, R.Word32), ccInstretIncrement :: Bool, ccInstretEnable :: Bool }
++  deriving (Generic,NFDataX)
++
++circuitWithExternalCounters :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit -> ExternalCounters dom ->
++ (BoardOutput dom, Signal dom R.PipelineTrace, Signal dom CounterCommands)
++circuitWithExternalCounters serialRx memoryData memoryHeld sdMiso counters = circuitWith (Just counters) serialRx memoryData memoryHeld sdMiso
++
++counterHalf :: Unsigned 12 -> Unsigned 12 -> Maybe (Unsigned 12, R.Word32) -> Maybe (Bool, R.Word32)
++counterHalf low high command = case command of
++  Just (address,value) | address==low -> Just (False,value)
++                       | address==high -> Just (True,value)
++  _ -> Nothing
++
++-- With external counters, Machine's own copies are written back as constants
++-- (so synthesis removes them and HeldState's counter halves) and the injected
++-- values take their place in 'running' every cycle.
++circuitWith :: HiddenClockResetEnable dom => Maybe (ExternalCounters dom) -> Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
++ (BoardOutput dom, Signal dom R.PipelineTrace, Signal dom CounterCommands)
++circuitWith externalCounters serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace,commands)
+  where
++ commands=(\m next held -> CounterCommands (counterHalf 0xb00 0xb80 (R.cpuCounterWrite m)) (R.cpuTimeWrite next)
++   (counterHalf 0xb02 0xb82 (R.cpuCounterWrite m)) (R.cpuCountRetirement m) (not held)) <$> running <*> machineNextRaw <*> holding
++ withoutCounters m=case externalCounters of
++   Nothing -> m
++   Just _ -> m {R.cpuCycle=R.initialCounter,R.cpuInstret=R.initialCounter,R.cpuDevices=(R.cpuDevices m) {R.devMtime=R.initialCounter}}
++ withCounters=case externalCounters of
++   Nothing -> id
++   Just (cycle,time,instret) -> \ms -> (\m c t i -> m {R.cpuCycle=c,R.cpuInstret=i,R.cpuDevices=(R.cpuDevices m) {R.devMtime=t}}) <$> ms <*> cycle <*> time <*> instret
+  trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
+  receivedNow=R.uartRx (register high (register high serialRx))
+  -- Fold not (cpuInRom machine) into the emergency flip-flop D input so
+@@ -191,7 +230,8 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
+  -- the counters and the received-byte holding register load every cycle, and
+  -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
+  stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
+- machineNext=(\(m,_,_,_) -> m) <$> stepped
++ machineNextRaw=(\(m,_,_,_) -> m) <$> stepped
++ machineNext=withoutCounters <$> machineNextRaw
+  stageNext=(\(_,_,ps,_) -> ps) <$> stepped
+  machineOutput=(\(_,o,_,_) -> o) <$> stepped
+  holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
+@@ -215,7 +255,7 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
+  pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
+  btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
+  effectivePipe=withBtb <$> btb <*> pipeState
+- running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
++ running=withCounters (R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine)))
+  breaking=emergency
+  rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
+  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
+diff --git a/src/SimpleRisc.hs b/src/SimpleRisc.hs
+index 3f026a3..3bfc251 100644
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -402,6 +402,7 @@ initialMachine =
+       cpuInstret = initialCounter,
+       cpuCountRetirement = False,
+       cpuCounterWrite = Nothing,
++      cpuTimeWrite = Nothing,
+       cpuMulDiv = MulDivUnit MdPrepare 0 0 0 0 False False False False,
+       cpuMulProducts = repeat 0,
+       cpuMulOperandsMirror = (0, 0, 0),
+@@ -760,6 +761,10 @@ machineStepCoreStagesBy cpuStepWith decodeTarget machine (memoryWord, received,
+             bootCause = if effect == ConsumeBootCause then causeNone else bootCause machine',
+             cpuCycle = tickCounter True (counterWrite 0xb00 0xb80) (cpuCycle machine),
+             cpuInstret = tickCounter (cpuCountRetirement machine) (counterWrite 0xb02 0xb82) (cpuInstret machine),
++            cpuTimeWrite = case effect of
++              DeviceWrite ClintTimeLoTarget value -> Just (False, value)
++              DeviceWrite ClintTimeHiTarget value -> Just (True, value)
++              _ -> Nothing,
+             -- Devices step from their registers; a reset this cycle quietens
+             -- them after the time and compare logic, keeping time.
+             cpuDevices = if clearRegisters machine' then initialDevices {devMtime = devMtime devices'} else devices',
+@@ -840,6 +845,7 @@ systemReset cause machine =
+       cpuInterruptEnable = 0,
+       cpuCountRetirement = False,
+       cpuCounterWrite = Nothing,
++      cpuTimeWrite = Nothing,
+       systemBus = (systemBus machine) {busPhase = BusIdle},
+       cpuBusRequest = Nothing,
+       cpuBusResponse = Nothing,
+@@ -1999,7 +2005,7 @@ pipelinedCpuStepStages decodeTarget machine memoryWord _received _txReady emerge
+       BusWait -> busWaitStep machine
+       MulDiv ->
+         let instruction = cpuInstruction machine
+-         in case mulDivStep (instructionFunct3 instruction) (cpuA machine) (cpuB machine) (cpuMulDiv machine) of
++         in case divideOnlyStep (resize (instructionFunct3 instruction)) (cpuA machine) (cpuB machine) (cpuMulDiv machine) of
+               Left unit -> (machine {cpuMulDiv = unit}, Nothing, idle)
+               Right result ->
+                 withRegister
+diff --git a/src/SimpleRisc/Decode.hs b/src/SimpleRisc/Decode.hs
+index b7435a9..03d0fda 100644
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -370,6 +370,14 @@ shiftResult funct3 funct7 value amount
+   | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
+   | otherwise = value `shiftR` amount
+ 
++-- | Division-only service port: 00 DIV, 01 DIVU, 10 REM, 11 REMU.
++-- The pipeline multiplies in DSPs. Making bit 2 constant here lets Clash
++-- eliminate the iterative multiply datapath without changing division timing
++-- or the shared state layout. The multi-cycle reference keeps mulDivStep.
++{-# INLINE divideOnlyStep #-}
++divideOnlyStep :: BitVector 2 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
++divideOnlyStep operation = mulDivStep (0b100 .|. resize operation)
++
+ -- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
+ -- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.
+ mulDivStep :: BitVector 3 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
+diff --git a/src/SimpleRisc/Types.hs b/src/SimpleRisc/Types.hs
+index 4242d13..ab355d2 100644
+--- a/src/SimpleRisc/Types.hs
++++ b/src/SimpleRisc/Types.hs
+@@ -603,6 +603,11 @@ data Machine = Machine
+     -- | Registered pulse and CSR write request, applied on the next clock.
+     cpuCountRetirement :: Bool,
+     cpuCounterWrite :: Maybe (Unsigned 12, Word32),
++    -- | This cycle's CLINT mtime write (high half, value), as 'tickCounter'
++    -- applies it to 'devMtime': set combinationally each step for a circuit
++    -- that keeps mtime outside 'Machine' (SdramPipeline's DSP counters).
++    -- Nothing reads it back, so its register is removed by synthesis.
++    cpuTimeWrite :: Maybe (Bool, Word32),
+     cpuMulDiv :: MulDivUnit,
+     -- | The pipelined multiply's four partial products, injected each cycle
+     -- like cpuRfA/cpuRfB. In hardware they come from two free-running

@@ -373,3 +373,47 @@ improves timing robustly across the two placements. Wide enable distribution
 remains, and the limiting paths shift to BRAM feedback or pipeline control.
 The trial report retains patches, model tests, functional receipts, constraints,
 area/fanout counts, hard-block placements and timing/congestion evidence.
+
+## Acceptance method, revised on 2026-11-08
+
+The three experiment records above judged each change by Fmax at placement 3
+and placement 0 against the baseline's 84.447 and 81.055 MHz. That cannot
+separate a design effect from placement: the baseline netlist itself spans
+78.8 to 84.4 MHz across placement options 0 to 3 with the same floorplan
+([THREE-CLOCK-PORT](2026-11-06-THREE-CLOCK-PORT.md)); the combined-reset
+netlist spans 67.7 to 81.2 MHz across three floorplans at one placement; the
+DSP counter is behind the baseline at placement 3 and ahead at placement 0.
+Every change re-rolls the placement, and the median roll is below the
+baseline's best, so the method reports a regression for any change at all.
+None of the recorded "regressions", and none of the "improvements", is
+established by those runs. From here:
+
+1. **Intermediate steps are judged on deterministic metrics only**: the
+   functional gates (Haskell properties, the Verilator cache/CDC guest, the
+   warm-reset equivalence bench where reset or state ownership changes, the
+   vendor model where a hard block is used); synthesized core LUT4
+   equivalents by structure (`area_census.py`), whole-design logic and
+   registers; direct reset and clock-enable loads; and logic levels per
+   pipeline loop from a 3,000-path census at one placement. Occupied slices
+   and Fmax from a single placement are recorded but decide nothing.
+2. **Routing is measured as a distribution, never a draw.** Baseline and
+   candidate are each routed at placement options 0 to 4 and placer targets
+   87, 89 and 91 MHz (the tool has no seed; these fifteen settings are the
+   available draws), with regenerated floorplans. Report the pass count at
+   81 MHz and the median Fmax; a candidate is "not worse" when both are
+   within one pass and 1 MHz of the baseline's, and "better" only when the
+   whole distribution moves. Report every failure.
+3. **Only aggregates are routed.** A candidate earns a routing distribution
+   when it removes at least 1,500 LUT4 equivalents, or cuts the logic depth
+   of a limiting loop, or changes the floorplan rules. Smaller steps are
+   combined first and judged by item 1.
+4. **Floorplans are regenerated for each netlist and sized from the
+   census**: each region should get about 1.5 times the slices its group's
+   logic needs at the design's packing. Today the plan carries fixed rows;
+   deriving them from the census is the next change to `floorplan_cst.py`.
+5. Unchanged: identical ROM bytes for comparisons, fresh preset builds with
+   their own ROM identity for adoption, and the board gates.
+
+The 3,000-path census needs the `report_timing` line in the SDC;
+`pnr_only.sh` writes it under `PNR_REPORT_PATHS` since 8cc61ed. The three
+records' 25-path samples came from runs without it.
