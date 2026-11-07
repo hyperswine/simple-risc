@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "dcd220d",
+  "variant": "baseline",
+  "rtl_sha256": "3937573c4b49baa946b82eee58a9d313e016cd7e448d0903f6d40124b7000e9e",
+  "rom_sha256": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+  "environment": {
+    "SDRAM_FREQ_MHZ": "48",
+    "SDRAM_CPU_FREQ_MHZ": "81",
+    "SDRAM_RVC": "1",
+    "SDRAM_CACHE": "1",
+    "SDRAM_CACHE_WAYS": "2",
+    "SDRAM_CACHE_LINE_BITS": "11",
+    "SDRAM_PHASE_DEGREES": "135",
+    "SDRAM_PLACE_OPTION": "3",
+    "SDRAM_TARGET_MHZ": "89",
+    "SDRAM_MAP_OPTION": "3",
+    "SDRAM_ROUTE_OPTION": "1",
+    "SDRAM_ROUTE_MAXFAN": "8",
+    "SDRAM_CRITICAL_PATHS": "3000",
+    "SDRAM_GENERATE_ONLY": "1",
+    "SDRAM_OUT": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical",
+    "SDRAM_RTL_FILE": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v"
+  }
+}

@@ -669,6 +669,44 @@ prop_muldiv_matches_reference = withTests 400 . property $ do
   cpuRegs (simMachine halted) !! (3 :: Index 32) === expected
   ramRead (simRam halted) 64 === expected
 
+-- Every M opcode must use the intended execution path, including the four
+-- multiply opcodes that must never reach the division-only service port.
+prop_pipeline_m_dispatch :: Property
+prop_pipeline_m_dispatch = withTests 100 . property $ do
+  a <- forAll operandGen
+  b <- forAll operandGen
+  P.mapM_ (checkOperation a b) [Mul, Mulh, Mulhsu, Mulhu, Div, Divu, Rem, Remu]
+  where
+    checkOperation a b operation = do
+      let start = startSim (pipelined (runningMachine [(1,a),(2,b),(31,ramBase)]))
+                    (ramFromList [encodeMulDiv operation, sw 3 31 256])
+          states = P.take 200 (P.iterate (\sim -> stepSim sim Nothing) start)
+          entered = P.any (\sim -> let m = simMachine sim in not (cpuFast m) && cpuPhase m == MulDiv) states
+          (_, halted) = runUntilHalt 200 start
+      entered === (fromEnum operation >= fromEnum Div)
+      assert (romAddress (cpuPc (simMachine halted)))
+      ramRead (simRam halted) 64 === mulDivResult operation a b
+
+-- Pin both the arithmetic and latency while specializing the service port.
+prop_divide_only_matches_reference :: Property
+prop_divide_only_matches_reference = withTests 400 . property $ do
+  operation <- forAll (Gen.element [Div, Divu, Rem, Remu])
+  a <- forAll operandGen
+  b <- forAll operandGen
+  let code = fromIntegral (fromEnum operation)
+      initial = cpuMulDiv initialMachine
+      run fuel step unit
+        | fuel == (0 :: Int) = Nothing
+        | otherwise = case step unit of
+            Left next -> run (fuel - 1) step next
+            Right value -> Just (fuel, value)
+      specialized = run 80 (divideOnlyStep (resize code) a b) initial
+      original = run 80 (mulDivStep code a b) initial
+  specialized === original
+  case specialized of
+    Nothing -> failure
+    Just (_, value) -> value === mulDivResult operation a b
+
 -- UART timing ----------------------------------------------------------------
 
 clocksPerBit :: Int
@@ -2509,6 +2547,8 @@ simpleRiscGroup =
       ("Boot ROM implements SRID1 I and SRU1 U/C/G commands", prop_boot_rom_identity_and_crc_upload),
       ("Boot ROM clears RAM", prop_boot_rom_clears_memory),
       ("RV32M matches the reference semantics", prop_muldiv_matches_reference),
+      ("Pipeline M operations use the correct service", prop_pipeline_m_dispatch),
+      ("Division-only service preserves results and latency", prop_divide_only_matches_reference),
       ("Test encoders match known instructions", prop_encoders_match_known_instructions),
       ("Backward branch in final word loops", prop_backward_branch_in_final_word_loops),
       ("SDRAM holds full word addresses across waits", prop_sdram_waits_preserve_full_address),

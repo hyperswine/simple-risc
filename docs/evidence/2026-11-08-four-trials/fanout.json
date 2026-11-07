@@ -1,0 +1,582 @@
+{
+  "baseline": {
+    "scope": "synthesized core module, direct input pin loads; clocks/constants excluded; not post-route replicated fanout",
+    "highest_input_loads": [
+      [
+        "reset_sync[1]",
+        3849
+      ],
+      [
+        "machine_0_0[11048]",
+        863
+      ],
+      [
+        "pipeState_8673_6",
+        679
+      ],
+      [
+        "ds5_797_10",
+        381
+      ],
+      [
+        "ds4_324_6",
+        309
+      ],
+      [
+        "ds6_454_6",
+        270
+      ],
+      [
+        "result_275_12822_5",
+        268
+      ],
+      [
+        "pipeState[7815]",
+        235
+      ],
+      [
+        "result_275_13044_10",
+        229
+      ],
+      [
+        "machine_0_0[944]",
+        192
+      ]
+    ],
+    "control_pin_loads": {
+      "CE": [
+        [
+          "pipeState_8673_6",
+          487
+        ],
+        [
+          "ds5_797_10",
+          381
+        ],
+        [
+          "ds4_324_6",
+          309
+        ],
+        [
+          "ds6_454_6",
+          270
+        ],
+        [
+          "machine_0_1458_8",
+          162
+        ],
+        [
+          "pipeState_7674_9",
+          132
+        ],
+        [
+          "pipeState_7541_9",
+          132
+        ],
+        [
+          "ds3_0_132_6",
+          132
+        ],
+        [
+          "advance",
+          82
+        ],
+        [
+          "machine_0_380_9",
+          68
+        ]
+      ],
+      "RESET": [
+        [
+          "reset_sync[1]",
+          3723
+        ],
+        [
+          "result_275_2813_5",
+          35
+        ],
+        [
+          "\\c$case_alt_1161_30_5",
+          17
+        ],
+        [
+          "result_579_19_10",
+          9
+        ],
+        [
+          "\\c$action_case_alt_1_63_4",
+          4
+        ],
+        [
+          "result_487_63_9",
+          4
+        ],
+        [
+          "result_266_3_5",
+          1
+        ],
+        [
+          "result_266_2_5",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_7_8",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_6_8",
+          1
+        ]
+      ],
+      "SET": [
+        [
+          "reset_sync[1]",
+          105
+        ]
+      ]
+    },
+    "flipflops": {
+      "DFFRE": 3682,
+      "DFFR": 120,
+      "DFF": 67,
+      "DFFS": 4,
+      "DFFE": 471,
+      "DFFSE": 101
+    }
+  },
+  "all-reset": {
+    "scope": "synthesized core module, direct input pin loads; clocks/constants excluded; not post-route replicated fanout",
+    "highest_input_loads": [
+      [
+        "reset_sync[1]",
+        2737
+      ],
+      [
+        "machine_0_0[11048]",
+        860
+      ],
+      [
+        "pipeState_8673_6",
+        678
+      ],
+      [
+        "ds5_75_22",
+        381
+      ],
+      [
+        "ds4_167_17",
+        309
+      ],
+      [
+        "ds6_454_6",
+        270
+      ],
+      [
+        "result_275_11603_4",
+        261
+      ],
+      [
+        "pipeState[7815]",
+        235
+      ],
+      [
+        "result_275_13044_10",
+        234
+      ],
+      [
+        "result_275_1823_4",
+        203
+      ]
+    ],
+    "control_pin_loads": {
+      "CE": [
+        [
+          "pipeState_8673_6",
+          487
+        ],
+        [
+          "ds5_75_22",
+          381
+        ],
+        [
+          "ds4_167_17",
+          309
+        ],
+        [
+          "ds6_454_6",
+          270
+        ],
+        [
+          "machine_0_1458_8",
+          162
+        ],
+        [
+          "pipeState_7674_9",
+          132
+        ],
+        [
+          "pipeState_7541_9",
+          132
+        ],
+        [
+          "ds3_0_132_6",
+          132
+        ],
+        [
+          "advance",
+          82
+        ],
+        [
+          "machine_0_380_9",
+          68
+        ]
+      ],
+      "RESET": [
+        [
+          "reset_sync[1]",
+          2613
+        ],
+        [
+          "result_275_2813_5",
+          35
+        ],
+        [
+          "result_513_12_4",
+          22
+        ],
+        [
+          "\\c$case_alt_1161_30_5",
+          17
+        ],
+        [
+          "result_579_19_10",
+          9
+        ],
+        [
+          "\\c$action_case_alt_1_66_8",
+          6
+        ],
+        [
+          "result_487_66_14",
+          6
+        ],
+        [
+          "\\c$cTarget_case_alt_2_0_9",
+          1
+        ],
+        [
+          "\\c$app_arg_251_2_5",
+          1
+        ],
+        [
+          "result_266_3_5",
+          1
+        ]
+      ],
+      "SET": [
+        [
+          "reset_sync[1]",
+          103
+        ]
+      ]
+    },
+    "flipflops": {
+      "DFFRE": 2604,
+      "DFFR": 116,
+      "DFF": 69,
+      "DFFS": 4,
+      "DFFE": 1551,
+      "DFFSE": 101
+    }
+  },
+  "dsp": {
+    "scope": "synthesized core module, direct input pin loads; clocks/constants excluded; not post-route replicated fanout",
+    "highest_input_loads": [
+      [
+        "reset_sync[1]",
+        3784
+      ],
+      [
+        "machine_0_0[11048]",
+        896
+      ],
+      [
+        "pipeState_8673_6",
+        677
+      ],
+      [
+        "ds5_797_10",
+        381
+      ],
+      [
+        "ds4_324_6",
+        309
+      ],
+      [
+        "ds6_454_6",
+        270
+      ],
+      [
+        "result_277_12839_5",
+        267
+      ],
+      [
+        "\\c$case_alt_521_47_5",
+        263
+      ],
+      [
+        "pipeState[7815]",
+        236
+      ],
+      [
+        "result_277_1823_4",
+        199
+      ]
+    ],
+    "control_pin_loads": {
+      "CE": [
+        [
+          "pipeState_8673_6",
+          487
+        ],
+        [
+          "ds5_797_10",
+          381
+        ],
+        [
+          "ds4_324_6",
+          309
+        ],
+        [
+          "ds6_454_6",
+          270
+        ],
+        [
+          "machine_0_1458_8",
+          162
+        ],
+        [
+          "pipeState_7674_9",
+          132
+        ],
+        [
+          "pipeState_7541_9",
+          132
+        ],
+        [
+          "ds3_0_132_6",
+          132
+        ],
+        [
+          "advance",
+          82
+        ],
+        [
+          "machine_0_380_9",
+          68
+        ]
+      ],
+      "RESET": [
+        [
+          "reset_sync[1]",
+          3658
+        ],
+        [
+          "result_277_2813_5",
+          35
+        ],
+        [
+          "\\c$case_alt_1163_30_5",
+          17
+        ],
+        [
+          "result_584_19_10",
+          9
+        ],
+        [
+          "\\c$action_case_alt_1_63_4",
+          4
+        ],
+        [
+          "result_489_63_9",
+          4
+        ],
+        [
+          "result_268_3_5",
+          1
+        ],
+        [
+          "result_268_2_5",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_7_8",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_6_8",
+          1
+        ]
+      ],
+      "SET": [
+        [
+          "reset_sync[1]",
+          105
+        ]
+      ]
+    },
+    "flipflops": {
+      "DFFRE": 3619,
+      "DFFR": 118,
+      "DFF": 67,
+      "DFFS": 4,
+      "DFFE": 471,
+      "DFFSE": 101
+    }
+  },
+  "division": {
+    "scope": "synthesized core module, direct input pin loads; clocks/constants excluded; not post-route replicated fanout",
+    "highest_input_loads": [
+      [
+        "reset_sync[1]",
+        3717
+      ],
+      [
+        "machine_0_0[11048]",
+        882
+      ],
+      [
+        "pipeState_8673_6",
+        652
+      ],
+      [
+        "ds5_797_10",
+        381
+      ],
+      [
+        "ds4_324_6",
+        309
+      ],
+      [
+        "result_275_11603_4",
+        271
+      ],
+      [
+        "ds6_454_6",
+        270
+      ],
+      [
+        "pipeState[7815]",
+        235
+      ],
+      [
+        "result_275_13044_10",
+        213
+      ],
+      [
+        "\\c$ds3_app_arg_1 [207]",
+        197
+      ]
+    ],
+    "control_pin_loads": {
+      "CE": [
+        [
+          "pipeState_8673_6",
+          487
+        ],
+        [
+          "ds5_797_10",
+          381
+        ],
+        [
+          "ds4_324_6",
+          309
+        ],
+        [
+          "ds6_454_6",
+          270
+        ],
+        [
+          "machine_0_1458_8",
+          162
+        ],
+        [
+          "pipeState_7674_9",
+          132
+        ],
+        [
+          "pipeState_7541_9",
+          132
+        ],
+        [
+          "ds3_0_132_6",
+          132
+        ],
+        [
+          "n1409777_243",
+          117
+        ],
+        [
+          "advance",
+          82
+        ]
+      ],
+      "RESET": [
+        [
+          "reset_sync[1]",
+          3589
+        ],
+        [
+          "result_275_2813_5",
+          35
+        ],
+        [
+          "\\c$case_alt_1167_30_5",
+          17
+        ],
+        [
+          "result_579_19_10",
+          9
+        ],
+        [
+          "\\c$action_case_alt_1_63_4",
+          4
+        ],
+        [
+          "result_487_63_9",
+          4
+        ],
+        [
+          "result_266_3_5",
+          1
+        ],
+        [
+          "result_266_2_5",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_7_8",
+          1
+        ],
+        [
+          "\\c$ds3_bindCsr_6_8",
+          1
+        ]
+      ],
+      "SET": [
+        [
+          "reset_sync[1]",
+          105
+        ]
+      ]
+    },
+    "flipflops": {
+      "DFFRE": 3559,
+      "DFFR": 109,
+      "DFF": 91,
+      "DFFS": 4,
+      "DFFE": 650,
+      "DFFSE": 101
+    }
+  }
+}

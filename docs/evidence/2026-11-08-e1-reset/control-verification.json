@@ -1,0 +1,7 @@
+{
+  "current_tree_with_E1_reset_restored_equals_frozen_baseline": false,
+  "baseline_rtl_sha256": "3937573c4b49baa946b82eee58a9d313e016cd7e448d0903f6d40124b7000e9e",
+  "control_rtl_sha256": "429f4d50123858ab6bbec90ee18560d48bde15f782a75d9fb3219b3fab782ae0",
+  "identical_except_source_location_comments": true,
+  "normalized_sha256": "d624752bfbcc2d1e8f68513671bb690570d6d5c33269c5a0f7097f3b2ac99db6"
+}

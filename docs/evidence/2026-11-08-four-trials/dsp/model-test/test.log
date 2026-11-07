@@ -1,0 +1,2 @@
+PASS: DSP counter 10015 checks
+output/refactor-four-2026-11-08/dsp/counter_tb.v:33: $finish called at 100150000 (1ps)

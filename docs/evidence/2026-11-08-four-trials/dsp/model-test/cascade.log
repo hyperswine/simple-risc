@@ -1,0 +1,2 @@
+PASS: CASO[54] remains high after overflow; it is not a carry pulse
+output/refactor-four-2026-11-08/dsp/cascade_tb.v:14: $finish called at 50000 (1ps)

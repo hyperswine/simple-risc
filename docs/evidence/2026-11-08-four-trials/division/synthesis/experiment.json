@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "dcd220d",
+  "variant": "division",
+  "rtl_sha256": "02cc23b091b028e1f7b1b5c7b3ee81119793acf7df1b43d29dfe7948d1d92d49",
+  "rom_sha256": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+  "environment": {
+    "SDRAM_FREQ_MHZ": "48",
+    "SDRAM_CPU_FREQ_MHZ": "81",
+    "SDRAM_RVC": "1",
+    "SDRAM_CACHE": "1",
+    "SDRAM_CACHE_WAYS": "2",
+    "SDRAM_CACHE_LINE_BITS": "11",
+    "SDRAM_PHASE_DEGREES": "135",
+    "SDRAM_PLACE_OPTION": "3",
+    "SDRAM_TARGET_MHZ": "89",
+    "SDRAM_MAP_OPTION": "3",
+    "SDRAM_ROUTE_OPTION": "1",
+    "SDRAM_ROUTE_MAXFAN": "8",
+    "SDRAM_CRITICAL_PATHS": "3000",
+    "SDRAM_GENERATE_ONLY": "1",
+    "SDRAM_OUT": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-four-2026-11-08/division-physical",
+    "SDRAM_RTL_FILE": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-four-2026-11-08/division-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v"
+  }
+}

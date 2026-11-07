@@ -1,0 +1,34 @@
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -203,10 +203,10 @@
+  -- then merged the two nets, and the pipeline's clock enable inherited four
+  -- levels of stage logic on top of its routing tree (2026-10-29). A stage that
+  -- does not advance loads its own payload back.
+- stageD=regEn (R.spD R.initialStagePayloads) (not <$> holding) ((\ps -> R.spD ps) <$> stageNext)
+- stageE1=regEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
+- stageE2=regEn (R.spE2 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE2 ps) <$> stageNext)
+- stageM=regEn (R.spM R.initialStagePayloads) (not <$> holding) ((\ps -> R.spM ps) <$> stageNext)
++ stageD=delayEn (R.spD R.initialStagePayloads) (not <$> holding) ((\ps -> R.spD ps) <$> stageNext)
++ stageE1=delayEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
++ stageE2=delayEn (R.spE2 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE2 ps) <$> stageNext)
++ stageM=delayEn (R.spM R.initialStagePayloads) (not <$> holding) ((\ps -> R.spM ps) <$> stageNext)
+  stages=R.StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM
+  heldState=register R.initialHeldState (R.heldStateOf <$> machineNext)
+  -- The pipeline itself is the largest remaining field, so it gets its own
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -369,6 +369,14 @@
+   | funct3 == 0b001 = value `shiftL` amount
+   | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
+   | otherwise = value `shiftR` amount
++
++-- | Division-only service port: 00 DIV, 01 DIVU, 10 REM, 11 REMU.
++-- The pipeline multiplies in DSPs. Making bit 2 constant here lets Clash
++-- eliminate the iterative multiply datapath without changing division timing
++-- or the shared state layout. The multi-cycle reference keeps mulDivStep.
++{-# INLINE divideOnlyStep #-}
++divideOnlyStep :: BitVector 2 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
++divideOnlyStep operation = mulDivStep (0b100 .|. resize operation)
+ 
+ -- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
+ -- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.

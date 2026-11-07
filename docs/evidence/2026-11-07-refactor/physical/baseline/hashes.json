@@ -1,0 +1,5 @@
+{
+  "output/refactor-2026-11-07/baseline-physical/impl/gwsynthesis/sdram_test.vg": "3ef0867ba2afbda276eb66f84c2e2658ca37f00132ae97cb6bcb42486e7a307f",
+  "output/refactor-2026-11-07/baseline-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "3937573c4b49baa946b82eee58a9d313e016cd7e448d0903f6d40124b7000e9e",
+  "output/refactor-2026-11-07/baseline-physical/bootrom-sdram.hex": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049"
+}

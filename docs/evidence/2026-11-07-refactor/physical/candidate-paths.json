@@ -1,0 +1,518 @@
+{
+ "report": "output/refactor-2026-11-07/candidate-p3/impl/pnr/sdram_test.tr",
+ "paths": 25,
+ "failing": 25,
+ "by_structure": [
+  {
+   "group": "fetch -> fetch",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.148
+  },
+  {
+   "group": "cache -> cache",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.134
+  },
+  {
+   "group": "fetch -> A",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.129
+  },
+  {
+   "group": "reset_sync_1_s0 -> E1 (CE)",
+   "paths": 11,
+   "ends": 11,
+   "worst": -0.112
+  },
+  {
+   "group": "A -> F",
+   "paths": 3,
+   "ends": 3,
+   "worst": -0.019
+  },
+  {
+   "group": "reset_sync_1_s0 -> E2 (CE)",
+   "paths": 2,
+   "ends": 2,
+   "worst": 0.009
+  },
+  {
+   "group": "reset_sync_1_s0 -> F (CE)",
+   "paths": 6,
+   "ends": 6,
+   "worst": 0.184
+  }
+ ],
+ "by_end_field": [
+  {
+   "group": "pInstructionPc",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.148
+  },
+  {
+   "group": "cache",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.134
+  },
+  {
+   "group": "pA",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.129
+  },
+  {
+   "group": "E1.e1FaultValue (CE)",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.112
+  },
+  {
+   "group": "E1.e1Predicted (CE)",
+   "paths": 10,
+   "ends": 10,
+   "worst": -0.112
+  },
+  {
+   "group": "pFQueue",
+   "paths": 3,
+   "ends": 3,
+   "worst": -0.019
+  },
+  {
+   "group": "E2.e2Computed (CE)",
+   "paths": 1,
+   "ends": 1,
+   "worst": 0.009
+  },
+  {
+   "group": "E2.e2Pc (CE)",
+   "paths": 1,
+   "ends": 1,
+   "worst": 0.009
+  },
+  {
+   "group": "pFQueue (CE)",
+   "paths": 6,
+   "ends": 6,
+   "worst": 0.184
+  }
+ ],
+ "by_start_field": [
+  {
+   "group": "pQueueRead",
+   "paths": 2,
+   "ends": 2,
+   "worst": -0.148
+  },
+  {
+   "group": "cache",
+   "paths": 1,
+   "ends": 1,
+   "worst": -0.134
+  },
+  {
+   "group": "reset_sync_1_s0",
+   "paths": 19,
+   "ends": 19,
+   "worst": -0.112
+  },
+  {
+   "group": "pA",
+   "paths": 3,
+   "ends": 3,
+   "worst": -0.019
+  }
+ ],
+ "by_clock": [
+  {
+   "group": "clk_core:[R] -> clk_core:[R]",
+   "paths": 25,
+   "ends": 25,
+   "worst": -0.148
+  }
+ ],
+ "high_fanout_nets_report": "Report Command:report_high_fanout_nets -max_nets 10\n  FANOUT          NET NAME           WORST SLACK   MAX DELAY  \n ======== ========================= ============= =========== \n  5170     clk                       -0.148        2.274      \n  4069     reset_sync[1]             -0.112        1.726      \n  862      core/machine_0_0[11048]   2.896         6.962      \n  673      core/pipeState_8673_6     -0.112        2.302      \n  381      core/ds5_797_10           0.009         5.992      \n  379      clk_memory                10.620        2.274      \n  309      core/ds4_324_8            -0.112        6.112      \n  303      advance                   5.670         2.263      \n  270      core/ds6_454_6            0.961         3.469      \n  269      core/result_275_12830_5   1.583         3.941      ",
+ "route_congestions_report": "Report Command:report_route_congestion -max_grids 10\n  GRID LOC   ROUTE CONGESTIONS  \n ========== =================== \n  R21C40     0.931              \n  R40C13     0.931              \n  R23C37     0.917              \n  R34C34     0.917              \n  R16C36     0.903              \n  R39C13     0.903              \n  R39C9      0.903              \n  R40C9      0.903              \n  R23C22     0.903              \n  R31C31     0.903              ",
+ "detail": [
+  {
+   "slack": -0.148,
+   "from": "core/pipeState_7815_s0",
+   "to": "core/pipeState_8631_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 9,
+   "route_share": 67.042,
+   "from_stage": "fetch",
+   "from_field": "pQueueRead",
+   "to_stage": "fetch",
+   "to_field": "pInstructionPc",
+   "structure": "fetch -> fetch"
+  },
+  {
+   "slack": -0.134,
+   "from": "cache/read_bank_hot_4_s0",
+   "to": "cache/cpu_word_29_s1",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 5,
+   "route_share": 79.284,
+   "from_stage": "cache",
+   "from_field": "cache",
+   "to_stage": "cache",
+   "to_field": "cache",
+   "structure": "cache -> cache"
+  },
+  {
+   "slack": -0.129,
+   "from": "core/pipeState_7815_s0",
+   "to": "core/pipeState_7710_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 8,
+   "route_share": 67.772,
+   "from_stage": "fetch",
+   "from_field": "pQueueRead",
+   "to_stage": "A",
+   "to_field": "pA",
+   "structure": "fetch -> A"
+  },
+  {
+   "slack": -0.112,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_13_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.698,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1FaultValue",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": -0.112,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_261_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.698,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": -0.112,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_264_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.698,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": -0.108,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_266_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.695,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": -0.108,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_269_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.695,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": -0.019,
+   "from": "core/pipeState_7792_s0",
+   "to": "core/pipeState_7471_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 7,
+   "route_share": 75.635,
+   "from_stage": "A",
+   "from_field": "pA",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "A -> F"
+  },
+  {
+   "slack": -0.019,
+   "from": "core/pipeState_7792_s0",
+   "to": "core/pipeState_7604_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 7,
+   "route_share": 75.635,
+   "from_stage": "A",
+   "from_field": "pA",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "A -> F"
+  },
+  {
+   "slack": 0.009,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds5_589_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.587,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E2",
+   "to_field": "E2.e2Computed",
+   "structure": "reset_sync_1_s0 -> E2 (CE)"
+  },
+  {
+   "slack": 0.009,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds5_784_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.587,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E2",
+   "to_field": "E2.e2Pc",
+   "structure": "reset_sync_1_s0 -> E2 (CE)"
+  },
+  {
+   "slack": 0.025,
+   "from": "core/pipeState_7778_s0",
+   "to": "core/pipeState_7582_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "D",
+   "levels": 9,
+   "route_share": 68.491,
+   "from_stage": "A",
+   "from_field": "pA",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "A -> F"
+  },
+  {
+   "slack": 0.072,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_262_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.529,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.072,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_267_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.529,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.075,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_280_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.525,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.075,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_283_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.525,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.079,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_277_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.522,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.079,
+   "from": "reset_sync_1_s0",
+   "to": "core/ds4_284_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.522,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "E1",
+   "to_field": "E1.e1Predicted",
+   "structure": "reset_sync_1_s0 -> E1 (CE)"
+  },
+  {
+   "slack": 0.184,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7559_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.422,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  },
+  {
+   "slack": 0.184,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7574_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.422,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  },
+  {
+   "slack": 0.184,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7628_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.422,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  },
+  {
+   "slack": 0.184,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7635_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.422,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  },
+  {
+   "slack": 0.185,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7553_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.421,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  },
+  {
+   "slack": 0.185,
+   "from": "reset_sync_1_s0",
+   "to": "core/pipeState_7555_s0",
+   "launch": "clk_core:[R]",
+   "latch": "clk_core:[R]",
+   "end_pin": "CE",
+   "levels": 4,
+   "route_share": 88.421,
+   "from_stage": "reset_sync_1_s0",
+   "from_field": "reset_sync_1_s0",
+   "to_stage": "F",
+   "to_field": "pFQueue",
+   "structure": "reset_sync_1_s0 -> F (CE)"
+  }
+ ]
+}

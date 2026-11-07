@@ -1,0 +1,120 @@
+--- /dev/null
++++ b/src/DspCycleTop.hs
+@@ -0,0 +1,20 @@
++{-# LANGUAGE DataKinds, NoImplicitPrelude #-}
++{-# OPTIONS_GHC -Wno-missing-export-lists #-}
++module DspCycleTop where
++import Clash.Prelude
++import qualified SimpleRisc as R
++import qualified SdramPipeline as P
++
++{-# ANN topEntity (Synthesize {t_name="sdram_pipeline_core", t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso",PortName "cycle_lo",PortName "cycle_hi",PortName "cycle_carry"], t_output=PortProduct "" [PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs"],PortProduct "" [PortName "cycle_write_valid",PortName "cycle_write_high",PortName "cycle_write_value"]]}) #-}
++topEntity :: Clock XilinxSystem -> Reset XilinxSystem -> Enable XilinxSystem -> Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> (P.BoardOutput XilinxSystem, (Signal XilinxSystem Bool,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32))
++topEntity clk rst en rx dat held miso lo hi carry = withClockResetEnable clk rst en $
++ let (o,t,w)=P.circuitWithExternalCycle rx dat held miso (R.Counter64 <$> lo <*> hi <*> carry)
++     (v,h,d)=unbundle w
++ in (o,(v,h,d))
++
++{-# ANN observedTop (Synthesize {t_name="sdram_pipeline_core", t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso",PortName "cycle_lo",PortName "cycle_hi",PortName "cycle_carry"], t_output=PortProduct "" [PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs"],PortProduct "" [PortName "observe_commit",PortName "observe_word",PortName "observe_pc",PortName "observe_next_pc",PortName "observe_issue",PortName "observe_fetch_pc",PortName "observe_empty",PortName "observe_redirect"],PortProduct "" [PortName "cycle_write_valid",PortName "cycle_write_high",PortName "cycle_write_value"]]}) #-}
++observedTop :: Clock XilinxSystem -> Reset XilinxSystem -> Enable XilinxSystem -> Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> (P.BoardOutput XilinxSystem, (Signal XilinxSystem Bool,Signal XilinxSystem R.Word32,Signal XilinxSystem R.Word32,Signal XilinxSystem R.Word32,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32,Signal XilinxSystem Bool,Signal XilinxSystem Bool), (Signal XilinxSystem Bool,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32))
++observedTop clk rst en rx dat held miso lo hi carry = withClockResetEnable clk rst en $
++ let (o,t,w)=P.circuitWithExternalCycle rx dat held miso (R.Counter64 <$> lo <*> hi <*> carry)
++     (v,h,d)=unbundle w
++ in (o,(R.ptCommit <$> t,R.ptWord <$> t,R.ptPc <$> t,R.ptNextPc <$> t,R.ptIssue <$> t,R.ptFetchPc <$> t,R.ptEmpty <$> t,R.ptRedirect <$> t),(v,h,d))
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -244,3 +244,77 @@
+  wdata=slotData <$> request
+  mask=requestMask <$> running <*> request
+  txNow=(\(_,_,_,_,tx) -> tx) <$> machineOutput
++
++-- Experimental external physical mcycle owner.
++circuitWithExternalCycle :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit -> Signal dom R.Counter64 ->
++ (BoardOutput dom, Signal dom R.PipelineTrace, Signal dom (Bool,Bool,R.Word32))
++circuitWithExternalCycle serialRx memoryData memoryHeld sdMiso externalCycle = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace,cycleWrite)
++ where
++ trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
++ receivedNow=R.uartRx (register high (register high serialRx))
++ -- Fold not (cpuInRom machine) into the emergency flip-flop D input so
++ -- breaking and emergencyReset are driven directly from the flip-flop Q pin
++ -- rather than routing cpuInRom into the 5,000-flop holding clock-enable tree.
++ emergency=register False ((\rx m -> rx == Just 3 && not (R.cpuInRom m)) <$> receivedNow <*> machine)
++ -- A hold is a clock enable on the machine register, not a next-state select:
++ -- the counters and the received-byte holding register load every cycle, and
++ -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
++ stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
++ machineNext=(\(m,_,_,_) -> m {R.cpuCycle=R.initialCounter}) <$> stepped
++ stageNext=(\(_,_,ps,_) -> ps) <$> stepped
++ machineOutput=(\(_,o,_,_) -> o) <$> stepped
++ holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
++ machine=regEn initialMachine (not <$> holding) machineNext
++ -- One clock-enabled register per pipeline stage. They all load on the same
++ -- hold enable: gating a stage group on its own advance decision put the whole
++ -- advance cone (a function of the frozen pipeline registers) in front of the
++ -- hold enable that every one of the 5,000 pipeline flops also uses. Synthesis
++ -- then merged the two nets, and the pipeline's clock enable inherited four
++ -- levels of stage logic on top of its routing tree (2026-10-29). A stage that
++ -- does not advance loads its own payload back.
++ stageD=regEn (R.spD R.initialStagePayloads) (not <$> holding) ((\ps -> R.spD ps) <$> stageNext)
++ stageE1=regEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
++ stageE2=regEn (R.spE2 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE2 ps) <$> stageNext)
++ stageM=regEn (R.spM R.initialStagePayloads) (not <$> holding) ((\ps -> R.spM ps) <$> stageNext)
++ stages=R.StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM
++ heldState=register R.initialHeldState (R.heldStateOf <$> machineNext)
++ -- The pipeline itself is the largest remaining field, so it gets its own
++ -- register: the hold enable is the widest net in the design either way, and
++ -- one 5,000-load enable was the critical path before the split.
++ pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
++ btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
++ effectivePipe=withBtb <$> btb <*> pipeState
++ running=(\m c -> m {R.cpuCycle=c}) <$> internalRunning <*> externalCycle
++ cycleWrite=cycleCommand <$> running
++ cycleCommand m=case R.cpuCounterWrite m of
++  Just (address,value) | address==0xb00 || address==0xb80 -> (True,address==0xb80,value)
++  _ -> (False,False,0)
++ internalRunning=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
++ breaking=emergency
++ rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
++ rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
++ received=register Nothing (mux rxPop rxHead (pure Nothing))
++ (rxHead,_)=unbundle (mealy R.fifoStep (R.initialFifo :: R.Fifo 32) (bundle (breaking,receivedNow,rxPop)))
++ (serialTx,uartReady)=R.uartTx txOffer
++ txPush=register Nothing txNow
++ txPop=(\ready headByte -> ready && isJust headByte) <$> uartReady <*> txHead
++ txOffer=mux txPop txHead (pure Nothing)
++ (txHead,txCount)=unbundle (mealy R.fifoStep (R.initialFifo :: R.Fifo 16) (bundle (pure False,txPush,txPop)))
++ txReady=register False ((<15) <$> txCount)
++ rfWrite=(\m stop pause -> if stop || pause then Nothing else R.cpuPendingWrite m) <$> running <*> breaking <*> memoryHeld
++ rfA=asyncRam (SNat @32) (fst . R.cpuReadIndices <$> running) rfWrite
++ rfB=asyncRam (SNat @32) (snd . R.cpuReadIndices <$> running) rfWrite
++ miso=register high (register high sdMiso)
++ (ioAnswer,ioPins)=unbundle (mealy spiIoStep initialSpiIo
++   (bundle (R.ioRequest <$> running,R.clearRegisters <$> running,memoryHeld,miso)))
++ (sck,mosi,cs)=unbundle ioPins
++ -- Free-running DSP operand and product registers: no enable, no reset
++ -- mux, so the MULT18X18 input/output registers absorb them (R.cpuMulProducts).
++ mulOperands=register (0,0,0) (R.multiplyOperands <$> running)
++ mulProducts=register (repeat 0) (R.partialProductsOf <$> mulOperands)
++ request=regEn initialRequestSlot (not <$> memoryHeld) (requestSlot <$> running <*> machineOutput)
++ address=requestAddress <$> running <*> request
++ write=slotWrite <$> request
++ wdata=slotData <$> request
++ mask=requestMask <$> running <*> request
++ txNow=(\(_,_,_,_,tx) -> tx) <$> machineOutput
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -369,6 +369,14 @@
+   | funct3 == 0b001 = value `shiftL` amount
+   | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
+   | otherwise = value `shiftR` amount
++
++-- | Division-only service port: 00 DIV, 01 DIVU, 10 REM, 11 REMU.
++-- The pipeline multiplies in DSPs. Making bit 2 constant here lets Clash
++-- eliminate the iterative multiply datapath without changing division timing
++-- or the shared state layout. The multi-cycle reference keeps mulDivStep.
++{-# INLINE divideOnlyStep #-}
++divideOnlyStep :: BitVector 2 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
++divideOnlyStep operation = mulDivStep (0b100 .|. resize operation)
+ 
+ -- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
+ -- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.

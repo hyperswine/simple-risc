@@ -1,0 +1,60 @@
+sdram_pipeline_risc: 12498 LUT4 equivalents; 130 feed no register in the module
+
+  part                              regs    LUTs    only   share
+  machine: csr, trap, counters       524    1897    1820   15.2%
+  pipeline: E2                       420    1428    1236   11.4%
+  machine: bus and devices           356    1262    1207   10.1%
+  pipeline: fetch                    442    1221     528    9.8%
+  pipeline: A                        262    1088     631    8.7%
+  unnamed                            639     935     913    7.5%
+  pipeline: E1                       310     839     332    6.7%
+  pipeline: F                        268     672     527    5.4%
+  pipeline: D                        199     653     343    5.2%
+  machine: multiply/divide           140     612     478    4.9%
+  machine: register write-back        80     534     390    4.3%
+  machine: phase datapath            266     532     490    4.3%
+  pipeline: M                        360     373     323    3.0%
+  pipeline: btb                      178     319     297    2.5%
+  blocks                               9       4       4    0.0%
+
+  field                                         regs    LUTs    only
+  pipeline: E2: E2.e2Candidates                   64     809     773
+  pipeline: A: pA                                 99     770     490
+  machine: bus and devices: systemBus            169     684     662
+  pipeline: F: pFQueue                           264     657     516
+  machine: multiply/divide: cpuMulDiv            140     612     478
+  machine: csr, trap, counters: cpuTrapRegiste   127     541     527
+  machine: csr, trap, counters: heldState        139     465     457
+  pipeline: fetch: pInstructionPc                 32     461     148
+  machine: register write-back: cpuPendingWrit    38     436     297
+  pipeline: D: pDOperands                         64     400     129
+  pipeline: fetch: pFetchPc                       32     339     155
+  machine: bus and devices: cpuBusResponse        35     305     288
+  unnamed: c$ds_app_arg                           46     304     301
+  pipeline: fetch: pInflight                     105     290     124
+  unnamed: c$ds3_app_arg                         471     282     272
+  unnamed: received                                9     274     272
+  machine: csr, trap, counters: cpuCsrValue       32     231     230
+  pipeline: E1: E1.e1Op2                          32     230      89
+  pipeline: E2: E2.e2Action                       39     209     174
+  pipeline: E1: E1.e1A                            32     207      32
+  machine: phase datapath: cpuPc                  32     202     197
+  machine: csr, trap, counters: cpuInstret        65     199     199
+  machine: bus and devices: cpuDevices            81     193     180
+  pipeline: A: pFrontTarget                       32     192      65
+  machine: csr, trap, counters: cpuExceptionVa    32     169     162
+  pipeline: btb: pBtbWrite                        50     167     145
+  pipeline: btb: btb valid                       128     152     152
+  pipeline: E1: E1.e1B                            32     144      19
+  pipeline: E2: pRedirect                         33     134     100
+  pipeline: D: pDBlocked                           1     118      89
+  machine: csr, trap, counters: cpuScratch        32     108      96
+  pipeline: M: M.mSum                             52     107     107
+  pipeline: E1: E1.e1FaultValue                   31      92      76
+  pipeline: M: M.mValue                           32      88      65
+  pipeline: E2: E2.e2BranchCompare                 5      86      86
+  pipeline: A: pRas                              128      83      61
+  machine: register write-back: cpuRegValid       31      80      80
+  pipeline: fetch: pQueue                        264      74      74
+  machine: bus and devices: cpuBusRequest         69      72      71
+  pipeline: E1: E1.e1FetchFault                    1      70      54

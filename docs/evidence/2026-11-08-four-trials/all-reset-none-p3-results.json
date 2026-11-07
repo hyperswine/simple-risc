@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "all-reset",
+    "mode": "none-p3",
+    "returncode": 2,
+    "elapsed_seconds": 60.21657674998278
+  },
+  {
+    "variant": "all-reset",
+    "mode": "wider-p3",
+    "returncode": 0,
+    "elapsed_seconds": 90.26475783300702
+  }
+]

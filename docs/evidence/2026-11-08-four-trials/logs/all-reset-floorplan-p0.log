@@ -1,0 +1,2 @@
+boards/tangnano20k/sdram/pnr_only.sh: line 42: 23017 Terminated: 15          "$ide/bin/gw_sh" build.tcl > pnr.log 2>&1
+TIMEOUT: place and route not finished after 1200 s ([70%] Routing Phase 1 completed)

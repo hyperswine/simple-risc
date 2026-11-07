@@ -16,6 +16,16 @@ src="$(cd "$1" && pwd)"; mkdir -p "$2"; out="$(cd "$2" && pwd)"; region="${3:-}"
 netlist="$src/impl/gwsynthesis/sdram_test.vg"
 [[ -f "$netlist" ]] || { echo "no synthesized netlist in $src" >&2; exit 1; }
 cp "$src/pins.cst" "$src/clocks.sdc" "$out/"
+# The long path census (path_census.py) comes from report_timing in the SDC,
+# as build.sh's SDRAM_REPORT_PATHS writes it; -num_critical_paths alone still
+# reports about 25 paths. Add it here when asked for and the source lacks it.
+if [[ -n "${PNR_REPORT_PATHS:-}" ]] && ! grep -q '^report_timing' "$out/clocks.sdc"; then
+  cat >> "$out/clocks.sdc" <<SDC
+report_timing -setup -from_clock [get_clocks {clk_core}] -to_clock [get_clocks {clk_core}] -max_paths ${PNR_REPORT_PATHS} -max_common_paths 1
+report_high_fanout_nets -max_nets 50
+report_route_congestion -max_grids 50
+SDC
+fi
 if [[ -n "$region" ]]; then
   [[ -f "$region" ]] || { echo "region file does not exist: $region" >&2; exit 1; }
   printf '\n' >> "$out/pins.cst"; cat "$region" >> "$out/pins.cst"

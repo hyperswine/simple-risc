@@ -1,0 +1,150 @@
+--- /dev/null
++++ b/src/DivisionService.hs
+@@ -0,0 +1,26 @@
++{-# LANGUAGE DataKinds, DeriveGeneric, DeriveAnyClass, NoImplicitPrelude #-}
++module DivisionService where
++import Clash.Prelude
++import SimpleRisc.Types
++import SimpleRisc.Decode (mulDivStep)
++
++type Command = (BitVector 3, Word32, Word32)
++data Service = Idle | Running (BitVector 3) Word32 Word32 MulDivUnit | Complete Word32
++ deriving (Generic,NFDataX,Show,Eq)
++initialUnit :: MulDivUnit
++initialUnit = MulDivUnit MdPrepare 0 0 0 0 False False False False
++-- A request is accepted only in Idle. Completion holds until consume.
++-- Cancellation wins over both transfers and suppresses any old completion.
++serviceStep :: Service -> (Bool,Maybe Command,Bool) -> (Service,Maybe Word32)
++serviceStep state (cancel,command,consume) = (next,answer)
++ where
++ answer | cancel = Nothing
++        | Complete value <- state = Just value
++        | otherwise = Nothing
++ next | cancel = Idle
++      | otherwise = case state of
++       Idle -> maybe Idle (\(op,a,b) -> Running op a b initialUnit) command
++       Running op a b unit -> case mulDivStep op a b unit of
++        Left unit' -> Running op a b unit'
++        Right value -> Complete value
++       Complete value -> if consume then Idle else Complete value
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -4,6 +4,7 @@
+ import Clash.Prelude
+ import Data.Maybe (isJust,isNothing)
+ import qualified SimpleRisc as R
++import qualified DivisionService as DS
+ 
+ decodeTarget :: R.Word32 -> R.MemoryTarget
+ decodeTarget address
+@@ -28,7 +29,7 @@
+   }
+ 
+ type Address = Unsigned 22
+-type Input = (R.Word32,Bool,Maybe R.Byte,Bool,Bool,R.Word32,R.Word32,Maybe R.Word32,Vec 4 (Signed 34))
++type Input = (R.Word32,Bool,Maybe R.Byte,Bool,Bool,R.Word32,R.Word32,Maybe R.Word32,Vec 4 (Signed 34),Maybe R.Word32)
+ type Output = (Address,Bool,R.Word32,BitVector 4,Maybe R.Byte)
+ 
+ physical :: R.Word32 -> Address
+@@ -78,9 +79,9 @@
+ -- the rest of 'Machine' under a hold-aware enable, so a held cycle simply
+ -- does not load those registers and the outputs are idled.
+ step :: R.Machine -> Input -> (R.Machine,Output,R.StagePayloads,R.StageLoad)
+-step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer,products) =
++step machine (memoryWord,held,received,txReady,emergency,a,b,ioAnswer,products,divisionAnswer) =
+   let injected=machine {R.cpuRfA=a,R.cpuRfB=b,R.cpuMulProducts=products,R.cpuDevices=(R.cpuDevices machine) {R.devIo=ioAnswer}}
+-      (next,(index,write,tx),stages,loads)=R.machineStepCoreStagesBy R.pipelinedCpuStepStages decodeTarget injected (memoryWord,received,txReady,emergency)
++      (next,(index,write,tx),stages,loads)=R.machineStepCoreStagesBy (R.pipelinedCpuStepDivisionStages divisionAnswer) decodeTarget injected (memoryWord,received,txReady,emergency)
+       bus=R.systemBus machine
+       busActive=case R.busPhase bus of R.BusIdle -> isJust (R.cpuBusRequest machine); _ -> True
+       busAddress=R.busAddress (R.busRequest bus)
+@@ -190,8 +191,8 @@
+  -- A hold is a clock enable on the machine register, not a next-state select:
+  -- the counters and the received-byte holding register load every cycle, and
+  -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
+- stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
+- machineNext=(\(m,_,_,_) -> m) <$> stepped
++ stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts,divisionAnswer)
++ machineNext=(\(m,_,_,_) -> m {R.cpuMulDiv=DS.initialUnit}) <$> stepped
+  stageNext=(\(_,_,ps,_) -> ps) <$> stepped
+  machineOutput=(\(_,o,_,_) -> o) <$> stepped
+  holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
+@@ -216,6 +217,10 @@
+  btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
+  effectivePipe=withBtb <$> btb <*> pipeState
+  running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
++ divisionActive=(\m -> case R.cpuPhase m of R.MulDiv -> not (R.cpuFast m); _ -> False) <$> running
++ divisionCommand=(\m active -> if active then Just (R.instructionFunct3 (R.cpuInstruction m),R.cpuA m,R.cpuB m) else Nothing) <$> running <*> divisionActive
++ divisionConsume=(&&) <$> divisionActive <*> (not <$> holding)
++ divisionAnswer=mealy DS.serviceStep DS.Idle (bundle (emergency,divisionCommand,divisionConsume))
+  breaking=emergency
+  rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
+  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -369,6 +369,14 @@
+   | funct3 == 0b001 = value `shiftL` amount
+   | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
+   | otherwise = value `shiftR` amount
++
++-- | Division-only service port: 00 DIV, 01 DIVU, 10 REM, 11 REMU.
++-- The pipeline multiplies in DSPs. Making bit 2 constant here lets Clash
++-- eliminate the iterative multiply datapath without changing division timing
++-- or the shared state layout. The multi-cycle reference keeps mulDivStep.
++{-# INLINE divideOnlyStep #-}
++divideOnlyStep :: BitVector 2 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
++divideOnlyStep operation = mulDivStep (0b100 .|. resize operation)
+ 
+ -- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
+ -- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -2013,6 +2013,48 @@
+       _ -> (machine {cpuPhase = Fetch}, Nothing, idle)
+     idle = (0, Nothing, Nothing)
+ 
++pipelinedCpuStepDivisionStages :: Maybe Word32 -> (Word32 -> MemoryTarget) -> Machine -> Word32 -> Maybe Byte -> Bool -> Bool -> (Machine, RegisterWrite, StepOutput, StagePayloads, StageLoad)
++pipelinedCpuStepDivisionStages divisionAnswer decodeTarget machine memoryWord _received _txReady emergencyReset =
++  let (machine', write, (address, memoryWrite, tx), stages, loads) = pipeStepStagesWith decodeTarget machine memoryWord
++   in if cpuFast machine
++        then
++          if emergencyReset
++            then ((resetCpu machine) {cpuReadIndices = cpuReadIndices machine'}, Nothing, (address, Nothing, Nothing), stages, loads)
++            else (machine', write, (address, memoryWrite, tx), stages, loads)
++        else
++          let (next, write', output) = phases
++           in (next, write', output, stages, noStageLoad)
++  where
++    phases
++      | emergencyReset = (resetCpu machine, Nothing, idle)
++      | otherwise = case cpuPhase machine of
++      -- an action has finished (or a trap, MRET or reset set the pc)
++      Fetch ->
++        ( machine {cpuFast = True, cpuPipe = restartPipe (cpuPc machine) (cpuPipe machine), cpuInRom = romAddress (cpuPc machine)},
++          Nothing,
++          idle
++        )
++      Trap -> withoutRegister (enterTrap machine)
++      CsrRead -> csrReadStep machine
++      CsrWrite -> csrWriteStep machine
++      TrapReturn -> withoutRegister (returnFromTrap machine)
++      BusWait -> busWaitStep machine
++      MulDiv ->
++        let instruction = cpuInstruction machine
++         in case divisionAnswer of
++              Nothing -> (machine, Nothing, idle)
++              Just result ->
++                withRegister
++                  (instructionRd instruction)
++                  result
++                  (finishInstruction machine {cpuPc = cLink (cpuComputed machine)} Nothing)
++      -- WFI waits until an interrupt is pending and enabled in mie
++      Commit
++        | cpuWake machine -> withoutRegister (finishInstruction machine {cpuPc = cLink (cpuComputed machine)} Nothing)
++        | otherwise -> (machine, Nothing, idle)
++      _ -> (machine {cpuPhase = Fetch}, Nothing, idle)
++    idle = (0, Nothing, Nothing)
++
+ -- CPU ------------------------------------------------------------------------
+ 
+ runningStep ::

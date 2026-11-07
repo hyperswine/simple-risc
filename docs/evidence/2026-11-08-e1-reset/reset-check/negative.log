@@ -1,0 +1,3 @@
+[41600000] %Fatal: pipeline_reset_tb.v:51: Assertion failed in reset_equivalence_tb: fetch mismatch epoch=1
+%Error: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_reset_tb.v:51: Verilog $stop
+Aborting...

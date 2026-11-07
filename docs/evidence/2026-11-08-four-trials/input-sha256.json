@@ -1,0 +1,16 @@
+{
+  "output/refactor-four-2026-11-08/all-reset-generated/SimpleRisc.topEntity/SimpleRisc_topEntity_trueDualPortBlockRamWrapper.v": "723c661745841a06a777b37825392d1467897ad1db376f5c916e4f0719c04df6",
+  "output/refactor-four-2026-11-08/all-reset-generated/SimpleRisc.topEntity/simple_risc.v": "31e066afec248143dfa7ce68214ff378ff14855efb5b1e6ffcef8a950811952e",
+  "output/refactor-four-2026-11-08/all-reset-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "7a4e16cab9cf348e86cd1e4d6c6f1567db804471fdbc1e83336831fc93a5e72b",
+  "output/refactor-four-2026-11-08/all-reset-generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "ea5b420f0a71c2cdf17c4214d6e6d82cf47c6f251b19468d27294e81b52d8aac",
+  "output/refactor-four-2026-11-08/all-reset-physical/impl/gwsynthesis/sdram_test.vg": "c88553b9153022cd59be6100a04db51e38910dde599a4e44b7b18564d66a075a",
+  "output/refactor-four-2026-11-08/dsp-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "5c93bb2ce87f0927951115df1e83aa6dfa2106aacd312a56721e5917a7f0f7c3",
+  "output/refactor-four-2026-11-08/dsp-generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "75344d49a7f123c420492b7ccd7288b49ea17f367f0b3896535459d934fd2ffe",
+  "output/refactor-four-2026-11-08/dsp-physical/impl/gwsynthesis/sdram_test.vg": "d060b262bc688eaae76ca07ce2dbf6fc4048c41c72b791e6d062a5eb85f29117",
+  "output/refactor-four-2026-11-08/division-generated/SimpleRisc.topEntity/SimpleRisc_topEntity_trueDualPortBlockRamWrapper.v": "723c661745841a06a777b37825392d1467897ad1db376f5c916e4f0719c04df6",
+  "output/refactor-four-2026-11-08/division-generated/SimpleRisc.topEntity/simple_risc.v": "91748823dcdd2478c421343375cff77a05e8d0d9bc3d17d4305123ae32ad50e0",
+  "output/refactor-four-2026-11-08/division-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "02cc23b091b028e1f7b1b5c7b3ee81119793acf7df1b43d29dfe7948d1d92d49",
+  "output/refactor-four-2026-11-08/division-generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v": "a93bed92832d684016e8b3eed5efc471668ec0d23bb2ccad826d004205a22348",
+  "output/refactor-four-2026-11-08/division-physical/impl/gwsynthesis/sdram_test.vg": "a51cf3764d251207438cbab9b4231749889384a9ac6fd2040ad696a9f4371263",
+  "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA/IDE/simlib/gw2a/prim_sim.v": "ea60e176f48306d596dc11d2495641a49cd778447f539427f53da95430bf9081"
+}

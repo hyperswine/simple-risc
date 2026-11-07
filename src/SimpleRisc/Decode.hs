@@ -370,6 +370,14 @@ shiftResult funct3 funct7 value amount
   | funct7 == 0x20 = unsigned32 (signed32 value `shiftR` amount)
   | otherwise = value `shiftR` amount
 
+-- | Division-only service port: 00 DIV, 01 DIVU, 10 REM, 11 REMU.
+-- The pipeline multiplies in DSPs. Making bit 2 constant here lets Clash
+-- eliminate the iterative multiply datapath without changing division timing
+-- or the shared state layout. The multi-cycle reference keeps mulDivStep.
+{-# INLINE divideOnlyStep #-}
+divideOnlyStep :: BitVector 2 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32
+divideOnlyStep operation = mulDivStep (0b100 .|. resize operation)
+
 -- | One cycle of the multiply/divide unit for the M instruction @funct3@ on
 -- operands @a@ (rs1) and @b@ (rs2): the next unit state, or the result.
 mulDivStep :: BitVector 3 -> Word32 -> Word32 -> MulDivUnit -> Either MulDivUnit Word32

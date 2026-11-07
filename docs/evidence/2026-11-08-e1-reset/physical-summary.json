@@ -1,0 +1,102 @@
+[
+  {
+    "variant": "baseline",
+    "placement": 3,
+    "fmax_mhz": 84.447,
+    "reported_paths": 25,
+    "worst_setup_ns": 0.504,
+    "mean_route_percent": 79.89376,
+    "reset_start_paths": 23,
+    "ce_end_paths": 23,
+    "worst_path": {
+      "slack": 0.504,
+      "from": "reset_sync_1_s0",
+      "to": "core/ds4_307_s0",
+      "launch": "clk_core:[R]",
+      "latch": "clk_core:[R]",
+      "end_pin": "CE",
+      "levels": 4,
+      "route_share": 82.934
+    },
+    "congestion_report": "\nReport Command:report_route_congestion -max_grids 10\n  GRID LOC   ROUTE CONGESTIONS  \n ========== =================== \n  R18C20     0.917              \n  R25C28     0.917              \n  R18C38     0.917              \n  R21C38     0.903              \n  R39C8      0.903              \n  R39C9      0.903              \n  R39C16     0.903              \n  R20C23     0.903              \n  R25C38     0.903              \n  R6C31      0.903              \n\n",
+    "fanout_report": "\nReport Command:report_high_fanout_nets -max_nets 10\n  FANOUT          NET NAME           WORST SLACK   MAX DELAY  \n ======== ========================= ============= =========== \n  5171     clk                       0.504         2.274      \n  4071     reset_sync[1]             0.504         1.350      \n  863      core/machine_0_0[11048]   3.632         3.504      \n  679      core/pipeState_8673_6     0.504         2.011      \n  381      core/ds5_797_10           1.606         3.350      \n  379      clk_memory                11.789        2.274      \n  309      core/ds4_324_6            0.504         4.716      \n  303      advance                   5.729         2.512      \n  270      core/ds6_454_6            2.142         2.603      \n  268      core/result_275_12822_5   3.936         2.203      \n\n",
+    "Logic": 15170,
+    "Register": 5436,
+    "CLS": 8717
+  },
+  {
+    "variant": "baseline",
+    "placement": 0,
+    "fmax_mhz": 81.055,
+    "reported_paths": 25,
+    "worst_setup_ns": 0.008,
+    "mean_route_percent": 81.55084,
+    "reset_start_paths": 16,
+    "ce_end_paths": 15,
+    "worst_path": {
+      "slack": 0.008,
+      "from": "core/ds6_195_s0",
+      "to": "core/pipeState_7205_s0",
+      "launch": "clk_core:[R]",
+      "latch": "clk_core:[R]",
+      "end_pin": "D",
+      "levels": 10,
+      "route_share": 69.544
+    },
+    "congestion_report": "\nReport Command:report_route_congestion -max_grids 10\n  GRID LOC   ROUTE CONGESTIONS  \n ========== =================== \n  R41C24     0.958              \n  R13C26     0.944              \n  R40C6      0.944              \n  R3C15      0.917              \n  R23C28     0.917              \n  R23C36     0.917              \n  R43C26     0.917              \n  R44C23     0.917              \n  R44C27     0.917              \n  R6C28      0.917              \n\n",
+    "fanout_report": "\nReport Command:report_high_fanout_nets -max_nets 10\n  FANOUT          NET NAME           WORST SLACK   MAX DELAY  \n ======== ========================= ============= =========== \n  5171     clk                       0.008         2.274      \n  4071     reset_sync[1]             0.213         1.704      \n  863      core/machine_0_0[11048]   1.713         6.576      \n  679      core/pipeState_8673_6     0.221         2.055      \n  381      core/ds5_797_10           0.317         3.733      \n  379      clk_memory                11.547        2.274      \n  309      core/ds4_324_6            0.252         3.503      \n  303      advance                   5.220         1.915      \n  270      core/ds6_454_6            0.378         3.587      \n  268      core/result_275_12822_5   1.018         6.086      \n\n",
+    "Logic": 15170,
+    "Register": 5436,
+    "CLS": 8687
+  },
+  {
+    "variant": "candidate",
+    "placement": 3,
+    "fmax_mhz": 72.794,
+    "reported_paths": 25,
+    "worst_setup_ns": -1.392,
+    "mean_route_percent": 82.25428,
+    "reset_start_paths": 20,
+    "ce_end_paths": 20,
+    "worst_path": {
+      "slack": -1.392,
+      "from": "core/pipeState_7691_s0",
+      "to": "core/pipeState_7637_s0",
+      "launch": "clk_core:[R]",
+      "latch": "clk_core:[R]",
+      "end_pin": "D",
+      "levels": 6,
+      "route_share": 82.755
+    },
+    "congestion_report": "\nReport Command:report_route_congestion -max_grids 10\n  GRID LOC   ROUTE CONGESTIONS  \n ========== =================== \n  R7C33      0.944              \n  R30C13     0.944              \n  R26C43     0.931              \n  R27C25     0.917              \n  R17C37     0.917              \n  R38C8      0.903              \n  R44C18     0.903              \n  R44C19     0.903              \n  R23C35     0.903              \n  R28C23     0.903              \n\n",
+    "fanout_report": "\nReport Command:report_high_fanout_nets -max_nets 10\n  FANOUT          NET NAME           WORST SLACK   MAX DELAY  \n ======== ========================= ============= =========== \n  5171     clk                       -1.392        2.274      \n  3762     reset_sync[1]             -1.214        2.161      \n  908      core/machine_0_0[11048]   1.471         3.592      \n  654      core/pipeState_8673_6     -1.214        1.927      \n  381      core/ds5_797_10           0.926         3.777      \n  379      clk_memory                11.882        2.274      \n  309      core/ds4_167_17           0.105         4.915      \n  303      advance                   4.413         1.992      \n  270      core/ds6_454_6            -1.214        6.655      \n  261      core/result_275_12839_5   0.378         6.790      \n\n",
+    "Logic": 15233,
+    "Register": 5436,
+    "CLS": 8730
+  },
+  {
+    "variant": "candidate",
+    "placement": 0,
+    "fmax_mhz": 78.219,
+    "reported_paths": 25,
+    "worst_setup_ns": -0.439,
+    "mean_route_percent": 70.94924,
+    "reset_start_paths": 0,
+    "ce_end_paths": 0,
+    "worst_path": {
+      "slack": -0.439,
+      "from": "core/pipeState_7815_s0",
+      "to": "core/pipeState_7729_s0",
+      "launch": "clk_core:[R]",
+      "latch": "clk_core:[R]",
+      "end_pin": "D",
+      "levels": 8,
+      "route_share": 75.071
+    },
+    "congestion_report": "\nReport Command:report_route_congestion -max_grids 10\n  GRID LOC   ROUTE CONGESTIONS  \n ========== =================== \n  R34C12     0.972              \n  R21C32     0.931              \n  R33C12     0.931              \n  R35C13     0.931              \n  R21C33     0.917              \n  R29C16     0.917              \n  R34C11     0.917              \n  R38C8      0.903              \n  R38C12     0.903              \n  R44C30     0.903              \n\n",
+    "fanout_report": "\nReport Command:report_high_fanout_nets -max_nets 10\n  FANOUT          NET NAME           WORST SLACK   MAX DELAY  \n ======== ========================= ============= =========== \n  5171     clk                       -0.439        2.274      \n  3762     reset_sync[1]             0.303         1.350      \n  908      core/machine_0_0[11048]   2.084         5.429      \n  654      core/pipeState_8673_6     0.303         1.761      \n  381      core/ds5_797_10           0.303         6.468      \n  379      clk_memory                11.611        2.274      \n  309      core/ds4_167_17           2.037         4.162      \n  303      advance                   6.674         1.721      \n  270      core/ds6_454_6            0.887         5.650      \n  261      core/result_275_12839_5   2.590         6.015      \n\n",
+    "Logic": 15233,
+    "Register": 5436,
+    "CLS": 8822
+  }
+]

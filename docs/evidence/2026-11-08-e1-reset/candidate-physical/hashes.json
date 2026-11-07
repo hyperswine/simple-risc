@@ -1,0 +1,5 @@
+{
+  "output/refactor-e1-2026-11-08/candidate-physical/impl/gwsynthesis/sdram_test.vg": "620d4d736662048f624014e415df3f559f0e108aa7a4171300f738874bf0fde6",
+  "output/refactor-e1-2026-11-08/candidate-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "aca9a1fbc99f57873d4018ee66aacb7d46642693566bd3e03717d65466119de9",
+  "output/refactor-e1-2026-11-08/candidate-physical/bootrom-sdram.hex": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049"
+}

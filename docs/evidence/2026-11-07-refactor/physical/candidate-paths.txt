@@ -1,0 +1,62 @@
+25 paths reported, 25 with slack below 100.0 ns; worst -0.148 ns
+
+BY STRUCTURE (from stage -> to stage)
+  group                                                     paths  ends    worst  levels  route%
+  fetch -> fetch                                                1     1   -0.148       9    67.0
+  cache -> cache                                                1     1   -0.134       5    79.3
+  fetch -> A                                                    1     1   -0.129       8    67.8
+  reset_sync_1_s0 -> E1 (CE)                                   11    11   -0.112       4    88.6
+  A -> F                                                        3     3   -0.019       9    73.3
+  reset_sync_1_s0 -> E2 (CE)                                    2     2    0.009       4    88.6
+  reset_sync_1_s0 -> F (CE)                                     6     6    0.184       4    88.4
+
+BY END FIELD
+  group                                                     paths  ends    worst  levels  route%
+  pInstructionPc                                                1     1   -0.148       9    67.0
+  cache                                                         1     1   -0.134       5    79.3
+  pA                                                            1     1   -0.129       8    67.8
+  E1.e1FaultValue (CE)                                          1     1   -0.112       4    88.7
+  E1.e1Predicted (CE)                                          10    10   -0.112       4    88.6
+  pFQueue                                                       3     3   -0.019       9    73.3
+  E2.e2Computed (CE)                                            1     1    0.009       4    88.6
+  E2.e2Pc (CE)                                                  1     1    0.009       4    88.6
+  pFQueue (CE)                                                  6     6    0.184       4    88.4
+
+BY START FIELD
+  group                                                     paths  ends    worst  levels  route%
+  pQueueRead                                                    2     2   -0.148       9    67.4
+  cache                                                         1     1   -0.134       5    79.3
+  reset_sync_1_s0                                              19    19   -0.112       4    88.5
+  pA                                                            3     3   -0.019       9    73.3
+
+BY CLOCK
+  group                                                     paths  ends    worst  levels  route%
+  clk_core:[R] -> clk_core:[R]                                 25    25   -0.148       9    84.6
+
+HIGH FANOUT NETS REPORT
+  FANOUT          NET NAME           WORST SLACK   MAX DELAY  
+ ======== ========================= ============= =========== 
+  5170     clk                       -0.148        2.274      
+  4069     reset_sync[1]             -0.112        1.726      
+  862      core/machine_0_0[11048]   2.896         6.962      
+  673      core/pipeState_8673_6     -0.112        2.302      
+  381      core/ds5_797_10           0.009         5.992      
+  379      clk_memory                10.620        2.274      
+  309      core/ds4_324_8            -0.112        6.112      
+  303      advance                   5.670         2.263      
+  270      core/ds6_454_6            0.961         3.469      
+  269      core/result_275_12830_5   1.583         3.941      
+
+ROUTE CONGESTIONS REPORT
+  GRID LOC   ROUTE CONGESTIONS  
+ ========== =================== 
+  R21C40     0.931              
+  R40C13     0.931              
+  R23C37     0.917              
+  R34C34     0.917              
+  R16C36     0.903              
+  R39C13     0.903              
+  R39C9      0.903              
+  R40C9      0.903              
+  R23C22     0.903              
+  R31C31     0.903              

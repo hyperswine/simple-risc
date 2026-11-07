@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "sources": {
+    "baseline": {
+      "path": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-e1-2026-11-08/baseline-observed/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+      "sha256": "96e8122cd134fd891e1622dfdf0c327755781dbf9b59e5ac3e47cf8c7cbe2003"
+    },
+    "candidate": {
+      "path": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-four-2026-11-08/all-reset-generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+      "sha256": "ea5b420f0a71c2cdf17c4214d6e6d82cf47c6f251b19468d27294e81b52d8aac"
+    }
+  },
+  "testbench_sha256": "415b7e06b2d142dad291562e9653ca970168b3a920ded520f34120203c0acdb5",
+  "pass": {
+    "returncode": 0,
+    "output_sha256": "abcd5693b77ce04e6429075e39a59f884864b546bcc1dde45af88500f05889c8"
+  },
+  "negative": {
+    "returncode": 1,
+    "output_sha256": "5d276a663d0592f48e7dc221a04a90ba9eb9f2bb89e517014e73ae745890fb83"
+  }
+}

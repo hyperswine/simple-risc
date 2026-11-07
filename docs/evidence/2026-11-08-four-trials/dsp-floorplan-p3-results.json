@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "dsp",
+    "mode": "floorplan-p3",
+    "returncode": 2,
+    "elapsed_seconds": 290.61346341701574
+  },
+  {
+    "variant": "dsp",
+    "mode": "floorplan-p0",
+    "returncode": 0,
+    "elapsed_seconds": 586.1941260829917
+  }
+]

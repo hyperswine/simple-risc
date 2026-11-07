@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "cells": {
+      "DFFRE": 309,
+      "DFFSE": 1
+    },
+    "reset_pins": {
+      "reset_sync[1]": 310
+    },
+    "enable_pins": {
+      "pipeState_8673_6": 1,
+      "ds4_324_6": 309
+    }
+  },
+  "candidate": {
+    "cells": {
+      "DFFRE": 23,
+      "DFFE": 286,
+      "DFFSE": 1
+    },
+    "reset_pins": {
+      "reset_sync[1]": 1,
+      "result_513_12_4": 22
+    },
+    "enable_pins": {
+      "pipeState_8673_6": 1,
+      "ds4_167_17": 309
+    }
+  }
+}

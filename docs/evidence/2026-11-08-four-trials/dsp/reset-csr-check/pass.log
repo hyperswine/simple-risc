@@ -1,0 +1,5 @@
+PASS: reset equivalence, 20 warm resets, 7 while held, 493 commits, 130 stores
+- /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_reset_tb.v:77: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 121us; walltime 0.378 s; speed 319.154 us/s
+- Verilator: cpu 0.377 s on 1 threads; allocated 5 MB

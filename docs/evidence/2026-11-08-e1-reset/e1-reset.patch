@@ -1,0 +1,16 @@
+diff --git a/src/SdramPipeline.hs b/src/SdramPipeline.hs
+index 993337e..46b78fb 100644
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -204,7 +204,10 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
+  -- levels of stage logic on top of its routing tree (2026-10-29). A stage that
+  -- does not advance loads its own payload back.
+  stageD=regEn (R.spD R.initialStagePayloads) (not <$> holding) ((\ps -> R.spD ps) <$> stageNext)
+- stageE1=regEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
++ -- E1 payload is unreset storage. Pipe owns its resettable validity bit;
++ -- after reset/flush, pE1 cannot observe this payload until a new instruction
++ -- installs it. Keep the existing hold enable; add no explicit reset gate.
++ stageE1=delayEn (R.spE1 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE1 ps) <$> stageNext)
+  stageE2=regEn (R.spE2 R.initialStagePayloads) (not <$> holding) ((\ps -> R.spE2 ps) <$> stageNext)
+  stageM=regEn (R.spM R.initialStagePayloads) (not <$> holding) ((\ps -> R.spM ps) <$> stageNext)
+  stages=R.StagePayloads <$> stageD <*> stageE1 <*> stageE2 <*> stageM

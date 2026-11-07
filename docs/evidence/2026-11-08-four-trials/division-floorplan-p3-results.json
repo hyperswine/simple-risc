@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "division",
+    "mode": "floorplan-p3",
+    "returncode": 2,
+    "elapsed_seconds": 110.28321900000446
+  },
+  {
+    "variant": "division",
+    "mode": "floorplan-p0",
+    "returncode": 0,
+    "elapsed_seconds": 250.57262866699602
+  }
+]

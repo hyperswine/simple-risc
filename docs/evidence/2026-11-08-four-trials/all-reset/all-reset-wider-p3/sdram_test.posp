@@ -1,0 +1,52 @@
+//Copyright (C)2014-2026 Gowin Semiconductor Corporation.
+//All rights reserved.
+//File Title: Post-Place file
+//Tool Version: V1.9.12.04
+//Part Number: GW2AR-LV18QN88C8/I7
+//Device: GW2AR-18
+//Device Version: C
+//Created Time: Sun Nov  8 04:17:21 2026
+
+core/n986907_s2 PLACE_DSP_R37[3][A] //R37C29[0]
+core/c$app_arg_349_0_s0 PLACE_DSP_R37[3][B] //R37C29[1][A]
+core/bits_2_32_s2 PLACE_DSP_R37[5][A] //R37C47[0]
+core/RAM_1_RAM_1_0_0_s PLACE_BSRAM_R10[11]
+core/RAM_1_RAM_1_0_1_s PLACE_BSRAM_R10[15]
+core/RAM_0_RAM_0_0_0_s PLACE_BSRAM_R46[15]
+core/RAM_0_RAM_0_0_0_s0 PLACE_BSRAM_R28[13]
+cache/tags_tags_0_0_s PLACE_BSRAM_R28[1]
+cache/tags_way1_tags_way1_0_0_s PLACE_BSRAM_R28[0]
+cache/banks[0].mem_banks[0].mem_0_0_s PLACE_BSRAM_R10[0]
+cache/banks[1].mem_banks[1].mem_0_0_s PLACE_BSRAM_R46[0]
+cache/banks[2].mem_banks[2].mem_0_0_s PLACE_BSRAM_R10[1]
+cache/banks[3].mem_banks[3].mem_0_0_s PLACE_BSRAM_R28[2]
+cache/banks[4].mem_banks[4].mem_0_0_s PLACE_BSRAM_R46[1]
+cache/banks[5].mem_banks[5].mem_0_0_s PLACE_BSRAM_R10[2]
+cache/banks[6].mem_banks[6].mem_0_0_s PLACE_BSRAM_R10[3]
+cache/banks[7].mem_banks[7].mem_0_0_s PLACE_BSRAM_R28[5]
+cache/banks[8].mem_banks[8].mem_0_0_s PLACE_BSRAM_R46[3]
+cache/banks[9].mem_banks[9].mem_0_0_s PLACE_BSRAM_R10[4]
+cache/banks[10].mem_banks[10].mem_0_0_s PLACE_BSRAM_R28[4]
+cache/banks[11].mem_banks[11].mem_0_0_s PLACE_BSRAM_R46[4]
+cache/banks[12].mem_banks[12].mem_0_0_s PLACE_BSRAM_R10[5]
+cache/banks[13].mem_banks[13].mem_0_0_s PLACE_BSRAM_R28[3]
+cache/banks[14].mem_banks[14].mem_0_0_s PLACE_BSRAM_R46[5]
+cache/banks[15].mem_banks[15].mem_0_0_s PLACE_BSRAM_R10[6]
+cache/way1_storage.banks_way1[0].mem1_way1_storage.banks_way1[0].mem1_0_0_s PLACE_BSRAM_R28[7]
+cache/way1_storage.banks_way1[1].mem1_way1_storage.banks_way1[1].mem1_0_0_s PLACE_BSRAM_R46[6]
+cache/way1_storage.banks_way1[2].mem1_way1_storage.banks_way1[2].mem1_0_0_s PLACE_BSRAM_R28[6]
+cache/way1_storage.banks_way1[3].mem1_way1_storage.banks_way1[3].mem1_0_0_s PLACE_BSRAM_R46[7]
+cache/way1_storage.banks_way1[4].mem1_way1_storage.banks_way1[4].mem1_0_0_s PLACE_BSRAM_R46[8]
+cache/way1_storage.banks_way1[5].mem1_way1_storage.banks_way1[5].mem1_0_0_s PLACE_BSRAM_R28[8]
+cache/way1_storage.banks_way1[6].mem1_way1_storage.banks_way1[6].mem1_0_0_s PLACE_BSRAM_R46[9]
+cache/way1_storage.banks_way1[7].mem1_way1_storage.banks_way1[7].mem1_0_0_s PLACE_BSRAM_R28[9]
+cache/way1_storage.banks_way1[8].mem1_way1_storage.banks_way1[8].mem1_0_0_s PLACE_BSRAM_R46[10]
+cache/way1_storage.banks_way1[9].mem1_way1_storage.banks_way1[9].mem1_0_0_s PLACE_BSRAM_R28[10]
+cache/way1_storage.banks_way1[10].mem1_way1_storage.banks_way1[10].mem1_0_0_s PLACE_BSRAM_R46[11]
+cache/way1_storage.banks_way1[11].mem1_way1_storage.banks_way1[11].mem1_0_0_s PLACE_BSRAM_R28[11]
+cache/way1_storage.banks_way1[12].mem1_way1_storage.banks_way1[12].mem1_0_0_s PLACE_BSRAM_R46[12]
+cache/way1_storage.banks_way1[13].mem1_way1_storage.banks_way1[13].mem1_0_0_s PLACE_BSRAM_R28[12]
+cache/way1_storage.banks_way1[14].mem1_way1_storage.banks_way1[14].mem1_0_0_s PLACE_BSRAM_R46[14]
+cache/way1_storage.banks_way1[15].mem1_way1_storage.banks_way1[15].mem1_0_0_s PLACE_BSRAM_R46[13]
+cache/mru_mru_0_0_s PLACE_BSRAM_R10[7]
+cache/rom_rom_0_0_s PLACE_BSRAM_R46[2]

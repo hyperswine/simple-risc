@@ -1,0 +1,4 @@
+{'variant': 'all-reset', 'mode': 'none-p3', 'returncode': 2, 'elapsed_seconds': 60.21657674998278}
+csr          R[2:11]C[2:55]       437 registers, 87 left free
+bus          R[36:53]C[2:19]      284 registers, 72 left free
+{'variant': 'all-reset', 'mode': 'wider-p3', 'returncode': 0, 'elapsed_seconds': 90.26475783300702}

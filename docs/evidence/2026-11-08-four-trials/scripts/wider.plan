@@ -1,0 +1,4 @@
+# Bounded adjustment: two extra rows for each slow region, same columns.
+free ^pipeline
+csr R[2:11]C[2:55] ^machine: csr, trap, counters
+bus R[36:53]C[2:19] ^machine: bus and devices

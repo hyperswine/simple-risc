@@ -1,0 +1,50 @@
+25 paths reported, 25 with slack below 100.0 ns; worst 0.504 ns
+
+BY STRUCTURE (from stage -> to stage)
+  group                                                     paths  ends    worst  levels  route%
+  reset_sync_1_s0 -> E1 (CE)                                    1     1    0.504       4    82.9
+  btb -> btb                                                    2     2    0.596       9    50.8
+  reset_sync_1_s0 -> F (CE)                                    22    22    0.861       4    82.4
+
+BY END FIELD
+  group                                                     paths  ends    worst  levels  route%
+  E1.e1Pc (CE)                                                  1     1    0.504       4    82.9
+  btb table RAM                                                 2     2    0.596       9    50.8
+  pFQueue (CE)                                                 22    22    0.861       4    82.4
+
+BY START FIELD
+  group                                                     paths  ends    worst  levels  route%
+  reset_sync_1_s0                                              23    23    0.504       4    82.4
+  btb table RAM                                                 2     2    0.596       9    50.8
+
+BY CLOCK
+  group                                                     paths  ends    worst  levels  route%
+  clk_core:[R] -> clk_core:[R]                                 25    25    0.504       9    79.9
+
+HIGH FANOUT NETS REPORT
+  FANOUT          NET NAME           WORST SLACK   MAX DELAY  
+ ======== ========================= ============= =========== 
+  5171     clk                       0.504         2.274      
+  4071     reset_sync[1]             0.504         1.350      
+  863      core/machine_0_0[11048]   3.632         3.504      
+  679      core/pipeState_8673_6     0.504         2.011      
+  381      core/ds5_797_10           1.606         3.350      
+  379      clk_memory                11.789        2.274      
+  309      core/ds4_324_6            0.504         4.716      
+  303      advance                   5.729         2.512      
+  270      core/ds6_454_6            2.142         2.603      
+  268      core/result_275_12822_5   3.936         2.203      
+
+ROUTE CONGESTIONS REPORT
+  GRID LOC   ROUTE CONGESTIONS  
+ ========== =================== 
+  R18C20     0.917              
+  R25C28     0.917              
+  R18C38     0.917              
+  R21C38     0.903              
+  R39C8      0.903              
+  R39C9      0.903              
+  R39C16     0.903              
+  R20C23     0.903              
+  R25C38     0.903              
+  R6C31      0.903              

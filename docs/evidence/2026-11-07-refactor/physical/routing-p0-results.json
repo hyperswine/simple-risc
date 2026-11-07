@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "baseline",
+    "placement": 0,
+    "returncode": 0,
+    "elapsed_seconds": 330.7235560830013
+  },
+  {
+    "variant": "candidate",
+    "placement": 0,
+    "returncode": 2,
+    "elapsed_seconds": 721.4549690420099
+  }
+]
