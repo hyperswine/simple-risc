@@ -78,20 +78,55 @@ def boundary(cells, labels, pattern):
     return coupled
 
 
+MODULE = re.compile(r'^module (\S+) \(.*?^endmodule', re.S | re.M)
+INSTANCE = re.compile(r'^  ([A-Za-z0-9_]+) (\S+)\s+\(', re.M)
+
+
+def locate_core(netlist, module=None, instance=None):
+    """The module whose registers are the pipeline's, and its path under top.
+
+    The core is sdram_pipeline_risc itself in the usual build; a wrapper
+    (package_dsp_counters.py) puts it one level down as sdram_pipeline_core,
+    so the constraint names must carry the extra instance."""
+    bodies = {m.group(1): m.group(0) for m in MODULE.finditer(netlist)}
+    if module is None:
+        module = next((name for name, body in bodies.items() if re.search(r'^  DFF\w* \\?pipeState_', body, re.M)), None)
+        if module is None:
+            raise SystemExit('no module with pipeState registers in the netlist')
+    if instance is None:
+        parents = {}
+        for name, body in bodies.items():
+            for kind, inst in INSTANCE.findall(body):
+                if kind in bodies:
+                    parents[kind] = (name, inst.lstrip('\\'))
+        path, current = [], module
+        while current in parents:
+            parent, inst = parents[current]
+            path.insert(0, inst)
+            current = parent
+        if not path:
+            raise SystemExit(f'{module} is not instantiated under the top module')
+        instance = '/'.join(path)
+    return module, instance
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('plan', type=Path)
     p.add_argument('netlist', type=Path)
     p.add_argument('--layout', type=Path, required=True)
-    p.add_argument('--instance', default='core', help='instance name of the core in the top module')
-    p.add_argument('--module', default='sdram_pipeline_risc')
+    p.add_argument('--instance', help='hierarchical instance name of the core module (found from the netlist when omitted)')
+    p.add_argument('--module', help='module holding the pipeline registers (found from the netlist when omitted)')
     p.add_argument('--free', help='leave registers with a one-cycle path to or from a matching register unplaced')
     p.add_argument('-o', '--output', type=Path)
     args = p.parse_args()
     layout = path_census.load_layout(args.layout)
     plan, free = read_plan(args.plan)
     free = args.free or free
-    cells = area_census.core_cells(args.netlist.read_text(), args.module)
+    netlist = args.netlist.read_text()
+    module, instance = locate_core(netlist, args.module, args.instance)
+    print(f'core module {module} at {instance}', file=sys.stderr)
+    cells = area_census.core_cells(netlist, module)
     labels = {i: ': '.join(area_census.group(kind, name, layout))
               for i, (kind, name, _, _) in enumerate(cells) if kind not in area_census.LOGIC}
     coupled = boundary(cells, labels, re.compile(free)) if free else set()
@@ -113,7 +148,7 @@ def main():
         if not names:
             raise SystemExit(f'group {group}: no register matches {selector.pattern}')
         print(f'{group:12} {region:18} {len(names):5} registers, {freed[group]} left free', file=sys.stderr)
-        lines.append(f'GROUP {group} = {{' + ' '.join(f'"{args.instance}/{n}"' for n in names) + '};')
+        lines.append(f'GROUP {group} = {{' + ' '.join(f'"{instance}/{n}"' for n in names) + '};')
         lines.append(f'GRP_LOC {group} {region};')
     text = '\n'.join(lines) + '\n'
     if args.output:

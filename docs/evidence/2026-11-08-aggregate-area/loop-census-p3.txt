@@ -1,0 +1,12 @@
+
+output/tangnano20k/aggregate-20261108/build/impl/pnr/sdram_test.tr: 3000 paths
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  fetch -> btb                          14   14   14  -1.986      7      7     73  yes  pFetchPc -> btb table RAM (7 levels)
+  machine -> machine                   300    2    2  -1.767      4      6     81  yes  machine -> machine (5 levels)
+  fetch -> A                            30   15   16  -1.690      8      9     67       pQueueRead -> pA (8 levels)
+  fetch -> fetch                        76   21   34  -1.280      7      9     65  yes  pQueueRead -> pInstructionPc (8 levels)
+  E2 -> fetch                           19    3    5  -1.274      7      7     69       pRedirect -> pInflight (7 levels)
+  A -> F                               119    9   13  -0.858      9      9     67       pA -> pFQueue (7 levels)
+  E1 -> E2                              53    1    2  -0.654      7     10     68       E1.e1A -> E2.e2Forwards (10 levels)
+  D -> E1                               93    1    1  -0.543      6     10     72       D.fPc -> E1.e1FetchFault (10 levels)
+  structures with 7+ levels: E1 -> D (11), E1 -> E2 (10), D -> E1 (10), fetch -> A (9), fetch -> fetch (9), A -> F (9), core-other -> cache (9), A -> A (9), cache ->

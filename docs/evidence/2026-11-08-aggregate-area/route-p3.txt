@@ -1,0 +1,1 @@
+aggregate, placement 3, regenerated floorplan, one draw (not a judgment): FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 69.778 MHz Fmax, -1.986 ns worst setup slack; 67 setup / 0 hold violating endpoints; routing 23 min; occupied CLS 8720 (baseline 8717)
