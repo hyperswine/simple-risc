@@ -603,6 +603,11 @@ data Machine = Machine
     -- | Registered pulse and CSR write request, applied on the next clock.
     cpuCountRetirement :: Bool,
     cpuCounterWrite :: Maybe (Unsigned 12, Word32),
+    -- | This cycle's CLINT mtime write (high half, value), as 'tickCounter'
+    -- applies it to 'devMtime': set combinationally each step for a circuit
+    -- that keeps mtime outside 'Machine' (SdramPipeline's DSP counters).
+    -- Nothing reads it back, so its register is removed by synthesis.
+    cpuTimeWrite :: Maybe (Bool, Word32),
     cpuMulDiv :: MulDivUnit,
     -- | The pipelined multiply's four partial products, injected each cycle
     -- like cpuRfA/cpuRfB. In hardware they come from two free-running

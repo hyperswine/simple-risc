@@ -179,8 +179,47 @@ withBtb stored pipe = pipe {R.pBtb=repeat stored}
 -- it must never supply a board timing/resource measurement.
 circuitWithObservations :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (BoardOutput dom, Signal dom R.PipelineTrace)
-circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace)
+circuitWithObservations serialRx memoryData memoryHeld sdMiso = (output,trace)
+ where (output,trace,_)=circuitWith Nothing serialRx memoryData memoryHeld sdMiso
+
+-- | The three 64-bit counters kept outside 'Machine', in order mcycle, mtime,
+-- minstret, and the commands that drive them (see 'CounterCommands').
+type ExternalCounters dom = (Signal dom R.Counter64, Signal dom R.Counter64, Signal dom R.Counter64)
+
+-- | What an external counter owner needs each cycle, with 'tickCounter'
+-- timing: mcycle and minstret take the registered CSR write command, minstret
+-- counts the registered retirement pulse and loads only while the machine
+-- does; mtime takes this cycle's CLINT write and always counts.
+data CounterCommands = CounterCommands
+  { ccCycleWrite :: Maybe (Bool, R.Word32), ccTimeWrite :: Maybe (Bool, R.Word32),
+    ccInstretWrite :: Maybe (Bool, R.Word32), ccInstretIncrement :: Bool, ccInstretEnable :: Bool }
+  deriving (Generic,NFDataX)
+
+circuitWithExternalCounters :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit -> ExternalCounters dom ->
+ (BoardOutput dom, Signal dom R.PipelineTrace, Signal dom CounterCommands)
+circuitWithExternalCounters serialRx memoryData memoryHeld sdMiso counters = circuitWith (Just counters) serialRx memoryData memoryHeld sdMiso
+
+counterHalf :: Unsigned 12 -> Unsigned 12 -> Maybe (Unsigned 12, R.Word32) -> Maybe (Bool, R.Word32)
+counterHalf low high command = case command of
+  Just (address,value) | address==low -> Just (False,value)
+                       | address==high -> Just (True,value)
+  _ -> Nothing
+
+-- With external counters, Machine's own copies are written back as constants
+-- (so synthesis removes them and HeldState's counter halves) and the injected
+-- values take their place in 'running' every cycle.
+circuitWith :: HiddenClockResetEnable dom => Maybe (ExternalCounters dom) -> Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
+ (BoardOutput dom, Signal dom R.PipelineTrace, Signal dom CounterCommands)
+circuitWith externalCounters serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace,commands)
  where
+ commands=(\m next held -> CounterCommands (counterHalf 0xb00 0xb80 (R.cpuCounterWrite m)) (R.cpuTimeWrite next)
+   (counterHalf 0xb02 0xb82 (R.cpuCounterWrite m)) (R.cpuCountRetirement m) (not held)) <$> running <*> machineNextRaw <*> holding
+ withoutCounters m=case externalCounters of
+   Nothing -> m
+   Just _ -> m {R.cpuCycle=R.initialCounter,R.cpuInstret=R.initialCounter,R.cpuDevices=(R.cpuDevices m) {R.devMtime=R.initialCounter}}
+ withCounters=case externalCounters of
+   Nothing -> id
+   Just (cycle,time,instret) -> \ms -> (\m c t i -> m {R.cpuCycle=c,R.cpuInstret=i,R.cpuDevices=(R.cpuDevices m) {R.devMtime=t}}) <$> ms <*> cycle <*> time <*> instret
  trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
  receivedNow=R.uartRx (register high (register high serialRx))
  -- Fold not (cpuInRom machine) into the emergency flip-flop D input so
@@ -191,7 +230,8 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  -- the counters and the received-byte holding register load every cycle, and
  -- the rest loads unless the cache holds the core or Ctrl-C breaks it.
  stepped=step <$> running <*> bundle (memoryData,memoryHeld,received,txReady,emergency,rfA,rfB,ioAnswer,mulProducts)
- machineNext=(\(m,_,_,_) -> m) <$> stepped
+ machineNextRaw=(\(m,_,_,_) -> m) <$> stepped
+ machineNext=withoutCounters <$> machineNextRaw
  stageNext=(\(_,_,ps,_) -> ps) <$> stepped
  machineOutput=(\(_,o,_,_) -> o) <$> stepped
  holding=liftA2 (\held breakingNow -> held && not breakingNow) memoryHeld breaking
@@ -215,7 +255,7 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
  btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
  effectivePipe=withBtb <$> btb <*> pipeState
- running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
+ running=withCounters (R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine)))
  breaking=emergency
  rxWanted=(\held offered headByte -> isNothing (R.heldRx held) && isNothing offered && isJust headByte) <$> heldState <*> received <*> rxHead
  rxPop=(&&) <$> rxWanted <*> (not <$> breaking)
