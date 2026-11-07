@@ -402,6 +402,7 @@ initialMachine =
       cpuInstret = initialCounter,
       cpuCountRetirement = False,
       cpuCounterWrite = Nothing,
+      cpuTimeWrite = Nothing,
       cpuMulDiv = MulDivUnit MdPrepare 0 0 0 0 False False False False,
       cpuMulProducts = repeat 0,
       cpuMulOperandsMirror = (0, 0, 0),
@@ -760,6 +761,10 @@ machineStepCoreStagesBy cpuStepWith decodeTarget machine (memoryWord, received, 
             bootCause = if effect == ConsumeBootCause then causeNone else bootCause machine',
             cpuCycle = tickCounter True (counterWrite 0xb00 0xb80) (cpuCycle machine),
             cpuInstret = tickCounter (cpuCountRetirement machine) (counterWrite 0xb02 0xb82) (cpuInstret machine),
+            cpuTimeWrite = case effect of
+              DeviceWrite ClintTimeLoTarget value -> Just (False, value)
+              DeviceWrite ClintTimeHiTarget value -> Just (True, value)
+              _ -> Nothing,
             -- Devices step from their registers; a reset this cycle quietens
             -- them after the time and compare logic, keeping time.
             cpuDevices = if clearRegisters machine' then initialDevices {devMtime = devMtime devices'} else devices',
@@ -840,6 +845,7 @@ systemReset cause machine =
       cpuInterruptEnable = 0,
       cpuCountRetirement = False,
       cpuCounterWrite = Nothing,
+      cpuTimeWrite = Nothing,
       systemBus = (systemBus machine) {busPhase = BusIdle},
       cpuBusRequest = Nothing,
       cpuBusResponse = Nothing,
@@ -1999,7 +2005,7 @@ pipelinedCpuStepStages decodeTarget machine memoryWord _received _txReady emerge
       BusWait -> busWaitStep machine
       MulDiv ->
         let instruction = cpuInstruction machine
-         in case mulDivStep (instructionFunct3 instruction) (cpuA machine) (cpuB machine) (cpuMulDiv machine) of
+         in case divideOnlyStep (resize (instructionFunct3 instruction)) (cpuA machine) (cpuB machine) (cpuMulDiv machine) of
               Left unit -> (machine {cpuMulDiv = unit}, Nothing, idle)
               Right result ->
                 withRegister
