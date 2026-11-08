@@ -1,0 +1,533 @@
+{
+  "summary": {
+    "baseline": {
+      "recorded": 5,
+      "status_counts": {
+        "pass": 2,
+        "timing-fail": 2,
+        "unrouted": 1
+      },
+      "timing_reports": 4,
+      "median_completed_fmax_mhz": 79.91050000000001,
+      "distinct_report_fingerprints": 3
+    },
+    "anchors": {
+      "recorded": 5,
+      "status_counts": {
+        "pass": 3,
+        "timing-fail": 2
+      },
+      "timing_reports": 5,
+      "median_completed_fmax_mhz": 81.171,
+      "distinct_report_fingerprints": 4,
+      "paired_completed": {
+        "count": 4,
+        "median_fmax_delta_mhz": 1.4349999999999952,
+        "faster_count": 3
+      }
+    },
+    "feedback": {
+      "recorded": 5,
+      "status_counts": {
+        "pass": 2,
+        "timing-fail": 3
+      },
+      "timing_reports": 5,
+      "median_completed_fmax_mhz": 76.389,
+      "distinct_report_fingerprints": 4,
+      "paired_completed": {
+        "count": 4,
+        "median_fmax_delta_mhz": -10.073000000000008,
+        "faster_count": 1
+      }
+    }
+  },
+  "runs": [
+    {
+      "variant": "anchors",
+      "placement": 0,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 961.6031982898712,
+      "imported": true,
+      "origin": "output/btb-ablation-2026-11-08/anchors-p0",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8776,
+      "fmax_mhz": 81.171,
+      "worst_setup_ns": 0.026,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.026,
+        "from": "core/RAM_1_RAM_1_0_1_s",
+        "to": "core/RAM_1_RAM_1_0_0_s",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "ADB[10]",
+        "levels": 9,
+        "route_share": 53.356
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "45bef5c03d2cc474b4cfd764334ab013cd9588402cfc6e4eda52413cdbd14c92",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.931
+    },
+    {
+      "variant": "anchors",
+      "placement": 1,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 476.0651388168335,
+      "imported": true,
+      "origin": "output/btb-ablation-2026-11-08/anchors-p1",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8718,
+      "fmax_mhz": 81.52,
+      "worst_setup_ns": 0.079,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.079,
+        "from": "core/RAM_1_RAM_1_0_1_s",
+        "to": "core/RAM_1_RAM_1_0_1_s",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "ADB[11]",
+        "levels": 8,
+        "route_share": 52.772
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "df17fdf672cc5a80e27cd0262bc5db93d03258d0bd7d5b5ff00d9f3c4419c43a",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.944
+    },
+    {
+      "variant": "anchors",
+      "placement": 2,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 405.680947303772,
+      "imported": true,
+      "origin": "output/btb-ablation-2026-11-08/anchors-p2",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8718,
+      "fmax_mhz": 81.52,
+      "worst_setup_ns": 0.079,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.079,
+        "from": "core/RAM_1_RAM_1_0_1_s",
+        "to": "core/RAM_1_RAM_1_0_1_s",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "ADB[11]",
+        "levels": 8,
+        "route_share": 52.772
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "df17fdf672cc5a80e27cd0262bc5db93d03258d0bd7d5b5ff00d9f3c4419c43a",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.944
+    },
+    {
+      "variant": "anchors",
+      "placement": 3,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 90.28104090690613,
+      "imported": true,
+      "origin": "output/btb-ablation-2026-11-08/anchors-p3",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8694,
+      "fmax_mhz": 78.977,
+      "worst_setup_ns": -0.316,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -0.316,
+        "from": "core/RAM_1_RAM_1_0_1_s",
+        "to": "core/RAM_1_RAM_1_0_0_s",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "ADB[5]",
+        "levels": 8,
+        "route_share": 55.178
+      },
+      "setup_violations": 6,
+      "hold_violations": 0,
+      "report_fingerprint": "e719d05113dddc0d483da3049b4c8bc83d899710dd368ce2ff2c89e8767b83f1",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.931
+    },
+    {
+      "variant": "anchors",
+      "placement": 4,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 125.26225924491882,
+      "imported": true,
+      "origin": "output/btb-ablation-2026-11-08/anchors-p4",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8823,
+      "fmax_mhz": 78.037,
+      "worst_setup_ns": -0.469,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -0.469,
+        "from": "core/RAM_1_RAM_1_0_1_s",
+        "to": "core/RAM_1_RAM_1_0_1_s",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "ADB[7]",
+        "levels": 8,
+        "route_share": 54.935
+      },
+      "setup_violations": 9,
+      "hold_violations": 0,
+      "report_fingerprint": "2a7e80dc6fa893e4d3c908b635b575b838bb6e96b9e741b70e1861901089f5fa",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.903
+    },
+    {
+      "variant": "baseline",
+      "target": 89,
+      "placement": 0,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 824.254231929779,
+      "imported": true,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p0",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8687,
+      "fmax_mhz": 81.055,
+      "worst_setup_ns": 0.008,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.008,
+        "from": "core/ds6_195_s0",
+        "to": "core/pipeState_7205_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 10,
+        "route_share": 69.544
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "3f20e28d4c41edfbcfc6ab5fe302c5423ae40ff8c4a6e87b0dc12e94b4447895",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s PLACE_BSRAM_R10[4]",
+        "core/RAM_1_RAM_1_0_1_s PLACE_BSRAM_R10[5]"
+      ],
+      "peak_reported_congestion": 0.958
+    },
+    {
+      "variant": "baseline",
+      "target": 89,
+      "placement": 1,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 908.5577228069305,
+      "imported": true,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8649,
+      "fmax_mhz": 78.766,
+      "worst_setup_ns": -0.35,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -0.35,
+        "from": "core/pipeState_7816_s0",
+        "to": "core/pipeState_8640_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 8,
+        "route_share": 71.345
+      },
+      "setup_violations": 154,
+      "hold_violations": 0,
+      "report_fingerprint": "4cb689e6ae32da2b199b923af24f5455a96abf47956ce534abed4bd769f046b8",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s PLACE_BSRAM_R10[5]",
+        "core/RAM_1_RAM_1_0_1_s PLACE_BSRAM_R10[4]"
+      ],
+      "peak_reported_congestion": 0.917
+    },
+    {
+      "variant": "baseline",
+      "target": 89,
+      "placement": 2,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 536.0068917274475,
+      "imported": true,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p2",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8649,
+      "fmax_mhz": 78.766,
+      "worst_setup_ns": -0.35,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -0.35,
+        "from": "core/pipeState_7816_s0",
+        "to": "core/pipeState_8640_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 8,
+        "route_share": 71.345
+      },
+      "setup_violations": 154,
+      "hold_violations": 0,
+      "report_fingerprint": "4cb689e6ae32da2b199b923af24f5455a96abf47956ce534abed4bd769f046b8",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s PLACE_BSRAM_R10[5]",
+        "core/RAM_1_RAM_1_0_1_s PLACE_BSRAM_R10[4]"
+      ],
+      "peak_reported_congestion": 0.917
+    },
+    {
+      "variant": "baseline",
+      "target": 89,
+      "placement": 3,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 236.28254580497742,
+      "imported": true,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p3",
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8717,
+      "fmax_mhz": 84.447,
+      "worst_setup_ns": 0.504,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.504,
+        "from": "reset_sync_1_s0",
+        "to": "core/ds4_307_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "CE",
+        "levels": 4,
+        "route_share": 82.934
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "141e6e657441ecd4adb09a2af9975452af6ea89d0da744a2dc3069229423b4b3",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s PLACE_BSRAM_R28[13]",
+        "core/RAM_1_RAM_1_0_1_s PLACE_BSRAM_R10[14]"
+      ],
+      "peak_reported_congestion": 0.917
+    },
+    {
+      "variant": "baseline",
+      "target": 89,
+      "placement": 4,
+      "status": "unrouted",
+      "returncode": 1,
+      "elapsed_seconds": 631.4892289638519,
+      "imported": true,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p4",
+      "raw_status": "tool-error",
+      "unrouted_nets": 557,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8629
+    },
+    {
+      "variant": "feedback",
+      "placement": 0,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 230.40021920204163,
+      "imported": false,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8833,
+      "fmax_mhz": 81.48,
+      "worst_setup_ns": 0.073,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.073,
+        "from": "core/pipeState_7808_s0",
+        "to": "core/pipeState_7473_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 10,
+        "route_share": 67.558
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "76ad8e62e9df3a13cecc10e4b1f9cc48e9044f85d08d51d47272d62b43a14bdb",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.944
+    },
+    {
+      "variant": "feedback",
+      "placement": 1,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 666.0405466556549,
+      "imported": false,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8782,
+      "fmax_mhz": 66.678,
+      "worst_setup_ns": -2.652,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -2.652,
+        "from": "core/pipeState_7692_s0",
+        "to": "core/pipeState_7500_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 5,
+        "route_share": 85.631
+      },
+      "setup_violations": 41,
+      "hold_violations": 0,
+      "report_fingerprint": "271e42f4d5cffbd21d8b57122af2cef49a71f0a820ef4c89356e47abd424ac6b",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.944
+    },
+    {
+      "variant": "feedback",
+      "placement": 2,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 711.2395040988922,
+      "imported": false,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8782,
+      "fmax_mhz": 66.678,
+      "worst_setup_ns": -2.652,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -2.652,
+        "from": "core/pipeState_7692_s0",
+        "to": "core/pipeState_7500_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 5,
+        "route_share": 85.631
+      },
+      "setup_violations": 41,
+      "hold_violations": 0,
+      "report_fingerprint": "271e42f4d5cffbd21d8b57122af2cef49a71f0a820ef4c89356e47abd424ac6b",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.944
+    },
+    {
+      "variant": "feedback",
+      "placement": 3,
+      "status": "timing-fail",
+      "returncode": 2,
+      "elapsed_seconds": 520.8500030040741,
+      "imported": false,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8665,
+      "fmax_mhz": 76.389,
+      "worst_setup_ns": -0.745,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": -0.745,
+        "from": "core/pipeState_7777_s0",
+        "to": "core/pipeState_7463_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 9,
+        "route_share": 68.817
+      },
+      "setup_violations": 18,
+      "hold_violations": 0,
+      "report_fingerprint": "b40fb660e7f5b352211e0e4099e20bbaab119222a7f482cc51e4521f8b57a3ac",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.931
+    },
+    {
+      "variant": "feedback",
+      "placement": 4,
+      "status": "pass",
+      "returncode": 0,
+      "elapsed_seconds": 100.21834397315979,
+      "imported": false,
+      "Logic": 15170,
+      "Register": 5436,
+      "CLS": 8858,
+      "fmax_mhz": 81.064,
+      "worst_setup_ns": 0.01,
+      "reported_paths": 3000,
+      "worst_path": {
+        "slack": 0.01,
+        "from": "core/ds6_197_s0",
+        "to": "core/pipeState_7205_s0",
+        "launch": "clk_core:[R]",
+        "latch": "clk_core:[R]",
+        "end_pin": "D",
+        "levels": 10,
+        "route_share": 67.264
+      },
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "report_fingerprint": "31570bec0059937a3fb223e64cbdc23e817dc4cab0cfe41d336dfda22725dca4",
+      "btb_sites": [
+        "core/RAM_1_RAM_1_0_0_s CST_BSRAM_R28[12]",
+        "core/RAM_1_RAM_1_0_1_s CST_BSRAM_R28[13]"
+      ],
+      "anchors_verified": true,
+      "peak_reported_congestion": 0.931
+    }
+  ]
+}

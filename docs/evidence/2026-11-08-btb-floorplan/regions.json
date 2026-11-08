@@ -1,0 +1,46 @@
+{
+  "core_module": "sdram_pipeline_risc",
+  "instance": "core",
+  "headroom": 1.5,
+  "measured_logic_per_cls": 1.7402776184467132,
+  "capacity_excluded_rows": [
+    10,
+    19,
+    28,
+    37,
+    46
+  ],
+  "regions": [
+    {
+      "group": "csr",
+      "selector": "^machine: csr, trap, counters",
+      "registers": 437,
+      "charged_lut_equivalents": 1887.9635734731282,
+      "required_cls": 1628,
+      "region": "R[2:9]C[2:55]",
+      "conservative_capacity_cls": 1728
+    },
+    {
+      "group": "bus",
+      "selector": "^machine: bus and devices",
+      "registers": 284,
+      "charged_lut_equivalents": 1259.622869402545,
+      "required_cls": 1086,
+      "region": "R[36:53]C[2:19]",
+      "conservative_capacity_cls": 1152
+    },
+    {
+      "group": "front",
+      "selector": "^pipeline: (fetch|A|F|btb):",
+      "registers": 1150,
+      "charged_lut_equivalents": 3317.9609369638733,
+      "required_cls": 2860,
+      "region": "R[17:36]C[16:55]",
+      "conservative_capacity_cls": 2880
+    }
+  ],
+  "bram_sites": {
+    "RAM_1_RAM_1_0_0_s": "BSRAM_R28[12]",
+    "RAM_1_RAM_1_0_1_s": "BSRAM_R28[13]"
+  }
+}

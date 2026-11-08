@@ -1,0 +1,14 @@
+{
+  "front": {
+    "registers": 1150,
+    "entire_feeding_cone_lut_equivalents": 3376
+  },
+  "csr": {
+    "registers": 437,
+    "entire_feeding_cone_lut_equivalents": 1637
+  },
+  "bus": {
+    "registers": 284,
+    "entire_feeding_cone_lut_equivalents": 1189
+  }
+}

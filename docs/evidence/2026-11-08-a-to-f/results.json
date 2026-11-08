@@ -1,0 +1,92 @@
+[
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 0,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 824.254231929779,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p0"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 1,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 908.5577228069305,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 2,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 536.0068917274475,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p2"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 3,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 236.28254580497742,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p3"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 4,
+    "status": "tool-error",
+    "returncode": 1,
+    "elapsed_seconds": 631.4892289638519,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p4"
+  },
+  {
+    "variant": "candidate",
+    "placement": 0,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 846.6536602973938,
+    "imported": false
+  },
+  {
+    "variant": "candidate",
+    "placement": 1,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 220.45586776733398,
+    "imported": false
+  },
+  {
+    "variant": "candidate",
+    "placement": 2,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 315.86359763145447,
+    "imported": false
+  },
+  {
+    "variant": "candidate",
+    "placement": 3,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 666.4833960533142,
+    "imported": false
+  },
+  {
+    "variant": "candidate",
+    "placement": 4,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 701.4099228382111,
+    "imported": false
+  }
+]

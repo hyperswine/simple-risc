@@ -1,0 +1,14 @@
+{
+  "baseline": {
+    "paired": 4,
+    "faster": 1,
+    "slower": 3,
+    "median_delta_mhz": -10.073000000000008
+  },
+  "anchors": {
+    "paired": 5,
+    "faster": 2,
+    "slower": 3,
+    "median_delta_mhz": -2.588000000000008
+  }
+}

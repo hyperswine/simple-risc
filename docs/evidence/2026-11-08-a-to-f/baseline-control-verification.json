@@ -1,0 +1,53 @@
+{
+  "current_sources_equal_previous_control_except_line_comments": true,
+  "previous_control_equals_frozen_production_rtl_except_line_comments": true,
+  "frozen_production_rtl_sha256": "3937573c4b49baa946b82eee58a9d313e016cd7e448d0903f6d40124b7000e9e",
+  "control_rtl_sha256": "429f4d50123858ab6bbec90ee18560d48bde15f782a75d9fb3219b3fab782ae0",
+  "sources": {
+    "src/SdramPipeline.hs": {
+      "current_sha256": "f4799e44aa32584be0fec7c08f5c4790d8f6a968d4d45870a4eae9bd3ab14f1f",
+      "previous_control_sha256": "0ba20157cbe9f15c364ea68c3b1293faa3a35185fe52e3fe4bb05d16666a4cd2",
+      "equal_except_line_comments": true
+    },
+    "src/SdramPipelineObserved.hs": {
+      "current_sha256": "7b5e0f6cf2ad815dafd6944458616532a5047614d6e4e3e82b3161bb1041db7d",
+      "previous_control_sha256": "7b5e0f6cf2ad815dafd6944458616532a5047614d6e4e3e82b3161bb1041db7d",
+      "equal_except_line_comments": true
+    },
+    "src/PsramRegs.hs": {
+      "current_sha256": "566e97bb019da4979230f9e57c1ffc418a978b21fd8ed93afbaf38362261fe0e",
+      "previous_control_sha256": "566e97bb019da4979230f9e57c1ffc418a978b21fd8ed93afbaf38362261fe0e",
+      "equal_except_line_comments": true
+    },
+    "src/SimpleRisc.hs": {
+      "current_sha256": "78fb8682b923bc11c8c0c88c910d6a054080c9a50e23dc8c38826a43c664f74d",
+      "previous_control_sha256": "78fb8682b923bc11c8c0c88c910d6a054080c9a50e23dc8c38826a43c664f74d",
+      "equal_except_line_comments": true
+    },
+    "src/RiscVCompressed.hs": {
+      "current_sha256": "520c40f397db58660ff1ba9ad1a09e4c0e95aee50f5b25cc9f2ffdb0423bd327",
+      "previous_control_sha256": "520c40f397db58660ff1ba9ad1a09e4c0e95aee50f5b25cc9f2ffdb0423bd327",
+      "equal_except_line_comments": true
+    },
+    "src/SdramSimpleRisc.hs": {
+      "current_sha256": "ba3bab4382f25fdd72c73b30b1aa5c9b791c3655e9958d4dee56866c70a75373",
+      "previous_control_sha256": "ba3bab4382f25fdd72c73b30b1aa5c9b791c3655e9958d4dee56866c70a75373",
+      "equal_except_line_comments": true
+    },
+    "src/SimpleRisc/Uart.hs": {
+      "current_sha256": "c96fa43b69a7b639d6ef49130acee2e6f1361b5003c043ca034f73d6c4ef228d",
+      "previous_control_sha256": "c96fa43b69a7b639d6ef49130acee2e6f1361b5003c043ca034f73d6c4ef228d",
+      "equal_except_line_comments": true
+    },
+    "src/SimpleRisc/Decode.hs": {
+      "current_sha256": "7cbb4747e9ccf065a07fbd79b97e32129afcda47e9f52f8eb4288cbe76ea12a0",
+      "previous_control_sha256": "7cbb4747e9ccf065a07fbd79b97e32129afcda47e9f52f8eb4288cbe76ea12a0",
+      "equal_except_line_comments": true
+    },
+    "src/SimpleRisc/Types.hs": {
+      "current_sha256": "a548936f23576a2c0f779c1113a8c458464aa74a22d4ea302573012928f5833b",
+      "previous_control_sha256": "a548936f23576a2c0f779c1113a8c458464aa74a22d4ea302573012928f5833b",
+      "equal_except_line_comments": true
+    }
+  }
+}

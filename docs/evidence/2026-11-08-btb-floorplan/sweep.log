@@ -1,0 +1,64 @@
+core module sdram_pipeline_risc at core
+csr          R[2:9]C[2:55]        437 registers, 87 left free
+bus          R[38:53]C[2:19]      284 registers, 72 left free
+START baseline-t89-p3
+START candidate-t89-p3
+START baseline-t89-p0
+DONE baseline-t89-p3 pass 236
+START candidate-t89-p0
+DONE baseline-t89-p0 pass 824
+START baseline-t89-p1
+DONE baseline-t89-p1 timing-fail 909
+START candidate-t89-p1
+DONE candidate-t89-p3 timeout 1802
+START baseline-t89-p2
+DONE candidate-t89-p0 timeout 1806
+START candidate-t89-p2
+DONE baseline-t89-p2 timing-fail 536
+START baseline-t89-p4
+DONE baseline-t89-p4 tool-error 631
+START candidate-t89-p4
+DONE candidate-t89-p4 tool-error 351
+START baseline-t87-p3
+DONE baseline-t87-p3 pass 115
+START candidate-t87-p3
+DONE candidate-t89-p1 timeout 1803
+START baseline-t87-p0
+DONE candidate-t89-p2 timeout 1804
+START candidate-t87-p0
+DONE baseline-t87-p0 pass 391
+START baseline-t87-p1
+DONE baseline-t87-p1 timing-fail 506
+START candidate-t87-p1
+DONE candidate-t87-p3 tool-error 1253
+START baseline-t87-p2
+DONE baseline-t87-p2 timing-fail 441
+START candidate-t87-p2
+DONE candidate-t87-p0 timeout 1804
+START baseline-t87-p4
+DONE baseline-t87-p4 tool-error 471
+START candidate-t87-p4
+DONE candidate-t87-p1 tool-error 1774
+START baseline-t91-p3
+DONE baseline-t91-p3 pass 105
+START candidate-t91-p3
+DONE candidate-t87-p4 tool-error 321
+START baseline-t91-p0
+DONE baseline-t91-p0 pass 356
+START candidate-t91-p0
+DONE candidate-t87-p2 tool-error 1728
+START baseline-t91-p1
+DONE baseline-t91-p1 timing-fail 441
+START candidate-t91-p1
+DONE candidate-t91-p3 tool-error 1127
+START baseline-t91-p2
+DONE baseline-t91-p2 timing-fail 436
+START candidate-t91-p2
+DONE candidate-t91-p0 timeout 1804
+START baseline-t91-p4
+DONE candidate-t91-p1 tool-error 1764
+START candidate-t91-p4
+DONE baseline-t91-p4 tool-error 481
+DONE candidate-t91-p4 tool-error 301
+DONE candidate-t91-p2 tool-error 1679
+COMPLETE 30

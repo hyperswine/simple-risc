@@ -1,0 +1,48 @@
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-source/.ghc.environment.aarch64-darwin-9.8.2
+[ 1 of 14] Compiling PsramRegs        ( src/PsramRegs.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/PsramRegs.o )
+[ 2 of 14] Compiling RiscVCompressed  ( src/RiscVCompressed.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/RiscVCompressed.o, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/RiscVCompressed.dyn_o )
+[ 3 of 14] Compiling Rv32Model        ( /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/Rv32Model.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/Rv32Model.o )
+[ 4 of 14] Compiling SimpleRisc.Types ( src/SimpleRisc/Types.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Types.o, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Types.dyn_o )
+[ 5 of 14] Compiling SimpleRisc.Decode ( src/SimpleRisc/Decode.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Decode.o, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Decode.dyn_o )
+[ 6 of 14] Compiling SimpleRisc.Uart  ( src/SimpleRisc/Uart.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Uart.o, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc/Uart.dyn_o )
+[ 7 of 14] Compiling SimpleRisc       ( src/SimpleRisc.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc.o, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SimpleRisc.dyn_o )
+[ 8 of 14] Compiling SdramSimpleRisc  ( src/SdramSimpleRisc.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SdramSimpleRisc.o )
+[ 9 of 14] Compiling SdramPipeline    ( src/SdramPipeline.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/SdramPipeline.o )
+[10 of 14] Compiling FQueueVariant    ( /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/FQueueVariant.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/FQueueVariant.o )
+[11 of 14] Compiling TestPsramRegs    ( /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestPsramRegs.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/TestPsramRegs.o )
+[12 of 14] Compiling TestSimpleRisc   ( /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestSimpleRisc.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/TestSimpleRisc.o )
+
+/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestSimpleRisc.hs:1112:18: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1112 |       fetching = P.head (P.dropWhile ((/= Fetch) . cpuPhase) (P.iterate step m))
+     |                  ^^^^^^
+
+/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestSimpleRisc.hs:1118:21: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1118 |       let entered = P.head (P.dropWhile ((== Trap) . cpuPhase) (P.iterate step next))
+     |                     ^^^^^^
+
+/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestSimpleRisc.hs:1300:16: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1300 |       status = P.head (rigAnswers (rigAccess ioDmaStatus False 0 received))
+     |                ^^^^^^
+
+/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/TestSimpleRisc.hs:1310:17: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1310 |       refusal = P.head (rigAnswers (rigAccess ioDmaStatus False 0 refused))
+     |                 ^^^^^^
+[13 of 14] Compiling Main             ( /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-test/Spec.hs, /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-obj/Main.o )
+[14 of 14] Linking /Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/host-tests
+ld: warning: -U option is redundant when using -undefined dynamic_lookup

@@ -1,0 +1,96 @@
+{
+  "variants": [
+    "baseline",
+    "candidate"
+  ],
+  "baseline_commit": "dcd220d",
+  "new_routes": 5,
+  "imported_controls": [
+    {
+      "placement": 0,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p0",
+      "hashes": {
+        "build.tcl": "b9120a7ddba29b0c16c2c359b8427f6c65e54f6450c883c5f0e43fbdfc3e8e17",
+        "pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+        "clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+        "pnr.log": "5ae3ed9427b51c1b52059ea40616e23b8d268b087da11b8a7c562e99f444b39e",
+        "impl/pnr/sdram_test.tr": "28f93f6a4f548308cf93ecb8635f5002be9554f311894432e72ca63966976fc1"
+      }
+    },
+    {
+      "placement": 1,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1",
+      "hashes": {
+        "build.tcl": "481035fb3b55eb6cfb0a3172340dc1565b311e654099e0ce527ac29344e98067",
+        "pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+        "clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+        "pnr.log": "62c1bc8a79c024d1b73db938cc8094566be7477b4c741c2c924f40ec312f66ee",
+        "impl/pnr/sdram_test.tr": "dcf1c508bcbf7cf3aaaf4057582c1999bba22fa2435e3c811eeb8912f744e416"
+      }
+    },
+    {
+      "placement": 2,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p2",
+      "hashes": {
+        "build.tcl": "9b3cbbf76caac64d620b32ca2a6f7d0eb20bcd2f38744ff67bd999ac7d3fd371",
+        "pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+        "clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+        "pnr.log": "1f1b84cbff19030af8f282027529d6ececbea11a42ec683c6b23d2d1c965bb9d",
+        "impl/pnr/sdram_test.tr": "ea7c277d7f29930686b1132d77369427a1175c12bde94d57ebf08e83427d306e"
+      }
+    },
+    {
+      "placement": 3,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p3",
+      "hashes": {
+        "build.tcl": "2c9858c2a53a259df4681c0b25d644b4c319b22f2140e43ae2dd3a0371db9e7d",
+        "pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+        "clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+        "pnr.log": "795deca08a5d7e944d011741c8ee9f45084e1676d36e96ee0898095fc33f9406",
+        "impl/pnr/sdram_test.tr": "8c0f83790335842da9e4498a3926a0aad38dba9dea77a061ac6cab19cb596722"
+      }
+    },
+    {
+      "placement": 4,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p4",
+      "hashes": {
+        "build.tcl": "1898859d8a2700efe307ff74265993ab928f56e05cf0df50e026393937e18c5a",
+        "pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+        "clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+        "pnr.log": "b8d1f6c54add2a319ee65a0f8d4030c42e7ef0437d698dbe2b46b2a33afc84ff"
+      }
+    }
+  ],
+  "cpu_mhz": 81,
+  "memory_mhz": 48,
+  "frequency_option_mhz": 89,
+  "map_option": 3,
+  "route_option": 1,
+  "route_maxfan": 8,
+  "placements": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "order": [
+    3,
+    0,
+    1,
+    2,
+    4
+  ],
+  "parallel_jobs": 3,
+  "route_timeout_seconds": 1800,
+  "candidate_hashes": {
+    "candidate-physical/impl/gwsynthesis/sdram_test.vg": "14958b97017c5ffbe86f94369d6438bdcad684d380d3ecda761db8395bb0447e",
+    "candidate-physical/pins.cst": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+    "candidate-physical/clocks.sdc": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+    "candidate-physical/bootrom-sdram.hex": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+    "candidate-physical/layout.json": "1524e4a1769dcea439429125e5a3acd85028fa2d87ff3c86505216a7934ba99f",
+    "candidate-physical/floorplan.cst": "8f4701c4b7dd22c3361cd6979ab368225fb6b1fc611174bb44f2023a47f2644b",
+    "candidate.patch": "129ad0ee6d6b92c81c03b997df32e5621d579fd8a919cc938978ddd03dddacbd",
+    "candidate-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v": "bac7e57f9f8792286eaae3788fa377528fbb0a06f748f345af412617cc494bf3"
+  }
+}

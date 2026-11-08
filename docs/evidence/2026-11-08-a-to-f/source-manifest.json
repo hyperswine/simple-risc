@@ -1,0 +1,14 @@
+{
+  "head": "baf1583c7620f3492a2c6557930ff88b3e304ade",
+  "source_hashes": {
+    "src/SdramPipeline.hs": "f4799e44aa32584be0fec7c08f5c4790d8f6a968d4d45870a4eae9bd3ab14f1f",
+    "src/SdramPipelineObserved.hs": "7b5e0f6cf2ad815dafd6944458616532a5047614d6e4e3e82b3161bb1041db7d",
+    "src/PsramRegs.hs": "566e97bb019da4979230f9e57c1ffc418a978b21fd8ed93afbaf38362261fe0e",
+    "src/SimpleRisc.hs": "026eee7ff5b0c1cbac0f0a9d7f41b603be35d4e7561740b39fb4da2a92b4589c",
+    "src/RiscVCompressed.hs": "520c40f397db58660ff1ba9ad1a09e4c0e95aee50f5b25cc9f2ffdb0423bd327",
+    "src/SdramSimpleRisc.hs": "ba3bab4382f25fdd72c73b30b1aa5c9b791c3655e9958d4dee56866c70a75373",
+    "src/SimpleRisc/Uart.hs": "c96fa43b69a7b639d6ef49130acee2e6f1361b5003c043ca034f73d6c4ef228d",
+    "src/SimpleRisc/Decode.hs": "7cbb4747e9ccf065a07fbd79b97e32129afcda47e9f52f8eb4288cbe76ea12a0",
+    "src/SimpleRisc/Types.hs": "a548936f23576a2c0f779c1113a8c458464aa74a22d4ea302573012928f5833b"
+  }
+}

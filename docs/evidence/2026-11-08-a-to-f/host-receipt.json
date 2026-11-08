@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "property_counts": [
+    "74",
+    "8"
+  ],
+  "log_sha256": "f30f9c7f4df5e39af41499b04a0e00ab057b63280071b9d897fe3dfce32f66d2",
+  "method": "Test module names renamed and package imports removed; ghc -hide-package simple-risc -isrc compiles isolated candidate sources, not installed baseline library",
+  "adapted_test_hashes": {
+    "RvcDecodeDump.hs": "ba255854814409458187fae1c337883caa30165f2495e7c8876c7141a618644c",
+    "TestPsramRegs.hs": "da1f61941a37e5ba150459bba5732b2f963f10a264814a16ce2efc9b8fafebc9",
+    "Rv32Model.hs": "7a2b9c795939b86886c400c23fa52bde6498552be6a7428b245cbc29adb994e8",
+    "FQueueVariant.hs": "7dff053d450a01a473eaa73330e63583625f45470916e136742edebf5f7f272b",
+    "TestSimpleRisc.hs": "a4248ce3550e501ba0356abd10cefea80b6f2ceca10c2736a5fb87eae701919c",
+    "Spec.hs": "5c5d7a307235b993b569bd88049f4d13a18b7fe94b15794592bc821cafabfbc3"
+  }
+}

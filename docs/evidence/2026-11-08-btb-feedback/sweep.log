@@ -1,0 +1,11 @@
+START feedback-p3
+START feedback-p0
+START feedback-p1
+DONE feedback-p0 pass 230
+START feedback-p2
+DONE feedback-p3 timing-fail 521
+START feedback-p4
+DONE feedback-p4 pass 100
+DONE feedback-p1 timing-fail 666
+DONE feedback-p2 timing-fail 711
+COMPLETE 15 including 10 imported controls

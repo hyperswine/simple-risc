@@ -1,0 +1,137 @@
+[
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 0,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 824.254231929779,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p0"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 1,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 908.5577228069305,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 2,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 536.0068917274475,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p2"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 3,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 236.28254580497742,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p3"
+  },
+  {
+    "variant": "baseline",
+    "target": 89,
+    "placement": 4,
+    "status": "tool-error",
+    "returncode": 1,
+    "elapsed_seconds": 631.4892289638519,
+    "imported": true,
+    "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p4"
+  },
+  {
+    "variant": "anchors",
+    "placement": 0,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 961.6031982898712,
+    "imported": true,
+    "origin": "output/btb-ablation-2026-11-08/anchors-p0"
+  },
+  {
+    "variant": "anchors",
+    "placement": 1,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 476.0651388168335,
+    "imported": true,
+    "origin": "output/btb-ablation-2026-11-08/anchors-p1"
+  },
+  {
+    "variant": "anchors",
+    "placement": 2,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 405.680947303772,
+    "imported": true,
+    "origin": "output/btb-ablation-2026-11-08/anchors-p2"
+  },
+  {
+    "variant": "anchors",
+    "placement": 3,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 90.28104090690613,
+    "imported": true,
+    "origin": "output/btb-ablation-2026-11-08/anchors-p3"
+  },
+  {
+    "variant": "anchors",
+    "placement": 4,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 125.26225924491882,
+    "imported": true,
+    "origin": "output/btb-ablation-2026-11-08/anchors-p4"
+  },
+  {
+    "variant": "feedback",
+    "placement": 0,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 230.40021920204163,
+    "imported": false
+  },
+  {
+    "variant": "feedback",
+    "placement": 1,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 666.0405466556549,
+    "imported": false
+  },
+  {
+    "variant": "feedback",
+    "placement": 2,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 711.2395040988922,
+    "imported": false
+  },
+  {
+    "variant": "feedback",
+    "placement": 3,
+    "status": "timing-fail",
+    "returncode": 2,
+    "elapsed_seconds": 520.8500030040741,
+    "imported": false
+  },
+  {
+    "variant": "feedback",
+    "placement": 4,
+    "status": "pass",
+    "returncode": 0,
+    "elapsed_seconds": 100.21834397315979,
+    "imported": false
+  }
+]

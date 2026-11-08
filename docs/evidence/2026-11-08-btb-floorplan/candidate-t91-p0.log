@@ -1,0 +1,2 @@
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pnr_only.sh: line 52:  5732 Terminated: 15          "$ide/bin/gw_sh" build.tcl > pnr.log 2>&1
+TIMEOUT: place and route not finished after 1800 s ([70%] Routing Phase 1 completed)

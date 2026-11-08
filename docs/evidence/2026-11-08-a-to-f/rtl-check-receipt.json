@@ -1,0 +1,22 @@
+{
+  "name": "rtl-check",
+  "command": [
+    "python3",
+    "boards/tangnano20k/sdram/check_pipeline_rtl.py",
+    "--generated",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-generated/SdramPipelineObserved.topEntity",
+    "--compressed",
+    "--simulator",
+    "verilator",
+    "--cache-line-bits",
+    "11",
+    "--cache-ways",
+    "2",
+    "--cdc-bridge",
+    "--out",
+    "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/rtl-check"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 15.791712045669556,
+  "log_sha256": "4b4942507ff995541d959afa7274391359418c9293506fab237fb05e64331f7a"
+}

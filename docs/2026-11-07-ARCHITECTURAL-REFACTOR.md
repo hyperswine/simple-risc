@@ -417,3 +417,30 @@ established by those runs. From here:
 The 3,000-path census needs the `report_timing` line in the SDC;
 `pnr_only.sh` writes it under `PNR_REPORT_PATHS` since 8cc61ed. The three
 records' 25-path samples came from runs without it.
+
+
+## BTB/front-end floorplan sweep on 2026-11-08
+
+[BTB-FRONTEND-FLOORPLAN](2026-11-08-BTB-FRONTEND-FLOORPLAN.md) completes
+30 bounded PNR attempts on the identical baseline netlist: canonical versus
+census-sized CSR/bus/front-end regions with two adjacent anchored BTB RAMs.
+Baseline passes 6/15 requested settings, with six timing failures and three
+unrouted results. Candidate passes 0/15: nine unrouted results and six
+30-minute timeouts. No candidate produces a routed timing report. Keep the
+canonical floorplan; this tested combination is not adopted.
+
+The requested frequency options 87/89/91 MHz repeat identical baseline
+outcomes at each placement. All twelve completed timing reports have only
+three distinct timing/site fingerprints (placements 1 and 2 also coincide).
+Thus the proposed fifteen-setting grid did not provide fifteen distinct
+physical implementations. `-frequency` is listed among Gowin's synthesis
+options, while this flow reuses a synthesized netlist and explicit 81/48 MHz
+SDC constraints. Future distributions must verify that the selected control
+actually perturbs PNR; do not infer independent draws from option labels.
+
+The candidate's 50% census headroom did not establish routability, even though
+the full front-end feeding cone is close to its attributed area. Separate
+BTB anchoring from register grouping/region geometry in a follow-up rather
+than attributing the bundled failure to locality in general. The generator,
+input audit, all receipts, failed routes and conditional timing summaries
+are preserved with the trial report. No RTL or default preset changed.

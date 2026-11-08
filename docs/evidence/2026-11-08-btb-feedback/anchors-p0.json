@@ -1,0 +1,9 @@
+{
+  "variant": "anchors",
+  "placement": 0,
+  "status": "pass",
+  "returncode": 0,
+  "elapsed_seconds": 961.6031982898712,
+  "imported": true,
+  "origin": "output/btb-ablation-2026-11-08/anchors-p0"
+}

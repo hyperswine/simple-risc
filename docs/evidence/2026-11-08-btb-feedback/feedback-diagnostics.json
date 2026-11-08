@@ -1,0 +1,5539 @@
+{
+  "runs": {
+    "anchors-p0": {
+      "variant": "anchors",
+      "placement": 0,
+      "observed_members": 30,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          26,
+          43
+        ],
+        [
+          "core/ds92_11128_s6",
+          26,
+          43
+        ],
+        [
+          "core/ds92_11129_s1",
+          25,
+          43
+        ],
+        [
+          "core/ds92_11129_s11",
+          25,
+          43
+        ],
+        [
+          "core/ds92_11130_s1",
+          29,
+          33
+        ],
+        [
+          "core/ds92_11130_s11",
+          29,
+          33
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          42
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          42
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          41
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          41
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          34
+        ],
+        [
+          "core/ds92_11134_s6",
+          27,
+          34
+        ],
+        [
+          "core/ds92_11157_s104",
+          24,
+          40
+        ],
+        [
+          "core/ds92_11157_s106",
+          26,
+          38
+        ],
+        [
+          "core/n972276_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          29,
+          43
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          31,
+          43
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          32,
+          43
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          7,
+          36
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/pipeState_c_8648_s0",
+          7,
+          36
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/n972276_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          42
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          42
+        ],
+        [
+          "core/ds92_11134_s6",
+          27,
+          34
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          31,
+          43
+        ],
+        [
+          "core/ds92_11157_s106",
+          26,
+          38
+        ],
+        [
+          "core/ds92_11130_s11",
+          29,
+          33
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11128_s6",
+          26,
+          43
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          32,
+          43
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          34
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11129_s11",
+          25,
+          43
+        ],
+        [
+          "core/ds92_11128_s1",
+          26,
+          43
+        ],
+        [
+          "core/ds92_11129_s1",
+          25,
+          43
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          41
+        ],
+        [
+          "core/ds92_11130_s1",
+          29,
+          33
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/ds92_11157_s104",
+          24,
+          40
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          41
+        ]
+      ],
+      "btb_feedback_paths": 14,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 6.047499999999999,
+      "worst_btb_slack_ns": 0.026,
+      "worst_path_details": {
+        "cell_ns": 3.47,
+        "route_ns": 6.555,
+        "grouped_cells": [
+          "core/ds92_11133_s1",
+          "core/ds92_11133_s6",
+          "core/ds92_11157_s104",
+          "core/ds92_11157_s106",
+          "core/n972276_s0",
+          "core/n972277_s0",
+          "core/n972278_s0",
+          "core/n972279_s0",
+          "core/n972280_s0",
+          "core/n972281_s0",
+          "core/n972282_s0",
+          "core/pipeState_c_8649_s0"
+        ]
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 0.026,
+          "cell_ns": 3.47,
+          "route_ns": 6.555,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 0.103,
+          "cell_ns": 3.47,
+          "route_ns": 6.477,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.251,
+          "cell_ns": 3.199,
+          "route_ns": 6.601,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.251,
+          "cell_ns": 3.199,
+          "route_ns": 6.601,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.451,
+          "cell_ns": 3.281,
+          "route_ns": 6.319,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.496,
+          "cell_ns": 3.281,
+          "route_ns": 6.274,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 0.766,
+          "cell_ns": 3.102,
+          "route_ns": 6.183,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 1.037,
+          "cell_ns": 3.102,
+          "route_ns": 5.912,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.279,
+          "cell_ns": 3.248,
+          "route_ns": 5.524,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.69,
+          "cell_ns": 3.248,
+          "route_ns": 5.112,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[6]",
+          "slack_ns": 1.715,
+          "cell_ns": 3.345,
+          "route_ns": 4.991,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[6]",
+          "slack_ns": 1.764,
+          "cell_ns": 3.345,
+          "route_ns": 4.942,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 2.37,
+          "cell_ns": 3.243,
+          "route_ns": 4.438,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 2.491,
+          "cell_ns": 3.243,
+          "route_ns": 4.317,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        }
+      }
+    },
+    "anchors-p1": {
+      "variant": "anchors",
+      "placement": 1,
+      "observed_members": 27,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s1",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11",
+        "core/n972276_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          26,
+          42
+        ],
+        [
+          "core/ds92_11128_s6",
+          26,
+          41
+        ],
+        [
+          "core/ds92_11130_s1",
+          26,
+          38
+        ],
+        [
+          "core/ds92_11130_s11",
+          25,
+          38
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          40
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          40
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          26,
+          34
+        ],
+        [
+          "core/ds92_11134_s6",
+          26,
+          35
+        ],
+        [
+          "core/ds92_11157_s104",
+          23,
+          42
+        ],
+        [
+          "core/ds92_11157_s106",
+          24,
+          42
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          29,
+          43
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          32,
+          43
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          31,
+          43
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          6,
+          35
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/ds92_11128_s6",
+          26,
+          41
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          26,
+          34
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11134_s6",
+          26,
+          35
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          42
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11130_s1",
+          26,
+          38
+        ],
+        [
+          "core/ds92_11130_s11",
+          25,
+          38
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          40
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11157_s106",
+          24,
+          42
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          31,
+          43
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/ds92_11128_s1",
+          26,
+          42
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          32,
+          43
+        ],
+        [
+          "core/ds92_11157_s104",
+          23,
+          42
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ]
+      ],
+      "btb_feedback_paths": 12,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.806,
+      "worst_btb_slack_ns": 0.079,
+      "worst_path_details": {
+        "cell_ns": 3.517,
+        "route_ns": 6.455,
+        "grouped_cells": [
+          "core/ds92_11134_s1",
+          "core/ds92_11134_s6",
+          "core/ds92_11157_s104",
+          "core/ds92_11157_s106",
+          "core/n972277_s0",
+          "core/n972278_s0",
+          "core/n972279_s0",
+          "core/n972280_s0",
+          "core/n972281_s0",
+          "core/n972282_s0",
+          "core/pipeState_c_8650_s0"
+        ]
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.079,
+          "cell_ns": 3.517,
+          "route_ns": 6.455,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 0.237,
+          "cell_ns": 3.354,
+          "route_ns": 6.46,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.398,
+          "cell_ns": 3.517,
+          "route_ns": 6.136,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 0.431,
+          "cell_ns": 3.354,
+          "route_ns": 6.266,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 0.668,
+          "cell_ns": 3.538,
+          "route_ns": 5.845,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.752,
+          "cell_ns": 3.479,
+          "route_ns": 5.82,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.78,
+          "cell_ns": 3.479,
+          "route_ns": 5.792,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 0.939,
+          "cell_ns": 3.538,
+          "route_ns": 5.574,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.066,
+          "cell_ns": 3.462,
+          "route_ns": 5.523,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.115,
+          "cell_ns": 3.462,
+          "route_ns": 5.474,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.856,
+          "cell_ns": 3.479,
+          "route_ns": 4.716,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 2.05,
+          "cell_ns": 3.479,
+          "route_ns": 4.522,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        }
+      }
+    },
+    "anchors-p2": {
+      "variant": "anchors",
+      "placement": 2,
+      "observed_members": 27,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s1",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11",
+        "core/n972276_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          26,
+          42
+        ],
+        [
+          "core/ds92_11128_s6",
+          26,
+          41
+        ],
+        [
+          "core/ds92_11130_s1",
+          26,
+          38
+        ],
+        [
+          "core/ds92_11130_s11",
+          25,
+          38
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          40
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          40
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          26,
+          34
+        ],
+        [
+          "core/ds92_11134_s6",
+          26,
+          35
+        ],
+        [
+          "core/ds92_11157_s104",
+          23,
+          42
+        ],
+        [
+          "core/ds92_11157_s106",
+          24,
+          42
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          29,
+          43
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          32,
+          43
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          31,
+          43
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          6,
+          35
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/ds92_11128_s6",
+          26,
+          41
+        ],
+        [
+          "core/n972282_s0",
+          23,
+          47
+        ],
+        [
+          "core/ds92_11133_s1",
+          24,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          26,
+          34
+        ],
+        [
+          "core/n972278_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11134_s6",
+          26,
+          35
+        ],
+        [
+          "core/ds92_11132_s1",
+          25,
+          42
+        ],
+        [
+          "core/n972281_s0",
+          23,
+          46
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          6,
+          34
+        ],
+        [
+          "core/n972280_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11130_s1",
+          26,
+          38
+        ],
+        [
+          "core/ds92_11130_s11",
+          25,
+          38
+        ],
+        [
+          "core/ds92_11132_s6",
+          25,
+          42
+        ],
+        [
+          "core/ds92_11131_s1",
+          24,
+          40
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11157_s106",
+          24,
+          42
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          6,
+          35
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          31,
+          43
+        ],
+        [
+          "core/ds92_11133_s6",
+          24,
+          41
+        ],
+        [
+          "core/n972277_s0",
+          23,
+          46
+        ],
+        [
+          "core/ds92_11131_s6",
+          24,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          6,
+          34
+        ],
+        [
+          "core/ds92_11128_s1",
+          26,
+          42
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          32,
+          43
+        ],
+        [
+          "core/ds92_11157_s104",
+          23,
+          42
+        ],
+        [
+          "core/n972279_s0",
+          23,
+          46
+        ]
+      ],
+      "btb_feedback_paths": 12,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.806,
+      "worst_btb_slack_ns": 0.079,
+      "worst_path_details": {
+        "cell_ns": 3.517,
+        "route_ns": 6.455,
+        "grouped_cells": [
+          "core/ds92_11134_s1",
+          "core/ds92_11134_s6",
+          "core/ds92_11157_s104",
+          "core/ds92_11157_s106",
+          "core/n972277_s0",
+          "core/n972278_s0",
+          "core/n972279_s0",
+          "core/n972280_s0",
+          "core/n972281_s0",
+          "core/n972282_s0",
+          "core/pipeState_c_8650_s0"
+        ]
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.079,
+          "cell_ns": 3.517,
+          "route_ns": 6.455,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 0.237,
+          "cell_ns": 3.354,
+          "route_ns": 6.46,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.398,
+          "cell_ns": 3.517,
+          "route_ns": 6.136,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 0.431,
+          "cell_ns": 3.354,
+          "route_ns": 6.266,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 0.668,
+          "cell_ns": 3.538,
+          "route_ns": 5.845,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.752,
+          "cell_ns": 3.479,
+          "route_ns": 5.82,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.78,
+          "cell_ns": 3.479,
+          "route_ns": 5.792,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 0.939,
+          "cell_ns": 3.538,
+          "route_ns": 5.574,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.066,
+          "cell_ns": 3.462,
+          "route_ns": 5.523,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.115,
+          "cell_ns": 3.462,
+          "route_ns": 5.474,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.856,
+          "cell_ns": 3.479,
+          "route_ns": 4.716,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 2.05,
+          "cell_ns": 3.479,
+          "route_ns": 4.522,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        }
+      }
+    },
+    "anchors-p3": {
+      "variant": "anchors",
+      "placement": 3,
+      "observed_members": 28,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11",
+        "core/n972276_s0",
+        "core/n972277_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          45,
+          39
+        ],
+        [
+          "core/ds92_11128_s6",
+          45,
+          39
+        ],
+        [
+          "core/ds92_11129_s1",
+          43,
+          39
+        ],
+        [
+          "core/ds92_11129_s11",
+          43,
+          39
+        ],
+        [
+          "core/ds92_11130_s1",
+          44,
+          27
+        ],
+        [
+          "core/ds92_11130_s11",
+          44,
+          27
+        ],
+        [
+          "core/ds92_11131_s1",
+          43,
+          40
+        ],
+        [
+          "core/ds92_11131_s6",
+          43,
+          39
+        ],
+        [
+          "core/ds92_11132_s1",
+          42,
+          39
+        ],
+        [
+          "core/ds92_11132_s6",
+          42,
+          39
+        ],
+        [
+          "core/ds92_11133_s1",
+          42,
+          39
+        ],
+        [
+          "core/ds92_11133_s6",
+          42,
+          39
+        ],
+        [
+          "core/ds92_11134_s1",
+          43,
+          28
+        ],
+        [
+          "core/ds92_11134_s6",
+          43,
+          28
+        ],
+        [
+          "core/ds92_11157_s104",
+          39,
+          47
+        ],
+        [
+          "core/ds92_11157_s106",
+          44,
+          42
+        ],
+        [
+          "core/n972278_s0",
+          35,
+          49
+        ],
+        [
+          "core/n972279_s0",
+          35,
+          49
+        ],
+        [
+          "core/n972280_s0",
+          35,
+          49
+        ],
+        [
+          "core/n972281_s0",
+          35,
+          49
+        ],
+        [
+          "core/n972282_s0",
+          35,
+          50
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          50,
+          23
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          44,
+          23
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          43,
+          23
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          44,
+          45
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          48,
+          42
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          48,
+          43
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          45,
+          40
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/n972280_s0",
+          35,
+          49
+        ],
+        [
+          "core/ds92_11130_s1",
+          44,
+          27
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          50,
+          23
+        ],
+        [
+          "core/ds92_11128_s1",
+          45,
+          39
+        ],
+        [
+          "core/ds92_11134_s1",
+          43,
+          28
+        ],
+        [
+          "core/ds92_11131_s1",
+          43,
+          40
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          45,
+          40
+        ],
+        [
+          "core/ds92_11133_s6",
+          42,
+          39
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          48,
+          43
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          48,
+          42
+        ],
+        [
+          "core/n972279_s0",
+          35,
+          49
+        ],
+        [
+          "core/ds92_11133_s1",
+          42,
+          39
+        ],
+        [
+          "core/n972282_s0",
+          35,
+          50
+        ],
+        [
+          "core/ds92_11132_s1",
+          42,
+          39
+        ],
+        [
+          "core/ds92_11129_s1",
+          43,
+          39
+        ],
+        [
+          "core/ds92_11131_s6",
+          43,
+          39
+        ],
+        [
+          "core/ds92_11130_s11",
+          44,
+          27
+        ],
+        [
+          "core/n972278_s0",
+          35,
+          49
+        ],
+        [
+          "core/ds92_11157_s106",
+          44,
+          42
+        ],
+        [
+          "core/ds92_11129_s11",
+          43,
+          39
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          43,
+          23
+        ],
+        [
+          "core/n972281_s0",
+          35,
+          49
+        ],
+        [
+          "core/ds92_11134_s6",
+          43,
+          28
+        ],
+        [
+          "core/ds92_11132_s6",
+          42,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          44,
+          23
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          44,
+          45
+        ],
+        [
+          "core/ds92_11157_s104",
+          39,
+          47
+        ],
+        [
+          "core/ds92_11128_s6",
+          45,
+          39
+        ]
+      ],
+      "btb_feedback_paths": 14,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 6.306,
+      "worst_btb_slack_ns": -0.316,
+      "worst_path_details": {
+        "cell_ns": 3.4,
+        "route_ns": 6.967,
+        "grouped_cells": [
+          "core/ds92_11128_s1",
+          "core/ds92_11128_s6",
+          "core/ds92_11157_s104",
+          "core/ds92_11157_s106",
+          "core/n972278_s0",
+          "core/n972279_s0",
+          "core/n972280_s0",
+          "core/n972281_s0",
+          "core/n972282_s0",
+          "core/pipeState_c_8644_s0"
+        ]
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": -0.316,
+          "cell_ns": 3.4,
+          "route_ns": 6.967,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": -0.239,
+          "cell_ns": 3.4,
+          "route_ns": 6.891,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[6]",
+          "slack_ns": -0.229,
+          "cell_ns": 3.146,
+          "route_ns": 7.134,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[6]",
+          "slack_ns": -0.161,
+          "cell_ns": 3.146,
+          "route_ns": 7.067,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.229,
+          "cell_ns": 3.135,
+          "route_ns": 6.688,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.509,
+          "cell_ns": 3.184,
+          "route_ns": 6.359,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 0.605,
+          "cell_ns": 3.027,
+          "route_ns": 6.419,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.742,
+          "cell_ns": 3.135,
+          "route_ns": 6.174,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.751,
+          "cell_ns": 3.184,
+          "route_ns": 6.116,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 0.771,
+          "cell_ns": 3.027,
+          "route_ns": 6.253,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 1.03,
+          "cell_ns": 3.038,
+          "route_ns": 5.983,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 1.086,
+          "cell_ns": 3.222,
+          "route_ns": 5.743,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 1.135,
+          "cell_ns": 3.038,
+          "route_ns": 5.879,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[2] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 1.163,
+          "cell_ns": 3.222,
+          "route_ns": 5.667,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        }
+      }
+    },
+    "anchors-p4": {
+      "variant": "anchors",
+      "placement": 4,
+      "observed_members": 25,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11",
+        "core/n972276_s0",
+        "core/n972277_s0",
+        "core/n972278_s0",
+        "core/n972279_s0",
+        "core/n972280_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          45,
+          19
+        ],
+        [
+          "core/ds92_11128_s6",
+          45,
+          19
+        ],
+        [
+          "core/ds92_11129_s1",
+          42,
+          25
+        ],
+        [
+          "core/ds92_11129_s11",
+          42,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          45,
+          20
+        ],
+        [
+          "core/ds92_11130_s11",
+          45,
+          20
+        ],
+        [
+          "core/ds92_11131_s1",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11131_s6",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11132_s1",
+          45,
+          19
+        ],
+        [
+          "core/ds92_11132_s6",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11133_s1",
+          44,
+          21
+        ],
+        [
+          "core/ds92_11133_s6",
+          44,
+          21
+        ],
+        [
+          "core/ds92_11134_s1",
+          44,
+          19
+        ],
+        [
+          "core/ds92_11134_s6",
+          44,
+          19
+        ],
+        [
+          "core/ds92_11157_s104",
+          31,
+          26
+        ],
+        [
+          "core/ds92_11157_s106",
+          35,
+          21
+        ],
+        [
+          "core/n972281_s0",
+          31,
+          21
+        ],
+        [
+          "core/n972282_s0",
+          31,
+          22
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          44,
+          22
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          41,
+          25
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          42,
+          24
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          43,
+          19
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          44,
+          19
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          45,
+          23
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          44,
+          24
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/pipeState_c_8650_s0",
+          44,
+          24
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          42,
+          24
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          44,
+          22
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          45,
+          23
+        ],
+        [
+          "core/ds92_11130_s11",
+          45,
+          20
+        ],
+        [
+          "core/ds92_11133_s6",
+          44,
+          21
+        ],
+        [
+          "core/ds92_11131_s1",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11133_s1",
+          44,
+          21
+        ],
+        [
+          "core/ds92_11157_s104",
+          31,
+          26
+        ],
+        [
+          "core/ds92_11132_s6",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11134_s6",
+          44,
+          19
+        ],
+        [
+          "core/n972282_s0",
+          31,
+          22
+        ],
+        [
+          "core/ds92_11131_s6",
+          45,
+          18
+        ],
+        [
+          "core/ds92_11128_s6",
+          45,
+          19
+        ],
+        [
+          "core/ds92_11134_s1",
+          44,
+          19
+        ],
+        [
+          "core/ds92_11129_s11",
+          42,
+          25
+        ],
+        [
+          "core/ds92_11157_s106",
+          35,
+          21
+        ],
+        [
+          "core/ds92_11129_s1",
+          42,
+          25
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          44,
+          19
+        ],
+        [
+          "core/ds92_11132_s1",
+          45,
+          19
+        ],
+        [
+          "core/ds92_11128_s1",
+          45,
+          19
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          41,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          45,
+          20
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          43,
+          19
+        ],
+        [
+          "core/n972281_s0",
+          31,
+          21
+        ]
+      ],
+      "btb_feedback_paths": 14,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 6.8125,
+      "worst_btb_slack_ns": -0.469,
+      "worst_path_details": {
+        "cell_ns": 3.499,
+        "route_ns": 7.021,
+        "grouped_cells": [
+          "core/ds92_11130_s1",
+          "core/ds92_11130_s11",
+          "core/ds92_11157_s104",
+          "core/ds92_11157_s106",
+          "core/n972281_s0",
+          "core/n972282_s0",
+          "core/pipeState_c_8646_s0"
+        ]
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": -0.469,
+          "cell_ns": 3.499,
+          "route_ns": 7.021,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": -0.392,
+          "cell_ns": 3.499,
+          "route_ns": 6.944,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": -0.374,
+          "cell_ns": 3.522,
+          "route_ns": 6.903,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": -0.374,
+          "cell_ns": 3.522,
+          "route_ns": 6.903,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": -0.339,
+          "cell_ns": 3.28,
+          "route_ns": 7.11,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": -0.262,
+          "cell_ns": 3.28,
+          "route_ns": 7.033,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": -0.25,
+          "cell_ns": 3.446,
+          "route_ns": 6.855,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": -0.097,
+          "cell_ns": 3.446,
+          "route_ns": 6.701,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": -0.063,
+          "cell_ns": 3.344,
+          "route_ns": 6.77,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.054,
+          "cell_ns": 3.344,
+          "route_ns": 6.652,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[6]",
+          "slack_ns": 0.133,
+          "cell_ns": 3.376,
+          "route_ns": 6.542,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[6]",
+          "slack_ns": 0.161,
+          "cell_ns": 3.376,
+          "route_ns": 6.513,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 0.226,
+          "cell_ns": 3.458,
+          "route_ns": 6.367,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[5] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 0.226,
+          "cell_ns": 3.458,
+          "route_ns": 6.367,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        }
+      }
+    },
+    "baseline-p0": {
+      "variant": "baseline",
+      "placement": 0,
+      "observed_members": 29,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s11",
+        "core/n972276_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11129_s11",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ],
+        [
+          "core/ds92_11130_s14",
+          7,
+          22
+        ],
+        [
+          "core/ds92_11131_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11131_s6",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11132_s1",
+          6,
+          26
+        ],
+        [
+          "core/ds92_11132_s6",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11133_s6",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11157_s104",
+          9,
+          25
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          22
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          16
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          36
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          11,
+          37
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          34
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          11,
+          38
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          22
+        ],
+        [
+          "core/ds92_11132_s1",
+          6,
+          26
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          11,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/ds92_11132_s6",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11129_s11",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11131_s6",
+          4,
+          26
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/ds92_11133_s6",
+          6,
+          27
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11131_s1",
+          5,
+          27
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          16
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11157_s104",
+          9,
+          25
+        ],
+        [
+          "core/ds92_11130_s14",
+          7,
+          22
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          11,
+          37
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          36
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          34
+        ]
+      ],
+      "btb_feedback_paths": 12,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.8745,
+      "worst_btb_slack_ns": 0.323,
+      "worst_path_details": {
+        "cell_ns": 3.515,
+        "route_ns": 8.555,
+        "grouped_cells": []
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.323,
+          "cell_ns": 3.485,
+          "route_ns": 6.243,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 0.349,
+          "cell_ns": 3.494,
+          "route_ns": 6.208,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.454,
+          "cell_ns": 3.494,
+          "route_ns": 6.103,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.566,
+          "cell_ns": 3.485,
+          "route_ns": 6.0,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 0.613,
+          "cell_ns": 3.517,
+          "route_ns": 5.921,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 0.706,
+          "cell_ns": 3.517,
+          "route_ns": 5.828,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 0.982,
+          "cell_ns": 3.14,
+          "route_ns": 5.929,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s14",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[6]",
+          "slack_ns": 0.986,
+          "cell_ns": 3.435,
+          "route_ns": 5.63,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.029,
+          "cell_ns": 3.532,
+          "route_ns": 5.49,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 1.029,
+          "cell_ns": 3.532,
+          "route_ns": 5.49,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.208,
+          "cell_ns": 3.14,
+          "route_ns": 5.703,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s14",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[6]",
+          "slack_ns": 1.257,
+          "cell_ns": 3.435,
+          "route_ns": 5.359,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        }
+      }
+    },
+    "baseline-p1": {
+      "variant": "baseline",
+      "placement": 1,
+      "observed_members": 29,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/n972276_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          26
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11129_s14",
+          9,
+          23
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ],
+        [
+          "core/ds92_11130_s11",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11132_s1",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11132_s12",
+          8,
+          23
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11133_s11",
+          6,
+          24
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11157_s104",
+          8,
+          26
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          26
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          17
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          34
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          12,
+          36
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          37
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          13,
+          36
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/ds92_11130_s11",
+          4,
+          26
+        ],
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11132_s1",
+          4,
+          26
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          13,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          27
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/ds92_11129_s14",
+          9,
+          23
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          17
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          34
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          26
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          12,
+          36
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11133_s11",
+          6,
+          24
+        ],
+        [
+          "core/ds92_11132_s12",
+          8,
+          23
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          26
+        ],
+        [
+          "core/ds92_11157_s104",
+          8,
+          26
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          37
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ]
+      ],
+      "btb_feedback_paths": 8,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.0649999999999995,
+      "worst_btb_slack_ns": 0.44,
+      "worst_path_details": {
+        "cell_ns": 3.396,
+        "route_ns": 9.033,
+        "grouped_cells": []
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.44,
+          "cell_ns": 3.178,
+          "route_ns": 6.433,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s12",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.759,
+          "cell_ns": 3.178,
+          "route_ns": 6.114,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s12",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 1.134,
+          "cell_ns": 3.68,
+          "route_ns": 5.237,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 1.134,
+          "cell_ns": 3.68,
+          "route_ns": 5.237,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.435,
+          "cell_ns": 3.761,
+          "route_ns": 4.855,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 1.484,
+          "cell_ns": 3.761,
+          "route_ns": 4.806,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.651,
+          "cell_ns": 3.507,
+          "route_ns": 4.893,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.651,
+          "cell_ns": 3.507,
+          "route_ns": 4.893,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        }
+      }
+    },
+    "baseline-p2": {
+      "variant": "baseline",
+      "placement": 2,
+      "observed_members": 29,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/n972276_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          26
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/ds92_11129_s14",
+          9,
+          23
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ],
+        [
+          "core/ds92_11130_s11",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11132_s1",
+          4,
+          26
+        ],
+        [
+          "core/ds92_11132_s12",
+          8,
+          23
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11133_s11",
+          6,
+          24
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11157_s104",
+          8,
+          26
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          26
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          17
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          34
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          12,
+          36
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          37
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          13,
+          36
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/ds92_11130_s11",
+          4,
+          26
+        ],
+        [
+          "core/n972280_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11132_s1",
+          4,
+          26
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          13,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          27
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          12,
+          14
+        ],
+        [
+          "core/ds92_11129_s14",
+          9,
+          23
+        ],
+        [
+          "core/ds92_11129_s1",
+          5,
+          25
+        ],
+        [
+          "core/n972277_s0",
+          6,
+          25
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          12,
+          17
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11134_s6",
+          5,
+          27
+        ],
+        [
+          "core/n972279_s0",
+          6,
+          25
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          11,
+          34
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          12,
+          18
+        ],
+        [
+          "core/ds92_11128_s6",
+          5,
+          26
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          12,
+          36
+        ],
+        [
+          "core/n972282_s0",
+          6,
+          26
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          27
+        ],
+        [
+          "core/ds92_11133_s11",
+          6,
+          24
+        ],
+        [
+          "core/ds92_11132_s12",
+          8,
+          23
+        ],
+        [
+          "core/n972278_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11157_s106",
+          7,
+          26
+        ],
+        [
+          "core/ds92_11157_s104",
+          8,
+          26
+        ],
+        [
+          "core/ds92_11134_s1",
+          5,
+          27
+        ],
+        [
+          "core/ds92_11128_s1",
+          5,
+          25
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          11,
+          37
+        ],
+        [
+          "core/n972281_s0",
+          6,
+          25
+        ],
+        [
+          "core/ds92_11130_s1",
+          5,
+          26
+        ]
+      ],
+      "btb_feedback_paths": 8,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.0649999999999995,
+      "worst_btb_slack_ns": 0.44,
+      "worst_path_details": {
+        "cell_ns": 3.396,
+        "route_ns": 9.033,
+        "grouped_cells": []
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.44,
+          "cell_ns": 3.178,
+          "route_ns": 6.433,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s12",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.759,
+          "cell_ns": 3.178,
+          "route_ns": 6.114,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s12",
+            "core/ds92_11157_s104",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 1.134,
+          "cell_ns": 3.68,
+          "route_ns": 5.237,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 1.134,
+          "cell_ns": 3.68,
+          "route_ns": 5.237,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.435,
+          "cell_ns": 3.761,
+          "route_ns": 4.855,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 1.484,
+          "cell_ns": 3.761,
+          "route_ns": 4.806,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.651,
+          "cell_ns": 3.507,
+          "route_ns": 4.893,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[1] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.651,
+          "cell_ns": 3.507,
+          "route_ns": 4.893,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        }
+      }
+    },
+    "baseline-p3": {
+      "variant": "baseline",
+      "placement": 3,
+      "observed_members": 30,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11132_s12",
+        "core/ds92_11133_s11",
+        "core/ds92_11134_s6"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          7,
+          39
+        ],
+        [
+          "core/ds92_11128_s6",
+          7,
+          39
+        ],
+        [
+          "core/ds92_11129_s1",
+          6,
+          37
+        ],
+        [
+          "core/ds92_11129_s11",
+          6,
+          37
+        ],
+        [
+          "core/ds92_11130_s1",
+          7,
+          36
+        ],
+        [
+          "core/ds92_11130_s11",
+          7,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11132_s1",
+          6,
+          35
+        ],
+        [
+          "core/ds92_11132_s6",
+          5,
+          35
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          41
+        ],
+        [
+          "core/ds92_11133_s6",
+          6,
+          41
+        ],
+        [
+          "core/ds92_11134_s1",
+          6,
+          36
+        ],
+        [
+          "core/ds92_11134_s11",
+          7,
+          40
+        ],
+        [
+          "core/ds92_11157_s104",
+          7,
+          46
+        ],
+        [
+          "core/ds92_11157_s106",
+          8,
+          44
+        ],
+        [
+          "core/n972276_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972277_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972278_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972279_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972280_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972281_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972282_s0",
+          7,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          9,
+          53
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          9,
+          51
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          9,
+          52
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          23,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          23,
+          42
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          23,
+          43
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          23,
+          41
+        ]
+      ],
+      "outside_region": [
+        [
+          "core/ds92_11129_s1",
+          6,
+          37
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          23,
+          41
+        ],
+        [
+          "core/ds92_11133_s6",
+          6,
+          41
+        ],
+        [
+          "core/n972277_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972282_s0",
+          7,
+          38
+        ],
+        [
+          "core/n972279_s0",
+          7,
+          37
+        ],
+        [
+          "core/ds92_11129_s11",
+          6,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          6,
+          41
+        ],
+        [
+          "core/ds92_11128_s6",
+          7,
+          39
+        ],
+        [
+          "core/ds92_11134_s1",
+          6,
+          36
+        ],
+        [
+          "core/ds92_11130_s11",
+          7,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          6,
+          35
+        ],
+        [
+          "core/n972278_s0",
+          7,
+          37
+        ],
+        [
+          "core/ds92_11128_s1",
+          7,
+          39
+        ],
+        [
+          "core/ds92_11157_s106",
+          8,
+          44
+        ],
+        [
+          "core/n972276_s0",
+          7,
+          37
+        ],
+        [
+          "core/ds92_11131_s1",
+          6,
+          35
+        ],
+        [
+          "core/n972281_s0",
+          7,
+          37
+        ],
+        [
+          "core/n972280_s0",
+          7,
+          37
+        ],
+        [
+          "core/ds92_11157_s104",
+          7,
+          46
+        ],
+        [
+          "core/ds92_11130_s1",
+          7,
+          36
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          9,
+          51
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          9,
+          52
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          23,
+          41
+        ],
+        [
+          "core/ds92_11134_s11",
+          7,
+          40
+        ],
+        [
+          "core/ds92_11131_s6",
+          6,
+          35
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          9,
+          53
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          23,
+          42
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          23,
+          43
+        ],
+        [
+          "core/ds92_11132_s6",
+          5,
+          35
+        ]
+      ],
+      "btb_feedback_paths": 14,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": 5.6145,
+      "worst_btb_slack_ns": 0.596,
+      "worst_path_details": {
+        "cell_ns": 1.783,
+        "route_ns": 9.792,
+        "grouped_cells": []
+      },
+      "endpoints": {
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[9]",
+          "slack_ns": 0.596,
+          "cell_ns": 3.471,
+          "route_ns": 5.983,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[9]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[9]",
+          "slack_ns": 0.717,
+          "cell_ns": 3.471,
+          "route_ns": 5.862,
+          "members": [
+            "core/ds92_11132_s1",
+            "core/ds92_11132_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8648_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[11]",
+          "slack_ns": 0.898,
+          "cell_ns": 3.213,
+          "route_ns": 5.939,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s11",
+            "core/ds92_11157_s104",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[5]",
+          "slack_ns": 0.907,
+          "cell_ns": 3.476,
+          "route_ns": 5.668,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[8]",
+          "slack_ns": 0.927,
+          "cell_ns": 3.438,
+          "route_ns": 5.685,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[6]",
+          "slack_ns": 0.942,
+          "cell_ns": 3.368,
+          "route_ns": 5.741,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[10]",
+          "slack_ns": 1.027,
+          "cell_ns": 3.578,
+          "route_ns": 5.446,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[7]",
+          "slack_ns": 1.035,
+          "cell_ns": 3.438,
+          "route_ns": 5.577,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[11]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[11]",
+          "slack_ns": 1.185,
+          "cell_ns": 3.213,
+          "route_ns": 5.652,
+          "members": [
+            "core/ds92_11134_s1",
+            "core/ds92_11134_s11",
+            "core/ds92_11157_s104",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8650_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[8]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[8]",
+          "slack_ns": 1.198,
+          "cell_ns": 3.438,
+          "route_ns": 5.414,
+          "members": [
+            "core/ds92_11131_s1",
+            "core/ds92_11131_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8647_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[10]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_0_s/ADB[10]",
+          "slack_ns": 1.298,
+          "cell_ns": 3.578,
+          "route_ns": 5.175,
+          "members": [
+            "core/ds92_11133_s1",
+            "core/ds92_11133_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8649_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[5]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[5]",
+          "slack_ns": 1.465,
+          "cell_ns": 3.476,
+          "route_ns": 5.11,
+          "members": [
+            "core/ds92_11128_s1",
+            "core/ds92_11128_s6",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8644_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[6]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[6]",
+          "slack_ns": 1.512,
+          "cell_ns": 3.368,
+          "route_ns": 5.171,
+          "members": [
+            "core/ds92_11129_s1",
+            "core/ds92_11129_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8645_s0"
+          ]
+        },
+        "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[7]": {
+          "endpoint": "core/RAM_1_RAM_1_0_1_s/DO[0] -> core/RAM_1_RAM_1_0_1_s/ADB[7]",
+          "slack_ns": 1.743,
+          "cell_ns": 3.438,
+          "route_ns": 4.869,
+          "members": [
+            "core/ds92_11130_s1",
+            "core/ds92_11130_s11",
+            "core/ds92_11157_s104",
+            "core/ds92_11157_s106",
+            "core/n972276_s0",
+            "core/n972277_s0",
+            "core/n972278_s0",
+            "core/n972279_s0",
+            "core/n972280_s0",
+            "core/n972281_s0",
+            "core/n972282_s0",
+            "core/pipeState_c_8646_s0"
+          ]
+        }
+      }
+    },
+    "feedback-p0": {
+      "variant": "feedback",
+      "placement": 0,
+      "observed_members": 14,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11128_s6",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11131_s6",
+        "core/ds92_11132_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s11",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/ds92_11134_s6",
+        "core/ds92_11157_s104",
+        "core/ds92_11157_s106",
+        "core/n972276_s0",
+        "core/n972277_s0",
+        "core/n972278_s0",
+        "core/n972279_s0",
+        "core/n972280_s0",
+        "core/n972281_s0",
+        "core/n972282_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11129_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11130_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          27,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          27,
+          41
+        ]
+      ],
+      "outside_region": [],
+      "btb_feedback_paths": 0,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": null,
+      "worst_btb_slack_ns": null,
+      "worst_path_details": {
+        "cell_ns": 3.738,
+        "route_ns": 8.268,
+        "grouped_cells": []
+      },
+      "endpoints": {}
+    },
+    "feedback-p1": {
+      "variant": "feedback",
+      "placement": 1,
+      "observed_members": 14,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11128_s6",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11131_s6",
+        "core/ds92_11132_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s11",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/ds92_11134_s6",
+        "core/ds92_11157_s104",
+        "core/ds92_11157_s106",
+        "core/n972276_s0",
+        "core/n972277_s0",
+        "core/n972278_s0",
+        "core/n972279_s0",
+        "core/n972280_s0",
+        "core/n972281_s0",
+        "core/n972282_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11129_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11130_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          27,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          27,
+          41
+        ]
+      ],
+      "outside_region": [],
+      "btb_feedback_paths": 0,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": null,
+      "worst_btb_slack_ns": null,
+      "worst_path_details": {
+        "cell_ns": 1.918,
+        "route_ns": 12.812,
+        "grouped_cells": []
+      },
+      "endpoints": {}
+    },
+    "feedback-p2": {
+      "variant": "feedback",
+      "placement": 2,
+      "observed_members": 14,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11128_s6",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11131_s6",
+        "core/ds92_11132_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s11",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/ds92_11134_s6",
+        "core/ds92_11157_s104",
+        "core/ds92_11157_s106",
+        "core/n972276_s0",
+        "core/n972277_s0",
+        "core/n972278_s0",
+        "core/n972279_s0",
+        "core/n972280_s0",
+        "core/n972281_s0",
+        "core/n972282_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11129_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11130_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          27,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          27,
+          41
+        ]
+      ],
+      "outside_region": [],
+      "btb_feedback_paths": 0,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": null,
+      "worst_btb_slack_ns": null,
+      "worst_path_details": {
+        "cell_ns": 1.918,
+        "route_ns": 12.812,
+        "grouped_cells": []
+      },
+      "endpoints": {}
+    },
+    "feedback-p3": {
+      "variant": "feedback",
+      "placement": 3,
+      "observed_members": 23,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11128_s6",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11131_s6",
+        "core/ds92_11132_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s11",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/ds92_11134_s6"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11129_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11130_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          38
+        ],
+        [
+          "core/ds92_11157_s104",
+          27,
+          38
+        ],
+        [
+          "core/ds92_11157_s106",
+          27,
+          38
+        ],
+        [
+          "core/n972276_s0",
+          27,
+          39
+        ],
+        [
+          "core/n972277_s0",
+          27,
+          39
+        ],
+        [
+          "core/n972278_s0",
+          27,
+          39
+        ],
+        [
+          "core/n972279_s0",
+          27,
+          39
+        ],
+        [
+          "core/n972280_s0",
+          27,
+          39
+        ],
+        [
+          "core/n972281_s0",
+          27,
+          40
+        ],
+        [
+          "core/n972282_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          27,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          27,
+          41
+        ]
+      ],
+      "outside_region": [],
+      "btb_feedback_paths": 0,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": null,
+      "worst_btb_slack_ns": null,
+      "worst_path_details": {
+        "cell_ns": 3.839,
+        "route_ns": 8.985,
+        "grouped_cells": []
+      },
+      "endpoints": {}
+    },
+    "feedback-p4": {
+      "variant": "feedback",
+      "placement": 4,
+      "observed_members": 14,
+      "unobserved_members": [
+        "core/ds92_11128_s11",
+        "core/ds92_11128_s6",
+        "core/ds92_11129_s11",
+        "core/ds92_11129_s14",
+        "core/ds92_11130_s11",
+        "core/ds92_11130_s14",
+        "core/ds92_11131_s12",
+        "core/ds92_11131_s6",
+        "core/ds92_11132_s12",
+        "core/ds92_11132_s6",
+        "core/ds92_11133_s11",
+        "core/ds92_11133_s6",
+        "core/ds92_11134_s11",
+        "core/ds92_11134_s6",
+        "core/ds92_11157_s104",
+        "core/ds92_11157_s106",
+        "core/n972276_s0",
+        "core/n972277_s0",
+        "core/n972278_s0",
+        "core/n972279_s0",
+        "core/n972280_s0",
+        "core/n972281_s0",
+        "core/n972282_s0"
+      ],
+      "observed_locations": [
+        [
+          "core/ds92_11128_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11129_s1",
+          27,
+          35
+        ],
+        [
+          "core/ds92_11130_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11131_s1",
+          27,
+          36
+        ],
+        [
+          "core/ds92_11132_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11133_s1",
+          27,
+          37
+        ],
+        [
+          "core/ds92_11134_s1",
+          27,
+          38
+        ],
+        [
+          "core/pipeState_c_8644_s0",
+          27,
+          39
+        ],
+        [
+          "core/pipeState_c_8645_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8646_s0",
+          27,
+          40
+        ],
+        [
+          "core/pipeState_c_8647_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8648_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8649_s0",
+          27,
+          41
+        ],
+        [
+          "core/pipeState_c_8650_s0",
+          27,
+          41
+        ]
+      ],
+      "outside_region": [],
+      "btb_feedback_paths": 0,
+      "btb_feedback_cells_covered": true,
+      "median_btb_route_ns": null,
+      "worst_btb_slack_ns": null,
+      "worst_path_details": {
+        "cell_ns": 3.795,
+        "route_ns": 8.274,
+        "grouped_cells": []
+      },
+      "endpoints": {}
+    }
+  },
+  "paired": [
+    {
+      "placement": 0,
+      "control": "baseline",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 0,
+      "control": "anchors",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 1,
+      "control": "baseline",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 1,
+      "control": "anchors",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 2,
+      "control": "baseline",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 2,
+      "control": "anchors",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 3,
+      "control": "baseline",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 3,
+      "control": "anchors",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    },
+    {
+      "placement": 4,
+      "control": "anchors",
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null,
+      "deltas": []
+    }
+  ]
+}

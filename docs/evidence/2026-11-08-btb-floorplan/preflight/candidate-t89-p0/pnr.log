@@ -1,0 +1,19 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+current device: GW2AR-18C  GW2AR-LV18QN88C8/I7
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-source/impl/gwsynthesis/sdram_test.vg"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-p0/pins.cst"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-p0/clocks.sdc"
+NOTE (PJ2001) : Skip synthesis, because there is only one netlist file in this project
+Reading netlist file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-source/impl/gwsynthesis/sdram_test.vg"
+Parsing netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-source/impl/gwsynthesis/sdram_test.vg" completed
+Processing netlist completed
+Reading constraint file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-p0/pins.cst"
+ERROR  (CT1130) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t89-p0/pins.cst":37 | Illegal BSRAM location 'BSRAM_R28[14]'
+Physical Constraint parsed completed with errors
+
+    while executing
+"run pnr"
+    (file "build.tcl" line 15)

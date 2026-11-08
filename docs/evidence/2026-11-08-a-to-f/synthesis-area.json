@@ -1,0 +1,26 @@
+{
+  "baseline": {
+    "registers": 5436,
+    "alu": 901,
+    "lut_including_inverters": 13981,
+    "dsp_macros": 3,
+    "bsram": 40,
+    "ssram": 32,
+    "rom16": 0,
+    "whole_design_logic": 15074,
+    "report_sha256": "67bdc3e3c69df715ab5bb36a5b7d7a47bc13e41c6467c4d8c58470ce04df9b7d",
+    "core_lut_equivalents": 12834
+  },
+  "candidate": {
+    "registers": 5436,
+    "alu": 900,
+    "lut_including_inverters": 13780,
+    "dsp_macros": 3,
+    "bsram": 40,
+    "ssram": 32,
+    "rom16": 0,
+    "whole_design_logic": 14872,
+    "report_sha256": "f5dacf6424c5dd971a2f6c0b973d93448abab42dd9da7e19fb5540a2b686a42e",
+    "core_lut_equivalents": 12628
+  }
+}

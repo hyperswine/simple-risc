@@ -1,0 +1,241 @@
+{
+  "selection": "combinational reachability from BTB DO intersected with fan-in of BTB ADB; complete carry chains",
+  "netlist_sha256": "3ef0867ba2afbda276eb66f84c2e2658ca37f00132ae97cb6bcb42486e7a307f",
+  "cone_cells": 37,
+  "carry_closure_added": 0,
+  "members": 37,
+  "types": {
+    "LUT5": 15,
+    "LUT4": 9,
+    "LUT3": 3,
+    "LUT2": 3,
+    "ALU": 7
+  },
+  "lut_equivalents": 52,
+  "measured_logic_per_cls": 1.7402776184467132,
+  "headroom": 1.5,
+  "required_cls": 45,
+  "region": "R[27:29]C[35:46]",
+  "region_coordinates": [
+    27,
+    29,
+    35,
+    46
+  ],
+  "conservative_capacity_cls": 96,
+  "column_center_from_reference_median": 40,
+  "reference_reports": [
+    {
+      "path": "output/btb-ablation-2026-11-08/anchors-p0/impl/pnr/sdram_test.tr",
+      "sha256": "e87406fa75fd387b2ce2fa9cd0db41cc6064cd69e2178bb98d5c95775189d455",
+      "observed_members": 30
+    },
+    {
+      "path": "output/btb-ablation-2026-11-08/anchors-p1/impl/pnr/sdram_test.tr",
+      "sha256": "d8db842b62be0f845480b5ce9a48eaf02189f3e194aa1dd4c7bd40fd577004d5",
+      "observed_members": 27
+    },
+    {
+      "path": "output/btb-ablation-2026-11-08/anchors-p2/impl/pnr/sdram_test.tr",
+      "sha256": "fa2c518f7f1f2647b939de1566347d62f2fe7956d3e0f77e02bcb8a93d21ceb1",
+      "observed_members": 27
+    },
+    {
+      "path": "output/btb-ablation-2026-11-08/anchors-p3/impl/pnr/sdram_test.tr",
+      "sha256": "0ef392eee7e9262f176ca93647df0493738459530002303cf967214c245a041f",
+      "observed_members": 28
+    },
+    {
+      "path": "output/btb-ablation-2026-11-08/anchors-p4/impl/pnr/sdram_test.tr",
+      "sha256": "b9c1afd349ec31157e5e3671d5d623c11c9d8248bf5a46d6551e6f07db76f35b",
+      "observed_members": 25
+    }
+  ],
+  "cells": [
+    {
+      "name": "core/pipeState_c_8650_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8649_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8648_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8647_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8646_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8645_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/pipeState_c_8644_s0",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11134_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11133_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11132_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11131_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11130_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11129_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11128_s1",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11134_s6",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11133_s6",
+      "kind": "LUT3",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11132_s6",
+      "kind": "LUT2",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11131_s6",
+      "kind": "LUT2",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11128_s6",
+      "kind": "LUT2",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11129_s11",
+      "kind": "LUT3",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11130_s11",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11157_s104",
+      "kind": "LUT5",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11128_s11",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11129_s14",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11130_s14",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11131_s12",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11132_s12",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11133_s11",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11134_s11",
+      "kind": "LUT4",
+      "cone": true
+    },
+    {
+      "name": "core/ds92_11157_s106",
+      "kind": "LUT3",
+      "cone": true
+    },
+    {
+      "name": "core/n972276_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972277_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972278_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972279_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972280_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972281_s0",
+      "kind": "ALU",
+      "cone": true
+    },
+    {
+      "name": "core/n972282_s0",
+      "kind": "ALU",
+      "cone": true
+    }
+  ]
+}

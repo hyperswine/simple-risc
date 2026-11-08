@@ -1,0 +1,78 @@
+{
+  "baseline_netlist_sha256": "3ef0867ba2afbda276eb66f84c2e2658ca37f00132ae97cb6bcb42486e7a307f",
+  "rom_sha256": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+  "inputs": [
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical/pipeline_top.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/pipeline_top.v",
+      "sha256": "d16764e835dbb83fb5367ce8a5d9dccb929061868060631320e8f0f9f84d1d21",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical/memory.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/memory.v",
+      "sha256": "36c9ac1b92c1a032feafa217e882b5a74f0bc8f386bcbeb3f2b39158f2d688ec",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/cache.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/cache.v",
+      "sha256": "76f25a1eafdb078668dce8a3649930dd12479e08460e70cc6ffd9ffd3f4c0b6b",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/pipeline_cache.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/pipeline_cache.v",
+      "sha256": "1dcd9ea7b0ff12fb8e7d327f3e7794de70de8ee64571a6f531fa84aa5f4003f2",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/burst_memory.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/burst_memory.v",
+      "sha256": "b96af62e6b1ec957c112d6607d6bfd901560776dedbac9078588cb8910ddb35a",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/clock_bridge.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/clock_bridge.v",
+      "sha256": "9a480d99b18ca916c7031e000087351d085854e6c6f3403bb4e88dc3b11ef0d2",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/sdram.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/sdram.v",
+      "sha256": "fac724ff34098570c5ad55b18fa2fd43770496c11005e8b6992ad27f7830693e",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical/pll.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/pll.v",
+      "sha256": "46f5edabee90100cbc39380bba2f2dd49f161aa4e2e2e8a2d11fa2e76365404c",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/sdram/dual_pll.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/dual_pll.v",
+      "sha256": "b00f4a6bfb17262bc47a8ec7fd4b781c6f12776ae2803a3274753411c2e3aa77",
+      "role": "unchanged wrapper or peripheral RTL"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical/pins.cst",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/pins.cst",
+      "sha256": "c6e4e8f84a9c916795b031608a5b3a1739912ef59a64fa701173e8169b68ba22",
+      "role": "pin constraints; canonical regions regenerated after synthesis"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-2026-11-07/baseline-physical/clocks.sdc",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/clocks.sdc",
+      "sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "role": "same clocks and report commands as imported controls"
+    },
+    {
+      "source": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-generated/SdramPipeline.topEntity/sdram_pipeline_risc.v",
+      "copy": "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-physical/inputs/sdram_pipeline_risc.v",
+      "sha256": "bac7e57f9f8792286eaae3788fa377528fbb0a06f748f345af412617cc494bf3",
+      "role": "candidate core"
+    }
+  ]
+}

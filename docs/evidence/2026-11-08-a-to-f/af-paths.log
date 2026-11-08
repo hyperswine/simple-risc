@@ -1,0 +1,210 @@
+{
+  "runs": {
+    "baseline-p0": {
+      "paths": 73,
+      "worst": {
+        "endpoint": "core/pipeState_7808_s0 -> core/pipeState_7602_s0/D",
+        "from_field": "A.valid",
+        "to_field": "F[0].fPredicted[25]",
+        "end_pin": "D",
+        "slack_ns": 0.299,
+        "levels": 7,
+        "cell_ns": 2.749,
+        "route_ns": 9.03
+      },
+      "median_route_ns": 7.358,
+      "valid_paths": 43,
+      "valid_worst": {
+        "endpoint": "core/pipeState_7808_s0 -> core/pipeState_7602_s0/D",
+        "from_field": "A.valid",
+        "to_field": "F[0].fPredicted[25]",
+        "end_pin": "D",
+        "slack_ns": 0.299,
+        "levels": 7,
+        "cell_ns": 2.749,
+        "route_ns": 9.03
+      }
+    },
+    "baseline-p1": {
+      "paths": 78,
+      "worst": {
+        "endpoint": "core/pipeState_7678_s0 -> core/pipeState_7628_s0/D",
+        "from_field": "A.fRaw[0]",
+        "to_field": "F[0].fWord[17]",
+        "end_pin": "D",
+        "slack_ns": -0.184,
+        "levels": 6,
+        "cell_ns": 2.701,
+        "route_ns": 9.562
+      },
+      "median_route_ns": 6.6315,
+      "valid_paths": 53,
+      "valid_worst": {
+        "endpoint": "core/pipeState_7808_s0 -> core/pipeState_7455_s0/D",
+        "from_field": "A.valid",
+        "to_field": "F[1].fPredicted[11]",
+        "end_pin": "D",
+        "slack_ns": 0.039,
+        "levels": 9,
+        "cell_ns": 3.785,
+        "route_ns": 8.255
+      }
+    },
+    "baseline-p2": {
+      "paths": 78,
+      "worst": {
+        "endpoint": "core/pipeState_7678_s0 -> core/pipeState_7628_s0/D",
+        "from_field": "A.fRaw[0]",
+        "to_field": "F[0].fWord[17]",
+        "end_pin": "D",
+        "slack_ns": -0.184,
+        "levels": 6,
+        "cell_ns": 2.701,
+        "route_ns": 9.562
+      },
+      "median_route_ns": 6.6315,
+      "valid_paths": 53,
+      "valid_worst": {
+        "endpoint": "core/pipeState_7808_s0 -> core/pipeState_7455_s0/D",
+        "from_field": "A.valid",
+        "to_field": "F[1].fPredicted[11]",
+        "end_pin": "D",
+        "slack_ns": 0.039,
+        "levels": 9,
+        "cell_ns": 3.785,
+        "route_ns": 8.255
+      }
+    },
+    "baseline-p3": {
+      "paths": 76,
+      "worst": {
+        "endpoint": "core/pipeState_7693_s0 -> core/pipeState_7501_s0/D",
+        "from_field": "A.fRaw[15]",
+        "to_field": "F[1].fWord[23]",
+        "end_pin": "D",
+        "slack_ns": 2.148,
+        "levels": 6,
+        "cell_ns": 2.841,
+        "route_ns": 7.09
+      },
+      "median_route_ns": 5.652,
+      "valid_paths": 1,
+      "valid_worst": {
+        "endpoint": "core/pipeState_7808_s0 -> core/pipeState_7606_s0/D",
+        "from_field": "A.valid",
+        "to_field": "F[0].fPredicted[29]",
+        "end_pin": "D",
+        "slack_ns": 3.129,
+        "levels": 7,
+        "cell_ns": 3.049,
+        "route_ns": 5.9
+      }
+    },
+    "candidate-p0": {
+      "paths": 75,
+      "worst": {
+        "endpoint": "core/pipeState_7693_s0 -> core/pipeState_7618_s0/D",
+        "from_field": "A.fRaw[15]",
+        "to_field": "F[0].fWord[7]",
+        "end_pin": "D",
+        "slack_ns": 1.035,
+        "levels": 6,
+        "cell_ns": 1.577,
+        "route_ns": 9.466
+      },
+      "median_route_ns": 6.735,
+      "valid_paths": 0,
+      "valid_worst": null
+    },
+    "candidate-p1": {
+      "paths": 31,
+      "worst": {
+        "endpoint": "core/pipeState_7692_s0 -> core/pipeState_7476_s0/D",
+        "from_field": "A.fRaw[14]",
+        "to_field": "F[1].fUsesRs2[0]",
+        "end_pin": "D",
+        "slack_ns": 1.265,
+        "levels": 7,
+        "cell_ns": 3.194,
+        "route_ns": 7.62
+      },
+      "median_route_ns": 5.802,
+      "valid_paths": 0,
+      "valid_worst": null
+    },
+    "candidate-p2": {
+      "paths": 31,
+      "worst": {
+        "endpoint": "core/pipeState_7692_s0 -> core/pipeState_7476_s0/D",
+        "from_field": "A.fRaw[14]",
+        "to_field": "F[1].fUsesRs2[0]",
+        "end_pin": "D",
+        "slack_ns": 1.265,
+        "levels": 7,
+        "cell_ns": 3.194,
+        "route_ns": 7.62
+      },
+      "median_route_ns": 5.802,
+      "valid_paths": 0,
+      "valid_worst": null
+    },
+    "candidate-p3": {
+      "paths": 97,
+      "worst": {
+        "endpoint": "core/pipeState_7687_s0 -> core/pipeState_7476_s0/D",
+        "from_field": "A.fRaw[9]",
+        "to_field": "F[1].fUsesRs2[0]",
+        "end_pin": "D",
+        "slack_ns": -0.289,
+        "levels": 7,
+        "cell_ns": 3.119,
+        "route_ns": 9.249
+      },
+      "median_route_ns": 7.613,
+      "valid_paths": 0,
+      "valid_worst": null
+    },
+    "candidate-p4": {
+      "paths": 117,
+      "worst": {
+        "endpoint": "core/pipeState_7693_s0 -> core/pipeState_7496_s0/D",
+        "from_field": "A.fRaw[15]",
+        "to_field": "F[1].fWord[18]",
+        "end_pin": "D",
+        "slack_ns": 0.034,
+        "levels": 6,
+        "cell_ns": 2.512,
+        "route_ns": 9.532
+      },
+      "median_route_ns": 7.315,
+      "valid_paths": 0,
+      "valid_worst": null
+    }
+  },
+  "paired": [
+    {
+      "placement": 0,
+      "matched_endpoints": 4,
+      "median_matched_route_delta_ns": 0.8025000000000002,
+      "median_matched_slack_delta_ns": -0.2530000000000001
+    },
+    {
+      "placement": 1,
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null
+    },
+    {
+      "placement": 2,
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null
+    },
+    {
+      "placement": 3,
+      "matched_endpoints": 0,
+      "median_matched_route_delta_ns": null,
+      "median_matched_slack_delta_ns": null
+    }
+  ]
+}

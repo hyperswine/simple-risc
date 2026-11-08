@@ -1,0 +1,1 @@
+FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 78.766 MHz Fmax, -0.350 ns worst setup slack; 154 setup / 0 hold violating endpoints

@@ -1,0 +1,9 @@
+{
+  "variant": "grouping",
+  "placement": 4,
+  "status": "unrouted",
+  "returncode": 1,
+  "elapsed_seconds": 1687.6930329799652,
+  "imported": false,
+  "unrouted_nets": 1333
+}

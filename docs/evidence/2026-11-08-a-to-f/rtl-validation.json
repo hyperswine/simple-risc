@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "rtl-check",
+      "command": [
+        "python3",
+        "boards/tangnano20k/sdram/check_pipeline_rtl.py",
+        "--generated",
+        "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-generated/SdramPipelineObserved.topEntity",
+        "--compressed",
+        "--simulator",
+        "verilator",
+        "--cache-line-bits",
+        "11",
+        "--cache-ways",
+        "2",
+        "--cdc-bridge",
+        "--out",
+        "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/rtl-check"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 15.791712045669556,
+      "log_sha256": "4b4942507ff995541d959afa7274391359418c9293506fab237fb05e64331f7a"
+    },
+    {
+      "name": "reset-check",
+      "command": [
+        "python3",
+        "boards/tangnano20k/sdram/check_pipeline_reset.py",
+        "--baseline",
+        "/Users/jasonqin/Documents/GitHub/simple-risc/output/refactor-e1-2026-11-08/baseline-observed/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+        "--candidate",
+        "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/candidate-generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+        "--out",
+        "/Users/jasonqin/Documents/GitHub/simple-risc/output/a-to-f-2026-11-08/reset-check"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 13.564337015151978,
+      "log_sha256": "d91844cad603465e2ce9e1ce6fe90edf298876d9e67a0e16dfdfa5c6e3d687bc"
+    }
+  ]
+}

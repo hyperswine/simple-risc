@@ -1,0 +1,56 @@
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1611,9 +1611,12 @@
+         | cpuCompressed machine = assembled
+         | waiting = Just (pQueue pipe !! slot readPointer)
+         | otherwise = arrival
+-      fQueue' = case pA pipe of
+-        Just f | fPush -> replace (pFWrite pipe) ((expand f) {fPredicted = aPredicted}) (pFQueue pipe)
+-        _ -> pFQueue pipe
++      -- Payload is meaningful only on fPush, which includes A validity.
++      -- Do not put the validity-to-zero mux in front of the decompressor
++      -- and prediction arithmetic; validity belongs at the write enable.
++      fQueue'
++        | fPush = replace (pFWrite pipe) ((expand aFetched) {fPredicted = aPredicted}) (pFQueue pipe)
++        | otherwise = pFQueue pipe
+       -- Assembly-stage correction and the return address stack ----------
+       -- An instruction leaving A for F is on the predicted path: calls push
+       -- their link and returns pop. A return whose prediction differs from
+@@ -1624,7 +1627,10 @@
+       -- The decision reads A's raw bits only (no RV32C expansion, adder or
+       -- 32-bit compare): it ends at pRedirectFront. The target adder and
+       -- the stack read are data, ending at pFrontTarget and F's payload.
+-      aFetched = fromMaybe (Fetched 0 0 False False 0 0 4) (pA pipe)
++      -- Invalid A payload is a don't-care. Every architectural consumer
++      -- is guarded by fPush; the unconditional target register is masked
++      -- separately below to preserve its original invalid-A value.
++      aFetched = fromJustX (pA pipe)
+       aLink = fPc aFetched + resize (fSize aFetched)
+       aClass = rawControl (fSize aFetched) (fRaw aFetched)
+       rasTop = pRas pipe !! pRasTop pipe
+@@ -1638,6 +1644,7 @@
+       aReturn = cpuCompressed machine && rcReturn aClass
+       aJal = cpuCompressed machine && rcJal aClass && not followed
+       aTarget = if rcReturn aClass then rasTop else fPc aFetched + rcJalOffset aClass
++      aTargetStored = if isJust (pA pipe) then aTarget else 0
+       aPredicted = if aReturn || aJal then aTarget else fPredicted aFetched
+       aSteer = if fPush && (aReturn || aJal) then Just aTarget else Nothing
+       (ras', rasTop')
+@@ -1705,7 +1712,7 @@
+           { pQueue = queue',
+             pFQueue = fQueue',
+             pDOperands = dOperands',
+-            pFrontTarget = aTarget,
++            pFrontTarget = aTargetStored,
+             pBtb = btb'
+           }
+       pipe'
+@@ -1747,7 +1754,7 @@
+                 pMSlot = slotToken (pMSlot pipe) nextM,
+                 pRedirect = redirect,
+                 pRedirectFront = isJust aSteer,
+-                pFrontTarget = aTarget,
++                pFrontTarget = aTargetStored,
+                 pRas = ras',
+                 pRasTop = rasTop',
+                 pRasResolvedTop = rasResolvedTop',

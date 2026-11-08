@@ -1,0 +1,65 @@
+{
+  "baseline_commit": "dcd220d",
+  "cpu_mhz": 81,
+  "memory_mhz": 48,
+  "frequency_option_mhz": 89,
+  "placements": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "new_routes": 10,
+  "imported_controls": [
+    {
+      "placement": 0,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p0",
+      "pins_sha256": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+      "sdc_sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "timing_sha256": "28f93f6a4f548308cf93ecb8635f5002be9554f311894432e72ca63966976fc1",
+      "pnr_log_sha256": "5ae3ed9427b51c1b52059ea40616e23b8d268b087da11b8a7c562e99f444b39e"
+    },
+    {
+      "placement": 1,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1",
+      "pins_sha256": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+      "sdc_sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "timing_sha256": "dcf1c508bcbf7cf3aaaf4057582c1999bba22fa2435e3c811eeb8912f744e416",
+      "pnr_log_sha256": "62c1bc8a79c024d1b73db938cc8094566be7477b4c741c2c924f40ec312f66ee"
+    },
+    {
+      "placement": 2,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p2",
+      "pins_sha256": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+      "sdc_sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "timing_sha256": "ea7c277d7f29930686b1132d77369427a1175c12bde94d57ebf08e83427d306e",
+      "pnr_log_sha256": "1f1b84cbff19030af8f282027529d6ececbea11a42ec683c6b23d2d1c965bb9d"
+    },
+    {
+      "placement": 3,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p3",
+      "pins_sha256": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+      "sdc_sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "timing_sha256": "8c0f83790335842da9e4498a3926a0aad38dba9dea77a061ac6cab19cb596722",
+      "pnr_log_sha256": "795deca08a5d7e944d011741c8ee9f45084e1676d36e96ee0898095fc33f9406"
+    },
+    {
+      "placement": 4,
+      "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p4",
+      "pins_sha256": "af88de766e256c1d2cf031896538faa26c1aa7c17cf34b7ec960afea37b579aa",
+      "sdc_sha256": "9956b9ab2be97dc2e0198b0d9fd0a29e27258a2033146f5dff905dc7b726259f",
+      "timing_sha256": null,
+      "pnr_log_sha256": "b8d1f6c54add2a319ee65a0f8d4030c42e7ef0437d698dbe2b46b2a33afc84ff"
+    }
+  ],
+  "parallel_jobs": 3,
+  "route_timeout_seconds": 1800,
+  "hashes": {
+    "frozen/impl/gwsynthesis/sdram_test.vg": "3ef0867ba2afbda276eb66f84c2e2658ca37f00132ae97cb6bcb42486e7a307f",
+    "frozen/bootrom-sdram.hex": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+    "baseline.cst": "8f4701c4b7dd22c3361cd6979ab368225fb6b1fc611174bb44f2023a47f2644b",
+    "anchors.cst": "3a5a3a3653c69e844ac2da1a2aaff9292cf82c936d46c60490b6a6bc17b98ec7",
+    "grouping.cst": "0f296a683fb66e7f7d9248250016c3a8aa4f70500e1ff2fc808c1fe9714ec68e"
+  }
+}

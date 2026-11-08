@@ -1,0 +1,21 @@
+START grouping-p3
+START anchors-p0
+START anchors-p3
+DONE anchors-p3 timing-fail 90
+START grouping-p0
+DONE grouping-p3 timing-fail 155
+START anchors-p1
+DONE grouping-p0 unrouted 291
+START grouping-p1
+DONE anchors-p1 pass 476
+START anchors-p2
+DONE grouping-p1 unrouted 316
+START grouping-p2
+DONE anchors-p0 pass 962
+START anchors-p4
+DONE grouping-p2 unrouted 265
+START grouping-p4
+DONE anchors-p2 pass 406
+DONE anchors-p4 timing-fail 125
+DONE grouping-p4 unrouted 1688
+COMPLETE 15 including 5 imported controls

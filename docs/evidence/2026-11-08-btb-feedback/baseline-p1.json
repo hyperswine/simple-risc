@@ -1,0 +1,10 @@
+{
+  "variant": "baseline",
+  "target": 89,
+  "placement": 1,
+  "status": "timing-fail",
+  "returncode": 2,
+  "elapsed_seconds": 908.5577228069305,
+  "imported": true,
+  "origin": "output/btb-floorplan-2026-11-08/baseline-t89-p1"
+}

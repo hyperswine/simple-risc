@@ -1,0 +1,9 @@
+{
+  "variant": "anchors",
+  "placement": 3,
+  "status": "timing-fail",
+  "returncode": 2,
+  "elapsed_seconds": 90.28104090690613,
+  "imported": true,
+  "origin": "output/btb-ablation-2026-11-08/anchors-p3"
+}

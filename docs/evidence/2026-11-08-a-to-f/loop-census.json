@@ -1,0 +1,6661 @@
+{
+  "baseline-p0": {
+    "structures": [
+      {
+        "structure": "M -> D",
+        "paths": 2,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.008,
+        "levels_median": 7.0,
+        "levels_max": 10,
+        "route_median": 75.59,
+        "loop": false,
+        "worst_from": "M.mWait",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 27,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.015,
+        "levels_median": 8,
+        "levels_max": 9,
+        "route_median": 65.868,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 91,
+        "failing": 0,
+        "tight": 6,
+        "worst_slack": 0.034,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 81.295,
+        "loop": true,
+        "worst_from": "heldState",
+        "worst_to": "machine",
+        "worst_levels": 3
+      },
+      {
+        "structure": "machine -> btb",
+        "paths": 2,
+        "failing": 0,
+        "tight": 2,
+        "worst_slack": 0.035,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 71.4485,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 3,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.144,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 84.826,
+        "loop": false,
+        "worst_from": "D.fPc",
+        "worst_to": "E1.e1FaultValue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> fetch",
+        "paths": 12,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.18,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 75.804,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 19,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.213,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 77.755,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 264,
+        "failing": 0,
+        "tight": 132,
+        "worst_slack": 0.239,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.959,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 302,
+        "failing": 0,
+        "tight": 8,
+        "worst_slack": 0.252,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.38,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 73,
+        "failing": 0,
+        "tight": 3,
+        "worst_slack": 0.299,
+        "levels_median": 7,
+        "levels_max": 9,
+        "route_median": 70.348,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 367,
+        "failing": 0,
+        "tight": 5,
+        "worst_slack": 0.317,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.365,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 12,
+        "failing": 0,
+        "tight": 3,
+        "worst_slack": 0.323,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 50.849999999999994,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 35,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.333,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 72.462,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1B",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 348,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.378,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.507,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mB",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2",
+        "paths": 4,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.479,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.694,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 26,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.555,
+        "levels_median": 7.5,
+        "levels_max": 8,
+        "route_median": 47.036500000000004,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 593,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.624,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 80.734,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "A -> fetch",
+        "paths": 22,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.713,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 69.512,
+        "loop": false,
+        "worst_from": "pRedirectFront",
+        "worst_to": "pInflight",
+        "worst_levels": 7
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 25,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.827,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 65.493,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 8
+      },
+      {
+        "structure": "core-other -> E1",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.839,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 63.798,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other (CE)",
+        "paths": 15,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.914,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.711,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> E2",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.961,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 75.964,
+        "loop": true,
+        "worst_from": "E2.e2Computed",
+        "worst_to": "pRedirect",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.987,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.4915,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 196,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.003,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.242,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fUsesRs1",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 19,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.018,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 81.935,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 296,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.049,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.417,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> cache",
+        "paths": 6,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.116,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 76.95349999999999,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 20,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.213,
+        "levels_median": 7.5,
+        "levels_max": 10,
+        "route_median": 67.83250000000001,
+        "loop": false,
+        "worst_from": "E1.e1Pc",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 8
+      },
+      {
+        "structure": "M -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.3,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 81.573,
+        "loop": false,
+        "worst_from": "M.mNext",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.336,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 83.034,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "A -> A",
+        "paths": 12,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.422,
+        "levels_median": 6.0,
+        "levels_max": 8,
+        "route_median": 73.709,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pFrontTarget",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 42,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.523,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 79.921,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 14,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.54,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 58.5355,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "M -> A",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.612,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 82.186,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 16,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.662,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 80.2705,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 121,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.675,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.759,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.456,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 72.232,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "core-other -> D",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.58,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 61.584,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "M -> D": {
+        "paths": 2,
+        "median_cell_ns": 2.5365,
+        "median_route_ns": 8.256
+      },
+      "fetch -> fetch": {
+        "paths": 27,
+        "median_cell_ns": 3.426,
+        "median_route_ns": 6.876
+      },
+      "machine -> machine": {
+        "paths": 133,
+        "median_cell_ns": 1.785,
+        "median_route_ns": 8.336
+      },
+      "machine -> btb": {
+        "paths": 2,
+        "median_cell_ns": 3.249,
+        "median_route_ns": 8.712
+      },
+      "D -> E1": {
+        "paths": 3,
+        "median_cell_ns": 1.459,
+        "median_route_ns": 9.19
+      },
+      "M -> fetch": {
+        "paths": 12,
+        "median_cell_ns": 2.371,
+        "median_route_ns": 8.073
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 34,
+        "median_cell_ns": 1.956,
+        "median_route_ns": 7.928
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 264,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 9.642
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 302,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.64
+      },
+      "A -> F": {
+        "paths": 73,
+        "median_cell_ns": 2.764,
+        "median_route_ns": 7.358
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 371,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.632
+      },
+      "btb -> btb": {
+        "paths": 12,
+        "median_cell_ns": 3.4895,
+        "median_route_ns": 5.8745
+      },
+      "machine -> E1": {
+        "paths": 35,
+        "median_cell_ns": 2.625,
+        "median_route_ns": 7.404
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 352,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.5205
+      },
+      "btb -> fetch": {
+        "paths": 26,
+        "median_cell_ns": 3.0955000000000004,
+        "median_route_ns": 4.8745
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 593,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.41
+      },
+      "A -> fetch": {
+        "paths": 22,
+        "median_cell_ns": 2.9915000000000003,
+        "median_route_ns": 7.378
+      },
+      "fetch -> A": {
+        "paths": 25,
+        "median_cell_ns": 3.25,
+        "median_route_ns": 6.756
+      },
+      "core-other -> E1": {
+        "paths": 3,
+        "median_cell_ns": 1.727,
+        "median_route_ns": 7.319
+      },
+      "E2 -> E2": {
+        "paths": 1,
+        "median_cell_ns": 2.496,
+        "median_route_ns": 8.622
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 196,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.562
+      },
+      "machine -> fetch": {
+        "paths": 19,
+        "median_cell_ns": 1.621,
+        "median_route_ns": 8.404
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 296,
+        "median_cell_ns": 1.444,
+        "median_route_ns": 9.079
+      },
+      "machine -> cache": {
+        "paths": 6,
+        "median_cell_ns": 2.095,
+        "median_route_ns": 7.6535
+      },
+      "E1 -> E2": {
+        "paths": 20,
+        "median_cell_ns": 3.12,
+        "median_route_ns": 6.9990000000000006
+      },
+      "M -> machine": {
+        "paths": 1,
+        "median_cell_ns": 1.797,
+        "median_route_ns": 8.982
+      },
+      "cache -> machine": {
+        "paths": 1,
+        "median_cell_ns": 1.63,
+        "median_route_ns": 9.113
+      },
+      "A -> A": {
+        "paths": 12,
+        "median_cell_ns": 2.5185,
+        "median_route_ns": 7.6015
+      },
+      "cache -> cache": {
+        "paths": 14,
+        "median_cell_ns": 2.186,
+        "median_route_ns": 6.1495
+      },
+      "M -> A": {
+        "paths": 4,
+        "median_cell_ns": 1.631,
+        "median_route_ns": 8.433499999999999
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 16,
+        "median_cell_ns": 1.745,
+        "median_route_ns": 8.044
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 121,
+        "median_cell_ns": 1.85,
+        "median_route_ns": 7.979
+      },
+      "machine -> D": {
+        "paths": 1,
+        "median_cell_ns": 2.505,
+        "median_route_ns": 7.119
+      },
+      "core-other -> D": {
+        "paths": 1,
+        "median_cell_ns": 1.478,
+        "median_route_ns": 5.992
+      }
+    }
+  },
+  "baseline-p1": {
+    "structures": [
+      {
+        "structure": "fetch -> fetch",
+        "paths": 48,
+        "failing": 2,
+        "tight": 3,
+        "worst_slack": -0.35,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 68.6075,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 375,
+        "failing": 16,
+        "tight": 64,
+        "worst_slack": -0.249,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.389,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 78,
+        "failing": 1,
+        "tight": 3,
+        "worst_slack": -0.184,
+        "levels_median": 8.0,
+        "levels_max": 9,
+        "route_median": 64.207,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 306,
+        "failing": 1,
+        "tight": 6,
+        "worst_slack": -0.147,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.629,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.137,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 66.582,
+        "loop": false,
+        "worst_from": "M.mStore",
+        "worst_to": "pDBlocked",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 264,
+        "failing": 132,
+        "tight": 132,
+        "worst_slack": -0.06,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.37450000000001,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 43,
+        "failing": 1,
+        "tight": 9,
+        "worst_slack": -0.008,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 82.109,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 595,
+        "failing": 0,
+        "tight": 8,
+        "worst_slack": 0.033,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 81.972,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 195,
+        "failing": 0,
+        "tight": 5,
+        "worst_slack": 0.245,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.978,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fRaw",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 67,
+        "failing": 0,
+        "tight": 2,
+        "worst_slack": 0.31,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 83.281,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 315,
+        "failing": 0,
+        "tight": 7,
+        "worst_slack": 0.311,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.385,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb",
+        "paths": 6,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.354,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 77.9125,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "btb table RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 8,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.44,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 46.379000000000005,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other (CE)",
+        "paths": 27,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.504,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.889,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.868,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.418,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 27,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.012,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 66.935,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 50,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.134,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 73.417,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> fetch",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.197,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 80.134,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pFetchPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.352,
+        "levels_median": 7,
+        "levels_max": 10,
+        "route_median": 70.885,
+        "loop": false,
+        "worst_from": "E1.e1Imm",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 10
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 41,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.379,
+        "levels_median": 5,
+        "levels_max": 9,
+        "route_median": 64.939,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 289,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.381,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 85.721,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.399,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 63.7855,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.455,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.90549999999999,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 120,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.687,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.503,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> A",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.762,
+        "levels_median": 8,
+        "levels_max": 9,
+        "route_median": 67.177,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pFrontTarget",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.765,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 82.951,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 25,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.789,
+        "levels_median": 7,
+        "levels_max": 8,
+        "route_median": 46.13,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache",
+        "paths": 5,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.095,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.819,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      },
+      {
+        "structure": "machine -> A",
+        "paths": 6,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.122,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.15450000000001,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pA",
+        "worst_levels": 4
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.337,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 62.075,
+        "loop": false,
+        "worst_from": "D.fPc",
+        "worst_to": "E1.e1FetchFault",
+        "worst_levels": 9
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.341,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 72.388,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> E2",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.494,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 79.546,
+        "loop": true,
+        "worst_from": "E2.e2BranchCompare",
+        "worst_to": "pRedirect",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 6,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.578,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.4675,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.677,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.447,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache (CE)",
+        "paths": 19,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.722,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.819,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "fetch -> fetch": {
+        "paths": 48,
+        "median_cell_ns": 3.044,
+        "median_route_ns": 6.9575
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 379,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 9.001
+      },
+      "A -> F": {
+        "paths": 78,
+        "median_cell_ns": 3.501,
+        "median_route_ns": 6.6315
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 306,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.529
+      },
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.928,
+        "median_route_ns": 8.288
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 264,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 9.742
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 70,
+        "median_cell_ns": 1.6225,
+        "median_route_ns": 8.323
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 595,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.316
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 195,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.741
+      },
+      "machine -> machine": {
+        "paths": 67,
+        "median_cell_ns": 1.529,
+        "median_route_ns": 8.384
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 319,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.298
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 12,
+        "median_cell_ns": 1.839,
+        "median_route_ns": 7.941
+      },
+      "btb -> btb": {
+        "paths": 8,
+        "median_cell_ns": 3.5935,
+        "median_route_ns": 5.0649999999999995
+      },
+      "fetch -> A": {
+        "paths": 27,
+        "median_cell_ns": 3.046,
+        "median_route_ns": 6.711
+      },
+      "machine -> E1": {
+        "paths": 50,
+        "median_cell_ns": 2.5564999999999998,
+        "median_route_ns": 7.2285
+      },
+      "M -> fetch": {
+        "paths": 13,
+        "median_cell_ns": 1.724,
+        "median_route_ns": 7.975
+      },
+      "E1 -> E2": {
+        "paths": 31,
+        "median_cell_ns": 2.694,
+        "median_route_ns": 7.15
+      },
+      "cache -> cache": {
+        "paths": 41,
+        "median_cell_ns": 2.095,
+        "median_route_ns": 6.453
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 289,
+        "median_cell_ns": 1.26,
+        "median_route_ns": 8.957
+      },
+      "core-other -> cache": {
+        "paths": 2,
+        "median_cell_ns": 3.635,
+        "median_route_ns": 6.8245000000000005
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 120,
+        "median_cell_ns": 1.666,
+        "median_route_ns": 8.082
+      },
+      "A -> A": {
+        "paths": 7,
+        "median_cell_ns": 3.188,
+        "median_route_ns": 7.0
+      },
+      "machine -> fetch": {
+        "paths": 13,
+        "median_cell_ns": 1.475,
+        "median_route_ns": 8.24
+      },
+      "btb -> fetch": {
+        "paths": 25,
+        "median_cell_ns": 3.191,
+        "median_route_ns": 4.585
+      },
+      "reset_sync_1_s0 -> cache": {
+        "paths": 24,
+        "median_cell_ns": 0.936,
+        "median_route_ns": 8.421
+      },
+      "machine -> A": {
+        "paths": 6,
+        "median_cell_ns": 1.4315,
+        "median_route_ns": 8.311
+      },
+      "D -> E1": {
+        "paths": 1,
+        "median_cell_ns": 3.55,
+        "median_route_ns": 6.191
+      },
+      "machine -> D": {
+        "paths": 7,
+        "median_cell_ns": 2.506,
+        "median_route_ns": 7.095
+      },
+      "E2 -> E2": {
+        "paths": 1,
+        "median_cell_ns": 1.776,
+        "median_route_ns": 7.809
+      },
+      "M -> machine": {
+        "paths": 1,
+        "median_cell_ns": 1.748,
+        "median_route_ns": 7.653
+      }
+    }
+  },
+  "baseline-p2": {
+    "structures": [
+      {
+        "structure": "fetch -> fetch",
+        "paths": 48,
+        "failing": 2,
+        "tight": 3,
+        "worst_slack": -0.35,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 68.6075,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 375,
+        "failing": 16,
+        "tight": 64,
+        "worst_slack": -0.249,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.389,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 78,
+        "failing": 1,
+        "tight": 3,
+        "worst_slack": -0.184,
+        "levels_median": 8.0,
+        "levels_max": 9,
+        "route_median": 64.207,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 306,
+        "failing": 1,
+        "tight": 6,
+        "worst_slack": -0.147,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.629,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.137,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 66.582,
+        "loop": false,
+        "worst_from": "M.mStore",
+        "worst_to": "pDBlocked",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 264,
+        "failing": 132,
+        "tight": 132,
+        "worst_slack": -0.06,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.37450000000001,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 43,
+        "failing": 1,
+        "tight": 9,
+        "worst_slack": -0.008,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 82.109,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 595,
+        "failing": 0,
+        "tight": 8,
+        "worst_slack": 0.033,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 81.972,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 195,
+        "failing": 0,
+        "tight": 5,
+        "worst_slack": 0.245,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.978,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fRaw",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 67,
+        "failing": 0,
+        "tight": 2,
+        "worst_slack": 0.31,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 83.281,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 315,
+        "failing": 0,
+        "tight": 7,
+        "worst_slack": 0.311,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.385,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb",
+        "paths": 6,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.354,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 77.9125,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "btb table RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 8,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.44,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 46.379000000000005,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other (CE)",
+        "paths": 27,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.504,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.889,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.868,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.418,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 27,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.012,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 66.935,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 50,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.134,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 73.417,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> fetch",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.197,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 80.134,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pFetchPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.352,
+        "levels_median": 7,
+        "levels_max": 10,
+        "route_median": 70.885,
+        "loop": false,
+        "worst_from": "E1.e1Imm",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 10
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 41,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.379,
+        "levels_median": 5,
+        "levels_max": 9,
+        "route_median": 64.939,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 289,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.381,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 85.721,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.399,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 63.7855,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.455,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.90549999999999,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 120,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.687,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.503,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> A",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.762,
+        "levels_median": 8,
+        "levels_max": 9,
+        "route_median": 67.177,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pFrontTarget",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.765,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 82.951,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 25,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.789,
+        "levels_median": 7,
+        "levels_max": 8,
+        "route_median": 46.13,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache",
+        "paths": 5,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.095,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.819,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      },
+      {
+        "structure": "machine -> A",
+        "paths": 6,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.122,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.15450000000001,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pA",
+        "worst_levels": 4
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.337,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 62.075,
+        "loop": false,
+        "worst_from": "D.fPc",
+        "worst_to": "E1.e1FetchFault",
+        "worst_levels": 9
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.341,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 72.388,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> E2",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.494,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 79.546,
+        "loop": true,
+        "worst_from": "E2.e2BranchCompare",
+        "worst_to": "pRedirect",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 6,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.578,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.4675,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.677,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.447,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache (CE)",
+        "paths": 19,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.722,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.819,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "fetch -> fetch": {
+        "paths": 48,
+        "median_cell_ns": 3.044,
+        "median_route_ns": 6.9575
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 379,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 9.001
+      },
+      "A -> F": {
+        "paths": 78,
+        "median_cell_ns": 3.501,
+        "median_route_ns": 6.6315
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 306,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.529
+      },
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.928,
+        "median_route_ns": 8.288
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 264,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 9.742
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 70,
+        "median_cell_ns": 1.6225,
+        "median_route_ns": 8.323
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 595,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.316
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 195,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.741
+      },
+      "machine -> machine": {
+        "paths": 67,
+        "median_cell_ns": 1.529,
+        "median_route_ns": 8.384
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 319,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 8.298
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 12,
+        "median_cell_ns": 1.839,
+        "median_route_ns": 7.941
+      },
+      "btb -> btb": {
+        "paths": 8,
+        "median_cell_ns": 3.5935,
+        "median_route_ns": 5.0649999999999995
+      },
+      "fetch -> A": {
+        "paths": 27,
+        "median_cell_ns": 3.046,
+        "median_route_ns": 6.711
+      },
+      "machine -> E1": {
+        "paths": 50,
+        "median_cell_ns": 2.5564999999999998,
+        "median_route_ns": 7.2285
+      },
+      "M -> fetch": {
+        "paths": 13,
+        "median_cell_ns": 1.724,
+        "median_route_ns": 7.975
+      },
+      "E1 -> E2": {
+        "paths": 31,
+        "median_cell_ns": 2.694,
+        "median_route_ns": 7.15
+      },
+      "cache -> cache": {
+        "paths": 41,
+        "median_cell_ns": 2.095,
+        "median_route_ns": 6.453
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 289,
+        "median_cell_ns": 1.26,
+        "median_route_ns": 8.957
+      },
+      "core-other -> cache": {
+        "paths": 2,
+        "median_cell_ns": 3.635,
+        "median_route_ns": 6.8245000000000005
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 120,
+        "median_cell_ns": 1.666,
+        "median_route_ns": 8.082
+      },
+      "A -> A": {
+        "paths": 7,
+        "median_cell_ns": 3.188,
+        "median_route_ns": 7.0
+      },
+      "machine -> fetch": {
+        "paths": 13,
+        "median_cell_ns": 1.475,
+        "median_route_ns": 8.24
+      },
+      "btb -> fetch": {
+        "paths": 25,
+        "median_cell_ns": 3.191,
+        "median_route_ns": 4.585
+      },
+      "reset_sync_1_s0 -> cache": {
+        "paths": 24,
+        "median_cell_ns": 0.936,
+        "median_route_ns": 8.421
+      },
+      "machine -> A": {
+        "paths": 6,
+        "median_cell_ns": 1.4315,
+        "median_route_ns": 8.311
+      },
+      "D -> E1": {
+        "paths": 1,
+        "median_cell_ns": 3.55,
+        "median_route_ns": 6.191
+      },
+      "machine -> D": {
+        "paths": 7,
+        "median_cell_ns": 2.506,
+        "median_route_ns": 7.095
+      },
+      "E2 -> E2": {
+        "paths": 1,
+        "median_cell_ns": 1.776,
+        "median_route_ns": 7.809
+      },
+      "M -> machine": {
+        "paths": 1,
+        "median_cell_ns": 1.748,
+        "median_route_ns": 7.653
+      }
+    }
+  },
+  "baseline-p3": {
+    "structures": [
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 301,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.504,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.228,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Pc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 14,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.596,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 49.582,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 256,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.861,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.395,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 74,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.904,
+        "levels_median": 7.5,
+        "levels_max": 9,
+        "route_median": 64.98949999999999,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 29,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.242,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 64.384,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 8
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 140,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.304,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 73.9435,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E1 -> D",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.374,
+        "levels_median": 12,
+        "levels_max": 12,
+        "route_median": 49.807,
+        "loop": false,
+        "worst_from": "E1.e1A",
+        "worst_to": "pDBlocked",
+        "worst_levels": 12
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 378,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.606,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 78.58600000000001,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Pc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 195,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.646,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.319,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 24,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.745,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 44.290499999999994,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 476,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.77,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 77.275,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 10,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.839,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 67.322,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1B",
+        "worst_levels": 6
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 45,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.005,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 67.973,
+        "loop": false,
+        "worst_from": "D.fWord",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "core-other -> machine",
+        "paths": 79,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.022,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 80.69,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "heldState",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 325,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.142,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 77.734,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mNext",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 76,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.148,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 59.5265,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 29,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.184,
+        "levels_median": 4,
+        "levels_max": 6,
+        "route_median": 80.193,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "A -> A",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.297,
+        "levels_median": 6,
+        "levels_max": 7,
+        "route_median": 69.98,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pRasTop",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.479,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 79.5005,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 50,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.493,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 48.2685,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 7
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.494,
+        "levels_median": 8,
+        "levels_max": 11,
+        "route_median": 60.092,
+        "loop": false,
+        "worst_from": "E1.e1Imm",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 10
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 265,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.567,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.137,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 111,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.591,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 77.248,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> machine (CE)",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.66,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 79.2355,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "core-other -> A",
+        "paths": 27,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.758,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 74.982,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other (CE)",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.835,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.614,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.869,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 77.9585,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> core-other",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.883,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 77.84,
+        "loop": true,
+        "worst_from": "emergency_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "fetch -> fetch (CE)",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.985,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 67.393,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "E2 -> E1",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.264,
+        "levels_median": 6.5,
+        "levels_max": 7,
+        "route_median": 66.126,
+        "loop": false,
+        "worst_from": "E2.e2Word",
+        "worst_to": "E1.e1A",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.3,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 77.162,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> fetch",
+        "paths": 8,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.505,
+        "levels_median": 3.0,
+        "levels_max": 3,
+        "route_median": 85.748,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pInflight",
+        "worst_levels": 3
+      },
+      {
+        "structure": "D -> D",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.523,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 67.028,
+        "loop": true,
+        "worst_from": "D.fWord",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "E2 -> D",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.537,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 73.764,
+        "loop": false,
+        "worst_from": "E2.e2Word",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.547,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 68.03,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.587,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.071,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "reset_sync_1_s0 -> E1": {
+        "paths": 301,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 7.24
+      },
+      "btb -> btb": {
+        "paths": 14,
+        "median_cell_ns": 3.438,
+        "median_route_ns": 5.6145
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 256,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 9.431
+      },
+      "fetch -> fetch": {
+        "paths": 105,
+        "median_cell_ns": 3.026,
+        "median_route_ns": 6.172
+      },
+      "fetch -> A": {
+        "paths": 29,
+        "median_cell_ns": 3.314,
+        "median_route_ns": 6.39
+      },
+      "core-other -> cache": {
+        "paths": 140,
+        "median_cell_ns": 2.025,
+        "median_route_ns": 6.4595
+      },
+      "E1 -> D": {
+        "paths": 1,
+        "median_cell_ns": 5.257,
+        "median_route_ns": 5.447
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 382,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 7.394500000000001
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 195,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 7.279
+      },
+      "btb -> fetch": {
+        "paths": 24,
+        "median_cell_ns": 3.2285,
+        "median_route_ns": 4.321
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 476,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 7.013
+      },
+      "machine -> E1": {
+        "paths": 10,
+        "median_cell_ns": 2.8105,
+        "median_route_ns": 6.288
+      },
+      "D -> E1": {
+        "paths": 45,
+        "median_cell_ns": 2.695,
+        "median_route_ns": 6.267
+      },
+      "core-other -> machine": {
+        "paths": 81,
+        "median_cell_ns": 1.508,
+        "median_route_ns": 7.242
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 329,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 7.0
+      },
+      "A -> F": {
+        "paths": 76,
+        "median_cell_ns": 3.5540000000000003,
+        "median_route_ns": 5.652
+      },
+      "machine -> machine": {
+        "paths": 29,
+        "median_cell_ns": 1.629,
+        "median_route_ns": 7.239
+      },
+      "A -> A": {
+        "paths": 7,
+        "median_cell_ns": 2.511,
+        "median_route_ns": 6.348
+      },
+      "cache -> cache": {
+        "paths": 50,
+        "median_cell_ns": 2.394,
+        "median_route_ns": 4.36
+      },
+      "E1 -> E2": {
+        "paths": 13,
+        "median_cell_ns": 3.446,
+        "median_route_ns": 5.412
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 265,
+        "median_cell_ns": 1.482,
+        "median_route_ns": 7.881
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 111,
+        "median_cell_ns": 1.762,
+        "median_route_ns": 6.79
+      },
+      "core-other -> A": {
+        "paths": 27,
+        "median_cell_ns": 1.975,
+        "median_route_ns": 6.637
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 2,
+        "median_cell_ns": 1.643,
+        "median_route_ns": 7.225
+      },
+      "core-other -> core-other": {
+        "paths": 4,
+        "median_cell_ns": 1.841,
+        "median_route_ns": 7.1355
+      },
+      "E2 -> E1": {
+        "paths": 2,
+        "median_cell_ns": 2.8105,
+        "median_route_ns": 5.948
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 13,
+        "median_cell_ns": 1.783,
+        "median_route_ns": 6.808
+      },
+      "core-other -> fetch": {
+        "paths": 8,
+        "median_cell_ns": 1.0125,
+        "median_route_ns": 7.4885
+      },
+      "D -> D": {
+        "paths": 3,
+        "median_cell_ns": 2.619,
+        "median_route_ns": 5.796
+      },
+      "E2 -> D": {
+        "paths": 1,
+        "median_cell_ns": 2.07,
+        "median_route_ns": 6.472
+      },
+      "machine -> D": {
+        "paths": 1,
+        "median_cell_ns": 2.57,
+        "median_route_ns": 5.962
+      }
+    }
+  },
+  "candidate-p0": {
+    "structures": [
+      {
+        "structure": "fetch -> btb",
+        "paths": 4,
+        "failing": 4,
+        "tight": 4,
+        "worst_slack": -2.295,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 75.98349999999999,
+        "loop": true,
+        "worst_from": "pFetchPc",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -2.293,
+        "levels_median": 10,
+        "levels_max": 10,
+        "route_median": 71.591,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 10,
+        "failing": 10,
+        "tight": 10,
+        "worst_slack": -2.289,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 59.199,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 8
+      },
+      {
+        "structure": "M -> fetch",
+        "paths": 11,
+        "failing": 2,
+        "tight": 4,
+        "worst_slack": -2.215,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 78.462,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> A (CE)",
+        "paths": 128,
+        "failing": 128,
+        "tight": 128,
+        "worst_slack": -2.006,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 83.727,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pRas",
+        "worst_levels": 5
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 64,
+        "failing": 27,
+        "tight": 38,
+        "worst_slack": -1.775,
+        "levels_median": 7.0,
+        "levels_max": 8,
+        "route_median": 72.755,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 49,
+        "failing": 7,
+        "tight": 13,
+        "worst_slack": -1.471,
+        "levels_median": 7,
+        "levels_max": 8,
+        "route_median": 74.609,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 7
+      },
+      {
+        "structure": "E2 -> fetch",
+        "paths": 20,
+        "failing": 6,
+        "tight": 8,
+        "worst_slack": -1.286,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 69.2535,
+        "loop": false,
+        "worst_from": "pRedirect",
+        "worst_to": "pInflight",
+        "worst_levels": 7
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 348,
+        "failing": 2,
+        "tight": 6,
+        "worst_slack": -1.252,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 82.3905,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 11,
+        "failing": 7,
+        "tight": 9,
+        "worst_slack": -1.107,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 53.928,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 59,
+        "failing": 10,
+        "tight": 12,
+        "worst_slack": -1.029,
+        "levels_median": 6,
+        "levels_max": 9,
+        "route_median": 73.914,
+        "loop": false,
+        "worst_from": "D.fWord",
+        "worst_to": "E1.e1B",
+        "worst_levels": 6
+      },
+      {
+        "structure": "E2 -> E1",
+        "paths": 19,
+        "failing": 1,
+        "tight": 3,
+        "worst_slack": -1.019,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 76.398,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> btb (CE)",
+        "paths": 16,
+        "failing": 15,
+        "tight": 16,
+        "worst_slack": -0.899,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 85.3115,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 265,
+        "failing": 2,
+        "tight": 3,
+        "worst_slack": -0.834,
+        "levels_median": 4,
+        "levels_max": 7,
+        "route_median": 79.87,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 86,
+        "failing": 6,
+        "tight": 11,
+        "worst_slack": -0.563,
+        "levels_median": 7.0,
+        "levels_max": 10,
+        "route_median": 71.348,
+        "loop": false,
+        "worst_from": "E1.e1Op2",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> fetch (CE)",
+        "paths": 264,
+        "failing": 66,
+        "tight": 66,
+        "worst_slack": -0.539,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.3675,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> core-other",
+        "paths": 9,
+        "failing": 1,
+        "tight": 2,
+        "worst_slack": -0.52,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 80.822,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "RAM",
+        "worst_levels": 4
+      },
+      {
+        "structure": "D -> D",
+        "paths": 27,
+        "failing": 1,
+        "tight": 2,
+        "worst_slack": -0.18,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 72.13,
+        "loop": true,
+        "worst_from": "D.fWord",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "fetch -> fetch (CE)",
+        "paths": 35,
+        "failing": 2,
+        "tight": 2,
+        "worst_slack": -0.061,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 78.786,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 66,
+        "failing": 1,
+        "tight": 2,
+        "worst_slack": -0.03,
+        "levels_median": 6.0,
+        "levels_max": 9,
+        "route_median": 57.9105,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "core-other -> E1",
+        "paths": 3,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.011,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 67.163,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> core-other",
+        "paths": 1,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.038,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 87.33,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "RAM",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> machine",
+        "paths": 10,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.173,
+        "levels_median": 5.0,
+        "levels_max": 6,
+        "route_median": 74.51650000000001,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> A",
+        "paths": 4,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.292,
+        "levels_median": 4.5,
+        "levels_max": 5,
+        "route_median": 80.0735,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pRasTop",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> E2 (CE)",
+        "paths": 228,
+        "failing": 0,
+        "tight": 2,
+        "worst_slack": 0.322,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 80.3575,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 15,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.369,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 77.164,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1A",
+        "worst_levels": 6
+      },
+      {
+        "structure": "M -> D (CE)",
+        "paths": 128,
+        "failing": 0,
+        "tight": 2,
+        "worst_slack": 0.415,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 79.6255,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "D.fPredicted",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> F",
+        "paths": 34,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.507,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.709,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> F (CE)",
+        "paths": 204,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.675,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 79.624,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 162,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.876,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 80.43,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> M (CE)",
+        "paths": 151,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.932,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.231,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "M.mPc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 75,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.035,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 65.395,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> btb",
+        "paths": 34,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.121,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 81.25,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> E2",
+        "paths": 5,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.178,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 78.117,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pRedirect",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> E1 (CE)",
+        "paths": 101,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.276,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.564,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "E1.e1B",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> A (CE)",
+        "paths": 33,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.426,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.773,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pFrontTarget",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> D",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.82,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 80.63,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "pDOperands",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> machine (CE)",
+        "paths": 93,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.954,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 78.808,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache",
+        "paths": 184,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.984,
+        "levels_median": 3.0,
+        "levels_max": 3,
+        "route_median": 87.294,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 15,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.071,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 75.943,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "core-other -> D",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.073,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 62.187,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> A",
+        "paths": 9,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.349,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 76.062,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "M -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.393,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.063,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> M",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.59,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 80.332,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "M -> F",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.619,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 76.857,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pFCount",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> M",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.642,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.87299999999999,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "M.mValue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> btb",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.761,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 76.538,
+        "loop": false,
+        "worst_from": "E2.e2Computed",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 6
+      },
+      {
+        "structure": "E2 -> E2",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.778,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 72.15,
+        "loop": true,
+        "worst_from": "E2.e2Computed",
+        "worst_to": "pRedirect",
+        "worst_levels": 7
+      },
+      {
+        "structure": "A -> A",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.957,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 64.399,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pRedirectFront",
+        "worst_levels": 7
+      },
+      {
+        "structure": "cache -> D (CE)",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.093,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 79.258,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> E2",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.308,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 78.725,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "fetch -> btb": {
+        "paths": 4,
+        "median_cell_ns": 3.197,
+        "median_route_ns": 10.869
+      },
+      "M -> D": {
+        "paths": 129,
+        "median_cell_ns": 1.771,
+        "median_route_ns": 7.841
+      },
+      "btb -> btb": {
+        "paths": 10,
+        "median_cell_ns": 3.555,
+        "median_route_ns": 8.437999999999999
+      },
+      "M -> fetch": {
+        "paths": 275,
+        "median_cell_ns": 1.645,
+        "median_route_ns": 9.412
+      },
+      "machine -> A": {
+        "paths": 132,
+        "median_cell_ns": 1.934,
+        "median_route_ns": 11.279
+      },
+      "fetch -> fetch": {
+        "paths": 99,
+        "median_cell_ns": 2.845,
+        "median_route_ns": 8.636
+      },
+      "fetch -> A": {
+        "paths": 49,
+        "median_cell_ns": 2.725,
+        "median_route_ns": 8.279
+      },
+      "E2 -> fetch": {
+        "paths": 20,
+        "median_cell_ns": 3.375,
+        "median_route_ns": 8.0485
+      },
+      "core-other -> cache": {
+        "paths": 348,
+        "median_cell_ns": 1.601,
+        "median_route_ns": 8.5875
+      },
+      "btb -> fetch": {
+        "paths": 11,
+        "median_cell_ns": 3.533,
+        "median_route_ns": 6.693
+      },
+      "D -> E1": {
+        "paths": 59,
+        "median_cell_ns": 2.473,
+        "median_route_ns": 7.886
+      },
+      "E2 -> E1": {
+        "paths": 19,
+        "median_cell_ns": 2.247,
+        "median_route_ns": 8.48
+      },
+      "machine -> btb": {
+        "paths": 50,
+        "median_cell_ns": 1.764,
+        "median_route_ns": 8.7515
+      },
+      "machine -> machine": {
+        "paths": 427,
+        "median_cell_ns": 1.667,
+        "median_route_ns": 7.689
+      },
+      "E1 -> E2": {
+        "paths": 86,
+        "median_cell_ns": 2.8445,
+        "median_route_ns": 7.609
+      },
+      "cache -> core-other": {
+        "paths": 9,
+        "median_cell_ns": 1.833,
+        "median_route_ns": 8.702
+      },
+      "D -> D": {
+        "paths": 27,
+        "median_cell_ns": 2.485,
+        "median_route_ns": 6.841
+      },
+      "cache -> cache": {
+        "paths": 66,
+        "median_cell_ns": 2.2960000000000003,
+        "median_route_ns": 6.2675
+      },
+      "core-other -> E1": {
+        "paths": 3,
+        "median_cell_ns": 1.268,
+        "median_route_ns": 7.402
+      },
+      "machine -> core-other": {
+        "paths": 1,
+        "median_cell_ns": 1.323,
+        "median_route_ns": 10.718
+      },
+      "cache -> machine": {
+        "paths": 103,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.629
+      },
+      "cache -> E2": {
+        "paths": 230,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.8035
+      },
+      "machine -> E1": {
+        "paths": 15,
+        "median_cell_ns": 1.988,
+        "median_route_ns": 7.22
+      },
+      "machine -> F": {
+        "paths": 34,
+        "median_cell_ns": 1.526,
+        "median_route_ns": 8.409
+      },
+      "cache -> F": {
+        "paths": 204,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.4715
+      },
+      "cache -> M": {
+        "paths": 153,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.76
+      },
+      "A -> F": {
+        "paths": 75,
+        "median_cell_ns": 3.37,
+        "median_route_ns": 6.735
+      },
+      "machine -> E2": {
+        "paths": 5,
+        "median_cell_ns": 1.858,
+        "median_route_ns": 7.461
+      },
+      "cache -> E1": {
+        "paths": 101,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.444
+      },
+      "cache -> A": {
+        "paths": 33,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 8.032
+      },
+      "E2 -> D": {
+        "paths": 3,
+        "median_cell_ns": 1.651,
+        "median_route_ns": 7.813
+      },
+      "reset_sync_1_s0 -> cache": {
+        "paths": 184,
+        "median_cell_ns": 0.948,
+        "median_route_ns": 8.107
+      },
+      "machine -> D": {
+        "paths": 15,
+        "median_cell_ns": 2.093,
+        "median_route_ns": 7.162
+      },
+      "core-other -> D": {
+        "paths": 2,
+        "median_cell_ns": 1.3925,
+        "median_route_ns": 6.0405
+      },
+      "M -> A": {
+        "paths": 9,
+        "median_cell_ns": 2.096,
+        "median_route_ns": 7.391
+      },
+      "M -> machine": {
+        "paths": 1,
+        "median_cell_ns": 1.547,
+        "median_route_ns": 8.139
+      },
+      "M -> F": {
+        "paths": 1,
+        "median_cell_ns": 2.011,
+        "median_route_ns": 7.449
+      },
+      "E2 -> M": {
+        "paths": 2,
+        "median_cell_ns": 1.3900000000000001,
+        "median_route_ns": 7.8625
+      },
+      "E2 -> btb": {
+        "paths": 1,
+        "median_cell_ns": 2.009,
+        "median_route_ns": 7.309
+      },
+      "E2 -> E2": {
+        "paths": 1,
+        "median_cell_ns": 2.423,
+        "median_route_ns": 6.878
+      },
+      "A -> A": {
+        "paths": 1,
+        "median_cell_ns": 3.098,
+        "median_route_ns": 6.024
+      },
+      "cache -> D": {
+        "paths": 3,
+        "median_cell_ns": 1.68,
+        "median_route_ns": 7.306
+      }
+    }
+  },
+  "candidate-p1": {
+    "structures": [
+      {
+        "structure": "btb -> btb",
+        "paths": 8,
+        "failing": 8,
+        "tight": 8,
+        "worst_slack": -2.505,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 60.387,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 8
+      },
+      {
+        "structure": "fetch -> btb",
+        "paths": 6,
+        "failing": 6,
+        "tight": 6,
+        "worst_slack": -2.118,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 78.9755,
+        "loop": true,
+        "worst_from": "pFetchPc",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -2.111,
+        "levels_median": 10,
+        "levels_max": 10,
+        "route_median": 71.544,
+        "loop": false,
+        "worst_from": "M.mWait",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 96,
+        "failing": 32,
+        "tight": 47,
+        "worst_slack": -1.882,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 72.9345,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E2 -> E1",
+        "paths": 38,
+        "failing": 7,
+        "tight": 11,
+        "worst_slack": -1.452,
+        "levels_median": 5.0,
+        "levels_max": 6,
+        "route_median": 77.875,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> cache",
+        "paths": 334,
+        "failing": 10,
+        "tight": 26,
+        "worst_slack": -1.277,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 81.0255,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 68,
+        "failing": 7,
+        "tight": 11,
+        "worst_slack": -1.052,
+        "levels_median": 7.0,
+        "levels_max": 10,
+        "route_median": 69.93,
+        "loop": false,
+        "worst_from": "E1.e1A",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 7
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 8,
+        "failing": 5,
+        "tight": 5,
+        "worst_slack": -0.977,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 53.282,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "core-other -> E1",
+        "paths": 6,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.841,
+        "levels_median": 4.5,
+        "levels_max": 5,
+        "route_median": 63.308499999999995,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "E1.e1B",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 64,
+        "failing": 13,
+        "tight": 27,
+        "worst_slack": -0.786,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 73.525,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 9
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 53,
+        "failing": 3,
+        "tight": 10,
+        "worst_slack": -0.32,
+        "levels_median": 6,
+        "levels_max": 9,
+        "route_median": 76.987,
+        "loop": false,
+        "worst_from": "D.fWord",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 223,
+        "failing": 3,
+        "tight": 8,
+        "worst_slack": -0.136,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.476,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> machine",
+        "paths": 6,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.075,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 73.406,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 6
+      },
+      {
+        "structure": "D -> D",
+        "paths": 40,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.037,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 76.575,
+        "loop": true,
+        "worst_from": "D.fWord",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 146,
+        "failing": 0,
+        "tight": 3,
+        "worst_slack": 0.218,
+        "levels_median": 5.0,
+        "levels_max": 7,
+        "route_median": 77.6365,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "fetch -> fetch (CE)",
+        "paths": 35,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.371,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 77.317,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 227,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.566,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.02,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mPc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> D",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.586,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 78.994,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "pDOperands",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 64,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.789,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 55.789500000000004,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 247,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.873,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.55,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Predicted",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 266,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.223,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 80.199,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.265,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 63.779,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 264,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.3,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.2635,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 119,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.362,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.912,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fUsesRs2",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 9,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.425,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 78.234,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 243,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.464,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.394,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 160,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.482,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 80.2925,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.625,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.14,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "M.mValue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.668,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.153,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> F",
+        "paths": 64,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.785,
+        "levels_median": 2.0,
+        "levels_max": 4,
+        "route_median": 91.493,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 16,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.891,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.128,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 10,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.903,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 76.529,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "core-other -> D",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.171,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 59.504,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.182,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.966,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache",
+        "paths": 93,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.427,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 85.395,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      },
+      {
+        "structure": "core-other -> machine",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.529,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.07050000000001,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> fetch",
+        "paths": 12,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.886,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.1695,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pInflight",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 14,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.095,
+        "levels_median": 2.0,
+        "levels_max": 2,
+        "route_median": 91.653,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pQueue",
+        "worst_levels": 2
+      },
+      {
+        "structure": "M -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.227,
+        "levels_median": 2,
+        "levels_max": 2,
+        "route_median": 90.247,
+        "loop": true,
+        "worst_from": "M.mWait",
+        "worst_to": "M.mSum",
+        "worst_levels": 2
+      },
+      {
+        "structure": "core-other -> A",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.372,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 76.483,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> core-other",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.378,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.82,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "request",
+        "worst_levels": 4
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "btb -> btb": {
+        "paths": 8,
+        "median_cell_ns": 3.4255,
+        "median_route_ns": 8.666
+      },
+      "fetch -> btb": {
+        "paths": 6,
+        "median_cell_ns": 2.745,
+        "median_route_ns": 10.9905
+      },
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.872,
+        "median_route_ns": 10.318
+      },
+      "fetch -> fetch": {
+        "paths": 131,
+        "median_cell_ns": 2.894,
+        "median_route_ns": 8.713
+      },
+      "E2 -> E1": {
+        "paths": 38,
+        "median_cell_ns": 2.266,
+        "median_route_ns": 8.6445
+      },
+      "machine -> cache": {
+        "paths": 334,
+        "median_cell_ns": 1.878,
+        "median_route_ns": 8.973500000000001
+      },
+      "E1 -> E2": {
+        "paths": 68,
+        "median_cell_ns": 2.997,
+        "median_route_ns": 7.034
+      },
+      "btb -> fetch": {
+        "paths": 8,
+        "median_cell_ns": 3.4495,
+        "median_route_ns": 6.656499999999999
+      },
+      "core-other -> E1": {
+        "paths": 6,
+        "median_cell_ns": 1.7974999999999999,
+        "median_route_ns": 7.183999999999999
+      },
+      "fetch -> A": {
+        "paths": 64,
+        "median_cell_ns": 2.601,
+        "median_route_ns": 8.1
+      },
+      "D -> E1": {
+        "paths": 53,
+        "median_cell_ns": 2.219,
+        "median_route_ns": 8.22
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 223,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.886
+      },
+      "cache -> machine": {
+        "paths": 6,
+        "median_cell_ns": 2.472,
+        "median_route_ns": 7.045
+      },
+      "D -> D": {
+        "paths": 40,
+        "median_cell_ns": 2.303,
+        "median_route_ns": 8.11
+      },
+      "machine -> machine": {
+        "paths": 155,
+        "median_cell_ns": 1.898,
+        "median_route_ns": 7.294
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 228,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.65
+      },
+      "E2 -> D": {
+        "paths": 13,
+        "median_cell_ns": 1.853,
+        "median_route_ns": 7.704
+      },
+      "cache -> cache": {
+        "paths": 64,
+        "median_cell_ns": 2.365,
+        "median_route_ns": 5.8260000000000005
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 247,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.925
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 266,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.356
+      },
+      "A -> F": {
+        "paths": 31,
+        "median_cell_ns": 3.034,
+        "median_route_ns": 5.802
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 264,
+        "median_cell_ns": 1.26,
+        "median_route_ns": 7.991
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 119,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.6
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 243,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.352
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 160,
+        "median_cell_ns": 1.734,
+        "median_route_ns": 7.948
+      },
+      "E2 -> M": {
+        "paths": 4,
+        "median_cell_ns": 1.412,
+        "median_route_ns": 8.2285
+      },
+      "machine -> F": {
+        "paths": 64,
+        "median_cell_ns": 0.555,
+        "median_route_ns": 8.368500000000001
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 16,
+        "median_cell_ns": 1.497,
+        "median_route_ns": 7.945
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 10,
+        "median_cell_ns": 2.04,
+        "median_route_ns": 7.378
+      },
+      "core-other -> D": {
+        "paths": 3,
+        "median_cell_ns": 1.704,
+        "median_route_ns": 5.835
+      },
+      "core-other -> cache": {
+        "paths": 3,
+        "median_cell_ns": 1.298,
+        "median_route_ns": 8.012
+      },
+      "reset_sync_1_s0 -> cache": {
+        "paths": 93,
+        "median_cell_ns": 1.094,
+        "median_route_ns": 7.821
+      },
+      "core-other -> machine": {
+        "paths": 2,
+        "median_cell_ns": 1.479,
+        "median_route_ns": 7.858499999999999
+      },
+      "core-other -> fetch": {
+        "paths": 12,
+        "median_cell_ns": 1.286,
+        "median_route_ns": 7.5634999999999994
+      },
+      "machine -> fetch": {
+        "paths": 14,
+        "median_cell_ns": 0.517,
+        "median_route_ns": 8.224
+      },
+      "M -> M": {
+        "paths": 1,
+        "median_cell_ns": 0.654,
+        "median_route_ns": 8.198
+      },
+      "core-other -> A": {
+        "paths": 1,
+        "median_cell_ns": 1.87,
+        "median_route_ns": 6.836
+      },
+      "machine -> core-other": {
+        "paths": 1,
+        "median_cell_ns": 1.66,
+        "median_route_ns": 7.041
+      }
+    }
+  },
+  "candidate-p2": {
+    "structures": [
+      {
+        "structure": "btb -> btb",
+        "paths": 8,
+        "failing": 8,
+        "tight": 8,
+        "worst_slack": -2.505,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 60.387,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 8
+      },
+      {
+        "structure": "fetch -> btb",
+        "paths": 6,
+        "failing": 6,
+        "tight": 6,
+        "worst_slack": -2.118,
+        "levels_median": 7.0,
+        "levels_max": 7,
+        "route_median": 78.9755,
+        "loop": true,
+        "worst_from": "pFetchPc",
+        "worst_to": "btb table RAM",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -2.111,
+        "levels_median": 10,
+        "levels_max": 10,
+        "route_median": 71.544,
+        "loop": false,
+        "worst_from": "M.mWait",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 96,
+        "failing": 32,
+        "tight": 47,
+        "worst_slack": -1.882,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 72.9345,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E2 -> E1",
+        "paths": 38,
+        "failing": 7,
+        "tight": 11,
+        "worst_slack": -1.452,
+        "levels_median": 5.0,
+        "levels_max": 6,
+        "route_median": 77.875,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> cache",
+        "paths": 334,
+        "failing": 10,
+        "tight": 26,
+        "worst_slack": -1.277,
+        "levels_median": 5.0,
+        "levels_max": 9,
+        "route_median": 81.0255,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 68,
+        "failing": 7,
+        "tight": 11,
+        "worst_slack": -1.052,
+        "levels_median": 7.0,
+        "levels_max": 10,
+        "route_median": 69.93,
+        "loop": false,
+        "worst_from": "E1.e1A",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 7
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 8,
+        "failing": 5,
+        "tight": 5,
+        "worst_slack": -0.977,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 53.282,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 8
+      },
+      {
+        "structure": "core-other -> E1",
+        "paths": 6,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.841,
+        "levels_median": 4.5,
+        "levels_max": 5,
+        "route_median": 63.308499999999995,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "E1.e1B",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 64,
+        "failing": 13,
+        "tight": 27,
+        "worst_slack": -0.786,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 73.525,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 9
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 53,
+        "failing": 3,
+        "tight": 10,
+        "worst_slack": -0.32,
+        "levels_median": 6,
+        "levels_max": 9,
+        "route_median": 76.987,
+        "loop": false,
+        "worst_from": "D.fWord",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 223,
+        "failing": 3,
+        "tight": 8,
+        "worst_slack": -0.136,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.476,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> machine",
+        "paths": 6,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.075,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 73.406,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 6
+      },
+      {
+        "structure": "D -> D",
+        "paths": 40,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.037,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 76.575,
+        "loop": true,
+        "worst_from": "D.fWord",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 146,
+        "failing": 0,
+        "tight": 3,
+        "worst_slack": 0.218,
+        "levels_median": 5.0,
+        "levels_max": 7,
+        "route_median": 77.6365,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "fetch -> fetch (CE)",
+        "paths": 35,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.371,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 77.317,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 227,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.566,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.02,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mPc",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> D",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.586,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 78.994,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "pDOperands",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 64,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.789,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 55.789500000000004,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 247,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.873,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.55,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Predicted",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 266,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.223,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 80.199,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.265,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 63.779,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 264,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.3,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.2635,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 119,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.362,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.912,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fUsesRs2",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 9,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.425,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 78.234,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 243,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.464,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.394,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 160,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.482,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 80.2925,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRas",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.625,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.14,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "M.mValue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.668,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.153,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> F",
+        "paths": 64,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.785,
+        "levels_median": 2.0,
+        "levels_max": 4,
+        "route_median": 91.493,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 16,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.891,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.128,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 10,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.903,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 76.529,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "core-other -> D",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.171,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 59.504,
+        "loop": false,
+        "worst_from": "RAM",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 3,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.182,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 83.966,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> cache",
+        "paths": 93,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.427,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 85.395,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "cache",
+        "worst_levels": 3
+      },
+      {
+        "structure": "core-other -> machine",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.529,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.07050000000001,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> fetch",
+        "paths": 12,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.886,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.1695,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pInflight",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 14,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.095,
+        "levels_median": 2.0,
+        "levels_max": 2,
+        "route_median": 91.653,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pQueue",
+        "worst_levels": 2
+      },
+      {
+        "structure": "M -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.227,
+        "levels_median": 2,
+        "levels_max": 2,
+        "route_median": 90.247,
+        "loop": true,
+        "worst_from": "M.mWait",
+        "worst_to": "M.mSum",
+        "worst_levels": 2
+      },
+      {
+        "structure": "core-other -> A",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.372,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 76.483,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> core-other",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.378,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.82,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "request",
+        "worst_levels": 4
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "btb -> btb": {
+        "paths": 8,
+        "median_cell_ns": 3.4255,
+        "median_route_ns": 8.666
+      },
+      "fetch -> btb": {
+        "paths": 6,
+        "median_cell_ns": 2.745,
+        "median_route_ns": 10.9905
+      },
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.872,
+        "median_route_ns": 10.318
+      },
+      "fetch -> fetch": {
+        "paths": 131,
+        "median_cell_ns": 2.894,
+        "median_route_ns": 8.713
+      },
+      "E2 -> E1": {
+        "paths": 38,
+        "median_cell_ns": 2.266,
+        "median_route_ns": 8.6445
+      },
+      "machine -> cache": {
+        "paths": 334,
+        "median_cell_ns": 1.878,
+        "median_route_ns": 8.973500000000001
+      },
+      "E1 -> E2": {
+        "paths": 68,
+        "median_cell_ns": 2.997,
+        "median_route_ns": 7.034
+      },
+      "btb -> fetch": {
+        "paths": 8,
+        "median_cell_ns": 3.4495,
+        "median_route_ns": 6.656499999999999
+      },
+      "core-other -> E1": {
+        "paths": 6,
+        "median_cell_ns": 1.7974999999999999,
+        "median_route_ns": 7.183999999999999
+      },
+      "fetch -> A": {
+        "paths": 64,
+        "median_cell_ns": 2.601,
+        "median_route_ns": 8.1
+      },
+      "D -> E1": {
+        "paths": 53,
+        "median_cell_ns": 2.219,
+        "median_route_ns": 8.22
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 223,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.886
+      },
+      "cache -> machine": {
+        "paths": 6,
+        "median_cell_ns": 2.472,
+        "median_route_ns": 7.045
+      },
+      "D -> D": {
+        "paths": 40,
+        "median_cell_ns": 2.303,
+        "median_route_ns": 8.11
+      },
+      "machine -> machine": {
+        "paths": 155,
+        "median_cell_ns": 1.898,
+        "median_route_ns": 7.294
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 228,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.65
+      },
+      "E2 -> D": {
+        "paths": 13,
+        "median_cell_ns": 1.853,
+        "median_route_ns": 7.704
+      },
+      "cache -> cache": {
+        "paths": 64,
+        "median_cell_ns": 2.365,
+        "median_route_ns": 5.8260000000000005
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 247,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.925
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 266,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.356
+      },
+      "A -> F": {
+        "paths": 31,
+        "median_cell_ns": 3.034,
+        "median_route_ns": 5.802
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 264,
+        "median_cell_ns": 1.26,
+        "median_route_ns": 7.991
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 119,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.6
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 243,
+        "median_cell_ns": 1.561,
+        "median_route_ns": 7.352
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 160,
+        "median_cell_ns": 1.734,
+        "median_route_ns": 7.948
+      },
+      "E2 -> M": {
+        "paths": 4,
+        "median_cell_ns": 1.412,
+        "median_route_ns": 8.2285
+      },
+      "machine -> F": {
+        "paths": 64,
+        "median_cell_ns": 0.555,
+        "median_route_ns": 8.368500000000001
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 16,
+        "median_cell_ns": 1.497,
+        "median_route_ns": 7.945
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 10,
+        "median_cell_ns": 2.04,
+        "median_route_ns": 7.378
+      },
+      "core-other -> D": {
+        "paths": 3,
+        "median_cell_ns": 1.704,
+        "median_route_ns": 5.835
+      },
+      "core-other -> cache": {
+        "paths": 3,
+        "median_cell_ns": 1.298,
+        "median_route_ns": 8.012
+      },
+      "reset_sync_1_s0 -> cache": {
+        "paths": 93,
+        "median_cell_ns": 1.094,
+        "median_route_ns": 7.821
+      },
+      "core-other -> machine": {
+        "paths": 2,
+        "median_cell_ns": 1.479,
+        "median_route_ns": 7.858499999999999
+      },
+      "core-other -> fetch": {
+        "paths": 12,
+        "median_cell_ns": 1.286,
+        "median_route_ns": 7.5634999999999994
+      },
+      "machine -> fetch": {
+        "paths": 14,
+        "median_cell_ns": 0.517,
+        "median_route_ns": 8.224
+      },
+      "M -> M": {
+        "paths": 1,
+        "median_cell_ns": 0.654,
+        "median_route_ns": 8.198
+      },
+      "core-other -> A": {
+        "paths": 1,
+        "median_cell_ns": 1.87,
+        "median_route_ns": 6.836
+      },
+      "machine -> core-other": {
+        "paths": 1,
+        "median_cell_ns": 1.66,
+        "median_route_ns": 7.041
+      }
+    }
+  },
+  "candidate-p3": {
+    "structures": [
+      {
+        "structure": "btb -> btb",
+        "paths": 14,
+        "failing": 7,
+        "tight": 12,
+        "worst_slack": -0.756,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 55.573499999999996,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 8
+      },
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.723,
+        "levels_median": 10,
+        "levels_max": 10,
+        "route_median": 67.643,
+        "loop": false,
+        "worst_from": "M.mWait",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 70,
+        "failing": 4,
+        "tight": 6,
+        "worst_slack": -0.597,
+        "levels_median": 7.0,
+        "levels_max": 9,
+        "route_median": 65.364,
+        "loop": true,
+        "worst_from": "pFetchPc",
+        "worst_to": "pInflight",
+        "worst_levels": 6
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 9,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.581,
+        "levels_median": 4,
+        "levels_max": 9,
+        "route_median": 81.499,
+        "loop": false,
+        "worst_from": "D.fPc",
+        "worst_to": "E1.e1FetchFault",
+        "worst_levels": 9
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 33,
+        "failing": 1,
+        "tight": 4,
+        "worst_slack": -0.477,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 67.815,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 7
+      },
+      {
+        "structure": "A -> F",
+        "paths": 97,
+        "failing": 3,
+        "tight": 8,
+        "worst_slack": -0.289,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 72.13,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 7
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 129,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.278,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 78.356,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 5,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.188,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 76.244,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 65,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.671,
+        "levels_median": 6,
+        "levels_max": 7,
+        "route_median": 72.082,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "E1.e1B",
+        "worst_levels": 6
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 17,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.777,
+        "levels_median": 8,
+        "levels_max": 8,
+        "route_median": 49.417,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pInflight",
+        "worst_levels": 8
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 264,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.22,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.98750000000001,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 91,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.277,
+        "levels_median": 5,
+        "levels_max": 9,
+        "route_median": 73.403,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "A -> fetch",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.372,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 72.696,
+        "loop": false,
+        "worst_from": "pFrontTarget",
+        "worst_to": "pInflight",
+        "worst_levels": 7
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 77,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.411,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 76.316,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pRasTop",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> A (CE)",
+        "paths": 64,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.708,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 73.2695,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pRas",
+        "worst_levels": 5
+      },
+      {
+        "structure": "M -> fetch",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.728,
+        "levels_median": 5.5,
+        "levels_max": 6,
+        "route_median": 78.5315,
+        "loop": false,
+        "worst_from": "M.mWait",
+        "worst_to": "pFetchPc",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> A",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.738,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 75.096,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pA",
+        "worst_levels": 5
+      },
+      {
+        "structure": "E2 -> E2",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.881,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 80.3625,
+        "loop": true,
+        "worst_from": "E2.e2Computed",
+        "worst_to": "pRedirect",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 21,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.93,
+        "levels_median": 7,
+        "levels_max": 9,
+        "route_median": 70.711,
+        "loop": false,
+        "worst_from": "E1.e1Imm",
+        "worst_to": "E2.e2Candidates",
+        "worst_levels": 8
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 63,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.072,
+        "levels_median": 5,
+        "levels_max": 8,
+        "route_median": 53.206,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 476,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.206,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 82.039,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 292,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.225,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.484,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Predicted",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> A",
+        "paths": 13,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.402,
+        "levels_median": 5,
+        "levels_max": 7,
+        "route_median": 78.27,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pRas",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 140,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.473,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.15899999999999,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "D.fPredicted",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 329,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.51,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.541,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mNext",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> fetch (CE)",
+        "paths": 35,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.6,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 66.356,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 7
+      },
+      {
+        "structure": "M -> machine",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.627,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 75.928,
+        "loop": false,
+        "worst_from": "M.mPc",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 342,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.632,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.487,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Control",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 9,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.672,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 79.226,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 229,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.863,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.372,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> btb (CE)",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.894,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.139,
+        "loop": true,
+        "worst_from": "pBtbWrite",
+        "worst_to": "btb valid",
+        "worst_levels": 3
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.914,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 69.04,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> btb (CE)",
+        "paths": 5,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.984,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 78.651,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 18,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.137,
+        "levels_median": 4.5,
+        "levels_max": 5,
+        "route_median": 76.67599999999999,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "c$ds3_app_arg",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.151,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 86.812,
+        "loop": false,
+        "worst_from": "E2.e2Control",
+        "worst_to": "M.mNext",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.272,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 82.852,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Action",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.351,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.33099999999999,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> cache",
+        "paths": 7,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.385,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 77.818,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "cache",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> core-other",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.902,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 77.248,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "request",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E2 -> btb",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.904,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 83.062,
+        "loop": false,
+        "worst_from": "E2.e2Computed",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 3
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "btb -> btb": {
+        "paths": 15,
+        "median_cell_ns": 3.269,
+        "median_route_ns": 6.878
+      },
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.985,
+        "median_route_ns": 8.816
+      },
+      "fetch -> fetch": {
+        "paths": 105,
+        "median_cell_ns": 3.151,
+        "median_route_ns": 6.218
+      },
+      "D -> E1": {
+        "paths": 9,
+        "median_cell_ns": 1.547,
+        "median_route_ns": 7.336
+      },
+      "fetch -> A": {
+        "paths": 33,
+        "median_cell_ns": 3.16,
+        "median_route_ns": 7.254
+      },
+      "A -> F": {
+        "paths": 97,
+        "median_cell_ns": 2.751,
+        "median_route_ns": 7.613
+      },
+      "machine -> machine": {
+        "paths": 138,
+        "median_cell_ns": 1.796,
+        "median_route_ns": 7.2275
+      },
+      "machine -> fetch": {
+        "paths": 5,
+        "median_cell_ns": 2.453,
+        "median_route_ns": 8.548
+      },
+      "machine -> E1": {
+        "paths": 65,
+        "median_cell_ns": 2.659,
+        "median_route_ns": 7.283
+      },
+      "btb -> fetch": {
+        "paths": 17,
+        "median_cell_ns": 3.181,
+        "median_route_ns": 5.105
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 264,
+        "median_cell_ns": 1.26,
+        "median_route_ns": 7.8255
+      },
+      "core-other -> cache": {
+        "paths": 91,
+        "median_cell_ns": 2.101,
+        "median_route_ns": 6.475
+      },
+      "A -> fetch": {
+        "paths": 7,
+        "median_cell_ns": 2.556,
+        "median_route_ns": 7.199
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 77,
+        "median_cell_ns": 1.854,
+        "median_route_ns": 7.114
+      },
+      "A -> A": {
+        "paths": 77,
+        "median_cell_ns": 2.28,
+        "median_route_ns": 7.032
+      },
+      "M -> fetch": {
+        "paths": 2,
+        "median_cell_ns": 2.0324999999999998,
+        "median_route_ns": 8.2875
+      },
+      "machine -> A": {
+        "paths": 31,
+        "median_cell_ns": 1.988,
+        "median_route_ns": 6.733
+      },
+      "E2 -> E2": {
+        "paths": 4,
+        "median_cell_ns": 1.552,
+        "median_route_ns": 7.2045
+      },
+      "E1 -> E2": {
+        "paths": 21,
+        "median_cell_ns": 2.651,
+        "median_route_ns": 6.571
+      },
+      "cache -> cache": {
+        "paths": 63,
+        "median_cell_ns": 2.139,
+        "median_route_ns": 4.899
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 476,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.221
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 292,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.299
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 140,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.138
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 333,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.303
+      },
+      "M -> machine": {
+        "paths": 1,
+        "median_cell_ns": 2.099,
+        "median_route_ns": 7.352
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 343,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.3
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 229,
+        "median_cell_ns": 1.318,
+        "median_route_ns": 7.243
+      },
+      "machine -> D": {
+        "paths": 31,
+        "median_cell_ns": 2.51,
+        "median_route_ns": 6.093
+      },
+      "reset_sync_1_s0 -> btb": {
+        "paths": 5,
+        "median_cell_ns": 1.6,
+        "median_route_ns": 6.749
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 18,
+        "median_cell_ns": 1.8115,
+        "median_route_ns": 6.702999999999999
+      },
+      "E2 -> M": {
+        "paths": 1,
+        "median_cell_ns": 0.976,
+        "median_route_ns": 7.952
+      },
+      "machine -> cache": {
+        "paths": 7,
+        "median_cell_ns": 1.712,
+        "median_route_ns": 6.82
+      },
+      "machine -> core-other": {
+        "paths": 1,
+        "median_cell_ns": 1.681,
+        "median_route_ns": 6.495
+      },
+      "E2 -> btb": {
+        "paths": 1,
+        "median_cell_ns": 1.192,
+        "median_route_ns": 6.983
+      }
+    }
+  },
+  "candidate-p4": {
+    "structures": [
+      {
+        "structure": "M -> D",
+        "paths": 1,
+        "failing": 1,
+        "tight": 1,
+        "worst_slack": -0.07,
+        "levels_median": 10,
+        "levels_max": 10,
+        "route_median": 68.739,
+        "loop": false,
+        "worst_from": "pMSlot",
+        "worst_to": "pDBlocked",
+        "worst_levels": 10
+      },
+      {
+        "structure": "machine -> machine",
+        "paths": 318,
+        "failing": 1,
+        "tight": 11,
+        "worst_slack": -0.061,
+        "levels_median": 4.0,
+        "levels_max": 7,
+        "route_median": 81.767,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "btb -> btb",
+        "paths": 12,
+        "failing": 1,
+        "tight": 2,
+        "worst_slack": -0.019,
+        "levels_median": 9.0,
+        "levels_max": 9,
+        "route_median": 50.4105,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "btb table RAM",
+        "worst_levels": 9
+      },
+      {
+        "structure": "core-other -> machine",
+        "paths": 128,
+        "failing": 0,
+        "tight": 3,
+        "worst_slack": 0.005,
+        "levels_median": 3.0,
+        "levels_max": 4,
+        "route_median": 85.7625,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> F",
+        "paths": 117,
+        "failing": 0,
+        "tight": 4,
+        "worst_slack": 0.034,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 67.851,
+        "loop": false,
+        "worst_from": "pA",
+        "worst_to": "pFQueue",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> machine (CE)",
+        "paths": 174,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.249,
+        "levels_median": 4.0,
+        "levels_max": 5,
+        "route_median": 82.678,
+        "loop": true,
+        "worst_from": "machine",
+        "worst_to": "machine",
+        "worst_levels": 5
+      },
+      {
+        "structure": "cache -> A (CE)",
+        "paths": 128,
+        "failing": 0,
+        "tight": 12,
+        "worst_slack": 0.325,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 83.716,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pRas",
+        "worst_levels": 5
+      },
+      {
+        "structure": "fetch -> A",
+        "paths": 24,
+        "failing": 0,
+        "tight": 1,
+        "worst_slack": 0.441,
+        "levels_median": 8.0,
+        "levels_max": 8,
+        "route_median": 67.3835,
+        "loop": false,
+        "worst_from": "pQueueRead",
+        "worst_to": "pA",
+        "worst_levels": 8
+      },
+      {
+        "structure": "machine -> E1",
+        "paths": 15,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.654,
+        "levels_median": 6,
+        "levels_max": 6,
+        "route_median": 71.214,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pE1Slot",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> A",
+        "paths": 71,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.8,
+        "levels_median": 5,
+        "levels_max": 6,
+        "route_median": 77.423,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pA",
+        "worst_levels": 6
+      },
+      {
+        "structure": "machine -> F",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 0.908,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.02699999999999,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pFRead",
+        "worst_levels": 4
+      },
+      {
+        "structure": "fetch -> fetch",
+        "paths": 45,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.048,
+        "levels_median": 8,
+        "levels_max": 9,
+        "route_median": 64.612,
+        "loop": true,
+        "worst_from": "pQueueRead",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "reset_sync_1_s0 -> machine (CE)",
+        "paths": 219,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.068,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 79.407,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> A (CE)",
+        "paths": 32,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.068,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 83.895,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFrontTarget",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> btb",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.13,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 76.178,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "btb table RAM",
+        "worst_levels": 6
+      },
+      {
+        "structure": "cache -> cache",
+        "paths": 61,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.176,
+        "levels_median": 5,
+        "levels_max": 8,
+        "route_median": 70.662,
+        "loop": true,
+        "worst_from": "cache",
+        "worst_to": "cache",
+        "worst_levels": 8
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M (CE)",
+        "paths": 187,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.238,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.216,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mNext",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> machine (CE)",
+        "paths": 170,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.307,
+        "levels_median": 3.0,
+        "levels_max": 4,
+        "route_median": 87.879,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> btb (CE)",
+        "paths": 16,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.328,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 84.829,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "btb -> fetch",
+        "paths": 31,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.338,
+        "levels_median": 7,
+        "levels_max": 9,
+        "route_median": 44.78,
+        "loop": true,
+        "worst_from": "btb table RAM",
+        "worst_to": "pFetchPc",
+        "worst_levels": 9
+      },
+      {
+        "structure": "machine -> D",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.472,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 85.449,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pDSlot",
+        "worst_levels": 4
+      },
+      {
+        "structure": "E1 -> E2",
+        "paths": 34,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.57,
+        "levels_median": 7.0,
+        "levels_max": 10,
+        "route_median": 61.4995,
+        "loop": false,
+        "worst_from": "E1.e1A",
+        "worst_to": "E2.e2Forwards",
+        "worst_levels": 10
+      },
+      {
+        "structure": "machine -> core-other",
+        "paths": 33,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.598,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 84.584,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "request",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> fetch",
+        "paths": 93,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.812,
+        "levels_median": 4,
+        "levels_max": 5,
+        "route_median": 77.398,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pInstructionPc",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E2 (CE)",
+        "paths": 354,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 1.851,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 80.411,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E2.e2Predicted",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> M",
+        "paths": 4,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.049,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.234,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "M.mAction",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> E1 (CE)",
+        "paths": 41,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.097,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.024,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "E1.e1Word",
+        "worst_levels": 4
+      },
+      {
+        "structure": "D -> E1",
+        "paths": 67,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.182,
+        "levels_median": 6,
+        "levels_max": 9,
+        "route_median": 72.684,
+        "loop": false,
+        "worst_from": "D.fWord",
+        "worst_to": "E1.e1Op2",
+        "worst_levels": 7
+      },
+      {
+        "structure": "machine -> E2",
+        "paths": 34,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.251,
+        "levels_median": 5.0,
+        "levels_max": 5,
+        "route_median": 75.674,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pRedirect",
+        "worst_levels": 5
+      },
+      {
+        "structure": "reset_sync_1_s0 -> core-other",
+        "paths": 11,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.286,
+        "levels_median": 5,
+        "levels_max": 5,
+        "route_median": 73.078,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "RAM",
+        "worst_levels": 5
+      },
+      {
+        "structure": "core-other -> machine (CE)",
+        "paths": 25,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.36,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 84.401,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "machine",
+        "worst_levels": 4
+      },
+      {
+        "structure": "cache -> btb",
+        "paths": 34,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.393,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.707,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "pBtbWrite",
+        "worst_levels": 4
+      },
+      {
+        "structure": "D -> D",
+        "paths": 30,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.579,
+        "levels_median": 6.0,
+        "levels_max": 6,
+        "route_median": 71.7005,
+        "loop": true,
+        "worst_from": "D.fWord",
+        "worst_to": "pDOperands",
+        "worst_levels": 6
+      },
+      {
+        "structure": "reset_sync_1_s0 -> F (CE)",
+        "paths": 264,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.655,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 80.76650000000001,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pFQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> A",
+        "paths": 2,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.734,
+        "levels_median": 4.5,
+        "levels_max": 5,
+        "route_median": 80.03,
+        "loop": false,
+        "worst_from": "emergency_s0",
+        "worst_to": "pRasTop",
+        "worst_levels": 5
+      },
+      {
+        "structure": "machine -> A (CE)",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.797,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 81.837,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pA",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> D (CE)",
+        "paths": 125,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.85,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.857,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pDOperands",
+        "worst_levels": 4
+      },
+      {
+        "structure": "A -> A",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.974,
+        "levels_median": 7,
+        "levels_max": 7,
+        "route_median": 65.297,
+        "loop": true,
+        "worst_from": "pA",
+        "worst_to": "pRedirectFront",
+        "worst_levels": 7
+      },
+      {
+        "structure": "machine -> M",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 2.985,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.569,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pMSlot",
+        "worst_levels": 4
+      },
+      {
+        "structure": "machine -> fetch (CE)",
+        "paths": 37,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.082,
+        "levels_median": 4,
+        "levels_max": 4,
+        "route_median": 80.999,
+        "loop": false,
+        "worst_from": "machine",
+        "worst_to": "pQueueRead",
+        "worst_levels": 4
+      },
+      {
+        "structure": "reset_sync_1_s0 -> fetch (CE)",
+        "paths": 16,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.326,
+        "levels_median": 4.0,
+        "levels_max": 4,
+        "route_median": 82.587,
+        "loop": false,
+        "worst_from": "reset_sync_1_s0",
+        "worst_to": "pQueue",
+        "worst_levels": 4
+      },
+      {
+        "structure": "core-other -> cache",
+        "paths": 1,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.497,
+        "levels_median": 9,
+        "levels_max": 9,
+        "route_median": 58.725,
+        "loop": false,
+        "worst_from": "request",
+        "worst_to": "cache",
+        "worst_levels": 9
+      },
+      {
+        "structure": "cache -> machine",
+        "paths": 35,
+        "failing": 0,
+        "tight": 0,
+        "worst_slack": 3.567,
+        "levels_median": 3,
+        "levels_max": 3,
+        "route_median": 87.923,
+        "loop": false,
+        "worst_from": "cache",
+        "worst_to": "machine",
+        "worst_levels": 3
+      }
+    ],
+    "absolute_delays_by_stage_pair": {
+      "M -> D": {
+        "paths": 1,
+        "median_cell_ns": 3.638,
+        "median_route_ns": 8.51
+      },
+      "machine -> machine": {
+        "paths": 492,
+        "median_cell_ns": 1.546,
+        "median_route_ns": 8.225
+      },
+      "btb -> btb": {
+        "paths": 12,
+        "median_cell_ns": 3.354,
+        "median_route_ns": 5.7059999999999995
+      },
+      "core-other -> machine": {
+        "paths": 153,
+        "median_cell_ns": 1.111,
+        "median_route_ns": 8.042
+      },
+      "A -> F": {
+        "paths": 117,
+        "median_cell_ns": 3.329,
+        "median_route_ns": 7.315
+      },
+      "cache -> A": {
+        "paths": 128,
+        "median_cell_ns": 1.6589999999999998,
+        "median_route_ns": 9.687
+      },
+      "fetch -> A": {
+        "paths": 24,
+        "median_cell_ns": 3.2235,
+        "median_route_ns": 6.9190000000000005
+      },
+      "machine -> E1": {
+        "paths": 15,
+        "median_cell_ns": 2.537,
+        "median_route_ns": 6.721
+      },
+      "machine -> A": {
+        "paths": 72,
+        "median_cell_ns": 2.101,
+        "median_route_ns": 7.827999999999999
+      },
+      "machine -> F": {
+        "paths": 4,
+        "median_cell_ns": 1.493,
+        "median_route_ns": 9.1805
+      },
+      "fetch -> fetch": {
+        "paths": 45,
+        "median_cell_ns": 3.271,
+        "median_route_ns": 6.528
+      },
+      "reset_sync_1_s0 -> machine": {
+        "paths": 219,
+        "median_cell_ns": 1.578,
+        "median_route_ns": 7.164
+      },
+      "reset_sync_1_s0 -> A": {
+        "paths": 32,
+        "median_cell_ns": 1.578,
+        "median_route_ns": 9.429
+      },
+      "machine -> btb": {
+        "paths": 2,
+        "median_cell_ns": 2.429,
+        "median_route_ns": 8.5095
+      },
+      "cache -> cache": {
+        "paths": 61,
+        "median_cell_ns": 2.042,
+        "median_route_ns": 6.582
+      },
+      "reset_sync_1_s0 -> M": {
+        "paths": 191,
+        "median_cell_ns": 1.578,
+        "median_route_ns": 7.35
+      },
+      "cache -> machine": {
+        "paths": 205,
+        "median_cell_ns": 0.824,
+        "median_route_ns": 7.952
+      },
+      "cache -> btb": {
+        "paths": 50,
+        "median_cell_ns": 1.481,
+        "median_route_ns": 8.204
+      },
+      "btb -> fetch": {
+        "paths": 31,
+        "median_cell_ns": 3.166,
+        "median_route_ns": 4.214
+      },
+      "machine -> D": {
+        "paths": 2,
+        "median_cell_ns": 1.246,
+        "median_route_ns": 8.7385
+      },
+      "E1 -> E2": {
+        "paths": 34,
+        "median_cell_ns": 3.2039999999999997,
+        "median_route_ns": 5.679
+      },
+      "machine -> core-other": {
+        "paths": 33,
+        "median_cell_ns": 1.355,
+        "median_route_ns": 8.479
+      },
+      "machine -> fetch": {
+        "paths": 130,
+        "median_cell_ns": 1.762,
+        "median_route_ns": 6.918
+      },
+      "reset_sync_1_s0 -> E2": {
+        "paths": 354,
+        "median_cell_ns": 1.599,
+        "median_route_ns": 7.516
+      },
+      "reset_sync_1_s0 -> E1": {
+        "paths": 41,
+        "median_cell_ns": 1.578,
+        "median_route_ns": 7.251
+      },
+      "D -> E1": {
+        "paths": 67,
+        "median_cell_ns": 2.232,
+        "median_route_ns": 6.626
+      },
+      "machine -> E2": {
+        "paths": 34,
+        "median_cell_ns": 2.031,
+        "median_route_ns": 7.044
+      },
+      "reset_sync_1_s0 -> core-other": {
+        "paths": 11,
+        "median_cell_ns": 2.231,
+        "median_route_ns": 6.719
+      },
+      "D -> D": {
+        "paths": 30,
+        "median_cell_ns": 2.367,
+        "median_route_ns": 6.5085
+      },
+      "reset_sync_1_s0 -> F": {
+        "paths": 264,
+        "median_cell_ns": 1.5885,
+        "median_route_ns": 7.6495
+      },
+      "core-other -> A": {
+        "paths": 2,
+        "median_cell_ns": 1.642,
+        "median_route_ns": 7.5055
+      },
+      "reset_sync_1_s0 -> D": {
+        "paths": 125,
+        "median_cell_ns": 1.578,
+        "median_route_ns": 7.645
+      },
+      "A -> A": {
+        "paths": 1,
+        "median_cell_ns": 3.008,
+        "median_route_ns": 6.097
+      },
+      "machine -> M": {
+        "paths": 1,
+        "median_cell_ns": 1.58,
+        "median_route_ns": 7.513
+      },
+      "reset_sync_1_s0 -> fetch": {
+        "paths": 16,
+        "median_cell_ns": 1.298,
+        "median_route_ns": 7.257
+      },
+      "core-other -> cache": {
+        "paths": 1,
+        "median_cell_ns": 3.406,
+        "median_route_ns": 5.176
+      }
+    }
+  }
+}

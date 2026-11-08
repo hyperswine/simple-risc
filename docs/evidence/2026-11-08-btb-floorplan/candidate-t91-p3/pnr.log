@@ -1,0 +1,34 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+current device: GW2AR-18C  GW2AR-LV18QN88C8/I7
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-source/impl/gwsynthesis/sdram_test.vg"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/pins.cst"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/clocks.sdc"
+NOTE (PJ2001) : Skip synthesis, because there is only one netlist file in this project
+Reading netlist file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-source/impl/gwsynthesis/sdram_test.vg"
+Parsing netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-source/impl/gwsynthesis/sdram_test.vg" completed
+Processing netlist completed
+Reading constraint file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/pins.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+ERROR  (PR0004) : There are total 1252 unrouted nets
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/impl/pnr/sdram_test.pin.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/impl/pnr/sdram_test.rpt.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/btb-floorplan-2026-11-08/candidate-t91-p3/impl/pnr/sdram_test.rpt.txt" completed
+Sun Nov  8 14:31:17 2026
+
+
+    while executing
+"run pnr"
+    (file "build.tcl" line 15)

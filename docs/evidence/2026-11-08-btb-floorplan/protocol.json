@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "dcd220d",
+  "route_timeout_seconds": 1800,
+  "parallel_jobs": 3,
+  "placements": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "targets_mhz": [
+    87,
+    89,
+    91
+  ],
+  "cpu_mhz": 81,
+  "memory_mhz": 48,
+  "hashes": {
+    "frozen/impl/gwsynthesis/sdram_test.vg": "3ef0867ba2afbda276eb66f84c2e2658ca37f00132ae97cb6bcb42486e7a307f",
+    "frozen/bootrom-sdram.hex": "f13d9eceebbd1459c5dab282c79133a7115aaa7127c378eac902a5de26343049",
+    "baseline.cst": "8f4701c4b7dd22c3361cd6979ab368225fb6b1fc611174bb44f2023a47f2644b",
+    "candidate.cst": "28460bb479564d8c98ff78a1ffb6df6621aa5677f61c8d1d23c4083b007b35cf",
+    "regions.json": "ec82ce14f1f25708fe2a46d92b88fc67559ca532a03d35e5b558e885d71959e3"
+  }
+}

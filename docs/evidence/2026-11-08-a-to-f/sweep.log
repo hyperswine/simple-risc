@@ -1,0 +1,11 @@
+START candidate-p3
+START candidate-p0
+START candidate-p1
+DONE candidate-p1 timing-fail 220
+START candidate-p2
+DONE candidate-p2 timing-fail 316
+START candidate-p4
+DONE candidate-p3 timing-fail 666
+DONE candidate-p0 timing-fail 847
+DONE candidate-p4 timing-fail 701
+COMPLETE 10 comparisons, including 5 imported controls
