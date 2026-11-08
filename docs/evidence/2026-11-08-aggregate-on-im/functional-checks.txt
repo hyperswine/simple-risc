@@ -1,0 +1,6 @@
+tests: Test suite simple-risc-test: PASS
+clash exit 0
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/aggregate-im-20261108/generated/SdramPipeline.topEntity/sdram_pipeline_risc.v
+/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/aggregate-im-20261108/generated/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v
+guest exit 0: 3 PASS
+reset-check exit 0: PASS: reset equivalence, 20 warm resets, 7 while held, 485 commits, 127 stores

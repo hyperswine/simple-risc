@@ -1,0 +1,32 @@
+sdram_pipeline_core: 10048 LUT4 equivalents; 116 feed no register in the module
+
+  part                              regs    LUTs    only   share
+  pipeline: E2                       416    1410    1201   14.0%
+  machine: bus and devices           356    1240    1201   12.3%
+  machine: csr, trap, counters       328    1222    1125   12.2%
+  unnamed                            639     995     973    9.9%
+  pipeline: fetch                    624     871     570    8.7%
+  pipeline: E1                       277     619     272    6.2%
+  machine: multiply/divide           140     606     454    6.0%
+  pipeline: A                         98     586     584    5.8%
+  machine: phase datapath            266     535     500    5.3%
+  machine: register write-back        80     516     357    5.1%
+  pipeline: D                        166     503     270    5.0%
+  pipeline: M                        360     387     327    3.9%
+  pipeline: btb                      177     312     294    3.1%
+  pipeline: F                        202     125     123    1.2%
+  blocks                               9       4       4    0.0%
+
+  field                                         regs    LUTs    only
+  pipeline: E2: E2.e2Candidates                   64     721     685
+  machine: bus and devices: systemBus            169     661     644
+  machine: multiply/divide: cpuMulDiv            140     606     454
+  pipeline: A: pA                                 98     586     584
+  machine: csr, trap, counters: cpuTrapRegiste   126     531     503
+  machine: register write-back: cpuPendingWrit    38     414     259
+  pipeline: fetch: pFetchPc                       32     375     227
+  pipeline: fetch: pInflight                     195     367     220
+  unnamed: c$ds_app_arg                           46     310     306
+  unnamed: c$ds3_app_arg                         471     310     300
+  machine: bus and devices: cpuBusResponse        35     304     291
+  pipeline: D: pDOperands                         64     291      97

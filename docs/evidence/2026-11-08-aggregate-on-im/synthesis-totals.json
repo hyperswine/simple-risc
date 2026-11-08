@@ -1,0 +1,16 @@
+{
+ "im-canon": {
+  "logic": 12684,
+  "lut": 11692,
+  "alu": 800,
+  "register": 5316,
+  "alu54d": 0
+ },
+ "im-aggregate": {
+  "logic": 12765,
+  "lut": 11800,
+  "alu": 773,
+  "register": 5216,
+  "alu54d": 3
+ }
+}
