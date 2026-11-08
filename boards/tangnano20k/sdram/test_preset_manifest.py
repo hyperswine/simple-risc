@@ -165,11 +165,22 @@ class PresetManifest(unittest.TestCase):
         # The core's sub-modules are inputs too, not only src/*.hs.
         self.assertIn('src/SimpleRisc/Types.hs', preset_manifest.inputs())
 
+    def test_preset_84_is_the_81_shape_at_84(self):
+        result = self.source_preset(SDRAM_PRESET='fprisc-84')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        settings = dict(line.split('=', 1) for line in result.stdout.split())
+        self.assertEqual((settings['SDRAM_CPU_FREQ_MHZ'], settings['SDRAM_TARGET_MHZ'], settings['SDRAM_PLACE_OPTION']), ('84', '92', '3'))
+        config = preset_manifest.PRESETS['fprisc-84']
+        self.assertEqual((config['cpu_mhz'], config['placer_target_mhz'], config['compressed'], config['floorplan']), (84, 92, False, 'fprisc-81.plan'))
+        self.assertEqual({k: v for k, v in config.items() if k not in ('cpu_mhz', 'placer_target_mhz')},
+                         {k: v for k, v in preset_manifest.CONFIG_81.items() if k not in ('cpu_mhz', 'placer_target_mhz')})
+        self.assertEqual(preset_manifest.rom_identity({'a': '1'}, config)['cpu_mhz'], 84)
+
     def test_only_the_split_clock_presets_take_their_floorplan(self):
         result = self.source_preset(SDRAM_PRESET='fprisc-48', SDRAM_FLOORPLAN='boards/tangnano20k/sdram/fprisc-81.plan')
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('SDRAM_FLOORPLAN is incompatible', result.stderr)
-        for name in ('fprisc-72', 'fprisc-81'):
+        for name in ('fprisc-72', 'fprisc-81', 'fprisc-84'):
             result = self.source_preset(SDRAM_PRESET=name, SDRAM_FLOORPLAN='other.plan')
             self.assertNotEqual(result.returncode, 0, name)
             self.assertIn('requires SDRAM_FLOORPLAN=', result.stderr)

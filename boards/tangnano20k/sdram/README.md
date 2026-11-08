@@ -32,10 +32,15 @@ default is two-way with `SDRAM_CACHE_WAYS=2` and `SDRAM_CACHE_LINE_BITS=11`
 `WAYS=1`, `LINE_BITS=12` geometry. Two-way timing and physical qualification
 are separate from the historical results.
 
-`SDRAM_PRESET=fprisc-72` is the faster FP-RISC image: CPU 72 MHz behind the
-clock bridge, SDRAM 48 MHz, two-way 64 KiB cache, aimed at 79 MHz (placement 0
-when it was validated; placement 3 with the `fprisc-81` floorplan since the
-three-clock cache port, a timing build that has not been on the board).
+`SDRAM_PRESET=fprisc-72` is the faster RV32IMC FP-RISC image: CPU 72 MHz behind
+the clock bridge, SDRAM 48 MHz, two-way 64 KiB cache, aimed at 79 MHz
+(placement 0 when it was validated; placement 3 with the `fprisc-81` floorplan
+since the three-clock cache port, a timing build that has not been on the
+board). `fprisc-81` and `fprisc-84` are the RV32IM core (no compressed
+instructions) at 81 and 84 MHz with the same cache, floorplan and placement:
+the IM core closes every placement option where the IMC core closed two
+([IM canon](../../../docs/2026-11-08-IM-CANON.md),
+[fprisc-84](../../../docs/2026-11-08-FPRISC-84.md)).
 FP-RISC's whole Tang Nano suite passes on it (`run_tangnano20k_examples.py
 --preset fprisc-72`); see the [fprisc-72 record](../../../docs/2026-11-01-FPRISC-72-PRESET.md).
 

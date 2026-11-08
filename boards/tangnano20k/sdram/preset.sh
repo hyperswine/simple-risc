@@ -10,8 +10,10 @@
 #              instructions: docs/2026-11-08-IM-CANON.md), two-way 64 KiB
 #              cache, placement 3 aimed at 89 MHz with the fprisc-81.plan
 #              floorplan.
+#   fprisc-84  the fprisc-81 shape at CPU 84 MHz, the highest clock every
+#              placement option closes (docs/2026-11-08-FPRISC-84.md).
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
-  case "$SDRAM_PRESET" in fprisc-48|fprisc-72|fprisc-81) ;; *) echo "unknown SDRAM_PRESET: $SDRAM_PRESET" >&2; exit 1;; esac
+  case "$SDRAM_PRESET" in fprisc-48|fprisc-72|fprisc-81|fprisc-84) ;; *) echo "unknown SDRAM_PRESET: $SDRAM_PRESET" >&2; exit 1;; esac
   sdram_preset_setting() {
     if [[ -n "${!1+x}" && "${!1}" != "$2" ]]; then
       echo "SDRAM_PRESET=$SDRAM_PRESET requires $1=$2 (got ${!1})" >&2; exit 1
@@ -19,9 +21,10 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
     export "$1=$2"
   }
   sdram_preset_setting SDRAM_FREQ_MHZ 48
-  # fprisc-48 and fprisc-72 are the RV32IMC core; fprisc-81 is RV32IM, which
-  # places with margin at every placement option where the IMC core does not.
-  if [[ "$SDRAM_PRESET" == fprisc-81 ]]; then sdram_preset_setting SDRAM_RVC 0; else sdram_preset_setting SDRAM_RVC 1; fi
+  # fprisc-48 and fprisc-72 are the RV32IMC core; fprisc-81 and fprisc-84 are
+  # RV32IM, which places with margin at every placement option where the IMC
+  # core does not.
+  case "$SDRAM_PRESET" in fprisc-81|fprisc-84) sdram_preset_setting SDRAM_RVC 0;; *) sdram_preset_setting SDRAM_RVC 1;; esac
   sdram_preset_setting SDRAM_CACHE 1
   sdram_preset_setting SDRAM_PHASE_DEGREES 135
   # Settings no preset may take from the environment.
@@ -46,13 +49,23 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
     sdram_preset_setting SDRAM_MAP_OPTION 3
     sdram_preset_setting SDRAM_ROUTE_OPTION 1
     sdram_preset_setting SDRAM_ROUTE_MAXFAN 8
-  else
+  elif [[ "$SDRAM_PRESET" == fprisc-81 ]]; then
     sdram_preset_setting SDRAM_CPU_FREQ_MHZ 81
     sdram_preset_setting SDRAM_CACHE_WAYS 2
     sdram_preset_setting SDRAM_CACHE_LINE_BITS 11
     sdram_preset_setting SDRAM_PLACE_OPTION 3
     sdram_preset_setting SDRAM_FLOORPLAN boards/tangnano20k/sdram/fprisc-81.plan
     sdram_preset_setting SDRAM_TARGET_MHZ 89
+    sdram_preset_setting SDRAM_MAP_OPTION 3
+    sdram_preset_setting SDRAM_ROUTE_OPTION 1
+    sdram_preset_setting SDRAM_ROUTE_MAXFAN 8
+  else
+    sdram_preset_setting SDRAM_CPU_FREQ_MHZ 84
+    sdram_preset_setting SDRAM_CACHE_WAYS 2
+    sdram_preset_setting SDRAM_CACHE_LINE_BITS 11
+    sdram_preset_setting SDRAM_PLACE_OPTION 3
+    sdram_preset_setting SDRAM_FLOORPLAN boards/tangnano20k/sdram/fprisc-81.plan
+    sdram_preset_setting SDRAM_TARGET_MHZ 92
     sdram_preset_setting SDRAM_MAP_OPTION 3
     sdram_preset_setting SDRAM_ROUTE_OPTION 1
     sdram_preset_setting SDRAM_ROUTE_MAXFAN 8

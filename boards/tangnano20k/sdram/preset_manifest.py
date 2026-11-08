@@ -34,7 +34,10 @@ CONFIG_81 = dict(xlen=32, compressed=False, cpu_mhz=81, memory_mhz=48,
                  placement=3, write_update=True, placer_target_mhz=89,
                  map_option=3, route_option=1, route_maxfan=8,
                  floorplan='fprisc-81.plan')
-PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72, 'fprisc-81': CONFIG_81}
+# The fprisc-81 shape at 84 MHz, the highest clock the IM core closes at
+# every placement option (docs/2026-11-08-FPRISC-84.md).
+CONFIG_84 = dict(CONFIG_81, cpu_mhz=84, placer_target_mhz=92)
+PRESETS = {'fprisc-48': CONFIG, 'fprisc-72': CONFIG_72, 'fprisc-81': CONFIG_81, 'fprisc-84': CONFIG_84}
 
 
 def preset():

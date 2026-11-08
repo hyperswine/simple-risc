@@ -1,0 +1,4 @@
+fprisc-84 preset, RV32IM core, from the committed tree:
+fprisc-84 build: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 86.021 MHz Fmax, 0.280 ns worst setup slack; 0 setup / 0 hold violating endpoints
+    Total Routing: CPU time = 0h 1m 7s, Elapsed time = 0h 1m 16s
+  CLS                         | 8053/10368                          |  78%
