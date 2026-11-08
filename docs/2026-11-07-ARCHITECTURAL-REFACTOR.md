@@ -444,3 +444,12 @@ BTB anchoring from register grouping/region geometry in a follow-up rather
 than attributing the bundled failure to locality in general. The generator,
 input audit, all receipts, failed routes and conditional timing summaries
 are preserved with the trial report. No RTL or default preset changed.
+
+
+## Superseded on 2026-11-09
+
+[AMENDED-PROPOSAL](2026-11-09-AMENDED-PROPOSAL.md) replaces the objective
+and the work sequence above after the IM core became the canon: the unit of
+progress is occupied slices and loop wire length, measured as four of four
+placements closing; state separation and registered interfaces are means,
+not goals. The acceptance method revised on 2026-11-08 stands.
