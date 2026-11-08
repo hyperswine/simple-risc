@@ -1,0 +1,40 @@
+sdram_pipeline_risc: 10547 LUT4 equivalents; 139 feed no register in the module
+
+  part                              regs    LUTs    only   share
+  machine: csr, trap, counters       523    1782    1701   16.9%
+  pipeline: E2                       416    1331    1123   12.6%
+  machine: bus and devices           356    1221    1170   11.6%
+  unnamed                            639     935     913    8.9%
+  pipeline: fetch                    624     884     587    8.4%
+  machine: multiply/divide           141     807     647    7.7%
+  pipeline: A                         98     587     585    5.6%
+  pipeline: E1                       277     536     148    5.1%
+  machine: phase datapath            266     513     483    4.9%
+  machine: register write-back        80     503     338    4.8%
+  pipeline: D                        166     498     249    4.7%
+  pipeline: M                        360     382     322    3.6%
+  pipeline: btb                      177     299     282    2.8%
+  pipeline: F                        202     125     122    1.2%
+  blocks                               9       4       4    0.0%
+
+  field                                         regs    LUTs    only
+  machine: multiply/divide: cpuMulDiv            141     807     647
+  pipeline: E2: E2.e2Candidates                   64     730     695
+  machine: bus and devices: systemBus            169     658     640
+  pipeline: A: pA                                 98     587     585
+  machine: csr, trap, counters: cpuTrapRegiste   126     540     525
+  machine: csr, trap, counters: heldState        139     406     396
+  machine: register write-back: cpuPendingWrit    38     406     245
+  pipeline: fetch: pInflight                     195     395     250
+  pipeline: fetch: pFetchPc                       32     359     213
+  unnamed: c$ds_app_arg                           46     306     302
+  machine: bus and devices: cpuBusResponse        35     303     286
+  unnamed: c$ds3_app_arg                         471     287     277
+  pipeline: D: pDOperands                         64     278      66
+  unnamed: received                                9     242     241
+  machine: csr, trap, counters: cpuCsrValue       32     234     232
+  machine: phase datapath: cpuPc                  32     199     195
+  pipeline: E2: E2.e2Action                       39     192     153
+  machine: csr, trap, counters: cpuInstret        65     179     179
+  machine: bus and devices: cpuDevices            81     173     161
+  machine: csr, trap, counters: cpuExceptionVa    32     165     160

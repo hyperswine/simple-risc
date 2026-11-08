@@ -1,0 +1,16 @@
+{
+ "baseline-imc": {
+  "logic": 15074,
+  "lut": 13981,
+  "alu": 901,
+  "register": 5436,
+  "bsram": 40
+ },
+ "im-only": {
+  "logic": 12684,
+  "lut": 11692,
+  "alu": 800,
+  "register": 5316,
+  "bsram": 40
+ }
+}

@@ -1,0 +1,6 @@
+IM-only core (SDRAM_RVC=0) with the fprisc-81 settings and fprisc-81.plan, 81/48 MHz, 3,000-path reports; non-preset build so the ROM carries its own build id.
+placement 3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 88.149 MHz Fmax, 1.001 ns worst setup slack; 0 setup / 0 hold violating endpoints | CLS 8053/10368 | routing 0h 0m 44s
+placement 0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 84.413 MHz Fmax, 0.499 ns worst setup slack; 0 setup / 0 hold violating endpoints | CLS 8125/10368 | routing 0h 0m 39s
+placement 1: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 85.238 MHz Fmax, 0.614 ns worst setup slack; 0 setup / 0 hold violating endpoints | CLS 8085/10368 | routing 0h 0m 35s
+placement 2: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 85.238 MHz Fmax, 0.614 ns worst setup slack; 0 setup / 0 hold violating endpoints | CLS 8085/10368 | routing 0h 0m 33s
+placement 4: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 81 MHz constraint, 82.194 MHz Fmax, 0.179 ns worst setup slack; 0 setup / 0 hold violating endpoints | CLS 8012/10368 | routing 0h 0m 45s

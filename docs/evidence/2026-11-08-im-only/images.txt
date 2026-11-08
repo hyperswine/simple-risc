@@ -1,0 +1,7 @@
+classifier fixture (128/64, bins 8, depth 5, minLeaf 2, one run) compiled by fprisc 9451dca (2026-11-06), FPR_XLEN=32 FPR_CPU_MHZ=48 FPR_HEAP_REPORT=1:
+   text	   data	    bss	    dec	    hex	filename
+  93592	     12	   5500	  99104	  18320	/Users/jasonqin/Documents/GitHub/fprisc-9451dca/build/im-only/rvc0/base.elf
+  74372	     12	   5500	  79884	  1380c	/Users/jasonqin/Documents/GitHub/fprisc-9451dca/build/im-only/rvc1/base.elf
+sha256:
+73d7d58778d09ce1236f3d546c161fbcd74896b1970674dd63e553d63c44e59b  /Users/jasonqin/Documents/GitHub/fprisc-9451dca/build/im-only/rvc0/base.bin
+e219bbf78cb951c02048d38cefc0d239d91eb2d61d7c0037b7230b1512ced99a  /Users/jasonqin/Documents/GitHub/fprisc-9451dca/build/im-only/rvc1/base.bin

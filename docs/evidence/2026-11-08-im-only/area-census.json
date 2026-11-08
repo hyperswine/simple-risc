@@ -1,0 +1,958 @@
+{
+ "total": 10547,
+ "unattributed": 139,
+ "parts": {
+  "unnamed": {
+   "registers": 639,
+   "luts": 935.0,
+   "only": 913
+  },
+  "machine: csr, trap, counters": {
+   "registers": 523,
+   "luts": 1781.8,
+   "only": 1701
+  },
+  "pipeline: btb": {
+   "registers": 177,
+   "luts": 299.4,
+   "only": 282
+  },
+  "pipeline: fetch": {
+   "registers": 624,
+   "luts": 884.4,
+   "only": 587
+  },
+  "pipeline: A": {
+   "registers": 98,
+   "luts": 587.2,
+   "only": 585
+  },
+  "pipeline: F": {
+   "registers": 202,
+   "luts": 125.1,
+   "only": 122
+  },
+  "pipeline: D": {
+   "registers": 166,
+   "luts": 498.0,
+   "only": 249
+  },
+  "pipeline: E1": {
+   "registers": 277,
+   "luts": 536.1,
+   "only": 148
+  },
+  "pipeline: E2": {
+   "registers": 416,
+   "luts": 1330.5,
+   "only": 1123
+  },
+  "pipeline: M": {
+   "registers": 360,
+   "luts": 381.5,
+   "only": 322
+  },
+  "machine: register write-back": {
+   "registers": 80,
+   "luts": 503.2,
+   "only": 338
+  },
+  "machine: phase datapath": {
+   "registers": 266,
+   "luts": 513.4,
+   "only": 483
+  },
+  "machine: multiply/divide": {
+   "registers": 141,
+   "luts": 807.3,
+   "only": 647
+  },
+  "machine: bus and devices": {
+   "registers": 356,
+   "luts": 1221.1,
+   "only": 1170
+  },
+  "blocks": {
+   "registers": 9,
+   "luts": 4.0,
+   "only": 4
+  }
+ },
+ "fields": [
+  {
+   "part": "machine: multiply/divide",
+   "field": "cpuMulDiv",
+   "registers": 141,
+   "luts": 807.3,
+   "only": 647
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Candidates",
+   "registers": 64,
+   "luts": 730.2,
+   "only": 695
+  },
+  {
+   "part": "machine: bus and devices",
+   "field": "systemBus",
+   "registers": 169,
+   "luts": 658.3,
+   "only": 640
+  },
+  {
+   "part": "pipeline: A",
+   "field": "pA",
+   "registers": 98,
+   "luts": 587.2,
+   "only": 585
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuTrapRegisters",
+   "registers": 126,
+   "luts": 540.3,
+   "only": 525
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "heldState",
+   "registers": 139,
+   "luts": 406.2,
+   "only": 396
+  },
+  {
+   "part": "machine: register write-back",
+   "field": "cpuPendingWrite",
+   "registers": 38,
+   "luts": 405.8,
+   "only": 245
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pInflight",
+   "registers": 195,
+   "luts": 395.4,
+   "only": 250
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pFetchPc",
+   "registers": 32,
+   "luts": 358.6,
+   "only": 213
+  },
+  {
+   "part": "unnamed",
+   "field": "c$ds_app_arg",
+   "registers": 46,
+   "luts": 305.8,
+   "only": 302
+  },
+  {
+   "part": "machine: bus and devices",
+   "field": "cpuBusResponse",
+   "registers": 35,
+   "luts": 302.6,
+   "only": 286
+  },
+  {
+   "part": "unnamed",
+   "field": "c$ds3_app_arg",
+   "registers": 471,
+   "luts": 287.2,
+   "only": 277
+  },
+  {
+   "part": "pipeline: D",
+   "field": "pDOperands",
+   "registers": 64,
+   "luts": 277.8,
+   "only": 66
+  },
+  {
+   "part": "unnamed",
+   "field": "received",
+   "registers": 9,
+   "luts": 242.3,
+   "only": 241
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCsrValue",
+   "registers": 32,
+   "luts": 233.6,
+   "only": 232
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuPc",
+   "registers": 32,
+   "luts": 199.5,
+   "only": 195
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Action",
+   "registers": 39,
+   "luts": 192.0,
+   "only": 153
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuInstret",
+   "registers": 65,
+   "luts": 179.0,
+   "only": 179
+  },
+  {
+   "part": "machine: bus and devices",
+   "field": "cpuDevices",
+   "registers": 81,
+   "luts": 173.1,
+   "only": 161
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuExceptionValue",
+   "registers": 32,
+   "luts": 165.3,
+   "only": 160
+  },
+  {
+   "part": "pipeline: btb",
+   "field": "btb valid",
+   "registers": 128,
+   "luts": 152.0,
+   "only": 152
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "pRedirect",
+   "registers": 33,
+   "luts": 150.5,
+   "only": 102
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Op2",
+   "registers": 32,
+   "luts": 148.6,
+   "only": 33
+  },
+  {
+   "part": "pipeline: btb",
+   "field": "pBtbWrite",
+   "registers": 49,
+   "luts": 147.4,
+   "only": 130
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1A",
+   "registers": 32,
+   "luts": 133.9,
+   "only": 1
+  },
+  {
+   "part": "pipeline: D",
+   "field": "pDBlocked",
+   "registers": 1,
+   "luts": 117.9,
+   "only": 91
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mSum",
+   "registers": 52,
+   "luts": 107.1,
+   "only": 107
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pQueue",
+   "registers": 388,
+   "luts": 104.2,
+   "only": 104
+  },
+  {
+   "part": "pipeline: F",
+   "field": "pFQueue",
+   "registers": 198,
+   "luts": 103.7,
+   "only": 103
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1B",
+   "registers": 32,
+   "luts": 95.4,
+   "only": 1
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2BranchCompare",
+   "registers": 5,
+   "luts": 82.1,
+   "only": 82
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuScratch",
+   "registers": 32,
+   "luts": 82.1,
+   "only": 68
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mValue",
+   "registers": 32,
+   "luts": 81.5,
+   "only": 65
+  },
+  {
+   "part": "machine: register write-back",
+   "field": "cpuRegValid",
+   "registers": 31,
+   "luts": 80.0,
+   "only": 80
+  },
+  {
+   "part": "machine: bus and devices",
+   "field": "cpuBusRequest",
+   "registers": 69,
+   "luts": 71.6,
+   "only": 71
+  },
+  {
+   "part": "unnamed",
+   "field": "request",
+   "registers": 65,
+   "luts": 69.3,
+   "only": 67
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1FaultValue",
+   "registers": 31,
+   "luts": 68.3,
+   "only": 64
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mAction",
+   "registers": 39,
+   "luts": 67.1,
+   "only": 65
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuComputed",
+   "registers": 64,
+   "luts": 66.6,
+   "only": 66
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mData",
+   "registers": 32,
+   "luts": 65.1,
+   "only": 65
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Control",
+   "registers": 19,
+   "luts": 53.8,
+   "only": 47
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2AluCompare",
+   "registers": 4,
+   "luts": 50.1,
+   "only": 50
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCounterWrite",
+   "registers": 36,
+   "luts": 49.0,
+   "only": 36
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2PredictedTaken",
+   "registers": 1,
+   "luts": 42.1,
+   "only": 32
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuPortAddressFull",
+   "registers": 30,
+   "luts": 41.5,
+   "only": 31
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCsrSelection",
+   "registers": 14,
+   "luts": 38.8,
+   "only": 36
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuPhase",
+   "registers": 8,
+   "luts": 36.9,
+   "only": 28
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Computed",
+   "registers": 94,
+   "luts": 36.2,
+   "only": 0
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuInstruction",
+   "registers": 32,
+   "luts": 35.1,
+   "only": 34
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mNext",
+   "registers": 32,
+   "luts": 34.8,
+   "only": 4
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuB",
+   "registers": 32,
+   "luts": 32.9,
+   "only": 32
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuA",
+   "registers": 32,
+   "luts": 32.9,
+   "only": 32
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCsrSource",
+   "registers": 32,
+   "luts": 32.8,
+   "only": 32
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fPc",
+   "registers": 32,
+   "luts": 32.6,
+   "only": 32
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fPredicted",
+   "registers": 32,
+   "luts": 32.6,
+   "only": 32
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuInRom",
+   "registers": 1,
+   "luts": 31.7,
+   "only": 30
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuPortWriteAddressFull",
+   "registers": 30,
+   "luts": 30.5,
+   "only": 30
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fWord",
+   "registers": 32,
+   "luts": 25.9,
+   "only": 22
+  },
+  {
+   "part": "unnamed",
+   "field": "c$ds3_bindCsr",
+   "registers": 9,
+   "luts": 21.5,
+   "only": 19
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Forwards",
+   "registers": 1,
+   "luts": 21.2,
+   "only": 2
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuExceptionCause",
+   "registers": 5,
+   "luts": 20.9,
+   "only": 15
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Imm",
+   "registers": 31,
+   "luts": 20.9,
+   "only": 0
+  },
+  {
+   "part": "machine: register write-back",
+   "field": "cpuReadIndices",
+   "registers": 10,
+   "luts": 16.4,
+   "only": 13
+  },
+  {
+   "part": "machine: bus and devices",
+   "field": "bootCause",
+   "registers": 2,
+   "luts": 15.5,
+   "only": 12
+  },
+  {
+   "part": "pipeline: F",
+   "field": "pFCount",
+   "registers": 2,
+   "luts": 15.2,
+   "only": 14
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuInterruptEnable",
+   "registers": 3,
+   "luts": 11.9,
+   "only": 9
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pOutstanding",
+   "registers": 3,
+   "luts": 10.7,
+   "only": 8
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2WaitFast",
+   "registers": 2,
+   "luts": 7.9,
+   "only": 2
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pQueueRead",
+   "registers": 3,
+   "luts": 7.7,
+   "only": 6
+  },
+  {
+   "part": "pipeline: fetch",
+   "field": "pQueueWrite",
+   "registers": 3,
+   "luts": 7.7,
+   "only": 6
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mMask",
+   "registers": 4,
+   "luts": 7.1,
+   "only": 7
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuInterruptDue",
+   "registers": 3,
+   "luts": 7.0,
+   "only": 6
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2StoreFast",
+   "registers": 1,
+   "luts": 6.9,
+   "only": 2
+  },
+  {
+   "part": "unnamed",
+   "field": "emergency_s0",
+   "registers": 1,
+   "luts": 6.8,
+   "only": 5
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Writes",
+   "registers": 1,
+   "luts": 6.6,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2LoadFast",
+   "registers": 1,
+   "luts": 5.8,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mWait",
+   "registers": 3,
+   "luts": 5.6,
+   "only": 5
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCsrReadOnly",
+   "registers": 1,
+   "luts": 5.3,
+   "only": 2
+  },
+  {
+   "part": "pipeline: D",
+   "field": "pDFresh",
+   "registers": 1,
+   "luts": 4.6,
+   "only": 4
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuPortByteEnable",
+   "registers": 4,
+   "luts": 4.5,
+   "only": 4
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1FetchFault",
+   "registers": 1,
+   "luts": 4.3,
+   "only": 0
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCsrWrite",
+   "registers": 1,
+   "luts": 3.8,
+   "only": 3
+  },
+  {
+   "part": "pipeline: M",
+   "field": "pMSlot",
+   "registers": 1,
+   "luts": 3.8,
+   "only": 2
+  },
+  {
+   "part": "pipeline: F",
+   "field": "pFRead",
+   "registers": 1,
+   "luts": 3.8,
+   "only": 3
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuCountRetirement",
+   "registers": 1,
+   "luts": 3.7,
+   "only": 1
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mMultiply",
+   "registers": 1,
+   "luts": 3.6,
+   "only": 2
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "pE1Slot",
+   "registers": 1,
+   "luts": 3.4,
+   "only": 2
+  },
+  {
+   "part": "pipeline: D",
+   "field": "pDSlot",
+   "registers": 1,
+   "luts": 2.8,
+   "only": 1
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mWrites",
+   "registers": 1,
+   "luts": 2.6,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "pE2Slot",
+   "registers": 1,
+   "luts": 2.5,
+   "only": 2
+  },
+  {
+   "part": "pipeline: F",
+   "field": "pFWrite",
+   "registers": 1,
+   "luts": 2.5,
+   "only": 2
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mFinal",
+   "registers": 1,
+   "luts": 2.1,
+   "only": 0
+  },
+  {
+   "part": "machine: csr, trap, counters",
+   "field": "cpuWake",
+   "registers": 1,
+   "luts": 2.0,
+   "only": 1
+  },
+  {
+   "part": "unnamed",
+   "field": "c$stepped_app_arg",
+   "registers": 1,
+   "luts": 2.0,
+   "only": 2
+  },
+  {
+   "part": "blocks",
+   "field": "SDPB",
+   "registers": 4,
+   "luts": 2.0,
+   "only": 2
+  },
+  {
+   "part": "blocks",
+   "field": "MULTADDALU18X18",
+   "registers": 2,
+   "luts": 2.0,
+   "only": 2
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fSize",
+   "registers": 1,
+   "luts": 1.6,
+   "only": 1
+  },
+  {
+   "part": "machine: phase datapath",
+   "field": "cpuFast",
+   "registers": 1,
+   "luts": 1.1,
+   "only": 1
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fUsesRs1",
+   "registers": 1,
+   "luts": 1.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: D",
+   "field": "D.fUsesRs2",
+   "registers": 1,
+   "luts": 1.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Straddle",
+   "registers": 1,
+   "luts": 1.1,
+   "only": 1
+  },
+  {
+   "part": "machine: register write-back",
+   "field": "clearRegisters",
+   "registers": 1,
+   "luts": 0.9,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Writes",
+   "registers": 1,
+   "luts": 0.6,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2MultFast",
+   "registers": 1,
+   "luts": 0.6,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Predicted",
+   "registers": 32,
+   "luts": 0.3,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Word",
+   "registers": 32,
+   "luts": 0.3,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Size",
+   "registers": 1,
+   "luts": 0.3,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E1",
+   "field": "E1.e1Pc",
+   "registers": 32,
+   "luts": 0.3,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mWord",
+   "registers": 24,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mLoad",
+   "registers": 1,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mOffset",
+   "registers": 2,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mPc",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mFunct3",
+   "registers": 3,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mA",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mStore",
+   "registers": 1,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mAddress",
+   "registers": 30,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mB",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: M",
+   "field": "M.mRd",
+   "registers": 5,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Predicted",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2A",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Word",
+   "registers": 29,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Refetch",
+   "registers": 1,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Pc",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2Control",
+   "registers": 9,
+   "luts": 0.1,
+   "only": 0
+  },
+  {
+   "part": "pipeline: E2",
+   "field": "E2.e2B",
+   "registers": 32,
+   "luts": 0.1,
+   "only": 0
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+PASS: byte/halfword/word stress, 5 exact C arithmetic runs, UART RX/TX, Ctrl-C recovery, and memory clear/reload
+exit 0
+PASS: 30720 hardware RV32M checks at 81 MHz
+exit 0
+PASS: 38400 hardware RV32I checks at 81 MHz
+exit 0
