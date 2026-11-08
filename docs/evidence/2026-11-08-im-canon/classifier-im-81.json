@@ -1,0 +1,77 @@
+{
+  "reference": {
+    "train_rows": 512,
+    "test_rows": 128,
+    "bins": 16,
+    "max_depth": 6,
+    "min_leaf": 5,
+    "nodes": 55,
+    "depth": 6,
+    "train": {
+      "hits": 481,
+      "rows": 512,
+      "digest": 354774,
+      "predictions_sha256": "dbc85e3a7188d43555e0876fc50dd901b15fa11c6da8ebda539e8580266f37a1"
+    },
+    "test": {
+      "hits": 116,
+      "rows": 128,
+      "digest": 434626,
+      "predictions_sha256": "9bc880f50defb44919cec07bff13fdfb9442287d88fa9e8b09300cc8100ef5c8"
+    },
+    "root": {
+      "column": 0,
+      "threshold": -0.12101956852711737
+    },
+    "entropy": "Independent Python math.log2; classifier uses its existing 48-step log2"
+  },
+  "source_sha256": "1112e34c59a05c61bd9ed8c22c67767385a7072284a4b5af5cf3ea337a59405b",
+  "classifier_sha256": "486a4abbd0876014555862a5bb70db6d4c0402e6e3f7f6193fbacb576750c791",
+  "compiler_sha256": "5dc69379f76e7d24a45f7407277dd290ff2a798ccf4c9380fb8ca0ab8c7ba747",
+  "repeats": 10,
+  "executions": {
+    "board": {
+      "image_sha256": "076a0bb1f7634be63466b3acc4cc124e09ece74c77bede5ab9f56532debe4c47",
+      "image_bytes": 94324,
+      "heap_arena_bytes": 8223248,
+      "heap_bitmap_bytes": 64256,
+      "usable_heap_block_bytes": 8158992,
+      "stack_bytes": 65536,
+      "frequency_mhz": 81,
+      "isa": "RV32IM",
+      "passed": true,
+      "bitstream_sha256": "85c83b5549d3c0c5e154d58c32d359de1ed8ac421485b06d2f715695d630d655",
+      "heap_samples": [
+        {
+          "live": 1237392,
+          "peak": 2502656,
+          "requests": 2330551,
+          "requested": 56674520,
+          "regions": 7661,
+          "reclaimed": 182474080
+        }
+      ],
+      "elapsed_us": 7278281,
+      "elapsed_us_runs": [
+        7283199,
+        7280755,
+        7278271,
+        7278304,
+        7278273,
+        7278272,
+        7278295,
+        7278255,
+        7278276,
+        7278281
+      ],
+      "wall_seconds_with_upload": 86.36614095902769
+    }
+  },
+  "build_options": {
+    "FPR_XLEN": "32",
+    "FPR_RVC": "0",
+    "FPR_QEMU": "0",
+    "FPR_CPU_MHZ": "81",
+    "FPR_HEAP_REPORT": "1"
+  }
+}

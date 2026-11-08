@@ -151,7 +151,15 @@ class PresetManifest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout.split(), ['81', '3', 'boards/tangnano20k/sdram/fprisc-81.plan'])
         config = preset_manifest.PRESETS['fprisc-81']
-        self.assertEqual((config['placement'], config['floorplan']), (3, 'fprisc-81.plan'))
+        self.assertEqual((config['placement'], config['floorplan'], config['compressed']), (3, 'fprisc-81.plan', False))
+        self.assertEqual(preset_manifest.rom_identity({'src/SimpleRisc.hs': '1'}, config)['isa'], 'rv32im')
+        rvc = subprocess.run(['bash', '-c', 'source "$1"; printf "%s" "$SDRAM_RVC"', 'bash', str(PRESET)], env=env,
+                             capture_output=True, text=True)
+        self.assertEqual(rvc.stdout, '0')
+        for name in ('fprisc-48', 'fprisc-72'):
+            result = self.source_preset(SDRAM_PRESET=name, SDRAM_RVC='0')
+            self.assertNotEqual(result.returncode, 0, name)
+            self.assertIn('requires SDRAM_RVC=1', result.stderr)
         self.assertTrue((PRESET.parent / config['floorplan']).is_file())
         self.assertIn('boards/tangnano20k/sdram/fprisc-81.plan', preset_manifest.inputs())
         # The core's sub-modules are inputs too, not only src/*.hs.

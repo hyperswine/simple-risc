@@ -6,10 +6,10 @@
 #              cache, aimed at 79 MHz with the timing-driven map and route
 #              options (docs/2026-11-01-FPRISC-72-PRESET.md); placement 3 and
 #              the floorplan since the three-clock cache port, like fprisc-81.
-#   fprisc-81  CPU 81 / SDRAM 48 MHz, otherwise the fprisc-72 shape with
-#              placement 3 aimed at 89 MHz and the fprisc-81.plan floorplan,
-#              which the three-clock cache port needs to place
-#              (docs/2026-11-06-THREE-CLOCK-PORT.md).
+#   fprisc-81  CPU 81 / SDRAM 48 MHz, the RV32IM core (no compressed
+#              instructions: docs/2026-11-08-IM-CANON.md), two-way 64 KiB
+#              cache, placement 3 aimed at 89 MHz with the fprisc-81.plan
+#              floorplan.
 if [[ -n "${SDRAM_PRESET:-}" ]]; then
   case "$SDRAM_PRESET" in fprisc-48|fprisc-72|fprisc-81) ;; *) echo "unknown SDRAM_PRESET: $SDRAM_PRESET" >&2; exit 1;; esac
   sdram_preset_setting() {
@@ -19,7 +19,9 @@ if [[ -n "${SDRAM_PRESET:-}" ]]; then
     export "$1=$2"
   }
   sdram_preset_setting SDRAM_FREQ_MHZ 48
-  sdram_preset_setting SDRAM_RVC 1
+  # fprisc-48 and fprisc-72 are the RV32IMC core; fprisc-81 is RV32IM, which
+  # places with margin at every placement option where the IMC core does not.
+  if [[ "$SDRAM_PRESET" == fprisc-81 ]]; then sdram_preset_setting SDRAM_RVC 0; else sdram_preset_setting SDRAM_RVC 1; fi
   sdram_preset_setting SDRAM_CACHE 1
   sdram_preset_setting SDRAM_PHASE_DEGREES 135
   # Settings no preset may take from the environment.
