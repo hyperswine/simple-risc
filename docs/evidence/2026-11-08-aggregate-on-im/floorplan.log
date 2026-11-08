@@ -1,0 +1,3 @@
+core module sdram_pipeline_core at core/logic_core
+csr          R[2:9]C[2:55]        241 registers, 87 left free
+bus          R[38:53]C[2:19]      284 registers, 72 left free

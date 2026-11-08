@@ -1,0 +1,4 @@
+cells of the three dsp_counter wrappers in the synthesized netlist (LUT5 = two LUT4 equivalents):
+  dsp_counter: {'LUT3': 41, 'LUT5': 34, 'LUT4': 14, 'LUT2': 10, 'DFFR': 32, 'ALU54D': 1} = 133 LUT4 equivalents
+  dsp_counter_0: {'LUT5': 74, 'LUT4': 51, 'LUT2': 6, 'LUT3': 11, 'DFFR': 32, 'ALU54D': 1} = 216 LUT4 equivalents
+  dsp_counter_1: {'LUT3': 41, 'LUT4': 17, 'LUT5': 33, 'LUT2': 8, 'DFFRE': 32, 'ALU54D': 1} = 132 LUT4 equivalents

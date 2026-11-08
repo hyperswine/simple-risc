@@ -1,0 +1,12 @@
+f87 p3: nverified); 87 MHz constraint, 88.326 MHz Fmax, 0.173 ns worst setup slack; 0 setup / 0 hold   | CLS 8124/10368
+f87 p0: nverified); 87 MHz constraint, 72.707 MHz Fmax, -2.260 ns worst setup slack; 12 setup / 0 hol  | CLS 8225/10368
+f87 p1: nverified); 87 MHz constraint, 83.620 MHz Fmax, -0.465 ns worst setup slack; 1 setup / 0 hold  | CLS 8175/10368
+f87 p4: nverified); 87 MHz constraint, 89.567 MHz Fmax, 0.329 ns worst setup slack; 0 setup / 0 hold   | CLS 8150/10368
+f84 p3: nverified); 84 MHz constraint, 84.828 MHz Fmax, 0.116 ns worst setup slack; 0 setup / 0 hold   | CLS 8106/10368
+f84 p0: nverified); 84 MHz constraint, 74.635 MHz Fmax, -1.494 ns worst setup slack; 7 setup / 0 hold  | CLS 8221/10368
+f84 p1: nverified); 84 MHz constraint, 75.626 MHz Fmax, -1.318 ns worst setup slack; 2 setup / 0 hold  | CLS 8179/10368
+f84 p4: nverified); 84 MHz constraint, 84.596 MHz Fmax, 0.084 ns worst setup slack; 0 setup / 0 hold   | CLS 8194/10368
+f90 p3: nverified); 90 MHz constraint, 88.010 MHz Fmax, -0.251 ns worst setup slack; 3 setup / 0 hold  | CLS 8105/10368
+f90 p0: nverified); 90 MHz constraint, 71.484 MHz Fmax, -2.878 ns worst setup slack; 167 setup / 0 ho  | CLS 8204/10368
+f90 p1: nverified); 90 MHz constraint, 81.977 MHz Fmax, -1.087 ns worst setup slack; 8 setup / 0 hold  | CLS 8192/10368
+f90 p4: nverified); 90 MHz constraint, 92.475 MHz Fmax, 0.297 ns worst setup slack; 0 setup / 0 hold   | CLS 8151/10368
