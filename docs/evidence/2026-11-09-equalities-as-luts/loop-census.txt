@@ -1,0 +1,88 @@
+== im-sweep-20261108 f87 p0
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  btb -> btb                             6    1    2  -0.039      7      7     57  yes  btb table RAM -> btb table RAM (7 levels)
+  machine -> cache                     330    1    2  -0.026      5      9     75       machine -> cache (9 levels)
+  machine -> machine                   337    0    3   0.004      5      7     75  yes  machine -> machine (7 levels)
+  M -> E1                               27    0    1   0.015      6      6     76       M.mRd -> E1.e1A (6 levels)
+  M -> D                                27    0    1   0.314      7      7     72       M.mRd -> pDOperands (7 levels)
+  fetch -> btb                           8    0    2   0.317      7      7     69  yes  pFetchPc -> btb table RAM (7 levels)
+  machine -> E1                         38    0    1   0.432      6      7     75       machine -> E1.e1B (6 levels)
+  btb -> fetch                           7    0    0   0.515      7      7     49  yes  btb table RAM -> pInflight (7 levels)
+  structures with 7+ levels: E1 -> D (11), E1 -> E2 (10), machine -> cache (9), E2 -> E2 (8), btb -> btb (7), machine -> machine (7), M -> D (7), fetch -> btb (7), machine -> E1 (7), btb -> fetch (7), fetch -> fetch (7), machine -> D (7), E2 -> fetch (7), machine -> core-other (7)
+== im-sweep-20261108 f87 p1
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  btb -> btb                             8    0    3   0.169      7      7     55  yes  btb table RAM -> btb table RAM (7 levels)
+  core-other -> machine                120    0    0   0.561      5      6     79       emergency_s0 -> heldState (5 levels)
+  E2 -> E1                              17    0    0   0.603      5      6     77       E2.e2Control -> E1.e1B (5 levels)
+  machine -> machine                   235    0    0   0.704      5      7     73  yes  machine -> machine (4 levels)
+  fetch -> fetch                        52    0    0   0.789      7      7     64  yes  pFetchPc -> pInflight (7 levels)
+  fetch -> btb                           6    0    0   0.873      7      7     64  yes  pFetchPc -> btb table RAM (7 levels)
+  reset_sync_1_s0 -> core-other         24    0    0   0.906      5      5     77       reset_sync_1_s0 -> c$ds3_app_arg (5 levels)
+  btb -> fetch                           8    0    0   0.936      7      7     52  yes  btb table RAM -> pInflight (7 levels)
+  structures with 7+ levels: E1 -> D (11), E1 -> E2 (10), machine -> cache (9), core-other -> cache (9), cache -> cache (8), btb -> btb (7), machine -> machine (7), fetch -> fetch (7), fetch -> btb (7), btb -> fetch (7), D -> E1 (7), E2 -> fetch (7), M -> D (7), machine -> core-other (7), D -> D (7)
+== im-sweep-20261108 f87 p3
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  machine -> machine                   332    0    3   0.102      5      7     74  yes  machine -> machine (4 levels)
+  machine -> fetch                      70    0    4   0.254      4      6     81       machine -> pInflight (4 levels)
+  fetch -> btb                          14    0    1   0.461      7      7     68  yes  pFetchPc -> btb table RAM (7 levels)
+  machine -> cache                     334    0    1   0.483      5      9     72       machine -> cache (9 levels)
+  E1 -> D                                1    0    0   0.785     11     11     56       E1.e1A -> pDBlocked (11 levels)
+  fetch -> fetch                        53    0    0   0.827      7      7     65  yes  pFetchPc -> pFetchPc (7 levels)
+  cache -> cache                        69    0    0   0.849      7      9     53  yes  cache -> cache (5 levels)
+  machine -> A                          53    0    0   1.130      4      4     77       machine -> pA (4 levels)
+  structures with 7+ levels: E1 -> D (11), E1 -> E2 (11), machine -> cache (9), cache -> cache (9), E2 -> E2 (9), machine -> machine (7), fetch -> btb (7), fetch -> fetch (7), M -> D (7), machine -> E1 (7), machine -> D (7), D -> E1 (7), E2 -> fetch (7), D -> D (7), machine -> core-other (7)
+== im-sweep-20261108 f87 p4
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  M -> D                                13    1    1  -0.003      6      9     73       pMSlot -> pDBlocked (9 levels)
+  machine -> machine                   213    0    5   0.098      5      7     77  yes  machine -> machine (5 levels)
+  cache -> cache                        66    0    3   0.103      6      7     55  yes  cache -> cache (6 levels)
+  reset_sync_1_s0 -> F (CE)            192    0   99   0.417      4      4     85       reset_sync_1_s0 -> pFQueue (4 levels)
+  D -> D                                51    0    1   0.467      6      7     71  yes  D.fWord -> pDOperands (7 levels)
+  fetch -> btb                          10    0    1   0.483      7      7     63  yes  pFetchPc -> btb table RAM (7 levels)
+  E1 -> E2                              55    0    0   0.516      7      8     64       E1.e1A -> E2.e2Candidates (8 levels)
+  D -> E1                               89    0    0   0.668      5      6     75       D.fWord -> E1.e1A (6 levels)
+  structures with 7+ levels: M -> D (9), core-other -> cache (9), E1 -> E2 (8), machine -> machine (7), cache -> cache (7), D -> D (7), fetch -> btb (7), fetch -> fetch (7)
+== lut-eq-and-20261109 f87 p0
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  E1 -> D                                1    1    1  -1.679     12     12     59       E1.e1A -> pDBlocked (12 levels)
+  fetch -> btb                          14   14   14  -1.531      9      9     65  yes  pFetchPc -> btb table RAM (9 levels)
+  fetch -> fetch                        64    5   27  -1.166      8      9     66  yes  pFetchPc -> pFetchPc (9 levels)
+  E1 -> E2                              59    5   11  -1.080      8     10     63       E1.e1A -> E2.e2Candidates (8 levels)
+  machine -> machine                   136    4    6  -0.290      5      7     74  yes  machine -> machine (6 levels)
+  D -> E1                               60    1    4  -0.078      7      7     71       D.fWord -> E1.e1Op2 (7 levels)
+  machine -> D                          14    0    1   0.098      7      7     67       machine -> pDOperands (7 levels)
+  reset_sync_1_s0 -> F (CE)            190    0   99   0.403      4      4     82       reset_sync_1_s0 -> pFQueue (4 levels)
+  structures with 7+ levels: E1 -> D (12), E1 -> E2 (10), fetch -> btb (9), fetch -> fetch (9), core-other -> cache (9), cache -> cache (8), machine -> machine (7), D -> E1 (7), machine -> D (7), D -> D (7), reset_sync_1_s0 -> cache (7), M -> E1 (7), machine -> E1 (7), M -> D (7)
+== lut-eq-and-20261109 f87 p1
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  E1 -> D                                1    1    1  -1.514     12     12     55       E1.e1A -> pDBlocked (12 levels)
+  fetch -> btb                          14   14   14  -1.504      9      9     66  yes  pFetchPc -> btb table RAM (9 levels)
+  E1 -> E2                              58    6   10  -1.297      8      9     65       E1.e1A -> E2.e2Candidates (8 levels)
+  fetch -> fetch                        64    1   15  -1.191      8      9     67  yes  pFetchPc -> pFetchPc (9 levels)
+  machine -> machine                   142    1    3  -0.636      5      7     76  yes  heldState -> heldState (5 levels)
+  D -> E1                               51    0    3   0.058      6      7     74       D.fWord -> E1.e1A (6 levels)
+  cache -> cache                        63    0    1   0.259      5      6     51  yes  cache -> cache (5 levels)
+  core-other -> cache                  240    0    0   0.655      5      9     74       request -> cache (9 levels)
+  structures with 7+ levels: E1 -> D (12), fetch -> btb (9), E1 -> E2 (9), fetch -> fetch (9), core-other -> cache (9), machine -> machine (7), D -> E1 (7), machine -> E1 (7), D -> D (7), machine -> D (7)
+== lut-eq-and-20261109 f87 p3
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  E1 -> D                                1    1    1  -1.369     12     12     59       E1.e1A -> pDBlocked (12 levels)
+  fetch -> btb                          14   14   14  -1.344      9      9     64  yes  pFetchPc -> btb table RAM (9 levels)
+  fetch -> fetch                        52    2    4  -0.234      8      9     65  yes  pFetchPc -> pFetchPc (9 levels)
+  E1 -> E2                              72    0    0   0.708      7     10     62       E1.e1A -> E2.e2Candidates (9 levels)
+  core-other -> cache                  339    0    0   0.892      5      9     77       request -> cache (9 levels)
+  core-other -> machine                 17    0    0   0.894      3      4     87       emergency_s0 -> machine (3 levels)
+  machine -> machine (CE)              515    0    0   0.936      3      5     83  yes  machine -> machine (5 levels)
+  machine -> machine                   375    0    0   0.951      5      7     75  yes  machine -> machine (6 levels)
+  structures with 7+ levels: E1 -> D (12), E1 -> E2 (10), fetch -> btb (9), fetch -> fetch (9), core-other -> cache (9), cache -> cache (8), core-other -> core-other (8), machine -> machine (7), D -> E1 (7), D -> D (7), M -> E1 (7), M -> D (7)
+== lut-eq-and-20261109 f87 p4
+  structure                          paths fail <0.5   worst lv med lv max route%  loop  worst path
+  E1 -> D                                1    1    1  -0.261     13     13     52       E1.e1A -> pDBlocked (13 levels)
+  machine -> machine                   283    2    3  -0.250      5      7     76  yes  heldState -> heldState (6 levels)
+  fetch -> btb                          14    1    3  -0.087      9      9     58  yes  pFetchPc -> btb table RAM (9 levels)
+  fetch -> fetch                        60    0    1   0.423      8      9     56  yes  pFetchPc -> pFetchPc (9 levels)
+  reset_sync_1_s0 -> F (CE)            187    0    0   1.100      4      4     82       reset_sync_1_s0 -> pFQueue (4 levels)
+  cache -> cache                        64    0    0   1.128      7      7     49  yes  cache -> cache (5 levels)
+  reset_sync_1_s0 -> core-other         25    0    0   1.259      5      5     76       reset_sync_1_s0 -> c$ds3_app_arg (5 levels)
+  core-other -> cache                  312    0    0   1.430      5      8     69       request -> cache (8 levels)
+  structures with 7+ levels: E1 -> D (13), E1 -> E2 (11), fetch -> btb (9), fetch -> fetch (9), core-other -> cache (8), core-other -> core-other (8), machine -> machine (7), cache -> cache (7), reset_sync_1_s0 -> cache (7), D -> E1 (7), M -> D (7), M -> E1 (7), D -> D (7), E2 -> fetch (7)

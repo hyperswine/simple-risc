@@ -1,0 +1,16 @@
+# Gowin synthesis (V1.9.12.04, GW2AR-18C) of each module in spellings.v as its own top: cells
+f1:  7 ALU 1 LUT3
+f2:  7 ALU 1 LUT3
+f3:  5 LUT4
+f4:  6 ALU 1 INV 2 LUT3
+f5:  6 ALU 1 INV 2 LUT3
+f6:  9 LUT2 2 LUT4
+f7:  5 LUT4
+f8:  3 ALU 1 LUT2 1 LUT3 2 LUT4
+f9:  4 ALU 1 LUT3
+f10:  3 ALU 1 LUT3
+f11:  5 LUT4
+f12:  3 LUT4
+f13:  5 LUT4
+f14:  7 ALU 1 LUT3
+f15:  7 LUT4

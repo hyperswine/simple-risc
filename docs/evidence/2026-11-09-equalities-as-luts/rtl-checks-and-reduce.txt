@@ -1,0 +1,73 @@
+Traceback (most recent call last):
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/bootrom/build_readback_rom.py", line 56, in <module>
+    main()
+    ~~~~^^
+  File "/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/bootrom/build_readback_rom.py", line 20, in main
+    out.mkdir(parents=True, exist_ok=False)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.15/3.15.2/Frameworks/Python.framework/Versions/3.15/lib/python3.15/pathlib/__init__.py", line 1210, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/Users/jasonqin/Documents/GitHub/simple-risc/output/ci-readback-rom'
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.270s
+GHC: Compiling and loading modules took: 28.637s
+Clash: Parsing and compiling primitives took 0.092s
+GHC+Clash: Loading modules cumulatively took 53.462s
+Clash: Compiling SdramPipelineObserved.topEntity
+Clash: Compiling SdramPipeline.topEntity
+Clash: Compiling SimpleRisc.topEntity
+Clash: Normalization took 42.611s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.289s
+Clash: Normalization took 1m4s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.689s
+Clash: Normalization took 1m12s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 0.950s
+Clash: Compiling SimpleRisc.topEntity took 1m27s
+Clash: Compiling SdramPipelineObserved.topEntity took 1m45s
+Clash: Compiling SdramPipeline.topEntity took 1m50s
+Clash: Total compilation took 2m44s
+== --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 109 fills 36 writes
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== --cache-ways 2 --cache-line-bits 11
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: pipeline/cache guest, high RAM, masked stores, fence.i, IM/branches/traps, eight timer interrupts across misses, counters and Ctrl-C; 107 fills 36 writes
+PASS: corrupt backend beat is rejected by the executing guest
+PASS: duplicate and wrong-path store controls are rejected by the effect monitor
+exit 0
+== --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 12
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== --boot-loader --loader-command U --uart-bit-cycles 32 --cache-ways 1 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C/G framed upload, CRC32 ack and readback, guarded execution and trap DONE
+exit 0
+== --boot-loader --loader-command U --upload-pattern zero --upload-words 16 --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+== --boot-loader --loader-command U --upload-pattern sequence --upload-words 16 --raw-readback --rom-file output/ci-readback-rom/readback.hex --cache-ways 2 --cache-line-bits 7
+memory-refetch: PASS
+stale-prefetch: PASS
+surviving-buffer: PASS
+PASS: ROM I/U/C upload-only, three readback CRCs and backing memory; no guest executed
+exit 0
+RTL-CHECKS-DONE

@@ -1,0 +1,13 @@
+# Synthesized netlists at 87 MHz, Gowin V1.9.12.04
+## canon 6418ad2 (im-sweep-20261108/f87-p3): Logic 12684 (11692 LUT, 800 ALU, 32 RAM16)
+443 mode-3 (equality) ALU cells in 56 chains; chain lengths: [(1, 2), (2, 22), (3, 2), (4, 2), (5, 10), (8, 3), (10, 1), (11, 2), (14, 1), (17, 1), (19, 4), (22, 2), (31, 2), (32, 2)]
+ALU modes:  165 ALU_MODE=0 155 ALU_MODE=1 37 ALU_MODE=2 443 ALU_MODE=3
+cells:  800 ALU 72 DFF 26 DFFC 324 DFFCE 1031 DFFE 4 DFFP 95 DFFR 3644 DFFRE 16 DFFS 104 DFFSE 1091 LUT2 1436 LUT3 2565 LUT4
+## xor-reduce spelling, ~|(a ^ b) (lut-eq-20261109/f87-p3): re-inferred as chains
+450 mode-3 (equality) ALU cells in 58 chains; chain lengths: [(1, 2), (2, 24), (3, 2), (4, 2), (5, 10), (8, 3), (10, 1), (11, 2), (16, 1), (17, 1), (19, 4), (22, 2), (31, 1), (32, 3)]
+ALU modes:  165 ALU_MODE=0 157 ALU_MODE=1 37 ALU_MODE=2 450 ALU_MODE=3
+cells:  809 ALU 72 DFF 26 DFFC 324 DFFCE 1031 DFFE 4 DFFP 100 DFFR 3638 DFFRE 25 DFFS 95 DFFSE 1016 LUT2 1572 LUT3 2620 LUT4
+## and-reduce spelling, &(~(a ^ b)) (lut-eq-and-20261109/f87-p3): Logic 12761 (11810 LUT, 759 ALU, 32 RAM16)
+400 mode-3 (equality) ALU cells in 50 chains; chain lengths: [(1, 2), (2, 24), (3, 2), (4, 2), (5, 4), (8, 2), (10, 2), (16, 1), (17, 1), (19, 4), (22, 2), (31, 1), (32, 3)]
+ALU modes:  165 ALU_MODE=0 157 ALU_MODE=1 37 ALU_MODE=2 400 ALU_MODE=3
+cells:  759 ALU 72 DFF 26 DFFC 324 DFFCE 1031 DFFE 4 DFFP 139 DFFR 3600 DFFRE 17 DFFS 103 DFFSE 992 LUT2 1754 LUT3 2890 LUT4

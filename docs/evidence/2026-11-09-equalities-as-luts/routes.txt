@@ -1,0 +1,9 @@
+im-sweep-20261108 f87 p3: 87.777 MHz Fmax, 0.102 ns worst setup slack; 0 setup / 0 hold violating endpoints
+im-sweep-20261108 f87 p0: 86.706 MHz Fmax, -0.039 ns worst setup slack; 2 setup / 0 hold violating endpoints
+im-sweep-20261108 f87 p1: 88.295 MHz Fmax, 0.169 ns worst setup slack; 0 setup / 0 hold violating endpoints
+im-sweep-20261108 f87 p4: 86.981 MHz Fmax, -0.003 ns worst setup slack; 1 setup / 0 hold violating endpoints
+lut-eq-and-20261109 f87 p3: 77.743 MHz Fmax, -1.369 ns worst setup slack; 17 setup / 0 hold violating endpoints
+lut-eq-and-20261109 f87 p0: 75.911 MHz Fmax, -1.679 ns worst setup slack; 30 setup / 0 hold violating endpoints
+lut-eq-and-20261109 f87 p1: 76.872 MHz Fmax, -1.514 ns worst setup slack; 23 setup / 0 hold violating endpoints
+lut-eq-and-20261109 f87 p4: 85.065 MHz Fmax, -0.261 ns worst setup slack; 4 setup / 0 hold violating endpoints
+lut-eq-20261109 (xor-reduce, chains re-inferred) f87 p3: 79.151 MHz Fmax, -1.140 ns worst setup slack; 15 setup / 0 hold violating endpoints

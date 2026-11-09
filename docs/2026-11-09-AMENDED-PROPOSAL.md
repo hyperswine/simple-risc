@@ -168,3 +168,17 @@ The paths quoted are from the 2026-11-08 IM clock sweep
 reports under `output/tangnano20k/im-sweep-20261108/`; the cell-level arcs
 are in those reports' setup analysis (`f87-p0`, `f87-p4`, `f90-p0`,
 `f90-p4`).
+
+## Step 1 carried out, 2026-11-09
+
+Step 1 was built and measured the same day and is **withdrawn**: see
+[EQUALITIES-AS-LUTS](2026-11-09-EQUALITIES-AS-LUTS.md). The equality
+chains went where they were aimed (443 to 400 mode-3 ALU cells) and every
+placement then missed 87 MHz by 0.26 to 1.68 ns, on exactly the loops the
+step touched. The premise above was wrong: a carry chain on this part is
+0.549 ns plus 0.035 ns a cell with zero-delay carries, so an 8-bit compare
+is 0.79 ns with one net in and one out, and a two-level LUT tree adds a
+routed net of 1 to 2 ns. The loops' cost is their routed nets after the
+compare, not the compare; the replacement for step 1, a fetch stage in which
+`hit` is the last select of the table address, is set out on that page.
+Steps 2 to 5 stand.
