@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/fast-probe/tb_probe.v:29: Mismatch cycle=4 lfsr=00000003/00000002 counter=00000001/00000001 bram=00000000/00000000 add=13579bdf
+       Time: 900000  Scope: tb_probe

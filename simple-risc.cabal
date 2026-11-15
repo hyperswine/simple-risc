@@ -40,7 +40,10 @@ library
   import: warnings, deps
   hs-source-dirs: src
   exposed-modules:
-        PsramRegs
+        CoreMini
+      , CoreProbes
+      , Deflate
+      , PsramRegs
       , RiscVCompressed
       , SdramPipeline
       , SdramPipelineObserved
@@ -72,7 +75,9 @@ test-suite simple-risc-test
   main-is: Spec.hs
   hs-source-dirs: test
   other-modules:
-      PsramRegs
+      CoreMini
+    , Deflate
+    , PsramRegs
     , FQueueVariant
     , Rv32Model
     , SimpleRisc

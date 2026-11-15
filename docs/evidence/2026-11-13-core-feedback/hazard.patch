@@ -1,0 +1,119 @@
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -864,7 +864,10 @@
+ fetchedWord :: (Word32, Word32) -> Word32 -> Fetched
+ fetchedWord (pc, predicted) word =
+   let opcode = word .&. 0x7f
+-   in Fetched pc word (opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f) (opcode == 0x33 || opcode == 0x23 || opcode == 0x63) predicted word 4
++      uses1 = opcode /= 0x37 && opcode /= 0x17 && opcode /= 0x6f
++      uses2 = opcode == 0x33 || opcode == 0x23 || opcode == 0x63
++      source used reg = if used then fromIntegral reg else 32
++   in Fetched pc word uses1 uses2 (source uses1 (instructionRs1 word)) (source uses2 (instructionRs2 word)) predicted word 4
+ 
+ btbIndex :: Word32 -> BtbIndex
+ btbIndex pc = fromIntegral (resize (pc `shiftR` 2) :: Unsigned 7)
+@@ -973,7 +976,7 @@
+ 
+ initialStagePayloads :: StagePayloads
+ initialStagePayloads =
+-  StagePayloads (Fetched 0 0 False False 0 0 4) emptyExecuteOne emptyExecuteTwo emptyMemoryStage
++  StagePayloads (Fetched 0 0 False False 32 32 0 0 4) emptyExecuteOne emptyExecuteTwo emptyMemoryStage
+ 
+ -- | Replace the pipeline state, for a circuit that keeps it in its own
+ -- clock-enabled register: 'cpuPipe' is the largest single field, so taking it
+@@ -1012,16 +1015,16 @@
+     0
+     0
+     (repeat Nothing)
+-    (repeat (Fetched 0 0 False False 0 0 4))
++    (repeat (Fetched 0 0 False False 32 32 0 0 4))
+     0
+     0
+     0
+     Nothing
+-    (repeat (Fetched 0 0 False False 0 0 4))
++    (repeat (Fetched 0 0 False False 32 32 0 0 4))
+     0
+     0
+     0
+-    (Slot False (Fetched 0 0 False False 0 0 4))
++    (Slot False (Fetched 0 0 False False 32 32 0 0 4))
+     (0, 0)
+     False
+     False
+@@ -1597,7 +1600,7 @@
+               -- full address-map decode out of FIFO consumption/accounting.
+               if straddle && not refetch && isNothing secondWord
+                 then (Nothing, False, False)
+-                else (Just (Fetched instructionPc raw False False predictedPc raw size), wordDone, straddleTaken)
++                else (Just (Fetched instructionPc raw False False 32 32 predictedPc raw size), wordDone, straddleTaken)
+       cConsume = aFree && headDone
+       consumed = if secondDone then 2 else 1 :: Unsigned 3
+       writePointer'
+@@ -1624,7 +1627,7 @@
+       -- The decision reads A's raw bits only (no RV32C expansion, adder or
+       -- 32-bit compare): it ends at pRedirectFront. The target adder and
+       -- the stack read are data, ending at pFrontTarget and F's payload.
+-      aFetched = fromMaybe (Fetched 0 0 False False 0 0 4) (pA pipe)
++      aFetched = fromMaybe (Fetched 0 0 False False 32 32 0 0 4) (pA pipe)
+       aLink = fPc aFetched + resize (fSize aFetched)
+       aClass = rawControl (fSize aFetched) (fRaw aFetched)
+       rasTop = pRas pipe !! pRasTop pipe
+--- a/src/SimpleRisc/Types.hs
++++ b/src/SimpleRisc/Types.hs
+@@ -721,6 +721,8 @@
+     fWord :: Word32,
+     fUsesRs1 :: Bool,
+     fUsesRs2 :: Bool,
++    fHazardRs1 :: Unsigned 6,
++    fHazardRs2 :: Unsigned 6,
+     -- | The pc fetched after it (the branch target buffer's prediction).
+     fPredicted :: Word32,
+     fRaw :: Word32,
+--- a/src/SimpleRisc/Decode.hs
++++ b/src/SimpleRisc/Decode.hs
+@@ -116,9 +116,7 @@
+ decodeHazard fetched one two memory = case fetched of
+   Nothing -> False
+   Just f ->
+-    let rs1 = instructionRs1 (fWord f)
+-        rs2 = instructionRs2 (fWord f)
+-        conflicts r writing = writing && ((fUsesRs1 f && rs1 == r) || (fUsesRs2 f && rs2 == r))
++    let conflicts r writing = writing && (fHazardRs1 f == fromIntegral r || fHazardRs2 f == fromIntegral r)
+      in maybe False (\x -> conflicts (e1Rd x) (e1Writes x)) one
+           || maybe False (\x -> conflicts (e2Rd x) (e2Writes x) && not (e2Forwards x)) two
+           || maybe False (\m -> not (mFinal m) && conflicts (mRd m) (mWrites m)) memory
+--- a/test/SimpleRisc.hs
++++ b/test/SimpleRisc.hs
+@@ -2312,7 +2312,7 @@
+   memoryWord <- forAll (Gen.integral Range.constantBounded)
+   let word = rType 0 rs2 rs1 0 9
+       decoded = fetchedWord (ramBase+2,ramBase+6) word
+-      aligned = Fetched ramBase (resize raw) False False (ramBase+2) (resize raw) 2
++      aligned = Fetched ramBase (resize raw) False False 32 32 (ramBase+2) (resize raw) 2
+       pipe = emptyPipe {pA=Just aligned,pFQueue=decoded :> decoded :> Nil,pFCount=1,pFWrite=1}
+       before = (runningMachine []) {cpuCompressed=True,cpuPipe=pipe}
+       (after,_,_) = pipeStep before memoryWord
+@@ -2460,9 +2460,9 @@
+       word <- Gen.integral Range.constantBounded
+       pc <- Gen.integral Range.constantBounded
+       size <- Gen.element [2,4]
+-      pure (Fetched pc word False False (pc+4) word size)
++      pure (Fetched pc word False False 32 32 (pc+4) word size)
+     pure (resetNow,cancel,advance,pop,offered)
+-  let empty = Fetched 0 0 False False 0 0 4
++  let empty = Fetched 0 0 False False 32 32 0 0 4
+       initial = (repeat empty :: Vec 2 Fetched,0 :: Index 2,0 :: Index 2,0 :: Unsigned 2)
+       toggle i = if i == 0 then 1 else 0
+       expand f =
+--- a/test/FQueueVariant.hs
++++ b/test/FQueueVariant.hs
+@@ -22,7 +22,7 @@
+ fQueueStorage :: HiddenClockResetEnable dom => Signal dom (Maybe (Index 2, R.Fetched)) -> Signal dom (Vec 2 R.Fetched)
+ fQueueStorage pending = bundle (imap bank (repeat ()))
+  where
+- empty = R.Fetched 0 0 False False 0 0 4
++ empty = R.Fetched 0 0 False False 32 32 0 0 4
+  bank index _ = regEn empty
+    ((\write -> maybe False ((==index) . fst) write) <$> pending)
+    ((\write -> maybe empty snd write) <$> pending)

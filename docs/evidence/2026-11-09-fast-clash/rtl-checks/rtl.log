@@ -1,0 +1,2 @@
+PASS 20000 cycles: Clash and independent Verilog agree through holds, resets and RAM wraps
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/fast-probe/tb_probe.v:32: $finish called at 2000400000 (100fs)

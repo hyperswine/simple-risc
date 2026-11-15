@@ -1,0 +1,1982 @@
+{
+  "restore_sha256": "64664f41c869e9110857ddf5b5df9797c0c4c3a38f750765646ec7fcd71fc261",
+  "tests": [
+    {
+      "frequency_mhz": 607.5,
+      "placement": 0,
+      "bitstream_sha256": "1e6d4dda672ddcf2668d0b46e902327f87b58ceb742dd5df4b3f23e07513d825",
+      "sta": {
+        "fmax_mhz": 809.973,
+        "slack_ns": 0.411,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "probe/q_1_31_s0/Q",
+        "end": "probe/q_1_0_s0/D",
+        "levels": 2,
+        "cell_ns": 0.549,
+        "route_ns": 0.419,
+        "bsram": 0,
+        "logic": 691,
+        "register": 284,
+        "cls": 393,
+        "netlist_sha256": "92abc54e8d349c013b01c70d93b6687eab21807b2399ecfd454cf82d4f4bb461"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1474560,
+          "state": "cc734fc5",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1480320,
+          "state": "4affba4b",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1486080,
+          "state": "d1d3afa8",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1491840,
+          "state": "0c03bf1e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1497600,
+          "state": "9fddf703",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1503360,
+          "state": "5ce7ace6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1509120,
+          "state": "68395013",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1514880,
+          "state": "83fa9dde",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1520640,
+          "state": "f65929d2",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1526400,
+          "state": "38f1652e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1532160,
+          "state": "2702e85e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1537920,
+          "state": "9c9d1ff4",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1543680,
+          "state": "30c3adee",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1549440,
+          "state": "0e9d2762",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1555200,
+          "state": "14bcc02e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1560960,
+          "state": "7de3fe5f",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1566720,
+          "state": "f53c55d2",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1572480,
+          "state": "305f20b0",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1578240,
+          "state": "db15b4a5",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1584000,
+          "state": "493b1053",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1589760,
+          "state": "fc703dbe",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1595520,
+          "state": "b2548680",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1601280,
+          "state": "4a6cbea1",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1607040,
+          "state": "2114bcae",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1612800,
+          "state": "7fa347b6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1618560,
+          "state": "3220d1f2",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1624320,
+          "state": "fa83ec38",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1630080,
+          "state": "ed7d5da8",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1635840,
+          "state": "0ed5d09c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1641600,
+          "state": "ef0d55b6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1647360,
+          "state": "88718be4",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1653120,
+          "state": "60ffe3cb",
+          "passes": true,
+          "boundary_offset": 0
+        }
+      ],
+      "passes": true,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 621.0,
+      "placement": 0,
+      "bitstream_sha256": "ece2f76ca1e8af183e3b3ca41f4b1528ea0721148e151dbc59cbed96654f2ab0",
+      "sta": {
+        "fmax_mhz": 693.75,
+        "slack_ns": 0.169,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "run_sync_1_s1/Q",
+        "end": "probe/q_1_28_s0/CE",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.175,
+        "bsram": 0,
+        "logic": 688,
+        "register": 284,
+        "cls": 391,
+        "netlist_sha256": "2515b5c7df20a999f74ed435d126ffeae14a46e15cfc30d0592230c5aca5e2d3"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1507328,
+          "state": "533392c3",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1513216,
+          "state": "ab07ccdc",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1519104,
+          "state": "ee840293",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1524992,
+          "state": "4b07f507",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1530880,
+          "state": "5cb24b88",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1536768,
+          "state": "1cb1f6fa",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1542656,
+          "state": "c48e4384",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1548544,
+          "state": "77f995e4",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1554432,
+          "state": "bbc9863b",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1560320,
+          "state": "703fe80e",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1566208,
+          "state": "fdf42288",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1572096,
+          "state": "8b79db1b",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1577984,
+          "state": "15c238b8",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1583872,
+          "state": "6ef5ba50",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1589760,
+          "state": "f8f03dbd",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1595648,
+          "state": "6ccfa419",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1601536,
+          "state": "d1724d36",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1607424,
+          "state": "d1803ef4",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1613312,
+          "state": "d1c783de",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1619200,
+          "state": "75c0410a",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1625088,
+          "state": "ba700a1c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1630976,
+          "state": "c3063304",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1636864,
+          "state": "50026b82",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1642752,
+          "state": "370dfa3f",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1648640,
+          "state": "cc31ba73",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1654528,
+          "state": "7fc7bf52",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1660416,
+          "state": "3081f09c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1666304,
+          "state": "d7c60089",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1672192,
+          "state": "2245fdae",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1678080,
+          "state": "3800441d",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1683968,
+          "state": "6b700e80",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1689856,
+          "state": "9700539f",
+          "passes": false,
+          "boundary_offset": null
+        }
+      ],
+      "passes": false,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 621.0,
+      "placement": 1,
+      "bitstream_sha256": "9a9e5c51e75445cbf5ef84e00e746c801d90bab0da9b3c08b5861126b5d56caa",
+      "sta": {
+        "fmax_mhz": 674.041,
+        "slack_ns": 0.127,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "run_sync_1_s1/Q",
+        "end": "probe/q_1_4_s0/CE",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.218,
+        "bsram": 0,
+        "logic": 688,
+        "register": 284,
+        "cls": 392,
+        "netlist_sha256": "2515b5c7df20a999f74ed435d126ffeae14a46e15cfc30d0592230c5aca5e2d3"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1507328,
+          "state": "299392c9",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1513216,
+          "state": "d586ccde",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1519104,
+          "state": "77440291",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1524992,
+          "state": "a587f50b",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1530880,
+          "state": "2e524b84",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1536768,
+          "state": "8e51f6f5",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1542656,
+          "state": "e24f4382",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1548544,
+          "state": "3bf995ea",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1554432,
+          "state": "dde88635",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1560320,
+          "state": "381ee807",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1566208,
+          "state": "fef4228c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1572096,
+          "state": "c5b8db15",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1577984,
+          "state": "8ae338bc",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1583872,
+          "state": "b775ba50",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1589760,
+          "state": "fc703dbe",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1595648,
+          "state": "366fa414",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1601536,
+          "state": "e8b34d33",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1607424,
+          "state": "e8c13efa",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1613312,
+          "state": "e8e783d7",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1619200,
+          "state": "3ae04105",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1625088,
+          "state": "5d300a16",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1630976,
+          "state": "e1863302",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1636864,
+          "state": "a8036b89",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1642752,
+          "state": "9b8cfa37",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1648640,
+          "state": "6611ba79",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1654528,
+          "state": "3fe6bf59",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1660416,
+          "state": "9840f096",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1666304,
+          "state": "6be7008c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1672192,
+          "state": "9124fdaf",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1678080,
+          "state": "1c01441e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1683968,
+          "state": "b5b10e80",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1689856,
+          "state": "cb80539f",
+          "passes": true,
+          "boundary_offset": 0
+        }
+      ],
+      "passes": true,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 621.0,
+      "placement": 2,
+      "bitstream_sha256": "dce5be68c096247e0f16e0d228dd4f277bcbd505a27d40033e8a37807acd87c6",
+      "sta": {
+        "fmax_mhz": 674.041,
+        "slack_ns": 0.127,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "run_sync_1_s1/Q",
+        "end": "probe/q_1_4_s0/CE",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.218,
+        "bsram": 0,
+        "logic": 688,
+        "register": 284,
+        "cls": 392,
+        "netlist_sha256": "2515b5c7df20a999f74ed435d126ffeae14a46e15cfc30d0592230c5aca5e2d3"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1507328,
+          "state": "299392c9",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1513216,
+          "state": "d586ccde",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1519104,
+          "state": "77440291",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1524992,
+          "state": "a587f50b",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1530880,
+          "state": "2e524b84",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1536768,
+          "state": "8e51f6f5",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1542656,
+          "state": "e24f4382",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1548544,
+          "state": "3bf995ea",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1554432,
+          "state": "dde88635",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1560320,
+          "state": "381ee807",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1566208,
+          "state": "fef4228c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1572096,
+          "state": "c5b8db15",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1577984,
+          "state": "8ae338bc",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1583872,
+          "state": "b775ba50",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1589760,
+          "state": "fc703dbe",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1595648,
+          "state": "366fa414",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1601536,
+          "state": "e8b34d33",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1607424,
+          "state": "e8c13efa",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1613312,
+          "state": "e8e783d7",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1619200,
+          "state": "3ae04105",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1625088,
+          "state": "5d300a16",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1630976,
+          "state": "e1863302",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1636864,
+          "state": "a8036b89",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1642752,
+          "state": "9b8cfa37",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1648640,
+          "state": "6611ba79",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1654528,
+          "state": "3fe6bf59",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1660416,
+          "state": "9840f096",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1666304,
+          "state": "6be7008c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1672192,
+          "state": "9124fdaf",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1678080,
+          "state": "1c01441e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1683968,
+          "state": "b5b10e80",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1689856,
+          "state": "cb80539f",
+          "passes": true,
+          "boundary_offset": 0
+        }
+      ],
+      "passes": true,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 621.0,
+      "placement": 3,
+      "bitstream_sha256": "0c078a0bd3ad0e5afefc15b04504f272ff462a8d8246cc136865b3726e8d4225",
+      "sta": {
+        "fmax_mhz": 710.027,
+        "slack_ns": 0.202,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "run_sync_1_s1/Q",
+        "end": "probe/q_1_31_s0/CE",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.142,
+        "bsram": 0,
+        "logic": 688,
+        "register": 284,
+        "cls": 389,
+        "netlist_sha256": "2515b5c7df20a999f74ed435d126ffeae14a46e15cfc30d0592230c5aca5e2d3"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1507328,
+          "state": "699391c3",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1513216,
+          "state": "9587cddc",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1519104,
+          "state": "77040113",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1524992,
+          "state": "e587f603",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1530880,
+          "state": "6e124b0c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1536768,
+          "state": "8e11f5fe",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1542656,
+          "state": "e20e4300",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1548544,
+          "state": "7bf997e0",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1554432,
+          "state": "9de9843f",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1560320,
+          "state": "781fe806",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1566208,
+          "state": "fef4210c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1572096,
+          "state": "85f9da1f",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1577984,
+          "state": "8ae2393c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1583872,
+          "state": "f775b8d0",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1589760,
+          "state": "fc703f3d",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1595648,
+          "state": "766fa41d",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1601536,
+          "state": "e8f24e32",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1607424,
+          "state": "e8803df0",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1613312,
+          "state": "e8e783de",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1619200,
+          "state": "7ae0420e",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1625088,
+          "state": "1d70081c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1630976,
+          "state": "e1863200",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1636864,
+          "state": "e8026b02",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1642752,
+          "state": "9b8df83f",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1648640,
+          "state": "6611b8f3",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1654528,
+          "state": "7fe7bed2",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1660416,
+          "state": "9801f11c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1666304,
+          "state": "6be6010d",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1672192,
+          "state": "9165ff2e",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1678080,
+          "state": "1c00441d",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1683968,
+          "state": "f5f00d00",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1689856,
+          "state": "8b80531f",
+          "passes": false,
+          "boundary_offset": null
+        }
+      ],
+      "passes": false,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 621.0,
+      "placement": 4,
+      "bitstream_sha256": "9f35e9f0c5ae4805f88a309fb8bfd01a0852e002a26b633f2ff9a5910f0305c0",
+      "sta": {
+        "fmax_mhz": 779.338,
+        "slack_ns": 0.327,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "probe/q_1_13_s0/Q",
+        "end": "probe/q_1_14_s0/D",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.016,
+        "bsram": 0,
+        "logic": 688,
+        "register": 284,
+        "cls": 397,
+        "netlist_sha256": "2515b5c7df20a999f74ed435d126ffeae14a46e15cfc30d0592230c5aca5e2d3"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1507328,
+          "state": "29939389",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1513216,
+          "state": "d586cd9e",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1519104,
+          "state": "77440311",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1524992,
+          "state": "a587f40b",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1530880,
+          "state": "2e524b04",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1536768,
+          "state": "8e51f7f5",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1542656,
+          "state": "e24f4302",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1548544,
+          "state": "3bf995ea",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1554432,
+          "state": "dde88675",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1560320,
+          "state": "381ee807",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1566208,
+          "state": "fef4230c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1572096,
+          "state": "c5b8da15",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1577984,
+          "state": "8ae3397c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1583872,
+          "state": "b775ba90",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1589760,
+          "state": "fc703d7e",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1595648,
+          "state": "366fa414",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1601536,
+          "state": "e8b34c73",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1607424,
+          "state": "e8c13ffa",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1613312,
+          "state": "e8e78397",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1619200,
+          "state": "3ae04005",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1625088,
+          "state": "5d300a16",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1630976,
+          "state": "e1863202",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1636864,
+          "state": "a8036b09",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1642752,
+          "state": "9b8cfa77",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1648640,
+          "state": "6611baf9",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1654528,
+          "state": "3fe6be99",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1660416,
+          "state": "9840f116",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1666304,
+          "state": "6be7010c",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1672192,
+          "state": "9124fd6f",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1678080,
+          "state": "1c01441e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1683968,
+          "state": "b5b10f00",
+          "passes": false,
+          "boundary_offset": null
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1689856,
+          "state": "cb80531f",
+          "passes": false,
+          "boundary_offset": null
+        }
+      ],
+      "passes": false,
+      "complete": true
+    },
+    {
+      "frequency_mhz": 594,
+      "placement": 0,
+      "bitstream_sha256": "4f70c32bbb4a9ec0f0ef7357968cf53a46251bddda2c1750c5ee0977190582bd",
+      "sta": {
+        "fmax_mhz": 767.685,
+        "slack_ns": 0.381,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "probe/q_1_1_s0/Q",
+        "end": "probe/q_1_2_s0/D",
+        "levels": 1,
+        "cell_ns": 0.0,
+        "route_ns": 1.036,
+        "bsram": 0,
+        "logic": 593,
+        "register": 284,
+        "cls": 345,
+        "netlist_sha256": "01cc62431dd81d6684771d44ed2eae8cba5e1b670f31e9c3ea21a11a31de08ad"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "cycles": 65536,
+          "steps": 1441792,
+          "state": "352fbb16",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 1,
+          "cycles": 65792,
+          "steps": 1447424,
+          "state": "c5be258e",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 2,
+          "cycles": 66048,
+          "steps": 1453056,
+          "state": "1036eaff",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 3,
+          "cycles": 66304,
+          "steps": 1458688,
+          "state": "c306c535",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 4,
+          "cycles": 66560,
+          "steps": 1464320,
+          "state": "04e180a2",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 5,
+          "cycles": 66816,
+          "steps": 1469952,
+          "state": "3b3217ff",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 6,
+          "cycles": 67072,
+          "steps": 1475584,
+          "state": "f120cde7",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 7,
+          "cycles": 67328,
+          "steps": 1481216,
+          "state": "f55bca2a",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 8,
+          "cycles": 67584,
+          "steps": 1486848,
+          "state": "c9ff2ac6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 9,
+          "cycles": 67840,
+          "steps": 1492480,
+          "state": "79c3afed",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 10,
+          "cycles": 68096,
+          "steps": 1498112,
+          "state": "21803841",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 11,
+          "cycles": 68352,
+          "steps": 1503744,
+          "state": "6f464ed6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 12,
+          "cycles": 68608,
+          "steps": 1509376,
+          "state": "5d7b3142",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 13,
+          "cycles": 68864,
+          "steps": 1515008,
+          "state": "6e42a434",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 14,
+          "cycles": 69120,
+          "steps": 1520640,
+          "state": "f65929d2",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 15,
+          "cycles": 69376,
+          "steps": 1526272,
+          "state": "ac9d0942",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 16,
+          "cycles": 69632,
+          "steps": 1531904,
+          "state": "7ce57963",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 17,
+          "cycles": 69888,
+          "steps": 1537536,
+          "state": "bf48e572",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 18,
+          "cycles": 70144,
+          "steps": 1543168,
+          "state": "7d999e57",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 19,
+          "cycles": 70400,
+          "steps": 1548800,
+          "state": "aad61421",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 20,
+          "cycles": 70656,
+          "steps": 1554432,
+          "state": "dde88635",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 21,
+          "cycles": 70912,
+          "steps": 1560064,
+          "state": "05007000",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 22,
+          "cycles": 71168,
+          "steps": 1565696,
+          "state": "e715ea64",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 23,
+          "cycles": 71424,
+          "steps": 1571328,
+          "state": "136d4af1",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 24,
+          "cycles": 71680,
+          "steps": 1576960,
+          "state": "e4bedfaf",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 25,
+          "cycles": 71936,
+          "steps": 1582592,
+          "state": "4e634417",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 26,
+          "cycles": 72192,
+          "steps": 1588224,
+          "state": "26fae9df",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 27,
+          "cycles": 72448,
+          "steps": 1593856,
+          "state": "e77aff7c",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 28,
+          "cycles": 72704,
+          "steps": 1599488,
+          "state": "4521a1b5",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 29,
+          "cycles": 72960,
+          "steps": 1605120,
+          "state": "ad1f73cb",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 30,
+          "cycles": 73216,
+          "steps": 1610752,
+          "state": "9960ecb6",
+          "passes": true,
+          "boundary_offset": 0
+        },
+        {
+          "index": 31,
+          "cycles": 73472,
+          "steps": 1616384,
+          "state": "566b361b",
+          "passes": true,
+          "boundary_offset": 0
+        }
+      ],
+      "passes": true,
+      "complete": true
+    }
+  ],
+  "original_identity": "SRID1 isa=rv32im cpu=00000054 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=28ed47fb2abb9afc",
+  "restored_identity": "SRID1 isa=rv32im cpu=00000054 mem=00000030 ram=00800000 max=00200000 cap=PMXQVHTUICG id=28ed47fb2abb9afc",
+  "restored": true
+}

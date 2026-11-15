@@ -1,0 +1,6 @@
+frame 0 frequency=1215 cycles=256 state=45166d95
+frame 1 frequency=1215 cycles=256 state=d3d7715a
+frame 2 frequency=1215 cycles=256 state=5d1d13a5
+frame 3 frequency=1215 cycles=256 state=13930c30
+PASS continuous UART and 256-cycle snapshot pairs
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/fast-probe/tb_continuous.v:55: $finish called at 257314821429 (1fs)

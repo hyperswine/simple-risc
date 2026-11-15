@@ -1,0 +1,2 @@
+PASS /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/deflate/vectors/all-literals input=0 output=3 cycles=742
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/deflate/tb_deflate.v:51: $finish called at 74550000 (100fs)

@@ -1,0 +1,77 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+current device: GW2AR-18C  GW2AR-LV18QN88C8/I7
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/deflate_top.v"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/deflate-generated/Deflate.topEntity/deflate_inflate.v"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/vector_rom.v"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/pll.v"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/pins.cst"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/clocks.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/deflate_top.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/deflate-generated/Deflate.topEntity/deflate_inflate.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/vector_rom.v'
+Analyzing Verilog file '/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/pll.v'
+Compiling module 'top'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/deflate_top.v":6)
+Compiling module 'deflate_pll(FBDIV_SEL=27,ODIV_SEL=8)'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/pll.v":2)
+Compiling module 'vector_rom'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/vector_rom.v":3)
+Extracting RAM for identifier 'rom'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/vector_rom.v":4)
+WARN  (EX3791) : Expression size 17 truncated to fit in target size 16("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/deflate_top.v":38)
+Compiling module 'deflate_inflate'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/deflate-generated/Deflate.topEntity/deflate_inflate.v":6)
+Extracting RAM for identifier 'result_0_RAM'("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/deflate-generated/Deflate.topEntity/deflate_inflate.v":505)
+WARN  (EX3831) : Vector size is larger than 2**16 bits("/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/deflate-generated/Deflate.topEntity/deflate_inflate.v":507)
+NOTE  (EX0101) : Current top module is "top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/gwsynthesis/deflate_test.vg" completed
+[100%] Generate report file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/gwsynthesis/deflate_test_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/gwsynthesis/deflate_test.vg"
+Parsing netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/gwsynthesis/deflate_test.vg" completed
+Processing netlist completed
+Reading constraint file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/pins.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+WARN  (PR1014) : Generic routing resource will be used to clock signal 'clk_27m_d' by the specified constraint. And then it may lead to the excessive delay or skew
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.power.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.pin.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.rpt.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.rpt.txt" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.vo" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.tr.html" completed
+Generate file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/four-trials-20261110/deflate/p0/impl/pnr/deflate_test.tr" completed
+Tue Nov 10 02:02:28 2026
+

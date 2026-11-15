@@ -1,0 +1,11 @@
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.228s
+GHC: Compiling and loading modules took: 2.776s
+Clash: Parsing and compiling primitives took 0.087s
+GHC+Clash: Loading modules cumulatively took 4.471s
+Clash: Compiling Deflate.topEntity
+Clash: Normalization took 57.274s
+[1m[WARNING] Dubious primitive instantiation for GHC.Num.Integer.integerToInt#: GHC.Num.Integer.integerToInt#: Integers are dynamically sized in simulation, but fixed-length after synthesis. Use carefully. (disable with -fclash-no-prim-warn)
+[0mClash: Netlist generation took 1.324s
+Clash: Compiling Deflate.topEntity took 58.944s
+Clash: Total compilation took 1m3s

@@ -1,0 +1,6 @@
+frame 0 frequency=216 cycles=64 state=beace942
+frame 1 frequency=216 cycles=320 state=ae2bfbcb
+frame 2 frequency=216 cycles=576 state=308b5ab4
+frame 3 frequency=216 cycles=832 state=c9b1ab33
+PASS board wrapper UART, CDC window and signatures
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/fast-probe/tb_board.v:55: $finish called at 286277785145 (1fs)

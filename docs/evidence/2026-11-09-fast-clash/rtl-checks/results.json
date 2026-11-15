@@ -1,0 +1,14 @@
+{
+  "equivalence_cycles": 20000,
+  "circuits": 6,
+  "board_simulated_mhz": [
+    216,
+    607.5
+  ],
+  "negative_controls": [
+    "wrong RTL feedback",
+    "wrong signature with valid checksum",
+    "wrong checksum"
+  ],
+  "passes": true
+}

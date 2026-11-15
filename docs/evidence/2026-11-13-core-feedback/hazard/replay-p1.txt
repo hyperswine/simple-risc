@@ -1,0 +1,2 @@
+PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 87 MHz constraint, 87.381 MHz Fmax, 0.050 ns worst setup slack; 0 setup / 0 hold violating endpoints; 2.250 ns minimum pulse width slack
+Bitstream SHA-256 matched the original route: 6262e23e1d2cbab008059088f4c15ddad03d6648b6207392fb4b2af31bce5d24

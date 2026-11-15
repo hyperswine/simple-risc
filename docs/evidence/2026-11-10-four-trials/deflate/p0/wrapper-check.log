@@ -1,0 +1,2 @@
+PASS wrapper: midstream reset and two complete 16384-byte replays
+/Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/deflate/tb_deflate_fpga.v:37: $finish called at 6752200000 (100fs)

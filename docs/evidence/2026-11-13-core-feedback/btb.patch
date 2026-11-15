@@ -1,0 +1,83 @@
+--- a/src/SimpleRisc.hs
++++ b/src/SimpleRisc.hs
+@@ -1011,6 +1011,7 @@
+   Pipe
+     0
+     0
++    0
+     (repeat Nothing)
+     (repeat (Fetched 0 0 False False 0 0 4))
+     0
+@@ -1048,6 +1049,7 @@
+ restartPipe pc pipe =
+   pipe
+     { pFetchPc = pc,
++      pFetchIndex = btbIndex pc,
+       pInstructionPc = pc,
+       pInflight = repeat Nothing,
+       pQueueRead = 0,
+@@ -1671,7 +1673,7 @@
+       -- is followed by target + 4.
+       -- The stored entry, or last cycle's resolution if it is for this index
+       -- (the board's table supplies only the entry at the fetch index).
+-      fetchIndex = btbIndex (pFetchPc pipe)
++      fetchIndex = pFetchIndex pipe
+       entry = case pBtbWrite pipe of
+         Just (index, resolved) | not (cpuExternalMemory machine) && index == fetchIndex -> resolved
+         _ -> pBtb pipe !! fetchIndex
+@@ -1681,6 +1683,16 @@
+           && bTag entry == btbTag (pFetchPc pipe)
+           && (not (cpuCompressed machine) || not (testBit (pFetchPc pipe) 1) || bSlot entry)
+       predicted = if hit then bTarget entry else (if cpuCompressed machine then fetchPc .&. complement 3 else fetchPc) + 4
++      -- Align the table address with the new PC even across redirects and holds.
++      sequentialIndex pc = btbIndex ((if cpuCompressed machine then pc .&. complement 3 else pc) + 4)
++      normalIndex
++        | not issue = fetchIndex
++        | bValid entry && bTag entry == btbTag (pFetchPc pipe)
++            && (not (cpuCompressed machine) || not (testBit (pFetchPc pipe) 1) || bSlot entry) = btbIndex (bTarget entry)
++        | otherwise = sequentialIndex (pFetchPc pipe)
++      nextIndex = case steering of
++        Nothing -> normalIndex
++        Just pc -> if issue then sequentialIndex pc else btbIndex pc
+       fetchMeta =
+         if cpuCompressed machine
+           then (if hit && not (bSlot entry) then 1 else 0) .|. (if hit && bSlot entry then 2 else 0)
+@@ -1713,7 +1725,8 @@
+         | fencing = restarted (maybe 0 mNext (pM pipe))
+         | isJust flushing =
+             (restarted (if issue then predicted else fetchPc))
+-              { pInstructionPc = fetchPc,
++              { pFetchIndex = nextIndex,
++                pInstructionPc = fetchPc,
+                 pInflight = issued :> Nothing :> Nothing :> Nothing :> Nil,
+                 pOutstanding = if issue then 1 else 0,
+                 pMSlot = slotToken (pMSlot pipe) (if mHold then pM pipe else Nothing)
+@@ -1721,6 +1734,7 @@
+         | otherwise =
+             Pipe
+               { pFetchPc = if issue then predicted else fetchPc,
++                pFetchIndex = nextIndex,
+                 pInstructionPc =
+                   if frontSteer
+                     then fetchPc
+--- a/src/SimpleRisc/Types.hs
++++ b/src/SimpleRisc/Types.hs
+@@ -868,6 +868,7 @@
+ data Pipe = Pipe
+   { -- | The next pc to fetch.
+     pFetchPc :: Word32,
++    pFetchIndex :: BtbIndex,
+     -- | C-mode byte PC within the fetched-word FIFO.
+     pInstructionPc :: Word32,
+     -- | Reads in flight, newest first; one of these words is on the memory
+--- a/src/SdramPipeline.hs
++++ b/src/SdramPipeline.hs
+@@ -213,7 +213,7 @@
+  -- register: the hold enable is the widest net in the design either way, and
+  -- one 5,000-load enable was the critical path before the split.
+  pipeState=regEn (withoutBtb (R.cpuPipe initialMachine)) (not <$> holding) (withoutBtb . R.cpuPipe <$> machineNext)
+- btb=btbStorage (R.pBtbWrite <$> pipeState) (R.btbIndex . R.pFetchPc <$> pipeState)
++ btb=btbStorage (R.pBtbWrite <$> pipeState) (R.pFetchIndex <$> pipeState)
+  effectivePipe=withBtb <$> btb <*> pipeState
+  running=R.withStagePayloads <$> stages <*> (R.applyHeldState <$> heldState <*> (R.withPipe <$> effectivePipe <*> machine))
+  breaking=emergency

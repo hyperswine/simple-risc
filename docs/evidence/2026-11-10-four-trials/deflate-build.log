@@ -1,0 +1,9 @@
+PLL: FBDIV_SEL=27 IDIV_SEL=8 ODIV_SEL=8 (VCO 672 MHz)
+vector big: 311 stream bytes
+gw_sh attempt 1 failed licence verification; retrying
+freq 84 MHz place 0 filler 0: fmax 81.036 MHz, worst slack -0.435, setup violations 8, hold 0, logic 1295/20736 (7%), registers 196/15750 (2%), CLS 713/10368 (7%), BSRAM 17/46 (37%)
+placement 1: route completed in 17.7s
+placement 2: route completed in 22.9s
+placement 3: route completed in 5.1s
+placement 4: route completed in 5.2s
+All five placements available; inspect setup AND hold in each .tr report.

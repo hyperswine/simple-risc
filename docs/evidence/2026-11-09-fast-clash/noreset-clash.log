@@ -1,0 +1,26 @@
+Loaded package environment from /Users/jasonqin/Documents/GitHub/simple-risc/.ghc.environment.aarch64-darwin-9.8.2
+GHC: Setting up GHC took: 0.285s
+GHC: Compiling and loading modules took: 1.160s
+Clash: Parsing and compiling primitives took 0.098s
+GHC+Clash: Loading modules cumulatively took 1.861s
+Clash: Compiling FastProbeNoReset.topEntity
+Clash: Compiling FastProbe.bramAddTop
+Clash: Compiling FastProbe.bramTop
+Clash: Compiling FastProbe.counterTop
+Clash: Compiling FastProbe.lfsrTop
+Clash: Normalization took 0.135s
+Clash: Normalization took 0.216s
+Clash: Netlist generation took 0.152s
+Clash: Netlist generation took 0.153s
+Clash: Compiling FastProbe.counterTop took 0.463s
+Clash: Compiling FastProbe.lfsrTop took 0.539s
+Clash: Normalization took 1.157s
+Clash: Normalization took 1.301s
+Clash: Netlist generation took 0.152s
+Clash: Normalization took 1.398s
+Clash: Netlist generation took 0.106s
+Clash: Netlist generation took 0.059s
+Clash: Compiling FastProbe.bramAddTop took 1.547s
+Clash: Compiling FastProbeNoReset.topEntity took 1.559s
+Clash: Compiling FastProbe.bramTop took 1.620s
+Clash: Total compilation took 3.482s

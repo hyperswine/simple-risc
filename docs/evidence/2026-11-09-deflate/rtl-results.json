@@ -1,0 +1,1061 @@
+{
+  "cases": [
+    {
+      "name": "hello",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hello",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hello",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "hello",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "abc",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "abc",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "abc",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "abc",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "lorem",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "lorem",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "lorem",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "lorem",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "big",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "big",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "big",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "big",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "empty",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "empty",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "empty",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "empty",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "wrap-64k",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "wrap-64k",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "wrap-64k",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "wrap-64k",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "overlap-one",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "overlap-one",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "overlap-one",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "overlap-one",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "all-literals",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "all-literals",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "all-literals",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "all-literals",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "stored",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "stored",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "stored-empty",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-empty",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-empty",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "stored-empty",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "stored-multiple",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-multiple",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-multiple",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "stored-multiple",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "mixed-blocks",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "mixed-blocks",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "mixed-blocks",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "mixed-blocks",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "stored-max",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-max",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "stored-max",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "stored-max",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "hand-far-distance",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hand-far-distance",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hand-far-distance",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "hand-far-distance",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "hand-bad-nlen",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hand-bad-nlen",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "hand-bad-nlen",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "hand-bad-nlen",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "zlib-stored",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "zlib-stored",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "zlib-stored",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "zlib-stored",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "dynamic",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "dynamic",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "dynamic",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "dynamic",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-block",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-block",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-block",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-block",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-286",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-286",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-286",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-286",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-287",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-287",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-287",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-length-287",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-30",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-30",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-30",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-30",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-31",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-31",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-31",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "reserved-distance-31",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "distance-32768",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "distance-32768",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "distance-32768",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "distance-32768",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "eob-seven-bits",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "eob-seven-bits",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "eob-seven-bits",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "eob-seven-bits",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "fixed-to-stored",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "fixed-to-stored",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "fixed-to-stored",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "fixed-to-stored",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "all-copy-codes",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "all-copy-codes",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "all-copy-codes",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "all-copy-codes",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-0",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-0",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-0",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-0",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-1",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-1",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-1",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-1",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-2",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-2",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-2",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-2",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-3",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-3",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-3",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-3",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-4",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-4",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-4",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-4",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-5",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-5",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-5",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-5",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-6",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-6",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-6",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-6",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-7",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-7",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-7",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-7",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-8",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-8",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-8",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-8",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-9",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-9",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-9",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-fixed-9",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-0",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-0",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-0",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-0",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-1",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-1",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-1",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-1",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-2",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-2",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-2",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-2",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-3",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-3",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-3",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-3",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-4",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-4",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-4",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-4",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-5",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-5",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-5",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-5",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-6",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-6",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-6",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-6",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-7",
+      "input_seed": 0,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-7",
+      "input_seed": 1,
+      "output_seed": 0,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-7",
+      "input_seed": 0,
+      "output_seed": 3,
+      "result": "pass"
+    },
+    {
+      "name": "truncated-stored-7",
+      "input_seed": 7,
+      "output_seed": 11,
+      "result": "pass"
+    }
+  ],
+  "negative_control": "rejected"
+}

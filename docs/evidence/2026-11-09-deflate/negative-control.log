@@ -1,0 +1,2 @@
+FATAL: /Users/jasonqin/Documents/GitHub/simple-risc/boards/tangnano20k/deflate/tb_deflate.v:44: byte 0 got 48 expected 49
+       Time: 1050000  Scope: tb_deflate

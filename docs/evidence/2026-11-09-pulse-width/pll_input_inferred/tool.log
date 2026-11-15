@@ -1,0 +1,23 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+current device: GW2AR-18C  GW2AR-LV18QN88C8/I7
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/fast-probe-board216-settled-20261109/lfsr/p0/impl/gwsynthesis/probe.vg"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/fast-probe-board216-settled-20261109/lfsr/p0/pins.cst"
+add new file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc"
+NOTE (PJ2001) : Skip synthesis, because there is only one netlist file in this project
+Reading netlist file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/fast-probe-board216-settled-20261109/lfsr/p0/impl/gwsynthesis/probe.vg"
+Parsing netlist file "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/fast-probe-board216-settled-20261109/lfsr/p0/impl/gwsynthesis/probe.vg" completed
+Processing netlist completed
+Reading constraint file: "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/fast-probe-board216-settled-20261109/lfsr/p0/pins.cst"
+Physical Constraint parsed completed
+ERROR  (TA2004) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc":2 | Cannot get clock with name ''
+WARN  (TA1052) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc":2 | Generated clock is ignored
+ERROR  (TA2004) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc":3 | Cannot get clock with name 'clk_core'
+ERROR  (TA2004) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc":4 | Cannot get clock with name 'clk_core'
+ERROR  (TA2004) : "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/pulse-width-20261109/pll_input_inferred/clocks.sdc":4 | Cannot get clock with name 'clk_core'
+
+    while executing
+"run pnr"
+    (file "build.tcl" line 16)

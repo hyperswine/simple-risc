@@ -1,0 +1,80 @@
+[
+  {
+    "variant": "621_slow_only",
+    "mpw_slack_ns": -0.198,
+    "actual_ns": 0.802,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "2dad40eeea3eeec9c9b0ef91fbe0a27b8ba449e0a9e5f19f517d3ffa581e5ca9",
+      "db": "5c2d95e3e58e38775e5e72a7a87d483f2c9488fe3f5271b2f2e7a3c0ce25af75"
+    }
+  },
+  {
+    "variant": "automatic",
+    "mpw_slack_ns": -1.195,
+    "actual_ns": -0.195,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "1bca9112e32f599e0a751bd96028028b5dc5cec861cc9c9444ec57aee2b373f7",
+      "db": "0a5f389baec7fe4c2e3d3123a6ac0e06058c292ca5614d45bb30997f7fc397e4"
+    }
+  },
+  {
+    "variant": "baseline",
+    "mpw_slack_ns": -1.195,
+    "actual_ns": -0.195,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "9242f30c68ee461d149ccb84d046a67769de0e45e5577ebbf133d2d3cc211320",
+      "db": "78ccc00ca30231f3899f596c25fcd0e9a65d67ef61ba9023487bfb81c5cadba5"
+    }
+  },
+  {
+    "variant": "fast_only",
+    "mpw_slack_ns": 1.313,
+    "actual_ns": 2.313,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "6b8255b30f1babaf8d75ad06f2e55c9187e76f470369b0e71984ade9de9e8c3c",
+      "db": "293bdee1558fcbf60a8b13cf0fb3f4f0fea019e1f9a7d6038e3f9e2d84003a3f"
+    }
+  },
+  {
+    "variant": "no_groups",
+    "mpw_slack_ns": -1.195,
+    "actual_ns": -0.195,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "1bca9112e32f599e0a751bd96028028b5dc5cec861cc9c9444ec57aee2b373f7",
+      "db": "0a5f389baec7fe4c2e3d3123a6ac0e06058c292ca5614d45bb30997f7fc397e4"
+    }
+  },
+  {
+    "variant": "output_primary",
+    "mpw_slack_ns": 0.552,
+    "actual_ns": 1.552,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "9242f30c68ee461d149ccb84d046a67769de0e45e5577ebbf133d2d3cc211320",
+      "db": "78ccc00ca30231f3899f596c25fcd0e9a65d67ef61ba9023487bfb81c5cadba5"
+    }
+  },
+  {
+    "variant": "pll_input",
+    "status": "tool error; see log"
+  },
+  {
+    "variant": "pll_input_inferred",
+    "status": "tool error; see log"
+  },
+  {
+    "variant": "slow_only",
+    "mpw_slack_ns": 1.312,
+    "actual_ns": 2.312,
+    "required_ns": 1.0,
+    "hashes": {
+      "bin": "9242f30c68ee461d149ccb84d046a67769de0e45e5577ebbf133d2d3cc211320",
+      "db": "78ccc00ca30231f3899f596c25fcd0e9a65d67ef61ba9023487bfb81c5cadba5"
+    }
+  }
+]

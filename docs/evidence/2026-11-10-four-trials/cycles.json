@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "baseline_cycles": 270,
+    "candidate_cycles": 310
+  },
+  "big": {
+    "baseline_cycles": 33292,
+    "candidate_cycles": 33508
+  },
+  "abc": {
+    "baseline_cycles": 12120,
+    "candidate_cycles": 12149
+  },
+  "all-literals": {
+    "baseline_cycles": 524,
+    "candidate_cycles": 524
+  },
+  "zlib-stored": {
+    "baseline_cycles": 876,
+    "candidate_cycles": 1130
+  }
+}

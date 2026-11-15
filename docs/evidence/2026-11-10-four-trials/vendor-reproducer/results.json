@@ -1,0 +1,16 @@
+{
+  "default": {
+    "pulse_slack_ns": -1.195,
+    "hashes": {
+      "bin": "104360a5095af7d974043a614ad9dcb47f193507b47c18278d44176a34724cb1",
+      "db": "a7bb81d9627d8f3d6a20fcca56d2b07006472eb46b126eac1796d86a9078eb7d"
+    }
+  },
+  "slow_only": {
+    "pulse_slack_ns": 1.312,
+    "hashes": {
+      "bin": "104360a5095af7d974043a614ad9dcb47f193507b47c18278d44176a34724cb1",
+      "db": "a7bb81d9627d8f3d6a20fcca56d2b07006472eb46b126eac1796d86a9078eb7d"
+    }
+  }
+}

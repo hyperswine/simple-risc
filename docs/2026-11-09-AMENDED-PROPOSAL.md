@@ -143,6 +143,8 @@ housekeeping. If 1 and 2 alone give four of four at 87 with 0.2 ns, the
 canon moves to 87 and is qualified like 84 was (a preset, the board checks,
 the suite, the classifier against 7.128 s); 90 is then the next sweep.
 
+The November 13 sweep tested the revised BTB address strategy and step 2 independently. The BTB version passed 0/5 at 87 MHz. Early hazard operands passed 4/5 against 3/5 for the canonical core, with a larger worst-case miss. The next proposed trial targets the E1 producer’s forwarding decision. [Measurements and next trial](2026-11-13-CORE-FEEDBACK-TRIALS.md)
+
 ## After 87
 
 - **IPC on the IM core**, now that placements route in a minute: load-use

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "sources": {
+    "baseline": {
+      "path": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/core-feedback-20261113/baseline/fresh/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+      "sha256": "3b732de3fc0035cda1b47d4f65511290c1e6ed0ddff3b14fc026d4b7f9b501d2"
+    },
+    "candidate": {
+      "path": "/Users/jasonqin/Documents/GitHub/simple-risc/output/tangnano20k/core-feedback-20261113/hazard/observed/SdramPipelineObserved.topEntity/sdram_pipeline_risc.v",
+      "sha256": "dd8b0fcff5be4cd4d420c6086e5aa18c3cc8ef42f631258e34b55dc724aace94"
+    }
+  },
+  "testbench_sha256": "415b7e06b2d142dad291562e9653ca970168b3a920ded520f34120203c0acdb5",
+  "pass": {
+    "returncode": 0,
+    "output_sha256": "7a99fcb407cc08443fab106335db7163fcb296d942a3619ad60c1ec07fd98791"
+  },
+  "negative": {
+    "returncode": 1,
+    "output_sha256": "acd2bf4a7b857851a74dbaff0490a305cfb78b1eb58e263854a7cccef748b2b1"
+  }
+}

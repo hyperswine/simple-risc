@@ -1,0 +1,1 @@
+PASS: mismatched constraint rejected: output/tangnano20k/deflate-invalid-sdc-20261109/p0: expected 84 MHz, got 756.000

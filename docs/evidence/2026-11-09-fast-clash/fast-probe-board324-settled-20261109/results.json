@@ -1,0 +1,26 @@
+{
+  "freq_mhz": 324,
+  "target_mhz": 360,
+  "board": true,
+  "variants": {
+    "lfsr": {
+      "0": {
+        "fmax_mhz": 747.373,
+        "slack_ns": 1.748,
+        "setup": 0,
+        "hold": 0,
+        "passes": true,
+        "start": "probe/q_1_1_s0/Q",
+        "end": "probe/q_1_0_s0/D",
+        "levels": 2,
+        "cell_ns": 0.57,
+        "route_ns": 0.501,
+        "bsram": 0,
+        "logic": 641,
+        "register": 284,
+        "cls": 355,
+        "netlist_sha256": "4b065984ec8c875b0c5d2124972e31eeccf36e75a663829135decdd915342761"
+      }
+    }
+  }
+}

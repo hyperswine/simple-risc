@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require the requested clock and zero reported setup/hold violations.
+"""Require the requested clock and passing setup, hold and minimum pulse width.
 
 This does not certify I/O constraint completeness or routed path coverage.
 """
@@ -24,8 +24,12 @@ def main():
     hold = re.search(r'<Numbers of Hold Violated Endpoints>:(\d+)', report)
     paths = re.search(r'3\.1\.1 Setup Paths Table\s*<Report Command>:(.*?)3\.1\.2 Hold Paths Table', report, re.S)
     slack = re.search(r'^\s*1\s+(-?[\d.]+)\s', paths[1], re.M) if paths else None
+    pulse_slacks = [float(value) for value in re.findall(
+        r'MPW Summary:\s*Slack:\s*(-?[\d.]+)', report)]
     if not all((clock, setup, hold, slack)):
         parser.error('missing core frequency, endpoint counts or setup paths in vendor report')
+    if not pulse_slacks:
+        parser.error('missing minimum pulse width details in vendor report')
     if abs(float(clock[1]) - args.freq_mhz) > .001:
         parser.error(f'expected {args.freq_mhz:g} MHz, report constrains {clock[1]} MHz')
     if args.memory_freq_mhz is not None:
@@ -36,11 +40,14 @@ def main():
                                    r'\s+Generated\s+[\d.]+\s+([\d.]+)MHz', report, re.M)
             if configured is None or abs(float(configured[1]) - args.memory_freq_mhz) > .001:
                 parser.error(f'expected an explicit {args.memory_freq_mhz:g} MHz {name}')
-    passed = int(setup[1]) == 0 and int(hold[1]) == 0 and float(slack[1]) >= 0
+    pulse_slack = min(pulse_slacks)
+    passed = (int(setup[1]) == 0 and int(hold[1]) == 0
+              and float(slack[1]) >= 0 and pulse_slack >= 0)
     print(f'{"PASS" if passed else "FAIL"}: STA under supplied constraints (SDRAM I/O signoff unverified); '
           f'{args.freq_mhz:g} MHz constraint, '
           f'{clock[2]} MHz Fmax, {slack[1]} ns worst setup slack; '
-          f'{setup[1]} setup / {hold[1]} hold violating endpoints')
+          f'{setup[1]} setup / {hold[1]} hold violating endpoints; '
+          f'{pulse_slack:.3f} ns minimum pulse width slack')
     return 0 if passed else 2
 
 

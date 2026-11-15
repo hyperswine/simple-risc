@@ -13,3 +13,5 @@ __pycache__/
 !boards/tangnano20k/bootrom/bootrom.hex
 !boards/tangnano20k/bootrom/bootrom-sdram.hex
 .qwen/
+
+!boards/tangnano20k/deflate/vectors/*.hex

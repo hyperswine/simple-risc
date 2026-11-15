@@ -1,0 +1,10 @@
+empty
+Jtag frequency : requested 6.00MHz    -> real 6.00MHz   
+Parse file Parse output/tangnano20k/four-trials-20261110/continuous-v3-621/lfsr/p2/impl/pnr/probe.fs: 
+Done
+DONE
+Erase SRAM Load SRAM Load SRAM: [=============================                     ] 56.77%
+Load SRAM: [==================================================] 100.00%
+
+Done
+DONE
