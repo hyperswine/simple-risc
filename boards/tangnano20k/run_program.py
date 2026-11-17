@@ -48,6 +48,13 @@ def open_port(port: str, baud: int) -> int:
     if baud != 115200:
         fcntl.ioctl(fd, 0x80085402, struct.pack("L", baud))  # macOS IOSSIOSPEED
     termios.tcflush(fd, termios.TCIOFLUSH)
+    # The Arty S7's FTDI bridge drops what is written in roughly the first
+    # second after the port opens (measured: 0.3 s too short, 1 s enough);
+    # SIMPLE_RISC_PORT_SETTLE=1 waits that out. The Tang Nano needs none.
+    settle = float(os.environ.get('SIMPLE_RISC_PORT_SETTLE', '0'))
+    if settle > 0:
+        time.sleep(settle)
+        termios.tcflush(fd, termios.TCIFLUSH)
     return fd
 
 
