@@ -155,6 +155,17 @@ if sys.argv[4] in ('core','pipeline','serial'):
     stamped_rom.write_text('\n'.join([*rom_words,f'{cpu_freq:08x}',f'{freq:08x}',build_id[:8],build_id[8:16]])+'\n')
     top=(src/('pipeline_top.v' if pipelined else 'core_top.v')).read_text()
     top=top.replace('BOOT_ROM_FILE',str(stamped_rom)).replace('CORE_FREQUENCY',str(freq*1000000)).replace('CPU_FREQUENCY',str(cpu_freq*1000000)).replace('CACHE_LINE_BITS',sys.argv[8]).replace('CACHE_WAYS',sys.argv[9])
+    import os
+    if os.environ.get('SDRAM_SERVO') == '1':
+        if not pipelined or cpu_freq != 84:
+            raise SystemExit('SDRAM_SERVO requires the 84 MHz pipeline')
+        top=top.replace('/* SERVO_PORT */','output servo_signal,')
+        top=top.replace('/* SERVO_WIRES */',"""wire servo_write;
+ wire [31:0] servo_width;
+ servo_pwm servo(.clk(clk),.reset(reset),.write_pulse(servo_write),.pulse_us(servo_width),.signal(servo_signal));""")
+        top=top.replace('/* SERVO_CONNECTION */',',.servo_write(servo_write),.servo_width(servo_width)')
+        with (out/'pins.cst').open('a') as pins:
+            pins.write('\nIO_LOC "servo_signal" 76;\nIO_PORT "servo_signal" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;\n')
     if cpu_freq!=freq:
         top=top.replace('sdram_pll pll(.clk_27m(clk_27m),.clk_core(clk),.clk_sdram(clk_sdram),.pll_lock(lock));',
                         f'sdram_dual_pll #(.CPU_MHZ({cpu_freq}),.MEM_MHZ({freq})) pll(.clk_27m(clk_27m),.clk_core(clk),.clk_memory(clk_memory),.clk_sdram(clk_sdram),.pll_lock(lock));')
@@ -229,6 +240,13 @@ file delete -force "$out/impl/pnr/sdram_test.tr"
 run all
 exit
 TCL
+if [[ "${SDRAM_SERVO:-0}" == 1 ]]; then
+  python3 - "$out/build.tcl" "$here/servo_pwm.v" <<'PYTHON'
+from pathlib import Path
+import sys
+p=Path(sys.argv[1]);p.write_text(p.read_text().replace('run all', 'add_file "'+sys.argv[2]+'"\nrun all'))
+PYTHON
+fi
 if [[ -n "$rtl" ]]; then
   python3 - "$out/build.tcl" "$rtl" <<'PYTHON'
 from pathlib import Path

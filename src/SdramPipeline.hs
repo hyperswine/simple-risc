@@ -8,7 +8,7 @@ import qualified SimpleRisc as R
 decodeTarget :: R.Word32 -> R.MemoryTarget
 decodeTarget address
   | address .&. 0xff80_0000 == 0x8000_0000 = R.RamTarget
-  | address >= R.ioBase && address <= R.ioBase + 12 = R.IoTarget
+  | address >= R.ioBase && address <= R.ioBase + 16 = R.IoTarget
   | address .&. 0xffff_f000 == R.ioBase = R.UnmappedTarget
   | otherwise = R.decodeMemoryTarget address
 
@@ -134,11 +134,13 @@ spiIoStep io (request,reset,held,miso) = (next,(slotAnswer io,R.spiPins (slotSpi
 
 {-# ANN topEntity (Synthesize {t_name="sdram_pipeline_risc",
  t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso"],
- t_output=PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs"]}) #-}
+ t_output=PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs",PortName "servo_write",PortName "servo_width"]}) #-}
 topEntity :: Clock XilinxSystem -> Reset XilinxSystem -> Enable XilinxSystem ->
  Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> Signal XilinxSystem Bit ->
- (Signal XilinxSystem Bit,Signal XilinxSystem Address,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32,Signal XilinxSystem (BitVector 4),Signal XilinxSystem Bit,Signal XilinxSystem Bit,Signal XilinxSystem Bit)
-topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en (circuit rx dat held miso)
+ (Signal XilinxSystem Bit,Signal XilinxSystem Address,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32,Signal XilinxSystem (BitVector 4),Signal XilinxSystem Bit,Signal XilinxSystem Bit,Signal XilinxSystem Bit,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32)
+topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en $
+ let ((tx,addr,wr,wd,mask,sck,mosi,cs),_,(servoWrite,servoWidth)) = boardCircuit rx dat held miso
+ in (tx,addr,wr,wd,mask,sck,mosi,cs,servoWrite,servoWidth)
 
 circuit :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal dom R.Word32,Signal dom (BitVector 4),Signal dom Bit,Signal dom Bit,Signal dom Bit)
@@ -179,7 +181,12 @@ withBtb stored pipe = pipe {R.pBtb=repeat stored}
 -- it must never supply a board timing/resource measurement.
 circuitWithObservations :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (BoardOutput dom, Signal dom R.PipelineTrace)
-circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace)
+circuitWithObservations rx dat held miso =
+ let (output,trace,_) = boardCircuit rx dat held miso in (output,trace)
+
+boardCircuit :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
+ (BoardOutput dom, Signal dom R.PipelineTrace, (Signal dom Bool, Signal dom R.Word32))
+boardCircuit serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace,(servoWrite,servoWidth))
  where
  trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
  receivedNow=R.uartRx (register high (register high serialRx))
@@ -233,6 +240,12 @@ circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,addre
  miso=register high (register high sdMiso)
  (ioAnswer,ioPins)=unbundle (mealy spiIoStep initialSpiIo
    (bundle (R.ioRequest <$> running,R.clearRegisters <$> running,memoryHeld,miso)))
+ (servoWrite,servoWidth)=unbundle (servoRequest <$> running <*> memoryHeld <*> ioAnswer)
+ servoRequest m held answer
+   | held || isJust answer || R.clearRegisters m = (False,0)
+   | Just q <- R.ioRequest m
+   , R.busWrite q && R.busAddress q == R.ioBase + 16 = (True,R.busData q)
+   | otherwise = (False,0)
  (sck,mosi,cs)=unbundle ioPins
  -- Free-running DSP operand and product registers: no enable, no reset
  -- mux, so the MULT18X18 input/output registers absorb them (R.cpuMulProducts).

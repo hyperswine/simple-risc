@@ -1,4 +1,5 @@
 module top(input clk_27m,btn_s1,uart_rx,output uart_tx,
+ /* SERVO_PORT */
  input sd_dat0,output sd_clk,sd_cmd,sd_dat1,sd_dat2,sd_dat3,
  output O_sdram_clk,O_sdram_cke,O_sdram_cs_n,O_sdram_cas_n,O_sdram_ras_n,O_sdram_wen_n,
  output [3:0] O_sdram_dqm,output [10:0] O_sdram_addr,output [1:0] O_sdram_ba,inout [31:0] IO_sdram_dq);
@@ -14,10 +15,11 @@ module top(input clk_27m,btn_s1,uart_rx,output uart_tx,
  if(reset_request)memory_reset_sync<=3;else memory_reset_sync<={memory_reset_sync[0],1'b0};
  wire memory_reset=memory_reset_sync[1];
  assign sd_dat1=1'b1;assign sd_dat2=1'b1;
+ /* SERVO_WIRES */
  wire [21:0] address;wire write,hold_cpu;wire [31:0] wdata,rdata;wire [3:0] mask;
  sdram_pipeline_risc core(.clk(clk),.reset(reset),.enable(1'b1),.uart_rx(uart_rx),.uart_tx(uart_tx),
    .memory_data(rdata),.memory_hold(hold_cpu),.memory_address(address),.memory_write(write),.memory_wdata(wdata),.memory_mask(mask),
-   .sd_miso(sd_dat0),.sd_sck(sd_clk),.sd_mosi(sd_cmd),.sd_cs(sd_dat3));
+   .sd_miso(sd_dat0),.sd_sck(sd_clk),.sd_mosi(sd_cmd),.sd_cs(sd_dat3) /* SERVO_CONNECTION */);
  wire req,mw,ready,done,word_valid;wire [20:0] ma;wire [31:0] md,mdata;wire [3:0] mm;wire [1:0] word_index;
  sdram_pipeline_cache #(.LINE_BITS(CACHE_LINE_BITS),.WAYS(CACHE_WAYS),.ROM_FILE("BOOT_ROM_FILE")) cache(clk,reset,address,write,wdata,mask,hold_cpu,rdata,
    req,mw,ma,md,mm,ready,done,mdata,word_valid,word_index);
