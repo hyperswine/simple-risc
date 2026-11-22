@@ -1174,6 +1174,16 @@ prop_sdram_spi_survives_cache_holds = withTests 1 . property $ do
   reset === SP.initialSpiIo
   SP.slotAnswer cap === Just 0x53445031
 
+-- | The servo image (SDRAM_SERVO=1) writes its pulse width at ioBase+16
+-- through the SPI slot, which must answer that write so the bus does not
+-- hang on it. The stock decode leaves the address unmapped (above).
+prop_sdram_servo_write_is_answered :: Property
+prop_sdram_servo_write_is_answered = withTests 1 . property $ do
+  let write = Just (BusRequest (ioBase+16) 2 True 1500)
+      taken = fst (SP.spiIoStep SP.initialSpiIo (write,False,False,high))
+  SP.slotAnswer taken === Just 0
+  SP.slotSpi taken === SP.slotSpi SP.initialSpiIo
+
 prop_spi_exchanges_bytes_in_mode_0 :: Property
 prop_spi_exchanges_bytes_in_mode_0 = property $ do
   divider <- forAll (Gen.integral (Range.linear 0 6))
@@ -2526,6 +2536,7 @@ simpleRiscGroup =
       ("Reset quietens interrupt sources", prop_reset_quietens_devices),
       ("SPI exchanges bytes in mode 0", prop_spi_exchanges_bytes_in_mode_0),
       ("SDRAM SPI survives cache holds", prop_sdram_spi_survives_cache_holds),
+      ("SDRAM servo write is answered", prop_sdram_servo_write_is_answered),
       ("FIFO is a bounded queue", prop_fifo_is_a_bounded_queue),
       ("A program reaches the I/O complex", prop_program_reaches_io_complex),
       ("SPI DMA moves blocks", prop_spi_dma_moves_blocks),

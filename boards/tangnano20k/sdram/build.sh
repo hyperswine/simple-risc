@@ -110,6 +110,9 @@ case "$mode" in
    fi
    generated="$root/output/tangnano20k/sdram-generated/$module-$rvc"
    options=(-isrc -hide-package simple-risc);if [[ "$rvc" == 1 ]];then options+=(-DRISCV_COMPRESSED);fi
+   # The servo image decodes one more I/O word (SdramPipeline.ioLast); the
+   # stock core stays the qualified netlist, so it is generated separately.
+   if [[ "${SDRAM_SERVO:-0}" == 1 ]];then options+=(-DSDRAM_SERVO);generated="$generated-servo";fi
    if [[ -n "${SDRAM_RTL_FILE:-}" ]];then
      rtl="$SDRAM_RTL_FILE"
      if [[ "$rtl" != /* ]];then rtl="$root/$rtl";fi

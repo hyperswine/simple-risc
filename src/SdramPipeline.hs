@@ -5,10 +5,22 @@ import Clash.Prelude
 import Data.Maybe (isJust,isNothing)
 import qualified SimpleRisc as R
 
+-- The last mapped I/O word. The servo image (build.sh SDRAM_SERVO=1, which
+-- passes -DSDRAM_SERVO) adds the pulse-width register at ioBase+16; every
+-- other image keeps the qualified decode exactly. Widening it for all images
+-- moved fprisc-84 placement 3 from +0.280 to -0.141 ns with no servo logic
+-- present (docs/2026-11-22-SERVO-TIMING.md).
+ioLast :: R.Word32
+#ifdef SDRAM_SERVO
+ioLast = R.ioBase + 16
+#else
+ioLast = R.ioBase + 12
+#endif
+
 decodeTarget :: R.Word32 -> R.MemoryTarget
 decodeTarget address
   | address .&. 0xff80_0000 == 0x8000_0000 = R.RamTarget
-  | address >= R.ioBase && address <= R.ioBase + 16 = R.IoTarget
+  | address >= R.ioBase && address <= ioLast = R.IoTarget
   | address .&. 0xffff_f000 == R.ioBase = R.UnmappedTarget
   | otherwise = R.decodeMemoryTarget address
 
@@ -132,6 +144,11 @@ spiIoStep io (request,reset,held,miso) = (next,(slotAnswer io,R.spiPins (slotSpi
    | reset = initialSpiIo
    | otherwise = SpiIo (R.stepSpi (resize <$> writing R.ioSpiData) (writing R.ioSpiControl) spi) answer
 
+-- The servo image's core has two more ports (build.sh SDRAM_SERVO=1). The
+-- stock core keeps the pre-servo port list: synthesis would drop unconnected
+-- servo logic, but the different Clash netlist alone maps to 36 more LUTs and
+-- costs fprisc-84 its placement margin (docs/2026-11-22-SERVO-TIMING.md).
+#ifdef SDRAM_SERVO
 {-# ANN topEntity (Synthesize {t_name="sdram_pipeline_risc",
  t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso"],
  t_output=PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs",PortName "servo_write",PortName "servo_width"]}) #-}
@@ -141,6 +158,16 @@ topEntity :: Clock XilinxSystem -> Reset XilinxSystem -> Enable XilinxSystem ->
 topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en $
  let ((tx,addr,wr,wd,mask,sck,mosi,cs),_,(servoWrite,servoWidth)) = boardCircuit rx dat held miso
  in (tx,addr,wr,wd,mask,sck,mosi,cs,servoWrite,servoWidth)
+
+#else
+{-# ANN topEntity (Synthesize {t_name="sdram_pipeline_risc",
+ t_inputs=[PortName "clk",PortName "reset",PortName "enable",PortName "uart_rx",PortName "memory_data",PortName "memory_hold",PortName "sd_miso"],
+ t_output=PortProduct "" [PortName "uart_tx",PortName "memory_address",PortName "memory_write",PortName "memory_wdata",PortName "memory_mask",PortName "sd_sck",PortName "sd_mosi",PortName "sd_cs"]}) #-}
+topEntity :: Clock XilinxSystem -> Reset XilinxSystem -> Enable XilinxSystem ->
+ Signal XilinxSystem Bit -> Signal XilinxSystem R.Word32 -> Signal XilinxSystem Bool -> Signal XilinxSystem Bit ->
+ (Signal XilinxSystem Bit,Signal XilinxSystem Address,Signal XilinxSystem Bool,Signal XilinxSystem R.Word32,Signal XilinxSystem (BitVector 4),Signal XilinxSystem Bit,Signal XilinxSystem Bit,Signal XilinxSystem Bit)
+topEntity clk rst en rx dat held miso = withClockResetEnable clk rst en (circuit rx dat held miso)
+#endif
 
 circuit :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (Signal dom Bit,Signal dom Address,Signal dom Bool,Signal dom R.Word32,Signal dom (BitVector 4),Signal dom Bit,Signal dom Bit,Signal dom Bit)
@@ -181,12 +208,18 @@ withBtb stored pipe = pipe {R.pBtb=repeat stored}
 -- it must never supply a board timing/resource measurement.
 circuitWithObservations :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (BoardOutput dom, Signal dom R.PipelineTrace)
+-- Clash keeps a binding the result discards, so the stock core has no servo
+-- binding at all (see topEntity): only the servo image defines boardCircuit.
+#ifdef SDRAM_SERVO
 circuitWithObservations rx dat held miso =
  let (output,trace,_) = boardCircuit rx dat held miso in (output,trace)
 
 boardCircuit :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom R.Word32 -> Signal dom Bool -> Signal dom Bit ->
  (BoardOutput dom, Signal dom R.PipelineTrace, (Signal dom Bool, Signal dom R.Word32))
 boardCircuit serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace,(servoWrite,servoWidth))
+#else
+circuitWithObservations serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wdata,mask,sck,mosi,cs),trace)
+#endif
  where
  trace=R.pipeTraceWith decodeTarget <$> running <*> memoryData
  receivedNow=R.uartRx (register high (register high serialRx))
@@ -240,12 +273,18 @@ boardCircuit serialRx memoryData memoryHeld sdMiso = ((serialTx,address,write,wd
  miso=register high (register high sdMiso)
  (ioAnswer,ioPins)=unbundle (mealy spiIoStep initialSpiIo
    (bundle (R.ioRequest <$> running,R.clearRegisters <$> running,memoryHeld,miso)))
+#ifdef SDRAM_SERVO
+ -- The write the SPI slot accepts (it answers every write, so this fires
+ -- once per store). Combinational, as first board-tested: registering it
+ -- here and in servo_pwm measured worse (2 of 4 placements against 3 of 4,
+ -- placement 3 failing), docs/2026-11-22-SERVO-TIMING.md.
  (servoWrite,servoWidth)=unbundle (servoRequest <$> running <*> memoryHeld <*> ioAnswer)
  servoRequest m held answer
    | held || isJust answer || R.clearRegisters m = (False,0)
    | Just q <- R.ioRequest m
    , R.busWrite q && R.busAddress q == R.ioBase + 16 = (True,R.busData q)
    | otherwise = (False,0)
+#endif
  (sck,mosi,cs)=unbundle ioPins
  -- Free-running DSP operand and product registers: no enable, no reset
  -- mux, so the MULT18X18 input/output registers absorb them (R.cpuMulProducts).
