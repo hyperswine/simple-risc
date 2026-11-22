@@ -1,0 +1,8 @@
+board-host: SRID1 isa=rv32im cpu=84 mem=48 ram=8388608 max=2097152 cap=PMXQVHTUICG id=1117eb6fa223746e
+servo pulse width (us): 1500
+servo pulse width (us): 1400
+servo pulse width (us): 1600
+servo pulse width (us): 1500
+servo output disabled
+FPR EXIT 0
+DONE

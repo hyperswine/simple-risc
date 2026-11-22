@@ -58,6 +58,26 @@ module servo_pwm_tb;
    if(c<1599*CPU || c>1601*CPU) begin failures=failures+1; $display("FAIL mid-frame: %0d clocks", c); end
   end
   to_boundary; repeat(2) @(posedge clk); expect_frames(1200,"1200 after mid-frame");
+  // Level mode: 1 drives the pin high at once and holds it; 0 drops it at
+  // once. PWM stops at the next boundary underneath the level.
+  repeat(300*CPU) @(posedge clk); command(1); #1
+  if(!signal) begin failures=failures+1; $display("FAIL: level 1 not immediate"); end
+  expect_frames(20000,"level high");
+  command(32'h0001_0001); expect_frames(20000,"level ignores high bits");
+  repeat(77) @(posedge clk); command(0); #1
+  if(signal) begin failures=failures+1; $display("FAIL: level 0 not immediate"); end
+  expect_frames(0,"level low");
+  // From level to PWM: the level drops at once, the pulse starts at the boundary.
+  command(1); repeat(10) @(posedge clk); command(1700); #1
+  if(signal && !(dut.frame_us < dut.active_us)) begin failures=failures+1; $display("FAIL: level held after PWM write"); end
+  to_boundary; repeat(2) @(posedge clk); expect_frames(1700,"1700 after level");
+  // From PWM to level 0 mid-pulse: the pulse in progress finishes.
+  to_boundary; repeat(500*CPU) @(posedge clk); command(0);
+  begin : runt integer c,n; c=500*CPU;
+   for(n=500*CPU+2;n<FRAME;n=n+1) begin @(posedge clk); #1 if(signal) c=c+1; end
+   if(c<1699*CPU || c>1701*CPU) begin failures=failures+1; $display("FAIL: pulse cut by 0: %0d clocks", c); end
+  end
+  to_boundary; repeat(2) @(posedge clk); expect_frames(0,"disabled after PWM");
   // Reset drops the output at once and disables it.
   repeat(10) @(posedge clk); @(negedge clk); reset=1; repeat(3) @(posedge clk); #1
   if(signal) begin failures=failures+1; $display("FAIL: high during reset"); end

@@ -1,0 +1,35 @@
+board-host: SRID1 isa=rv32im cpu=84 mem=48 ram=8388608 max=2097152 cap=PMXQVHTUICG id=1117eb6fa223746e
+motor test: 15 pairs, 1000 ms on, 1000 ms off
+motor on 1
+motor off 1
+motor on 2
+motor off 2
+motor on 3
+motor off 3
+motor on 4
+motor off 4
+motor on 5
+motor off 5
+motor on 6
+motor off 6
+motor on 7
+motor off 7
+motor on 8
+motor off 8
+motor on 9
+motor off 9
+motor on 10
+motor off 10
+motor on 11
+motor off 11
+motor on 12
+motor off 12
+motor on 13
+motor off 13
+motor on 14
+motor off 14
+motor on 15
+motor off 15
+motor output disabled
+FPR EXIT 0
+DONE

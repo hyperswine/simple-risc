@@ -1,0 +1,5 @@
+pin76-a p3: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 84.076 MHz Fmax, 0.011 ns worst setup slack; 0 setup / 0 hold violating endpoints; 2.455 ns minimum pulse width slack
+pin76-a p0: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 85.871 MHz Fmax, 0.259 ns worst setup slack; 0 setup / 0 hold violating endpoints; 2.455 ns minimum pulse width slack
+pin76-a p1: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 85.009 MHz Fmax, 0.141 ns worst setup slack; 0 setup / 0 hold violating endpoints; 2.455 ns minimum pulse width slack
+pin76-a p4: PASS: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 84.250 MHz Fmax, 0.035 ns worst setup slack; 0 setup / 0 hold violating endpoints; 2.455 ns minimum pulse width slack
+motor_gpio (external, superseded): FAIL: STA under supplied constraints (SDRAM I/O signoff unverified); 84 MHz constraint, 80.282 MHz Fmax, -0.551 ns worst setup slack; 1 setup / 0 hold violating endpoints; 2.455 ns minimum pulse width slack
