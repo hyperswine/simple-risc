@@ -192,3 +192,22 @@ The board is left running the replacement 96 MHz image in SRAM; flash is
 unchanged. Step 1 is complete within the roadmap's scope. Step 3 removes
 end-of-image halting, the vector-zero trap compatibility and the hardware
 host loader, then step 4 supplies the official conformance baseline.
+
+## Note, 2026-11-28
+
+The body of this document is the record of the 2026-10-05 slices; it is not
+rewritten below. Later, still-current behaviour that differs from the text
+above:
+
+- From 2026-10-11 (`2026-10-11-TANGNANO20K-INTERRUPTS.md`), `mip` reads the
+  real MEIP/MTIP/MSIP pending bits (writes are still ignored), and WFI waits
+  until `mie & mip` is nonzero, whether or not `mstatus.MIE` is set. It is no
+  longer a no-op, and `mip` is no longer WARL zero.
+- `misa` reads RV32IM (`0x40001100`), or RV32IMC (`0x40001104`) on the
+  compressed image.
+- Split `mcycle`/`minstret` and the read-only `cycle`/`instret` aliases
+  (including the high halves) were added after the opening line that said
+  machine mode remained incomplete until those counters existed.
+- On 2026-11-28, `mconfigptr` (`0xF15`) was added as read-only zero, like
+  the other machine ID CSRs. Unknown CSR numbers still raise an illegal
+  instruction.

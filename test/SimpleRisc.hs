@@ -909,7 +909,7 @@ prop_registered_csr_selection_matches_reference = property $ do
         cpuCsrValue readState === expected
     ) (address : [0x300, 0x301, 0x304, 0x305, 0x310, 0x340, 0x341, 0x342,
                   0x343, 0x344, 0xb00, 0xb80, 0xb02, 0xb82, 0xc00, 0xc80,
-                  0xc02, 0xc82, 0xf11, 0xf12, 0xf13, 0xf14])
+                  0xc02, 0xc82, 0xf11, 0xf12, 0xf13, 0xf14, 0xf15])
 
 prop_csr_read_modify_write :: Property
 prop_csr_read_modify_write = property $ do
@@ -965,10 +965,11 @@ prop_csr_access_rules_and_masks = property $ do
     checkAccess address 5 0 True
     checkAccess address 2 1 True -- rs1 has a zero value but is not x0
     checkAccess address 3 1 True
-    ) [0x301, 0xf11, 0xf12, 0xf13, 0xf14]
+    ) [0x301, 0xf11, 0xf12, 0xf13, 0xf14, 0xf15]
   checkAccess 0x999 2 0 True
   checkAccess 0x999 1 0 True
   readCsr 0x301 base === Just (0x40001100, True)
+  readCsr 0xf15 base === Just (0, True)
   let written address = writeCsr address value base
       regs = cpuTrapRegisters (written 0x300)
   readCsr 0x300 (written 0x300) === Just (0x1800 .|. (value .&. 0x88), False)
@@ -1008,7 +1009,54 @@ prop_mret_restores_status = property $ do
   cpuPhase returned === Fetch
   trapMie regs === previous
   trapMpie regs === True
+  readCsr 0x300 returned === Just (0x1800 .|. (if previous then 8 else 0) .|. 0x80, False)
   write === Nothing
+
+-- | MPP is hardwired to M. mconfigptr (0xF15) reads zero; writes are illegal.
+prop_mstatus_mpp_fixed_and_mconfigptr :: Property
+prop_mstatus_mpp_fixed_and_mconfigptr = property $ do
+  value <- forAll (Gen.integral Range.constantBounded)
+  mie <- forAll Gen.bool
+  let base = initialMachine
+      afterWrite = writeCsr 0x300 (value .&. complement 0x1800) base
+  -- A write that tries to clear MPP still reads MPP=M, with only MIE/MPIE taken.
+  readCsr 0x300 base === Just (0x1800, False)
+  readCsr 0x300 afterWrite === Just (0x1800 .|. (value .&. 0x88), False)
+  -- Trap entry keeps MPP=M, saves MIE into MPIE and clears MIE.
+  let entering =
+        base
+          { cpuPhase = Trap,
+            cpuPc = ramBase,
+            cpuExceptionCause = 11,
+            cpuExceptionValue = 0,
+            cpuTrapRegisters = initialTrapRegisters {trapMie = mie, trapVector = ramBase + 0x100}
+          }
+      (trapped, _) = enterTrap entering
+  readCsr 0x300 trapped === Just (0x1800 .|. (if mie then 0x80 else 0), False)
+  cpuPc trapped === ramBase + 0x100
+  -- mconfigptr is a standard read-only zero CSR, not an unknown address.
+  readCsr 0xf15 base === Just (0, True)
+  let readOnly = csrInstruction 0xf15 2 1 0
+      writing = csrInstruction 0xf15 1 0 1
+      stepFrom instr =
+        cpuStep
+          base
+            { cpuPhase = CsrRead,
+              cpuInstruction = instr,
+              cpuCsrSelection = decodeCsrSelection 0xf15,
+              cpuCsrWrite = csrWriteRequested instr,
+              cpuCsrReadOnly = True
+            }
+          0
+          Nothing
+          True
+      (readState, _, _) = stepFrom readOnly
+      (writeState, _, _) = stepFrom writing
+  cpuPhase readState === CsrWrite
+  cpuCsrValue readState === 0
+  cpuPhase writeState === Trap
+  cpuExceptionCause writeState === 2
+  cpuExceptionValue writeState === writing
 
 -- Interrupts ------------------------------------------------------------------
 
@@ -1402,12 +1450,12 @@ genInstruction i n = Gen.frequency
           <$> forwardFromNext <*> Gen.frequency [(20, P.pure False), (1, P.pure True)] <*> genReg),
     (6, (\csr f3 src rd -> [csrInstruction csr f3 rd src]) <$> Gen.element [0x340, 0x341, 0x342, 0x343, 0x304, 0x300]
           <*> Gen.element [1, 2, 3, 5, 6, 7] <*> genReg <*> genReg),
-    (2, (\csr f3 rd -> [csrInstruction csr f3 rd 0]) <$> Gen.element [0x301, 0xf11, 0xf14, 0x310, 0x344]
+    (2, (\csr f3 rd -> [csrInstruction csr f3 rd 0]) <$> Gen.element [0x301, 0xf11, 0xf14, 0xf15, 0x310, 0x344]
           <*> Gen.element [2, 3, 6, 7] <*> genReg),
     (1, P.pure [0x0ff0_000f]),
     -- rarer: each of these ends the program
     (1, Gen.frequency
-      [ (1, (\csr rd -> [csrInstruction csr 1 rd 1]) <$> Gen.element [0x301, 0xf12, 0x7c0] <*> genReg),
+      [ (1, (\csr rd -> [csrInstruction csr 1 rd 1]) <$> Gen.element [0x301, 0xf12, 0xf15, 0x7c0] <*> genReg),
         (1, Gen.element [[0x0000_0073], [0x0010_0073]]),
         (1, (: []) <$> Gen.integral Range.linearBounded) ]) ]
   where
@@ -2530,6 +2578,7 @@ simpleRiscGroup =
       ("CSR access rules and WARL masks", prop_csr_access_rules_and_masks),
       ("Guest trap handler resumes with mret", prop_guest_handler_resumes_with_mret),
       ("MRET restores machine status", prop_mret_restores_status),
+      ("MPP is fixed at M and mconfigptr is read-only zero", prop_mstatus_mpp_fixed_and_mconfigptr),
       ("mtip compares all 64 bits", prop_mtip_compares_64_bits),
       ("Timer interrupt wakes WFI", prop_timer_interrupt_wakes_wfi),
       ("UART interrupt claims through the PLIC", prop_uart_interrupt_claims_through_plic),

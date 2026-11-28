@@ -2528,6 +2528,7 @@ readCsr address machine = case address of
   0xf12 -> Just (0, True)
   0xf13 -> Just (0, True)
   0xf14 -> Just (0, True)
+  0xf15 -> Just (0, True) -- mconfigptr, hardwired zero
   _ -> Nothing
   where
     regs = cpuTrapRegisters machine

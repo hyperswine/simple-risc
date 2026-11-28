@@ -213,6 +213,8 @@ decodeCsrSelection address =
            == 0xf13
            || address
            == 0xf14
+           || address
+           == 0xf15
        )
     :> (address == 0x344)
     :> Nil
