@@ -72,7 +72,7 @@ module rv64_core #(parameter RVC=0)(input clk,reset,input rx_valid,input [7:0] r
  always @* begin
    csr_valid=1;csr_readonly=0;
    case(instruction[31:20])
-     12'h300:csr_old=mstatus;
+     12'h300:csr_old=mstatus | 64'h1800;
      12'h301:begin csr_old=(RVC ? 64'h8000000000001104:64'h8000000000001100);csr_readonly=1;end
      12'h304,12'h344:begin csr_old=0;csr_readonly=1;end
      12'h305:csr_old=mtvec;
@@ -96,12 +96,12 @@ module rv64_core #(parameter RVC=0)(input clk,reset,input rx_valid,input [7:0] r
    rx_pop<=0;tx_send<=0;
    if(reset) begin
      state<=HOST;running<=0;abort_pending<=0;pc<=0;program_end<=0;upload_count<=0;
-     fetch_valid<=0;cycle_count<=0;retired<=0;mtvec<=0;mepc<=0;mcause<=0;mtval<=0;mstatus<=0;mscratch<=0;
+     fetch_valid<=0;cycle_count<=0;retired<=0;mtvec<=0;mepc<=0;mcause<=0;mtval<=0;mstatus<=64'h1800;mscratch<=0;
      for(i=0;i<32;i=i+1) regs[i]<=0;
    end else begin
      cycle_count<=cycle_count+1'b1;
      if(emergency) begin
-       rx_pop<=1;running<=0;mtvec<=0;mstatus<=0;retired<=0;fetch_valid<=0;
+       rx_pop<=1;running<=0;mtvec<=0;mstatus<=64'h1800;retired<=0;fetch_valid<=0;
        for(i=0;i<32;i=i+1) regs[i]<=0;
        // A coincident completion is already drained; do not wait for a
        // second pulse that will never arrive.
@@ -116,7 +116,7 @@ module rv64_core #(parameter RVC=0)(input clk,reset,input rx_valid,input [7:0] r
            "V":begin upload_index<=0;verify_crc<=0;verify_digit<=0;state<=upload_count==0 ? VERIFYTX:VERIFY;end
            "H","R":begin
              running<=1;pc<=rx_data=="H" ? 64'h80000000:0;state<=FETCH;
-             mtvec<=0;mstatus<=0;retired<=0;abort_pending<=0;fetch_valid<=0;
+             mtvec<=0;mstatus<=64'h1800;retired<=0;abort_pending<=0;fetch_valid<=0;
              for(i=0;i<32;i=i+1) regs[i]<=0;
            end
            "M":begin upload_index<=0;state<=CLEAR;end
@@ -251,7 +251,7 @@ module rv64_core #(parameter RVC=0)(input clk,reset,input rx_valid,input [7:0] r
            7'h0f:begin rd<=0;if(funct3==1) fetch_valid<=0;if(funct3!=0 && funct3!=1) trap(2,{32'b0,instruction_raw});end
            7'h73:begin
              if(funct3==0) begin
-               if(instruction==32'h30200073) begin rd<=0;next_pc<=mepc;mstatus[3]<=mstatus[7];mstatus[7]<=1;mstatus[12:11]<=0;end
+               if(instruction==32'h30200073) begin rd<=0;next_pc<=mepc;mstatus[3]<=mstatus[7];mstatus[7]<=1;mstatus[12:11]<=2'b11;end
                else if(instruction==32'h00000073) trap(11,0);
                else if(instruction==32'h00100073) trap(3,pc);
                else trap(2,{32'b0,instruction_raw});
@@ -259,7 +259,7 @@ module rv64_core #(parameter RVC=0)(input clk,reset,input rx_valid,input [7:0] r
              else begin
                result<=csr_old;
                if(funct3[1:0]==1 || rs1!=0) case(instruction[31:20])
-                 12'h300:mstatus<=csr_new & 64'h1888;
+                 12'h300:mstatus<=(csr_new & 64'h88) | 64'h1800;
                  12'h305:mtvec<=csr_new & ~64'd3;
                  12'h340:mscratch<=csr_new;
                  12'h341:mepc<=csr_new & (RVC ? ~64'd1:~64'd3);

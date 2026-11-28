@@ -74,6 +74,16 @@ li t0,6
 bne s0,t0,fail
 li t0,22 // 2+2+3+11+3+1
 bne s1,t0,fail
+// MPP stays 11 through the compressed traps, mret, and a write of 0.
+li t1,0x1800
+csrr t0,mstatus
+and t0,t0,t1
+bne t0,t1,fail
+li t0,0
+csrw mstatus,t0
+csrr t0,mstatus
+and t0,t0,t1
+bne t0,t1,fail
 la a0,ok
 li a1,0
 j exit

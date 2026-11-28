@@ -42,6 +42,16 @@ bne t0,t1,fail
 li t0,0x8000000000001100
 csrr t1,misa
 bne t0,t1,fail
+// MPP is WARL-fixed at M (11) after the traps, mret, and a write that tries to clear it.
+li t1,0x1800
+csrr t0,mstatus
+and t0,t0,t1
+bne t0,t1,fail
+li t0,0x88
+csrw mstatus,t0
+csrr t0,mstatus
+and t0,t0,t1
+bne t0,t1,fail
 la a0,ok
 call puts
 li a0,0
