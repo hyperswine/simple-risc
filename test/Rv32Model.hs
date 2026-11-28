@@ -331,7 +331,7 @@ execute ins m = case opcode of
       0x342 -> Just (mCause m)
       0x343 -> Just (mTval m)
       0x344 -> Just (if mMsip m then 8 else 0) -- only msip is ever raised here
-      x | x >= 0xf11 && x <= 0xf14 -> Just 0
+      x | x >= 0xf11 && x <= 0xf15 -> Just 0 -- IDs and mconfigptr
       _ -> Nothing
 
 writeCsr :: Word32 -> Word32 -> Model -> Model
